@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELO – Beschaffungslogistik | Lern-Dashboard</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7; /* Sky Blue für BELO */
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --highlight-bg: #fef3c7;
+            --info-bg: #f0fdf4;
+            --info-border: #86efac;
+            --info-text: #166534;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .header-banner {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%);
+        }
+
+        .header-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%);
+        }
+
+        .header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .header-title-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-title-container h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            word-wrap: break-word;
+        }
+
+        .header-title-container p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: -20px auto 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: var(--radius) var(--radius) 0 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        nav a {
+            padding: 1rem 1.25rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 1rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .hamburger-btn {
+            display: none;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            font-size: 1.5rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            line-height: 1;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            word-wrap: break-word;
+        }
+
+        .card h4 {
+            font-size: 1.05rem;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+            color: var(--primary-color);
+        }
+
+        .calendar-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .calendar-section h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .calendar-container {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .calendar-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        details {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        details[open] {
+            background-color: #ffffff;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+            outline: none;
+            word-wrap: break-word;
+        }
+
+        .answer {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .content-section {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* --- STYLES FÜR INTERAKTIVE GRAFIKEN & WIDGETS --- */
+        .diagram-box {
+            background: #f8fafc;
+            border: 2px dashed var(--secondary-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .diagram-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .interactive-widget {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        .btn-interactive {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin: 0.25rem;
+        }
+
+        .btn-interactive:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-interactive.active {
+            background-color: #059669;
+        }
+
+        .interactive-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .hamburger-btn {
+                display: block;
+            }
+
+            .header-banner {
+                height: auto;
+                min-height: 180px;
+            }
+
+            .header-overlay {
+                position: relative;
+                padding: 1.25rem 1rem;
+            }
+
+            .header-title-container h1 {
+                font-size: 1.4rem;
+            }
+
+            .header-title-container p {
+                font-size: 0.88rem;
+            }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                border-radius: 0 0 var(--radius) var(--radius);
+                gap: 0;
+                width: 100%;
+            }
+
+            nav.mobile-active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 0.85rem 1.25rem;
+                border-bottom: 1px solid var(--border-color);
+                width: 100%;
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            nav a.active, nav a:hover {
+                border-bottom-color: transparent;
+                background-color: var(--accent-color);
+            }
+
+            main {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .calendar-container {
+                padding-bottom: 100%;
+            }
+
+            ul, ol {
+                padding-left: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>BELO – Beschaffungslogistik</h1>
+                    <p>Sourcing-Strategien, Bedarfsermittlung, Beschaffungsmarktforschung, Kennzahlen &amp; Losgrößen</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav id="main-nav">
+        <a href="scm.html" title="Supply Chain Management">SCM</a>
+        <a href="unlo.html" title="Unternehmenslogistik">UNLO</a>
+        <a href="belo.html" class="active" title="Beschaffungslogistik">BELO</a>
+        <a href="lalo.html" title="Lagerlogistik">LALO</a>
+        <a href="as.html" title="Arbeitssicherheit &amp; Gesundheitsschutz">AS</a>
+    </nav>
+
+    <main>
+        <!-- ========================================== -->
+        <!-- TEIL 1: GRUNDLAGEN DER BESCHAFFUNGSLOGISTIK -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-1">
+            <h2>BELO - Teil 1: Grundlagen der Beschaffungslogistik</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Grundlagen der Beschaffungslogistik (BELO 1) – Einordnung in die Unternehmenslogistik, Aufgaben und Ziele, Beschaffungsformen, Lieferantenmanagement sowie Beschaffungsmarktforschung.</p>
+            <p><strong>Lernziele:</strong></p>
+            <ul>
+                <li>Die Bedeutung der Beschaffungslogistik und deren Einflüsse auf die Geschäftstätigkeit eines Unternehmens präzise erläutern.</li>
+                <li>Die Lieferantenidentifikation und -auswahl aus operativer Sicht gezielt unterstützen.</li>
+                <li>Lieferantenbewertungen auf Basis vorgegebener Kriterien eigenständig durchführen.</li>
+                <li>Lieferantenbewertungen auswerten, interpretieren und konkrete Massnahmen für das Lieferantenmanagement vorschlagen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Einordnung der Beschaffungslogistik in die Unternehmenslogistik</h4>
+            <p>Die <strong>Beschaffungslogistik</strong> umfasst alle Prozesse vom Einkauf, der Beschaffung und des Warentransportes zur weiteren Produktion oder zum Wareneingang. Sie stellt das Bindeglied zwischen der Distributionslogistik des Lieferanten und der eigenen Produktionslogistik dar.</p>
+            <p>Innerhalb der Unternehmenslogistik steht die Beschaffungslogistik neben weiteren spezialisierten Teilbereichen:</p>
+            <ul>
+                <li><span class="highlight-text">Distributionslogistik (Absatz-/Vertriebslogistik):</span> Befasst sich mit Lagerumschlags- und Transportvorgängen innerhalb eines Unternehmens zur Belieferung des Marktes.</li>
+                <li><span class="highlight-text">Entsorgungslogistik:</span> Umschliesst alle logistischen Tätigkeiten zur Durchführung der Abfall- und Wertstoffentsorgung.</li>
+                <li><span class="highlight-text">Ersatzteillogistik:</span> Konzentriert sich auf die Bereitstellung und Lagerung von Ersatzteilen.</li>
+                <li><span class="highlight-text">Informationslogistik:</span> Steuert und steuert alle im Unternehmen ablaufenden Informationsflüsse.</li>
+                <li><span class="highlight-text">Lagerlogistik:</span> Beinhaltet die Lagerung, Planung und Steuerung eigener und fremder Güter im Lager.</li>
+                <li><span class="highlight-text">Instandhaltungslogistik:</span> Plant, steuert und stellt Materialien, Informationen und Ressourcen für die Instandhaltung von Anlagen und Betriebsmitteln bereit.</li>
+                <li><span class="highlight-text">Produktionslogistik:</span> Umfasst alle innerbetrieblichen Prozesse vom Transport über den Umschlag bis hin zur Einlagerung für die Fertigung.</li>
+                <li><span class="highlight-text">Transportlogistik:</span> Befasst sich mit sämtlichen logistischen Transporten jeglicher Art.</li>
+            </ul>
+            <p>Bei der Betrachtung der Beschaffungslogistik wird begrifflich differenziert:</p>
+            <ul>
+                <li><span class="highlight-text">Im weiteren Sinn:</span> Beschaffungsmanagement (inklusive des gesamten Einkaufs).</li>
+                <li><span class="highlight-text">Im engeren Sinn:</span> Die operative Bereitstellung von Materialien, die Wareneingangsprüfung, die Lagerhaltung/-disposition sowie der innerbetriebliche Transport.</li>
+            </ul>
+
+            <h4>2. Kernaufgaben und Ziele der Beschaffungslogistik</h4>
+            <p>Die Beschaffungslogistik stellt sicher, dass nahezu jedes Unternehmen stets handlungsfähig bleibt, indem benötigte Materialien rechtzeitig bereitgestellt werden. Die zentralen Aufgaben betreffen die Bereiche Einkauf, Materialdisposition, Transportwesen und Lagerwesen inklusive Warenannahme. Das Hauptziel liegt darin, Güter so wirtschaftlich wie möglich bereitzustellen, um die übergeordneten Unternehmensziele bestmöglich zu erreichen.</p>
+            <p><strong>Übergeordnete und untergeordnete Zielsetzungen:</strong></p>
+            <ul>
+                <li><span class="highlight-text">Kosten- und Qualitätsziel:</span> Senkung der Beschaffungskosten pro Einheit bei gleichzeitiger Gewährleistung oder Steigerung von Qualität und Quantität.</li>
+                <li><span class="highlight-text">Versorgungssicherheit:</span> Vermeidung von Produktionsstillständen durch kontinuierliche Materialverfügbarkeit.</li>
+                <li><span class="highlight-text">Risikominimierung:</span> Verringerung von Abhängigkeiten und Einhaltung von Umwelt- und Sozialstandards.</li>
+                <li><span class="highlight-text">Technologiezugang:</span> Sicherstellung eines frühzeitigen Zugangs zu neuen Technologien auf den Märkten.</li>
+            </ul>
+
+            <h4>3. Das Dilemma der Materialwirtschaft und das Zielsystem</h4>
+            <p>Das <strong>Dilemma der Materialwirtschaft</strong> beschreibt den permanenten Zielkonflikt zwischen einer hohen Versorgungssicherheit (hohe Lieferbereitschaft) und geringen Bestandskosten. Eine Erhöhung der Lieferbereitschaft führt in der Regel zu höheren Lagerbeständen und damit zu steigender Kapitalbindung sowie höheren Lagerkosten. Werden hingegen größere Mengen beschafft, lassen sich oft günstigere Preise und Mengenrabatte erzielen, was jedoch wiederum die Bestandskosten belastet.</p>
+            <p>Das magische Zielsystem fordert daher den Ausgleich zwischen Logistikleistung (hohe Liefertreue, kurze Lieferzeiten/Wiederbeschaffungszeiten) und Logistikkosten (geringe Prozesskosten, geringe Bestandskosten/Kapitalbindung), um maximale Wirtschaftlichkeit zu erreichen.</p>
+
+            <h4>4. Beschaffungsformen und Einkaufsmanagement</h4>
+            <p>Der Einkauf ist ein zentraler Bestandteil jedes Unternehmens und umfasst die Beschaffung von Gütern und Dienstleistungen. In der Praxis werden die Begriffe "Beschaffung" und "Einkauf" häufig synonym verwendet.</p>
+            <p>Es existieren verschiedene organisatorische Beschaffungsformen:</p>
+            <ul>
+                <li><span class="highlight-text">Zentral vs. Dezentral:</span> Beim Zentraleinkauf werden das Einkaufsvolumen und die Verantwortung an einer Stelle gebündelt. Bei der dezentralen Beschaffung kaufen einzelne Abteilungen oder Standorte eigenständig ein.</li>
+                <li><span class="highlight-text">Direkt vs. Indirekt:</span> Die direkte Beschaffung erfolgt ohne Zwischenhändler unmittelbar beim Hersteller. Die indirekte Beschaffung läuft über Großisten oder Händler.</li>
+                <li><span class="highlight-text">Category Management (Warengruppenmanagement):</span> Ein gemeinsamer Prozess von Händlern und Herstellern, bei dem Warengruppen als strategische Geschäftseinheiten geführt werden, um den Kundennutzen und betriebliche Ergebnisse zu steigern.</li>
+                <li><span class="highlight-text">Maverick-Buying:</span> Beschaffung am standardisierten Einkaufsweg vorbei, bei der Abteilungen eigenmächtig Materialien oder Dienstleistungen ohne Einbindung der Einkaufsabteilung bestellen.</li>
+            </ul>
+
+            <h4>5. Lieferantenmanagement und Schnittstelle zwischen operativer und strategischer Ebene</h4>
+            <p>Das <strong>Lieferantenmanagement</strong> gestaltet, lenkt und entwickelt die Abnehmer-Lieferanten-Beziehungen mit dem Ziel, die Qualität zu steigern sowie Kosten und Zeit einzusparen.</p>
+            <p><strong>Ziele des Lieferantenmanagements:</strong></p>
+            <ul>
+                <li>Minimierung der Beschaffungskosten.</li>
+                <li>Zeiteffiziente Optimierung der Beschaffungsprozesse.</li>
+                <li>Langfristige Sicherung der Materialversorgung.</li>
+                <li>Erreichung von "Operational Excellence" (kontinuierliche Prozessverbesserung).</li>
+                <li>Verbesserung der Liefertermintreue.</li>
+            </ul>
+            <p><strong>Schnittstellenfunktion der operativen Beschaffungslogistik:</strong> Die operative Ebene unterstützt den strategischen Einkauf durch Rückmeldung wertvoller Tagesdaten:</p>
+            <ol>
+                <li><span class="highlight-text">Lieferantendaten sammeln:</span> Erfassung von Realdaten bezüglich Lieferantenleistung, Zuverlässigkeit und Qualität im Tagesgeschäft.</li>
+                <li><span class="highlight-text">Probleme aufzeigen:</span> Aufdecken von Engpässen, Redundanzen oder Ineffizienzen bei Bestellungen, Lieferungen und Reklamationen.</li>
+                <li><span class="highlight-text">Operative Tätigkeiten:</span> Einholen von Angeboten, Kosten- und Preisüberwachung, Lieferantengespräche zur Terminkoordinierung sowie Übergabe von Forecasts.</li>
+            </ol>
+
+            <h4>6. Beschaffungsmarktforschung</h4>
+            <p>Die <strong>Beschaffungsmarktforschung</strong> ist die systematische Sammlung und Aufbereitung von Informationen aktueller und potenzieller Beschaffungsmärkte. Ihr Ziel ist es, die Markttransparenz zu erhöhen und beschaffungsrelevante Entwicklungen frühzeitig zu erkennen.</p>
+            <p>Für Handelsunternehmen unterscheidet man vier wesentliche Märkte:</p>
+            <ol>
+                <li><span class="highlight-text">Beschaffungsmarkt:</span> Markt für den Einkauf der benötigten Waren.</li>
+                <li><span class="highlight-text">Absatzmarkt:</span> Markt für den Verkauf der Produkte an Endkunden.</li>
+                <li><span class="highlight-text">Konkurrenzmarkt:</span> Markt mit vielen Anbietern und Nachfragern, auf dem einzelne Akteure den Preis nicht beeinflussen können und Rivalität um Marktanteile herrscht.</li>
+                <li><span class="highlight-text">Interner Markt:</span> Künstlich organisationsintern geschaffener Markt mit Verrechnungspreisen für interne Leistungstransfers.</li>
+            </ol>
+            <p><strong>Zentrale Untersuchungsobjekte:</strong> Die zu beschaffenden Einsatzgüter, die Angebotsstruktur auf den Märkten, die wirtschaftliche und technische Leistungsfähigkeit der Lieferanten sowie die Preisentwicklung.</p>
+
+            <!-- INTERAKTIVES WIDGET 1: 8-STUFIGER BESCHAFFUNGSPROZESS -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver 8-Stufen-Beschaffungsprozess</div>
+                <div class="diagram-subtitle">Klicke auf einen Prozessschritt, um die Zugehörigkeit (Strategisch vs. Operativ) und Details einzublenden.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 6px; margin-bottom: 1rem;">
+                        <button class="btn-interactive" onclick="showProcStep(1)">1. Bedarfsermittlung</button>
+                        <button class="btn-interactive" onclick="showProcStep(2)">2. Bezugsquelle</button>
+                        <button class="btn-interactive" onclick="showProcStep(3)">3. Auswahl</button>
+                        <button class="btn-interactive" onclick="showProcStep(4)">4. Bestellung</button>
+                        <button class="btn-interactive" onclick="showProcStep(5)">5. Überwachung</button>
+                        <button class="btn-interactive" onclick="showProcStep(6)">6. Wareneingang</button>
+                        <button class="btn-interactive" onclick="showProcStep(7)">7. Rechnungsprüfung</button>
+                        <button class="btn-interactive" onclick="showProcStep(8)">8. Zahlung</button>
+                    </div>
+
+                    <div id="proc-step-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="proc-step-title" style="color:var(--primary-color); margin-bottom: 0.25rem;">1. Bedarfsermittlung (Strategisch / Anbahnung)</h5>
+                        <p id="proc-step-desc" style="font-size: 0.9rem; margin:0;">Feststellung, welche Materialien in welcher Menge und Qualität benötigt werden.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>1. Der 8-stufige Beschaffungsprozess</h4>
+            <ol>
+                <li><strong>Bedarfsermittlung:</strong> Feststellung, welche Materialien in welcher Menge benötigt werden.</li>
+                <li><strong>Ermittlung der Bezugsquelle:</strong> Suche nach geeigneten Beschaffungsmärkten und Lieferanten.</li>
+                <li><strong>Lieferantenauswahl:</strong> Bewertung und Entscheidung für einen oder mehrere Lieferanten.</li>
+                <li><strong>Bestellabwicklung:</strong> Rechtssichere Erteilung des Kaufauftrags.</li>
+                <li><strong>Bestellüberwachung:</strong> Kontrolle der Fristen, Liefertermine und Auftragsbestätigungen.</li>
+                <li><strong>Wareneingang:</strong> Physikalische Annahme, Entladung und Prüfung der Lieferung.</li>
+                <li><strong>Rechnungsprüfung:</strong> Abgleich der Rechnung mit Bestellung und Lieferschein.</li>
+                <li><strong>Zahlungsabwicklung:</strong> Freigabe und Durchführung der Begleichung der Rechnungsbeträge.</li>
+            </ol>
+
+            <h4>2. Phasen der Beschaffung: Strategischer vs. Operativer Prozess</h4>
+            <ul>
+                <li><span class="highlight-text">Strategischer Beschaffungsprozess (Sourcing):</span>
+                    <ol>
+                        <li><em>Anbahnung:</em> Bedarfsermittlung und Lieferantensuche.</li>
+                        <li><em>Vereinbarung:</em> Lieferantenauswahl, Verhandlung und Vertragsabschluss.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Operativer Beschaffungsprozess (Ordering):</span>
+                    <ol>
+                        <li><em>Abwicklung:</em> Bestellüberwachung und Wareneingang.</li>
+                        <li><em>Kontrolle:</em> Rechnungsprüfung und Zahlungsabwicklung.</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <h4>3. Die 8 R der Logistik</h4>
+            <ol>
+                <li><strong>Richtiges Produkt:</strong> Exakte Übereinstimmung des gelieferten Artikels mit der Spezifikation.</li>
+                <li><strong>Richtige Menge:</strong> Exakte Bereitstellung der benötigten Einheiten zur Vermeidung von Engpässen oder Überbeständen.</li>
+                <li><strong>Richtige Qualität:</strong> Mangelfreie Ware, die sämtliche Kundenerwartungen erfüllt.</li>
+                <li><strong>Richtige Zeit:</strong> Termingerechte Verfügbarkeit zum geforderten Zeitpunkt.</li>
+                <li><strong>Richtiger Ort:</strong> Bereitstellung genau an dem Ort, an dem das Material benötigt wird.</li>
+                <li><strong>Richtiger Preis / Kosten:</strong> Wirtschaftlich tragbare und wettbewerbsfähige Konditionen.</li>
+                <li><strong>Richtiger Kunde:</strong> Ausrichtung des gesamten Prozesses auf die Erfüllung der Endkundenbedürfnisse.</li>
+                <li><strong>Richtige Information:</strong> Transparente, durchgängige und zugängliche Daten entlang der gesamten Lieferkette.</li>
+            </ol>
+
+            <h4>Tabelle 1: Systematischer Vergleich der Beschaffungsformen</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Beschaffungsform</th>
+                            <th>Definition</th>
+                            <th>Vorteile</th>
+                            <th>Nachteile / Folgen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Zentraleinkauf</strong></td>
+                            <td>Bündelung aller Beschaffungsvolumen und Verantwortungen an einer zentralen Stelle.</td>
+                            <td>• Stärkung der Verhandlungsposition<br>• Günstige Rahmenverträge &amp; Mengenrabatte<br>• Reduzierung der Transport- &amp; Bearbeitungskosten<br>• Bessere Übersicht &amp; Kostenkontrolle</td>
+                            <td>• Lange Wege von Abteilungen zum Einkauf<br>• Langsamere Materialverfügbarkeit vor Ort<br>• Höherer Bedarf an Lagerkapazität<br>• Erhöhter Verwaltungs- &amp; Bürokratieaufwand</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dezentrale Beschaffung</strong></td>
+                            <td>Eigenständige Beschaffung durch einzelne Standorte oder Fachabteilungen.</td>
+                            <td>• Meist kürzere Beschaffungswege<br>• Schnellere Entscheidungen vor Ort<br>• Hohe Flexibilität</td>
+                            <td>• Höhere Preise durch kleine Stückzahlen<br>• Keine Bündelungsvorteile oder Mengenrabatte<br>• Erhöhte Schnittstellen-Mehrarbeit</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Direkte Beschaffung</strong></td>
+                            <td>Unmittelbarer Einkauf des Produkts beim Produzenten/Hersteller.</td>
+                            <td>• Bessere Konditionen (Ausschaltung von Zwischenhändlern)<br>• Höheres Produkt-Know-how &amp; bessere Beratung<br>• Abnahme sehr großer Mengen möglich</td>
+                            <td>• Beschaffung von Kleinmengen oft schwierig<br>• Mindermengenzuschläge oder höhere Preise bei Kleinmengen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Indirekte Beschaffung</strong></td>
+                            <td>Einkauf über Zwischenhändler oder Grossisten.</td>
+                            <td>• Auch kleine Bestellmengen problemlos lieferbar<br>• Bündelung verschiedener Produkte beim Händler</td>
+                            <td>• Höhere Endpreise durch Handelsmarge<br>• Weniger direktes Hersteller-Know-how</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Category Management</strong></td>
+                            <td>Gemeinsames Führen von Warengruppen durch Händler &amp; Hersteller als strategische Geschäftseinheit.</td>
+                            <td>• Einnahme der Shopper-/Kundenperspektive<br>• Erhöhung der Sortimentskompetenz<br>• Positive Auswirkung auf Betriebsergebnisse</td>
+                            <td>• Risiko von "Warengruppenegoismus" (partikularistisches Denken)<br>• Geringere Synergien als im Zentraleinkauf<br>• Starke gegenseitige Abhängigkeit von Händler &amp; Hersteller</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maverick-Buying</strong></td>
+                            <td>Eigenmächtiger Kauf von Materialien durch Fachabteilungen am Einkauf vorbei.</td>
+                            <td>• Höhere Prozessgeschwindigkeit in Notfällen<br>• Ausnutzen spontaner Sonderangebote<br>• Hohe lokale Flexibilität</td>
+                            <td>• Unabgestimmte Prozesse &amp; fehlende Preisvergleiche<br>• Nicht genutzte Rahmenverträge &amp; höhere Preise<br>• Mangelnde Rechtssicherheit &amp; Mehrarbeit in FiBu/Wareneingang</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Teilbereiche der Beschaffungsmarktforschung</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Teilbereich</th>
+                            <th>Gegenstand &amp; Inhalt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Wertanalyse</strong></td>
+                            <td>Schätzung und Bewertung der Kosten für spezifische Objektleistungen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Preisanalyse</strong></td>
+                            <td>Systematischer Vergleich von vergangenen zu aktuellen Marktpreisen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kostenanalyse</strong></td>
+                            <td>Detaillierte Zerlegung der Gesamtkosten eines Objekts in seine einzelnen Kostenelemente.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Make-or-Buy-Analyse</strong></td>
+                            <td>Gegenüberstellung von Kosten und Leistungen externer Anbieter mit der eigenen Fertigung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lieferantenanalyse</strong></td>
+                            <td>Systematische Ermittlung, Bewertung und Auswahl geeigneter Lieferanten.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Marktanalyse</strong></td>
+                            <td>Untersuchung der grundlegenden Marktstrukturen und aktuellen Marktbewegungen.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 3: Informationsquellen der Beschaffungsmarktforschung</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kategorie</th>
+                            <th>Konkrete Informationsquellen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Presse &amp; Medien</strong></td>
+                            <td>Online-Presse, Fachzeitschriften (z. B. Logistikmedien), Werbesendungen, Einkäuferkataloge, Firmenporträts, Geschäftsberichte.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verbände &amp; Institute</strong></td>
+                            <td>Logistikverbände, Branchenverbände, Industrie- und Handelskammern (IHK im In- und Ausland), Wirtschafts- und Fachverbände, Universitäten, Forschungsinstitute, Forschungsberichte.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zusatz- &amp; Feldquellen</strong></td>
+                            <td>Internes Wissen bei Großfirmen, Messen, direkte Lieferantenbesuche, Schulen, Banken, Bonitätsprüfungen.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Maverick-Buying im Unternehmensalltag:</span> Eine IT-Abteilung benötigt dringend neue Monitore und bestellt diese eigenmächtig direkt bei einem Online-Händler, ohne die zentrale Einkaufsabteilung zu informieren. Obwohl die IT-Monitore schnell vor Ort sind (Vorteil: Geschwindigkeit), entstehen gravierende Nachteile: Der bestehende Rahmenvertrag mit einem PC-Hersteller mit 20 % Mengenrabatt wird nicht genutzt, die Finanzbuchhaltung muss eine manuelle Einzelrechnung verarbeiten (Mehrarbeit an Schnittstellen), und bei einem Defekt fehlen klare vertragliche Garantievereinbarungen (mangelnde Rechtssicherheit).</li>
+                <li><span class="highlight-text">TÜV Rheinland in der Beschaffungsmarktforschung:</span> Prüforganisationen wie der TÜV dienen Unternehmen als externe Informationsquelle und Dienstleister, um die technische Leistungsfähigkeit, Qualitätsstandards und Sicherheitszertifikate potenzieller Lieferanten im Rahmen der Lieferanten- und Marktanalyse objektiv zu überprüfen.</li>
+                <li><span class="highlight-text">Direkte vs. Indirekte Beschaffung (Hersteller vs. Grossist):</span> Ein Restaurantkette benötigt große Mengen an Speiseöl, während ein kleiner Quartier-Imbiss nur zwei Flaschen pro Woche braucht. Die Restaurantkette nutzt die direkte Beschaffung beim Ölproduzenten, um Zwischenhändler auszuschalten, beste Preis-Konditionen auszuhandeln und direktes Know-how zu erhalten. Der kleine Imbiss nutzt die indirekte Beschaffung über einen Großhändler (Grossisten), da der Produzent keine Kleinmengen liefert oder hohe Mindermengenzuschläge verlangt.</li>
+            </ul>
+
+            <h3>Mini-Quiz</h3>
+            <details>
+                <summary>1. Frage: Was versteht man unter dem "Dilemma der Materialwirtschaft"?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Das Dilemma der Materialwirtschaft beschreibt den Zielkonflikt zwischen einer hohen Versorgungssicherheit (hohe Lieferbereitschaft) und geringen Bestandskosten. Höhere Lagerbestände sichern zwar die Produktion, erhöhen aber Kapitalbindung und Lagerkosten.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>2. Frage: Welche acht Teilschritte umfasst der operative und strategische Beschaffungsprozess in seiner korrekten Reihenfolge?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die 8 Schritte lauten: 1. Bedarfsermittlung, 2. Ermittlung der Bezugsquelle, 3. Lieferantenauswahl, 4. Bestellabwicklung, 5. Bestellüberwachung, 6. Wareneingang, 7. Rechnungsprüfung, 8. Zahlungsabwicklung.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>3. Frage: Welche negativen Folgen bringt sogenanntes "Maverick-Buying" für ein Unternehmen mit sich?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Mögliche negative Folgen sind: Unabgestimmte Prozesse, fehlende Preisvergleiche, höhere Preise (durch kleine Mengen/schlechte Verhandlungen), Nichtnutzung von Rahmenverträgen, Mehrarbeit an Schnittstellen (Wareneingang/FiBu), mangelnde Rechtssicherheit bei Beanstandungen und Schaden der Außenwirkung gegenüber Lieferanten.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>4. Frage: Was unterscheidet den Konkurrenzmarkt vom internen Markt in der Beschaffungsmarktforschung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Ein Konkurrenzmarkt ist ein Markt mit vielen Anbietern/Nachfragern im Wettbewerb um Marktanteile, auf dem einzelne Akteure den Preis nicht beeinflussen können. Ein interner Markt ist ein künstlich organisationsintern geschaffener Markt, bei dem Leistungstransfers zwischen Abteilungen über interne Verrechnungspreise abgewickelt werden.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TEIL 2: SOURCING-STRATEGIEN & MAKE-OR-BUY  -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-2">
+            <h2>BELO - Teil 2: Sourcing-Strategien, Make-or-Buy &amp; E-Procurement</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Beschaffungslogistik II (BELO 2) – Sourcing-Strategien, internationale Beschaffungsstrukturen, Make-or-Buy-Analysen (Eigenfertigung vs. Fremdbezug), Beschaffungsformen, E-Procurement, Gestaltung des Produktionsprogramms sowie die abteilungsübergreifende Zusammenarbeit.</p>
+            <p><strong>Lernziele:</strong></p>
+            <ul>
+                <li>Die Eignung und Risiken unterschiedlicher Sourcing-Strategien erklären und situationsbezogen begründen.</li>
+                <li>Die Aufgabentrennung zwischen der Beschaffungslogistik und dem Einkauf im eigenen Unternehmen erläutern.</li>
+                <li>Den Informations-, Waren- und Wertefluss bei unterschiedlichen Beschaffungswegen aufzeigen und darstellen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Entwicklung internationaler Beschaffungsstrukturen &amp; Marktdaten</h4>
+            <p>Die Beschaffungsstrukturen haben sich im Zeitverlauf grundlegend gewandelt: Während früher national geprägte Beschaffungsstrukturen dominierten, prägen heute international vernetzte Beschaffungsstrukturen das Bild.</p>
+            <p>Eine Umfrage von <em>procure.ch</em> aus dem Jahr 2024 unter über 350 Schweizer Unternehmen verdeutlicht diese Internationalisierung:</p>
+            <ul>
+                <li><span class="highlight-text">Auslandsanteil:</span> Über die Hälfte der befragten Unternehmen beschaffen mehr als 40 % ihrer Güter im Ausland.</li>
+                <li><span class="highlight-text">Wichtigste Märkte:</span> 86 % der Unternehmen nannten Deutschland als wichtigsten Beschaffungsmarkt, gefolgt von China und Italien.</li>
+                <li><span class="highlight-text">Onlinehandel:</span> Der Umsatz mit im Ausland bestellten Waren stieg in der Schweiz von 3,6 Milliarden CHF (2021) auf 5,2 Milliarden CHF (2023). Dies entspricht 29 % aller Online-Einkäufe in der Schweiz, wobei Mode, Reisen und Geschenke besonders häufig international bezogen werden.</li>
+                <li><span class="highlight-text">Aktuelle Trends:</span> Durch Krisen wie die Pandemie und hohe Transportkosten gewinnt <em>Near-Sourcing</em> (sowie Re-Shoring) wieder an Bedeutung. Unternehmen bewerten Risiken in globalen Lieferketten stärker, diversifizieren ihre Lieferantenbeziehungen und stellen deutlich höhere Anforderungen an Transparenz, Nachhaltigkeit und Qualität von Auslandsbeschaffungen.</li>
+            </ul>
+
+            <h4>2. Sourcing-Strategien und die Lieferantenpyramide</h4>
+            <p><strong>Sourcing-Strategien im Detail:</strong> Unternehmen wählen je nach Risikolage, Kostenstruktur und Produktart unterschiedliche Strategien für den Wareneinkauf:</p>
+            <ul>
+                <li><span class="highlight-text">Global Sourcing:</span> Weltweiter Einkauf zur Nutzung globaler Kosten- und Preisvorteile sowie zum Zugang zu im Inland nicht vorhandenen Gütern.</li>
+                <li><span class="highlight-text">Local Sourcing:</span> Geografisch nahe Beschaffung zur Maximierung von Geschwindigkeit, Flexibilität und Nachhaltigkeit bei gleicher Sprache, Währung und Rechtsordnung.</li>
+                <li><span class="highlight-text">Single Sourcing:</span> Konzentration des gesamten Bedarfs eines Gutes auf einen einzigen Lieferanten zur Senkung von Transaktions- und Transportkosten.</li>
+                <li><span class="highlight-text">Multiple Sourcing:</span> Verteilung des Bedarfs auf mehrere Lieferanten zur Erhöhung des Konkurrenzdrucks und zur Vermeidung von Produktionsausfällen.</li>
+                <li><span class="highlight-text">Dual Sourcing:</span> Beschaffung bei exakt zwei Lieferanten als Kompromiss aus Mengenkonzentration und Risikostreuung.</li>
+                <li><span class="highlight-text">Modular / System Sourcing:</span> Einkauf komplett vormontierter Baugruppen oder Systeme von einem Systemlieferanten anstelle vieler Einzelteile.</li>
+            </ul>
+            <p><strong>Die Lieferantenpyramide:</strong> Die Lieferantenpyramide verknüpft die Wertschöpfungsebenen der Zulieferer mit den jeweils passenden Sourcing-Strategien:</p>
+            <ol>
+                <li><span class="highlight-text">Spitze (Hersteller):</span> Das beschaffende Unternehmen / OEM.</li>
+                <li><span class="highlight-text">Ebene 1 (System- und Modullieferanten):</span> Fokus auf <em>Partnerschaft</em>. Typische Strategien sind Modular Sourcing, Single Sourcing und Local Sourcing.</li>
+                <li><span class="highlight-text">Ebene 2 (Komponentenlieferanten):</span> Fokus auf <em>Qualität, Kosten und Zeit</em>. Typische Strategien sind Dual Sourcing sowie Local / Domestic Sourcing.</li>
+                <li><span class="highlight-text">Basis (Rohmaterial-, Halbfabrikate-, DIN- und Normteilelieferanten):</span> Fokus rein auf <em>Kosten (Preis)</em>. Typische Strategien sind Multiple Sourcing und Global Sourcing.</li>
+            </ol>
+
+            <h4>3. Make-or-Buy (MoB) und die Break-even-Berechnung</h4>
+            <p><strong>Strategische Entscheidungsfindung:</strong> Die Frage nach Eigenfertigung (<em>Make</em>) oder Fremdbezug (<em>Buy</em>) wird systematisch anhand von Kernkompetenzen, verfügbaren Ressourcen, erforderlichen Investitionen/Zeit und der Kostenwettbewerbsfähigkeit entschieden.</p>
+            <p><strong>Mathematische Break-even-Analyse (Kritische Menge):</strong> Zur Ermittlung der kritischen Menge, ab der sich die Eigenfertigung gegenüber dem Fremdbezug wirtschaftlich lohnt, wird der Schnittpunkt der Gesamtkostenfunktionen gebildet:</p>
+            <p>$$\text{Kosten}_{\text{Fremdbezug}} = \text{Fixkosten}_{\text{Eigenfertigung}} + \text{Variable Kosten}_{\text{Eigenfertigung}}$$</p>
+            <p><strong>Formel und Berechnung laut Quellbeispiel:</strong></p>
+            <ul>
+                <li>Gegeben: Fixkosten der Eigenfertigung = 300'000 CHF; Variable Kosten bei Fremdbezug = 5'000 CHF/Stück; Produktionskosten (variable Kosten) bei Eigenfertigung = 2'000 CHF/Stück.</li>
+                <li>Ansatz: $$5'000 \cdot X = 300'000 + (2'000 \cdot X)$$</li>
+                <li>Umstellung: $$3'000 \cdot X = 300'000$$</li>
+                <li>Ergebnis: $$X = 100 \text{ Stück}$$</li>
+            </ul>
+            <p><em>Interpretation:</em> Ab einer benötigten Menge von mehr als 100 Stück ist die Eigenfertigung kostengünstiger als der Fremdbezug.</p>
+
+            <!-- INTERAKTIVES WIDGET 2: MAKE-OR-BUY BREAK-EVEN RECHNER -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Make-or-Buy Break-Even Rechner</div>
+                <div class="diagram-subtitle">Passe die Werte an, um die kritische Menge (Schnittpunkt) live zu berechnen.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="flex: 1; min-width: 150px;">
+                            <label style="font-weight:600; font-size:0.85rem;">Fixkosten Make (CHF):</label>
+                            <input type="number" id="mob-fix" value="300000" oninput="calcMob()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <label style="font-weight:600; font-size:0.85rem;">Var. Kosten Make (CHF/Stk):</label>
+                            <input type="number" id="mob-var-make" value="2000" oninput="calcMob()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <label style="font-weight:600; font-size:0.85rem;">Preis Buy (CHF/Stk):</label>
+                            <input type="number" id="mob-price-buy" value="5000" oninput="calcMob()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                    </div>
+                    <div id="mob-result" style="background: var(--tag-bg); padding: 0.75rem; border-radius: 6px; font-weight: bold; color: var(--primary-color);">
+                        Kritische Menge (Break-Even): 100 Stück
+                    </div>
+                </div>
+            </div>
+
+            <h4>4. Arten von Beschaffungsprozessen</h4>
+            <p>Die Praxis unterscheidet drei Grundformen der zeitlichen Bedarfsdeckung:</p>
+            <ul>
+                <li><span class="highlight-text">Einzelbeschaffung:</span> Waren werden erst dann einzeln bezogen, wenn ein konkreter Kundenauftrag vorliegt (geringe Lagerbindung, aber Risiko von Lieferzeiten).</li>
+                <li><span class="highlight-text">Vorratsbeschaffung:</span> Es wird eine große Menge an Waren und Materialien auf Lager gelegt, um laufende Aufträge sofort bedienen zu können.</li>
+                <li><span class="highlight-text">Just-in-Time-Beschaffung (JIT):</span> Fertigungssynchrone Anlieferung, bei der die benötigten Waren exakt zum Zeitpunkt des Verbrauchs in der Produktion eintreffen.</li>
+            </ul>
+
+            <h4>5. E-Procurement-Systeme</h4>
+            <p>E-Procurement bezeichnet die elektronische Abwicklung von Beschaffungsprozessen. Das Ziel ist die Automatisierung von Routineaufgaben bei der operativen Beschaffung und die Senkung von Prozess- und Transaktionskosten. Dem stehen Aufwände für Systemintegration, Datensicherheit und Lieferantendatenpflege gegenüber.</p>
+
+            <h4>6. Das Produktionsprogramm</h4>
+            <p>Das <strong>Produktionsprogramm</strong> ist ein zentraler Plan, der festlegt, welche Produkte in welcher Menge und Reihenfolge produziert werden sollen.</p>
+            <ul>
+                <li><span class="highlight-text">Hauptziel:</span> Maximale Kosteneffizienz und Maximierung des Gewinns unter Berücksichtigung der verfügbaren Ressourcen und Produktionskapazitäten.</li>
+                <li><span class="highlight-text">Analysierte Faktoren:</span> Es basiert auf detaillierten Analysen von Materialkosten, Arbeitskosten, Maschinenkosten, Lagerkapazitäten, der erwarteten Nachfrage und Marktbedingungen.</li>
+                <li><span class="highlight-text">Zweck:</span> Optimaler Ressourceneinsatz, Minimierung von Abfall und Verbesserung der Gesamteffizienz des Produktionsprozesses.</li>
+            </ul>
+
+            <h4>7. Abteilungsübergreifende Zusammenarbeit</h4>
+            <p>Der Einkauf und die Beschaffungslogistik arbeiten nicht isoliert, sondern stehen in engem Austausch mit anderen Unternehmensbereichen:</p>
+            <ul>
+                <li><span class="highlight-text">Mit Verkauf / Vertrieb:</span> Klärung von Mengen, Kundennachfrage, qualitativen Anforderungen und Kunden-Lieferkonditionen.</li>
+                <li><span class="highlight-text">Mit Forschung &amp; Entwicklung (F&amp;E):</span> Abstimmung über Verpackungen und Verpackungseinheiten.</li>
+                <li><span class="highlight-text">Mit der Produktion:</span> Exakte Definition der Produktspezifikationen.</li>
+                <li><span class="highlight-text">Mit der Personalabteilung:</span> Ermittlung und Bereitstellung benötigter Fachmitarbeitender.</li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Vergleichende Übersicht aller Sourcing-Strategien</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sourcing-Strategie</th>
+                            <th>Beschreibung &amp; Merkmale</th>
+                            <th>Vorteile</th>
+                            <th>Nachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Global Sourcing</strong></td>
+                            <td>Weltweite Beschaffung auf internationalen Märkten.</td>
+                            <td>• Oft bessere Einkaufspreise<br>• Zwischenhandel ausschließbar<br>• Versorgung mit im Inland knappen Gütern<br>• Einblick in weltweites Angebot &amp; neue Absatzmärkte</td>
+                            <td>• Lange Lieferzeiten &amp; hoher Logistikaufwand<br>• Transport-, Währungs- &amp; Qualitätsrisiken<br>• Kultur-/Sprachbarrieren &amp; Wissenstransfer an Dritte<br>• Politische &amp; wirtschaftliche Risiken</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Local Sourcing</strong></td>
+                            <td>Beschaffung aus der unmittelbaren Region / im Inland.</td>
+                            <td>• Hohe Geschwindigkeit &amp; kurze Lieferzeiten<br>• Gleiches Qualitätsverständnis, Sprache &amp; Währung<br>• Gleiches Rechtssystem (weniger Rechtsfälle)<br>• Hohe Flexibilität, Nachhaltigkeit &amp; einfaches Retourenmanagement</td>
+                            <td>• Kleinere Lieferantenauswahl<br>• Tendenziell höhere Preise &amp; Kosten<br>• Verzicht auf internationale Kontakte &amp; globales Know-how<br>• "Beißhemmungen" bei Preisverhandlungen durch Nähe</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Single Sourcing</strong></td>
+                            <td>Ein einziger Lieferant für ein bestimmtes Material.</td>
+                            <td>• Bessere Beherrschung des Materialflusses<br>• Einfachere Sicherung von Qualitätsstandards<br>• Kostenreduktion durch Mengenkonzentration &amp; Standardisierung<br>• Senkung von Transaktions- &amp; Transportkosten</td>
+                            <td>• Hohe gegenseitige Abhängigkeit<br>• Produktionsunterbrechungen treffen beide Seiten direkt<br>• Schwieriger Lieferantenwechsel<br>• Verzicht auf Wettbewerbsvorteile durch fehlenden Konkurrenzdruck</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multiple Sourcing</strong></td>
+                            <td>Verteilung des Bedarfs auf viele verschiedene Lieferanten.</td>
+                            <td>• Höherer Konkurrenzdruck unter Anbietern<br>• Hohe Flexibilität bei Produktionsschwierigkeiten<br>• Geringere Lieferabhängigkeiten &amp; verringertes Ausfallrisiko</td>
+                            <td>• Mehrere Ansprechpartner &amp; höherer Verwaltungsaufwand<br>• Höhere Transaktions- &amp; Bestellkosten<br>• Weniger Rabatte wegen fehlender Mengenbündelung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dual Sourcing</strong></td>
+                            <td>Beschaffung bei genau zwei Lieferanten.</td>
+                            <td>• Tiefere Preise bei hohen Bestellvolumina<br>• Geringe Bestell- &amp; Transaktionskosten<br>• Wenige Kontakte &amp; geringe logistische Komplexität</td>
+                            <td>• Gewisse Abhängigkeit bleibt bestehen<br>• Nur mittlere Flexibilität &amp; Versorgungssicherheit<br>• Imagegefahr bei rücksichtslosem Ausnutzen der Verhandlungsmacht</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Modular / System Sourcing</strong></td>
+                            <td>Bezug komplett vormontierter Subsysteme statt Einzelteilen.</td>
+                            <td>• Risiko- &amp; Verantwortungsabgabe an Lieferanten<br>• Lieferant nutzt Spezialisierung, Skaleneffekte &amp; Innovation<br>• Senkung von Qualitätsprüfkosten &amp; Entwicklungszeiten<br>• Weniger Aufwand in Beschaffung, Produktion &amp; Lager</td>
+                            <td>• Verlust von eigenem Know-how &amp; Kompetenzen<br>• Starke Abhängigkeit vom Systemlieferanten<br>• Höhere externe Koordinations- &amp; Informationsanforderungen<br>• Kritisch bei strategischen Gütern &amp; Engpassgütern</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Vor- und Nachteile von Eigenfertigung (Make) vs. Fremdbezug (Buy)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kriterium</th>
+                            <th>Eigenfertigung (Make)</th>
+                            <th>Fremdbezug (Buy)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vorteile</strong></td>
+                            <td>• Auslastung vorhandener Kapazitäten<br>• Einfache Terminplanung &amp; hohe Verfügbarkeit<br>• Erhaltung der Autonomie &amp; von Know-how<br>• Wirksame, laufende Qualitätskontrolle<br>• Hohe Reaktionsflexibilität</td>
+                            <td>• Imagewert einer Fremdmarke nutzbar<br>• Keine oder geringe Fixkosten<br>• Nutzung modernster Produktionstechnologien &amp; externen Know-hows<br>• Preisgünstig bei kleinen Mengen, Standard- oder Hebelgütern<br>• Möglichkeit von Gegengeschäften</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nachteile</strong></td>
+                            <td>• Fehlender Zugang zu externem Lieferanten-Know-how<br>• Höhere Erfolgs- &amp; Innovationsrisiken<br>• Höhere Kapital- &amp; Ressourcenbindung (Spezialisten)<br>• Mehr Personal erforderlich</td>
+                            <td>• Abhängigkeit vom Lieferanten<br>• Hemmung eigener Technologieentwicklung<br>• Mangelhafte Sicherheit vertraulicher Daten<br>• Schaffung günstiger Bezugsquellen für Konkurrenten</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 3: Vor- und Nachteile von E-Procurement-Systemen</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vorteile von E-Procurement</th>
+                            <th>Nachteile / Herausforderungen von E-Procurement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>• Minimierung von Routineaufgaben in der operativen Beschaffung<br>• Erhebliche Reduktion von Kosten &amp; Zeitaufwand<br>• Geringere Transaktionskosten<br>• Vereinfachter Marktzugang (auch für kleinere Firmen)<br>• Möglichkeit zur Ad-hoc-Kooperation mehrerer Firmen<br>• Ständige Verfügbarkeit aktueller Informationen</td>
+                            <td>• Hohe Abhängigkeit zwischen Systemhersteller &amp; Nutzer<br>• Erforderliche Anpassung bestehender Bestellprozesse<br>• Zusatzaufwand für Sammlung &amp; Pflege von Lieferantendaten<br>• Hoher Aufwand für Integration, Einführung, Betrieb &amp; Wartung<br>• Hohe Anforderungen an Datensicherheit &amp; Datenschutz</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Nummerierte Listen</h4>
+            <p><strong>1. Prozesskette des Entscheidungsbaums "Make or Buy?" (MoB):</strong></p>
+            <ol>
+                <li><strong>Prüfung der Kernkompetenz:</strong> Ist das Beschaffungsobjekt von strategischer Bedeutung? (Falls Ja \(\rightarrow\) Schritt 2; Falls Nein \(\rightarrow\) Schritt 5).</li>
+                <li><strong>Ressourcenprüfung (bei strategischer Bedeutung):</strong> Sind die erforderlichen Ressourcen im Unternehmen vorhanden? (Falls Ja \(\rightarrow\) Schritt 3; Falls Nein \(\rightarrow\) Schritt 4).</li>
+                <li><strong>Kostenvergleich (bei vorhandenen Ressourcen):</strong> Ist die Eigenfertigung wettbewerbsfähig? (Falls Ja \(\rightarrow\) <strong>MAKE</strong>; Falls Nein \(\rightarrow\) Schritt 4).</li>
+                <li><strong>Investitions- &amp; Zeitprüfung:</strong> Lohnen sich die Investitionen und ist genügend Zeit vorhanden? (Falls Ja \(\rightarrow\) <strong>MAKE</strong>; Falls Nein \(\rightarrow\) <strong>BUY</strong>).</li>
+                <li><strong>Kostenprüfung (bei fehlender strategischer Bedeutung):</strong> Ist eine Eigenfertigung wettbewerbsfähig? (Falls Nein \(\rightarrow\) <strong>BUY</strong>; Falls Ja \(\rightarrow\) <strong>MAKE / BUY</strong>).</li>
+            </ol>
+
+            <p><strong>2. Abteilungsübergreifende Prozesskette der Einzelbeschaffung:</strong></p>
+            <ol>
+                <li>Konstruktion: Bedarf feststellen.</li>
+                <li>Einkauf: Lieferquelle(n) abklären.</li>
+                <li>Einkauf: Anfrage(n) an Lieferanten starten.</li>
+                <li>Lieferant: Angebot(e) erstellen.</li>
+                <li>Konstruktion &amp; Einkauf: Angebot(e) gemeinsam auswählen.</li>
+                <li>Einkauf: Ware(n) verbindlich bestellen.</li>
+                <li>Lieferant: Auftrag abwickeln und Lieferung(en) durchführen.</li>
+                <li>Wareneingang: Wareneingang prüfen und Ware(n) bereitstellen.</li>
+                <li>Produktion: Bereitgestellte Ware(n) verarbeiten.</li>
+                <li>Lieferant: Rechnung(en) stellen.</li>
+                <li>Einkauf &amp; Wareneingang: Rechnung(en) prüfen.</li>
+                <li>Rechnungswesen: Zahlung(en) abwickeln.</li>
+            </ol>
+
+            <p><strong>3. Physischer Ablauf einer Just-in-Time-Anlieferung (JIT):</strong></p>
+            <ol>
+                <li>Lieferant: Bereitsstellung der Waren im Versandpuffer.</li>
+                <li>Transport: Gütertransport per LKW/Transportmittel.</li>
+                <li>Pufferzone (WOW-Puffer): Zwischenpufferung nah am Werk.</li>
+                <li>Produktion (OEM-Verbauort): Direkte Anlieferung an den konkreten Verbauort in der Fertigung.</li>
+            </ol>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">procure.ch-Studie 2024:</span> Über 350 Schweizer Unternehmen wurden 2024 zu ihrem Einkaufsverhalten befragt. Die Daten zeigen eine hohe Abhängigkeit vom Ausland (über 50 % beschaffen mehr als 40 % im Ausland) mit Deutschland als Hauptmarkt (86 %). Zudem wuchs der grenzüberschreitende Online-Einkauf auf 5,2 Mrd. CHF an. Das Beispiel belegt empirisch den Wandel hin zu internationalen Beschaffungsstrukturen.</li>
+                <li><span class="highlight-text">Break-even-Berechnung (Make or Buy):</span> Ein Unternehmen prüft die Eigenfertigung eines Bauteils bei Fixkosten von 300'000 CHF und variablen Produktionskosten von 2'000 CHF/Stück gegenüber einem Fremdbezugspreis von 5'000 CHF/Stück. Die Berechnung liefert den exakten Schwellenwert von $$X = 100 \text{ Stück}$$.</li>
+                <li><span class="highlight-text">Modular / System Sourcing in der Mobilfunktelefonie:</span> Ein Mobiltelefon wird aus vier vorgefertigten Subsystemen zusammengesetzt: 1. Gehäuse- und Stabilitätseinheit, 2. Bildschirmsystem, 3. Rechner- und Speichersystem, 4. Batteriemodul. Der Smartphone-Hersteller kauft 100 % funktionstüchtige Module und konzentriert sich selbst nur noch auf die Endmontage.</li>
+                <li><span class="highlight-text">Just-in-Time-Anlieferung (JIT):</span> Lieferkette vom Versandpuffer des Lieferanten über den LKW-Transport und einen werknahen Puffer ("WOW-Puffer") direkt an den Verbauort des Herstellers (OEM).</li>
+            </ul>
+
+            <h3>Mini-Quiz</h3>
+            <details>
+                <summary>1. Frage: Ab welcher Stückzahl lohnt sich die Eigenfertigung eines Bauteils, wenn die Fixkosten 300'000 CHF, die variablen Eigenfertigungskosten 2'000 CHF/Stück und die Fremdbezugskosten 5'000 CHF/Stück betragen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> $$5'000 \cdot X = 300'000 + 2'000 \cdot X \implies 3'000 \cdot X = 300'000 \implies X = 100 \text{ Stück}$$. Ab mehr als 100 Stück lohnt sich Make.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>2. Frage: Welche vier vorgefertigten Module werden im Quellbeispiel der Mobilfunktelefonie für das System Sourcing genannt?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Gehäuse- und Stabilitätseinheit, 2. Bildschirmsystem, 3. Rechner- und Speichersystem, 4. Batteriemodul.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>3. Frage: Wie unterscheidet sich die Sourcing-Strategie auf der Ebene der Rohmateriallieferanten von der auf der Ebene der Systemlieferanten?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> An der Basis (Rohmaterial) liegt der Fokus auf Kosten; hier nutzt man Multiple und Global Sourcing. Auf der Ebene der Systemlieferanten steht Partnerschaft im Vordergrund (Modular, Single und Local Sourcing).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>4. Frage: Welche drei Abteilungen werden genannt, mit denen der Einkauf zur Festlegung von Spezifikationen, Verpackungen und Mengen zusammenarbeitet?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Produktion (Produktspezifikationen), F&amp;E (Verpackungseinheiten) und Verkauf/Vertrieb (Mengen und Nachfrage).</p>
+                </div>
+            </details>
+        </section>
+        <!-- ========================================== -->
+        <!-- TEIL 3: KENNZAHLEN DER BESCHAFFUNGSLOGISTIK -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-3">
+            <h2>BELO - Teil 3: Kennzahlen der Beschaffungslogistik</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Kennzahlen der Beschaffungslogistik (BELO 3) – Funktionen der Beschaffungslogistik, das Dilemma der Materialwirtschaft, Komponenten der Beschaffungskosten, mathematische Formeln zur Kennzahlenberechnung sowie Optimierungs- und Steuerungsmassnahmen in der Praxis.</p>
+            <p><strong>Lernziele:</strong></p>
+            <ul>
+                <li>Die Bedeutung relevanter Kennzahlen der Beschaffungslogistik präzise erläutern.</li>
+                <li>Kennzahlenwerte der Beschaffungslogistik eigenständig berechnen und rapportieren.</li>
+                <li>Kennzahlenwerte interpretieren sowie geeignete Korrektur- oder Optimierungsmassnahmen derive und vorschlagen.</li>
+                <li>Kostentreiber in der Beschaffungslogistik identifizieren und gezielte Massnahmen zur Kostenoptimierung erarbeiten.</li>
+                <li>Die Schnittstellen zur Lagerlogistik beim Waren- und Informationsfluss erklären.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Funktionen und Zielsystem der Beschaffungslogistik</h4>
+            <p>Die Beschaffungslogistik wird in ihren Funktionen über ein zentrales Zielsystem gesteuert, das auf dem logistischen Trichtermodell basiert. Das <strong>übergeordnete Hauptziel ist die Wirtschaftlichkeit</strong>.</p>
+            <p>Das Zielsystem gliedert sich in zwei wesentliche Hauptbereiche:</p>
+            <ul>
+                <li><span class="highlight-text">Logistikleistung (Ziel: Hohe Leistung):</span>
+                    <ul>
+                        <li>Liefertreue: Erreichen einer hohen Termin- und Mengentreue.</li>
+                        <li>Lieferzeit: Erreichen von kurzen Wiederbeschaffungszeiten.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Logistikkosten (Ziel: Geringe Kosten):</span>
+                    <ul>
+                        <li>Beschaffungskosten: Erreichen von geringen Prozesskosten.</li>
+                        <li>Kapitalbindungskosten: Erreichen von geringen Bestandskosten.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>2. Das Dilemma der Materialwirtschaft</h4>
+            <p>Das <strong>Dilemma der Materialwirtschaft</strong> beschreibt den permanenten <strong>Zielkonflikt zwischen einer hohen Versorgungssicherheit und geringen Bestandskosten</strong>.</p>
+            <ul>
+                <li>Eine Erhöhung der Lieferbereitschaft führt in der Regel zu höheren Lagerbeständen und damit zu steigenden Kosten.</li>
+                <li>Werden grössere Mengen beschafft, lassen sich zwar häufig günstigere Preise und Rabatte erzielen, dies zieht jedoch automatisch höhere Bestandskosten nach sich.</li>
+            </ul>
+
+            <h4>3. Die vier Komponenten der Beschaffungskosten</h4>
+            <p>Die Gesamtkosten der Beschaffung setzen sich aus vier spezifischen Kostenkomponenten zusammen:</p>
+            <ol>
+                <li><span class="highlight-text">Beschaffungskosten im engeren Sinn:</span> Unmittelbare Beschaffungskosten (berechnet aus Menge \(\times\) Preis) sowie Bestellkosten, die direkt von der Anzahl der ausgelösten Bestellungen abhängen.</li>
+                <li><span class="highlight-text">Lagerhaltungskosten:</span> Raumkosten, allgemeine Lagerkosten, Zinskosten für gebundenes Kapital, innerbetriebliche Transportkosten sowie Kosten durch Lagerschwund.</li>
+                <li><span class="highlight-text">Finanzierungskosten:</span> Kapitalbeschaffungskosten und Risikoausgleichskosten (z. B. zur Absicherung von Währungs- und Zinsschwankungen).</li>
+                <li><span class="highlight-text">Fehlmengenkosten:</span> Entstehen bei Lieferengpässen durch Preisdifferenzen, Konventionalstrafen, Stillstandskosten in der Fertigung oder entgangene Gewinne.</li>
+            </ol>
+
+            <h4>4. Mathematische Grundlagen: Bruchteil, Anteil und Quote</h4>
+            <p>Für das Verständnis und die Berechnung der Kennzahlen gelten folgende begriffliche Grundlagen:</p>
+            <ul>
+                <li><span class="highlight-text">Bruchteil:</span> Eine konkrete Zahl mit einer physikalischen oder Währungseinheit (z. B. \(300\text{ g}\)).</li>
+                <li><span class="highlight-text">Anteil:</span> Jedem Bruchteil kann ein Anteil zugeordnet werden, der als Bruch oder in Prozent ausgedrückt wird (z. B. \(\frac{1}{2}\) bzw. \(50\,\%\)).</li>
+                <li><span class="highlight-text">Quote:</span> Eine Quote ist ein spezifischer Anteil, der meist in Prozent angegeben wird. Sie beschreibt, wie viel von einer Gesamtmenge zu einer bestimmten Untergruppe gehört.
+                    $$\text{Quote in \%} = \frac{\text{Teilmenge}}{\text{Gesamtmenge}} \times 100$$
+                </li>
+            </ul>
+
+            <h4>5. Vollständige Übersicht aller Kennzahlen und Formeln (BELO 3)</h4>
+            <p><strong>Kosten- und Finanzkennzahlen:</strong></p>
+            <ul>
+                <li>Beschaffungskosten-Anteil am Umsatz:
+                    $$\text{Beschaffungskosten-Anteil in \%} = \frac{\text{Beschaffungskosten insgesamt} \times 100}{\text{Gesamtumsatz}}$$
+                </li>
+                <li>Beschaffungskosten-Anteil am Einkaufsvolumen:
+                    $$\text{Beschaffungskosten-Anteil in \%} = \frac{\text{Beschaffungskosten} \times 100}{\text{Einkaufsvolumen insgesamt (Gesamtwert der Einkäufe)}}$$
+                </li>
+                <li>Durchschnittliche Beschaffungskosten pro Bestellung:
+                    $$\text{Beschaffungskosten pro Bestellung in CHF} = \frac{\text{Beschaffungskosten pro Periode}}{\text{Anzahl Bestellungen pro Periode}}$$
+                    <em>(Alternativ: \(\frac{\text{Beschaffungskosten insgesamt}}{\text{Anzahl der Bestellungen insgesamt}}\))</em>
+                </li>
+                <li>Preisindex eines Materials:
+                    $$\text{Preisindex eines Materials in \%} = \frac{\text{Preis in der Berichtsperiode} \times 100}{\text{Preis in der Basisperiode}}$$
+                </li>
+                <li>Preisnachlassquote:
+                    $$\text{Preisnachlassquote in \%} = \frac{\text{erzielte Preisnachlässe} \times 100}{\text{Durchschnittspreise}}$$
+                </li>
+                <li>Rabattstruktur:
+                    $$\text{Rabattstruktur in \%} = \frac{\text{Gesamtrabattwert} \times 100}{\text{Einkaufswert zu Bruttopreisen}}$$
+                </li>
+            </ul>
+
+            <p><strong>Zeit- und Prozesskennzahlen:</strong></p>
+            <ul>
+                <li>Durchschnittliche Verweilzeit im Wareneingang:
+                    $$\text{Durchschnittliche Verweilzeit in Tagen} = \frac{\text{Warenannahmezeit insgesamt}}{\text{Anzahl eingegangener Sendungen pro Periode}}$$
+                </li>
+                <li>Annahmezeit pro Sendung:
+                    $$\text{Annahmezeit pro Sendung} = \frac{\text{Warenannahmezeit insgesamt}}{\text{Anzahl eingegangener Sendungen pro Periode}}$$
+                </li>
+                <li>Annahmekosten pro Sendung:
+                    $$\text{Annahmekosten pro Sendung in CHF} = \frac{\text{Kosten für die Warenannahme insgesamt}}{\text{Anzahl eingegangener Sendungen pro Periode}}$$
+                </li>
+                <li>Durchschnittliche Wiederbeschaffungszeit:
+                    $$\text{Durchschnittliche Wiederbeschaffungszeit} = \text{Zeit für Bestellauslösung/-abwicklung} + \text{Lieferzeit} + \text{Prüf-, Einlagerungs- und Bereitstellungszeit}$$
+                </li>
+            </ul>
+
+            <p><strong>Qualitäts- und Lieferantenkennzahlen:</strong></p>
+            <ul>
+                <li>Beanstandungsquote:
+                    $$\text{Beanstandungsquote in \%} = \frac{\text{Anzahl der Qualitätsbeanstandungen} \times 100}{\text{Anzahl der Lieferungen insgesamt}}$$
+                </li>
+                <li>Fehlquote / Fehllieferungsquote:
+                    $$\text{Fehlquote in \%} = \frac{\text{Anzahl der Fehllieferungen} \times 100}{\text{Anzahl der Lieferungen insgesamt}}$$
+                </li>
+                <li>Lieferverzögerungsquote:
+                    $$\text{Lieferverzögerungsquote in \%} = \frac{\text{Anzahl nicht eingehaltener Liefertermine} \times 100}{\text{Anzahl der Lieferungen insgesamt}}$$
+                </li>
+                <li>Zurückweisungsquote:
+                    $$\text{Zurückweisungsquote in \%} = \frac{\text{Anzahl der zurückgewiesenen Lieferungen} \times 100}{\text{Anzahl der Lieferungen insgesamt}}$$
+                </li>
+            </ul>
+
+            <p><strong>Struktur- und Produktivitätskennzahlen:</strong></p>
+            <ul>
+                <li>Bestellungen pro Person (Lager):
+                    $$\text{Bestellungen pro Person} = \frac{\text{Anzahl der abgewickelten Bestellungen}}{\text{Anzahl der Mitarbeitenden im Lager}}$$
+                </li>
+                <li>Bestellquote (Einkauf):
+                    $$\text{Bestellquote in \%} = \frac{\text{Anzahl der abgewickelten Bestellungen} \times 100}{\text{Anzahl der Mitarbeitenden im Einkauf}}$$
+                </li>
+                <li>Barcode-Quote:
+                    $$\text{Barcode-Quote in \%} = \frac{\text{Anzahl der Barcode-Lieferscheine} \times 100}{\text{Anzahl der Lieferscheine insgesamt}}$$
+                </li>
+                <li>Rahmenvertragsquote (Rvq):
+                    $$\text{Rvq in \%} = \frac{\text{Wareneinkaufsvolumen auf Basis von Rahmenverträgen} \times 100}{\text{Wareneinkaufsvolumen insgesamt}}$$
+                </li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET 3: KENNZAHLEN RECHNER -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Beschaffungs-Kennzahlen-Rechner</div>
+                <div class="diagram-subtitle">Gib Werte ein, um wichtige Kennzahlen wie den Beschaffungskosten-Anteil und die Beanstandungsquote zu berechnen.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label style="font-weight:600; font-size:0.85rem;">Beschaffungskosten (CHF):</label>
+                            <input type="number" id="kpi-bk" value="5000" oninput="calcKpi()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="font-weight:600; font-size:0.85rem;">Gesamtumsatz (CHF):</label>
+                            <input type="number" id="kpi-umsatz" value="100000" oninput="calcKpi()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="font-weight:600; font-size:0.85rem;">Mangelhafte Lieferungen:</label>
+                            <input type="number" id="kpi-mangel" value="10" oninput="calcKpi()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="font-weight:600; font-size:0.85rem;">Lieferungen insgesamt:</label>
+                            <input type="number" id="kpi-lief-total" value="200" oninput="calcKpi()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                    </div>
+                    <div id="kpi-result" style="background: var(--tag-bg); padding: 0.75rem; border-radius: 6px; font-size:0.9rem; border-left:4px solid var(--primary-color);">
+                        <strong>Beschaffungskosten-Anteil am Umsatz:</strong> 5.00 % | <strong>Beanstandungsquote:</strong> 5.00 %
+                    </div>
+                </div>
+            </div>
+
+            <h4>6. Massnahmen zur Steuerung und Kostenoptimierung</h4>
+            <p>Aus den ermittelten Kennzahlen werden spezifische Handlungsfelder abgeleitet:</p>
+            <ul>
+                <li><span class="highlight-text">Kostenkontrolle:</span> Senkung der Lagerkosten durch Anpassung der Bestellmengen; Überprüfung, Vereinfachung und Bündelung der Beschaffungslogistik; Preisprüfungen und Mengenbündelung im Einkauf; Überprüfung der Lagerkapazitäten und Raumkosten; Optimierung der Bestellzeitpunkte bei saisonalen Artikeln.</li>
+                <li><span class="highlight-text">Preisvergleiche &amp; Marktbeobachtung:</span> Kontinuierliches Monitoring von Preisentwicklungen; Ausnutzung saisonaler Schwankungen durch antizyklisches Einkaufen.</li>
+                <li><span class="highlight-text">Qualitätsmassnahmen in der Beschaffung:</span> Lieferantenwechsel bei ungenügender Leistung; Einkauf höherer Qualitätsstandards; Transportoptimierung (z. B. Temperaturüberwachung); Überprüfung von Verpackungsmaterialien; Durchführung regelmässiger Lieferantenaudits; systematische Prüfung der Beanstandungsquote.</li>
+                <li><span class="highlight-text">Ursachenbekämpfung in der Distribution:</span> Behebung falscher Stammdaten oder Fehlbestellungen; Vermeidung fehlender oder falscher Kommunikation; Durchführung einer strikten Schlusskontrolle im Warenausgang zur Vermeidung von Kommissionierungsfehlern (falsche Ware, falscher Kunde, falsche Menge, falsche Zeit oder falscher Ort).</li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Aufschlüsselung der Beschaffungskostenkomponenten</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kostenkomponente</th>
+                            <th>Enthaltene Einzelbestandteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Beschaffungskosten im engeren Sinn</strong></td>
+                            <td>• Unmittelbare Beschaffungskosten (\(\text{Menge} \times \text{Preis}\))<br>• Bestellkosten (abhängig von der Anzahl der Bestellungen)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerhaltungskosten</strong></td>
+                            <td>• Raumkosten<br>• Allgemeine Lagerkosten<br>• Zinskosten für gebundenes Kapital<br>• Innerbetriebliche Transportkosten<br>• Kosten für Lagerschwund</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Finanzierungskosten</strong></td>
+                            <td>• Kapitalbeschaffungskosten<br>• Risikoausgleichskosten (z. B. für Währungs- und Zinsschwankungen)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fehlmengenkosten</strong></td>
+                            <td>• Preisdifferenzen bei Eilbeschaffung<br>• Konventionalstrafen bei Lieferverzug<br>• Stillstandskosten der Produktion<br>• Entgangene Gewinne durch Nichtlieferung</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Systematische Übersicht ausgewählter Kennzahlen</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kennzahl</th>
+                            <th>Formel</th>
+                            <th>Maßeinheit / Ziel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Beschaffungskosten-Anteil (Umsatz)</strong></td>
+                            <td>\(\frac{\text{Beschaffungskosten insgesamt} \times 100}{\text{Gesamtumsatz}}\)</td>
+                            <td>Prozent (\(\%\)) / Kostenkontrolle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Durchschnittliche Wiederbeschaffungszeit</strong></td>
+                            <td>\(\text{Bestellauslösezeit} + \text{Lieferzeit} + \text{Bereitstellungszeit}\)</td>
+                            <td>Tage oder Stunden / Zeitkontrolle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beanstandungsquote</strong></td>
+                            <td>\(\frac{\text{Anzahl der Qualitätsbeanstandungen} \times 100}{\text{Anzahl der Lieferungen insgesamt}}\)</td>
+                            <td>Prozent (\(\%\)) / Qualitätskontrolle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rahmenvertragsquote (Rvq)</strong></td>
+                            <td>\(\frac{\text{Wareneinkaufsvolumen auf Basis von Rahmenverträgen} \times 100}{\text{Wareneinkaufsvolumen insgesamt}}\)</td>
+                            <td>Prozent (\(\%\)) / Prozessbündelung</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Nummerierte Liste: Ablauf zur Ermittlung der durchschnittlichen Wiederbeschaffungszeit</h4>
+            <ol>
+                <li><strong>Bestellauslösung und -abwicklung:</strong> Erfassung des Bedarfs, Übermittlung der Bestellung und kaufmännische Bearbeitung.</li>
+                <li><strong>Lieferzeit:</strong> Reine Transport- und Transitzeit des Lieferanten bis zum Eintreffen der Ware im Betrieb.</li>
+                <li><strong>Prüf-, Einlagerungs- und Bereitstellungszeit:</strong> Physikalische Warenannahme, Qualitätsprüfung im Wareneingang, Einlagerung sowie die interne Bereitstellung für die Fertigung.</li>
+            </ol>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Beschaffungskosten-Anteil am Gesamtumsatz:</span> Ein Unternehmen weist Beschaffungskosten von CHF 5'000.– auf bei einem Gesamtumsatz von CHF 100'000.–. Die Berechnung \(\frac{\text{CHF } 5'000.- \times 100}{\text{CHF } 100'000.-}\) ergibt genau \(5\,\%\). Die Beschaffungskosten machen somit 5 % des Gesamtumsatzes aus.</li>
+                <li><span class="highlight-text">Bruchteil vs. Anteil (600 g Gesamtgewicht):</span> Der Bruchteil 300 g entspricht dem Anteil \(\frac{1}{2}\) bzw. \(50\,\%\). Der Bruchteil 150 g entspricht \(\frac{1}{4}\) bzw. \(25\,\%\). Der Bruchteil 60 g entspricht \(\frac{1}{10}\) bzw. \(10\,\%\).</li>
+                <li><span class="highlight-text">Fehlerquote und Ursachen in der Distribution:</span> In der Distribution treten typischerweise Fehlerquoten von \(2\,\%\) bis \(3\,\%\) auf. Zu den Fehlerursachen gehören falsche Stammdaten, Fehlbestellungen, Kommissionierungsfehler (falsche Ware), fehlende oder falsche Kommunikation sowie die Belieferung des falschen Kunden mit falscher Menge, zur falschen Zeit, in falscher Qualität oder am falschen Ort.</li>
+            </ul>
+
+            <h3>Mini-Quiz</h3>
+            <details>
+                <summary>1. Frage: Aus welchen vier Hauptkomponenten setzen sich die Beschaffungskosten zusammen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Beschaffungskosten im engeren Sinn, 2. Lagerhaltungskosten, 3. Finanzierungskosten und 4. Fehlmengenkosten.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>2. Frage: Wie lautet die Formel zur Berechnung der Lieferverzögerungsquote?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> $$\text{Lieferverzögerungsquote in \%} = \frac{\text{Anzahl nicht eingehaltener Liefertermine} \times 100}{\text{Anzahl der Lieferungen insgesamt}}$$</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>3. Frage: Ein Lieferant führt im Jahr 200 Lieferungen aus. Bei 10 Lieferungen wird die Ware wegen Mängeln beanstandet. Wie hoch ist die Beanstandungsquote?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> $$\frac{10 \text{ Beanstandungen} \times 100}{200 \text{ Lieferungen insgesamt}} = \mathbf{5\,\%}$$</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>4. Frage: Welche drei Zeitabschnitte müssen addiert werden, um die durchschnittliche Wiederbeschaffungszeit zu ermitteln?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Zeit für Bestellauslösung/-abwicklung, 2. Lieferzeit und 3. Prüf-, Einlagerungs- und Bereitstellungszeit.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TEIL 4: BEDARFSERMITTLUNG & DISPOSITION    -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-4">
+            <h2>BELO - Teil 4: Bedarfsermittlung, Beschaffungsportfolio &amp; Disposition</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Bedarfsermittlung, Beschaffungsportfolio und Materialdisposition (BELO 4) – Strategische Portfolioanalyse im Einkauf, Beschaffungsformen, Bedarfsarten (Primär-, Sekundär- und Tertiärbedarf), Methoden der Bedarfsermittlung, Stücklistenstrukturen, ABC-/XYZ-Analysen sowie Verfahren der Bestelldisposition.</p>
+            <p><strong>Lernziele:</strong></p>
+            <ul>
+                <li>ABC- und XYZ-Güter in der Beschaffung an konkreten Beispielen unterscheiden und systematisch einteilen.</li>
+                <li>Den Primär-, Sekundär- und Tertiärbedarf in konkreten Geschäftsfällen unterscheiden und präzise zuordnen.</li>
+                <li>Den Brutto- und Nettobedarf berechnen.</li>
+                <li>Den Materialbedarf auf Basis von Stücklisten berechnen.</li>
+                <li>Den Einsatz von stochastischen und heuristischen Verfahren zur Bedarfsermittlung mit Bezug zur ABC-Einteilung von Gütern erläutern.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Die Portfolioanalyse im Einkauf (Kraljic-Matrix)</h4>
+            <p>Die Portfolioanalyse im Einkauf stellt ein strategisches Instrument zur Klassifizierung von Beschaffungsobjekten dar. Sie basiert auf zwei Hauptdimensionen:</p>
+            <ol>
+                <li><span class="highlight-text">Einkaufsvolumen / Einfluss auf den Markterfolg (Geschäftseinfluss):</span> Beschreibt die finanzielle Bedeutung des Gutes für das Unternehmen.</li>
+                <li><span class="highlight-text">Risikomanagement / Beschaffungsmarktkomplexität (Versorgungsrisiko):</span> Beschreibt die Verfügbarkeit, Anbietersituation und das Versorgungsrisiko auf dem Markt.</li>
+            </ol>
+            <p>Das Hauptziel der Portfolioanalyse besteht darin, Transparenz über das Einkaufsportfolio zu schaffen, Ressourcen zielgerichtet einzusetzen, Beschaffungskosten zu senken und Versorgungsrisiken zu minimieren. Strategien müssen kontinuierlich an Marktveränderungen angepasst werden.</p>
+            <p>Aus der Matrix ergeben sich <strong>vier Kategorien von Beschaffungsgütern</strong>:</p>
+            <ul>
+                <li><span class="highlight-text">Strategische Güter (Hohes Einkaufsvolumen, hohes Versorgungsrisiko):</span>
+                    <ul>
+                        <li>Stoßrichtung: Enge technische und kaufmännische Zusammenarbeit zwischen Lieferanten und Kunden, Aufbau von Partnerschaften und Entwicklungskooperationen.</li>
+                        <li>Aufgaben: Präzise Bedarfsprognosen, genaue Marktforschung, Risikoanalysen, Notfallplanung sowie Bestands- und Lieferantenkontrolle.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Hebelgüter (Hohes Einkaufsvolumen, geringes Versorgungsrisiko):</span>
+                    <ul>
+                        <li>Stoßrichtung: Aggressive Einkaufspolitik auf den Beschaffungsmärkten und Aktivierung des globalen Anbieterwettbewerbs.</li>
+                        <li>Aufgaben: Vollständige Ausnutzung der eigenen Einkaufsmacht, gezielte Preis- und Verhandlungsstrategien, Produktsubstitution, Mischung aus Vertragseinkäufen und Käufen auf Spotmärkten sowie Optimierung der Auftragsmengen.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Engpassgüter (Geringes Einkaufsvolumen, hohes Versorgungsrisiko):</span>
+                    <ul>
+                        <li>Stoßrichtung: Abschwächung des Beschaffungsrisikos und Sicherstellung der Versorgung.</li>
+                        <li>Aufgaben: Mengensicherung (falls notwendig auch gegen Aufpreis), Abschluss von Langzeitverträgen, intensiver Informationsaustausch zur Vermeidung von Versorgungslücken, Bestandssicherheit und Erstellung von Ausweichplänen.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Unkritische Güter (Geringes Einkaufsvolumen, geringes Versorgungsrisiko):</span>
+                    <ul>
+                        <li>Stoßrichtung: Effiziente Abwicklung aller Einkaufsvorgänge und Minimierung des Bestellaufwands.</li>
+                        <li>Aufgaben: Produktstandardisierung, Überwachung und Optimierung der Auftragsmengen, effiziente Bearbeitung und Bestandsoptimierung.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET 4: KRALJIC PORTFOLIO MATRIX -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktive Kraljic-Portfolio-Matrix</div>
+                <div class="diagram-subtitle">Klicke auf ein Feld der 2x2-Matrix, um Strategie und Aufgaben anzuzeigen.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem;">
+                        <button class="btn-interactive" onclick="showKraljic('engpass')" style="background:#f59e0b;">Engpassgüter (Geringes Vol. / Hohes Risiko)</button>
+                        <button class="btn-interactive" onclick="showKraljic('strategisch')" style="background:#dc2626;">Strategische Güter (Hohes Vol. / Hohes Risiko)</button>
+                        <button class="btn-interactive" onclick="showKraljic('unkritisch')" style="background:#10b981;">Unkritische Güter (Geringes Vol. / Geringes Risiko)</button>
+                        <button class="btn-interactive" onclick="showKraljic('hebel')" style="background:#0284c7;">Hebelgüter (Hohes Vol. / Geringes Risiko)</button>
+                    </div>
+                    <div id="kraljic-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="kraljic-title" style="color:var(--primary-color); margin-bottom: 0.25rem;">Kraljic-Kategorie wählen</h5>
+                        <p id="kraljic-desc" style="font-size: 0.9rem; margin:0;">Wähle einen Quadranten oben aus.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>2. Beschaffungsformen</h4>
+            <p>In der Materialwirtschaft werden drei grundlegende Beschaffungsformen unterschieden:</p>
+            <ul>
+                <li><span class="highlight-text">Fallweise Beschaffung:</span> Einmalige Bestellungen bzw. Bestellung direkt nach aktuellem Bedarf.
+                    <ul>
+                        <li>Vorteile: Keine oder sehr geringe Lagerkosten, schnelle Beschaffung im Bedarfsfall.</li>
+                        <li>Nachteile: Schlechtere Mengen- und Preiskonditionen, Anfälligkeit für Saisonalität, höhere Transportkosten (z. B. Expresszuschläge).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Vorratsbeschaffung:</span> Bestellung von Materialien auf Lager zur Bevorratung.
+                    <ul>
+                        <li>Vorteile: Bessere Preiskonditionen durch Mengeneinkauf, hohe Sicherheit für die Warenverfügbarkeit, hohe Reaktionsgeschwindigkeit in Produktion und Handel.</li>
+                        <li>Nachteile: Hohe Lagerkosten, Kapitalbindung, Risiko von Schwund oder Abschreibungen.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Fertigsynchrone Beschaffung / Just-in-Time-Beschaffung (JIT):</span> Die Anlieferung der Materialien ist zeitlich exakt mit dem Produktionsprozess synchronisiert. Das Material trifft genau dann ein, wenn der Artikel verarbeitet wird.
+                    <ul>
+                        <li>Vorteile: Vollständiger Wegfall eigener Lagerkosten.</li>
+                        <li>Nachteile: Hohe direkte Abhängigkeit vom Lieferanten und dessen Lieferpünktlichkeit.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>3. Bedarfsarten und Bedarfsstufen</h4>
+            <p>Bei der Materialplanung unterscheidet man die Güter nach ihrer Stellung im Herstellungsprozess:</p>
+            <ul>
+                <li><span class="highlight-text">Primärbedarf:</span> Beschreibt den Bedarf an fertigen Endprodukten, Ersatzteilen, verkaufsfähigen Baugruppen oder Zwischenerzeugnissen, die direkt an Kunden verkauft werden.</li>
+                <li><span class="highlight-text">Sekundärbedarf:</span> Umfasst alle Materialien, die zur Herstellung des Primärbedarfs benötigt werden, wie Rohstoffe, halbfertige Erzeugnisse (Baugruppen) und Einzelteile.</li>
+                <li><span class="highlight-text">Tertiärbedarf:</span> Güter, die zwar für die Produktion benötigt werden, jedoch nicht direkt in das Fertigerzeugnis eingehen. Dazu zählen Betriebsstoffe und Hilfsstoffe.</li>
+            </ul>
+            <p>Einflussfaktoren und Gründe für zusätzlichen Materialbedarf (Zusatzbedarf) sind unter anderem Wartung und Reparatur, Versuche und Sondereinrichtungen, selten verlangte Erzeugnisse, Ausschuss und Schwund, Belieferungsunsicherheiten sowie Ersatzteilbedarf.</p>
+
+            <h4>4. Berechnungsverfahren: Brutto- und Nettobedarf</h4>
+            <p>Die Bedarfsermittlung führt von den Gesamtanforderungen zur exakt zu bestellenden Menge:</p>
+            <ul>
+                <li><span class="highlight-text">Bruttobedarf:</span> Der gesamte Materialbedarf einer Periode vor Abzug von Lagerbeständen.
+                    $$\text{Bruttobedarf} = \text{Sekundärbedarf} + \text{Zusatzbedarf} + \text{Sicherheitsbedarf}$$
+                </li>
+                <li><span class="highlight-text">Nettobedarf:</span> Die tatsächlich am Markt zu beschaffende bzw. neu zu produzierende Menge.
+                    $$\begin{aligned}
+                    \text{Nettobedarf} = &amp; \text{ Bruttobedarf} \\
+                    &amp; - \text{verfügbare Lagerbestände} \\
+                    &amp; - \text{offene Bestellungen} \\
+                    &amp; + \text{reservierte Bestände}
+                    \end{aligned}$$
+                </li>
+            </ul>
+
+            <h4>5. Methoden der Bedarfsermittlung</h4>
+            <p>Grundsätzlich existieren vier Methoden zur Ermittlung des Materialbedarfs:</p>
+            <ol>
+                <li><span class="highlight-text">Deterministische Bedarfsermittlung (programmorientiert):</span>
+                    <ul>
+                        <li>Der Sekundärbedarf wird mithilfe von Stücklisten oder Rezepturen exakt aus dem Primärbedarf abgeleitet.</li>
+                        <li>Ausgangspunkt ist das marktbezogene Absatzprogramm bzw. das werkbezogene Produktionsprogramm.</li>
+                        <li>Analytische Methode: Das Endprodukt wird anhand seiner Stückliste in alle Einzelteile zerlegt.</li>
+                        <li>Synthetische Methode: Über Teileverwendungsnachweise wird ermittelt, wie oft ein Einzelteil in verschiedene Endprodukte eingeht.</li>
+                        <li>Stücklistenstrukturen: Mengenstückliste, Strukturstückliste, Baukastenstückliste und Variantenstückliste.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Stochastische Bedarfsermittlung (verbrauchsorientiert):</span>
+                    <ul>
+                        <li>Basiert auf Vergangenheitswerten, die statistisch ausgewertet und mittels Prognosemodellen in die Zukunft fortgeschrieben werden.</li>
+                        <li>Voraussetzung: Eine ausreichende historische Datenbasis.</li>
+                        <li>Einschränkung: Nicht geeignet für neue Produkte und hochwertige A-Teile; für Ersatzteile nur bedingt geeignet.</li>
+                        <li>Mathematisch-statistische Verfahren: Naive Prognose, arithmetischer Mittelwert, gleitender Mittelwert, gewichteter gleitender Mittelwert, lineare und nicht-lineare Regressionsanalyse sowie exponentielle Glättung 1. und 2. Ordnung.</li>
+                        <li>Formel für den gewichteten (gewogenen) gleitenden Mittelwert:
+                            $$V = \frac{MB_1 \cdot G_1 + MB_2 \cdot G_2 + \dots + MB_n \cdot G_n}{G_1 + G_2 + \dots + G_n}$$
+                            <em>(wobei \(V\) = Vorhersagewert, \(MB\) = Materialbedarf, \(G\) = Gewichtungsfaktor)</em>.
+                        </li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Heuristische Bedarfsermittlung:</span>
+                    <ul>
+                        <li>Basiert auf subjektiven Schätzungen erfahrener Mitarbeiter oder Experten.</li>
+                        <li>Anwendung: Bei Einführung neuer Produkte, Produktionsänderungen oder schwer vorhersehbarer Nachfrage ohne ausreichende Vergangenheitsdaten.</li>
+                        <li>Vorteile: Sehr flexibel und schnelle Reaktion auf veränderte Bedingungen.</li>
+                        <li>Nachteile: Geringere Genauigkeit als stochastische Methoden, bei großer Artikelanzahl sehr aufwendig.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Regelbasierte &amp; Hybride Bedarfsermittlung:</span>
+                    <ul>
+                        <li>Bei komplexen Produkten mit langen Lebenszyklen (z. B. in der Automobilindustrie) werden deterministische und stochastische Verfahren miteinander verknüpft (hybride Methode).</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>6. Klassifizierung von Gütern: ABC- und XYZ-Analyse</h4>
+            <p>Zur Steuerung des Dispositionssaufwands werden Materialien klassifiziert:</p>
+            <ul>
+                <li><span class="highlight-text">ABC-Analyse (Klassifizierung nach Wertanteil):</span>
+                    <ul>
+                        <li>A-Güter: Hoher Wertanteil (ca. 75–80 %), geringer Mengenanteil (ca. 15–20 %).</li>
+                        <li>B-Güter: Mittlerer Wertanteil (ca. 15–20 %), mittlerer Mengenanteil (ca. 30 %).</li>
+                        <li>C-Güter: Geringer Wertanteil (ca. 5–10 %), hoher Mengenanteil (ca. 50 %).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">XYZ-Analyse (Klassifizierung nach Verbrauchssynchronität und Vorhersagbarkeit):</span>
+                    <ul>
+                        <li>X-Güter: Konstanter Bedarf, hohe Vorhersagegenauigkeit.</li>
+                        <li>Y-Güter: Schwankender oder trendförmiger Bedarf, mittlere Vorhersagegenauigkeit.</li>
+                        <li>Z-Güter: Unregelmäßiger / sporadischer Bedarf, niedrige Vorhersagegenauigkeit.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Kombination von ABC- und XYZ-Analyse:</strong></p>
+            <ul>
+                <li><span class="highlight-text">AX-Teile:</span> Hoher Wertanteil und konstanter Bedarf \(\rightarrow\) Fertigsynchrone Beschaffung (Just-in-Time).</li>
+                <li><span class="highlight-text">BX- / CX-Teile:</span> Konstanter Bedarf bei mittlerem/niedrigem Wert \(\rightarrow\) Beschaffung der optimalen Losgröße.</li>
+                <li><span class="highlight-text">Y- und Z-Teile (AY, AZ, BY, BZ, CY, CZ):</span> Schwankender oder unregelmäßiger Bedarf \(\rightarrow\) Nutzung von Abruf- bzw. Rahmenverträgen oder Bevorratung für einen größeren Zeitabschnitt.</li>
+            </ul>
+
+            <h4>7. Bestelldisposition: Bestellpunkt- vs. Bestellrhythmusverfahren</h4>
+            <p>Für die Festlegung der Beschaffungstermine stehen zwei Hauptverfahren zur Verfügung:</p>
+            <ul>
+                <li><span class="highlight-text">Bestellpunktverfahren:</span> Eine Bestellung wird ausgelöst, sobald der effektive Lagerbestand die festgelegte Meldemenge (den Bestellpunkt) unterschreitet.
+                    $$\text{Bestellpunkt} = (\text{Tagesbedarf} \cdot \text{Beschaffungszeit}) + (\text{Tagesbedarf} \cdot \text{Sicherheitszeit})$$
+                    <ul>
+                        <li>Vorteile: Hohe Versorgungssicherheit, flexible Anpassung an Bedarfsschwankungen (bei steigendem Bedarf verkürzen sich die Bestellintervalle).</li>
+                        <li>Nachteile: Hoher ständiger Kontrollaufwand, tendenziell höhere Lagerbestände.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Bestellrhythmusverfahren:</span> Bestellungen werden in festen, vereinbarten Zeitintervallen ausgelöst.
+                    $$\text{Bestellmenge} = (\text{Beschaffungszeit} + \text{Überprüfungszeit}) \cdot \text{Tagesverbrauch} + \text{Sicherheitsbestand}$$
+                    <ul>
+                        <li>Vorteile: Feste Zeitintervalle erleichtern die Koordination, Optimierung von Mengenrabatten, geringerer Kontrollaufwand, besseres Aufdecken von Lagerhütern.</li>
+                        <li>Nachteile: Gefahr von Unterdeckung bei unregelmäßigem Verbrauch, hohe Bestellmengen bei langen Dispositionszeiten, höhere Kapitalbindung.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Vergleichende Übersicht der Beschaffungsformen</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Beschaffungsform</th>
+                            <th>Charakteristik &amp; Zeitpunkt</th>
+                            <th>Vorteile</th>
+                            <th>Nachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Fallweise Beschaffung</strong></td>
+                            <td>Einmalige Bestellung nach aktuellem Bedarf.</td>
+                            <td>• Wenig oder keine Lagerkosten<br>• Schnelle Beschaffung</td>
+                            <td>• Schlechte Preis-/Mengenkonditionen<br>• Saisonalitätsrisiko<br>• Höhere Express-Transportkosten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vorratsbeschaffung</strong></td>
+                            <td>Bestellung auf Lager zur Bevorratung.</td>
+                            <td>• Bessere Preis-/Mengenkonditionen<br>• Hohe Sicherheit der Warenverfügbarkeit<br>• Hohe Liefergeschwindigkeit</td>
+                            <td>• Hohe Lagerkosten<br>• Risiko von Schwund &amp; Abschreibungen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fertigsynchrone Beschaffung (JIT)</strong></td>
+                            <td>Anlieferung synchronisiert mit der Produktion exakt bei Bedarf.</td>
+                            <td>• Keine eigenen Lagerkosten</td>
+                            <td>• Starke Abhängigkeit vom Lieferanten</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Die vier Quadranten des Beschaffungsportfolios</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kategorie</th>
+                            <th>Einkaufsvolumen / Versorgungsrisiko</th>
+                            <th>Strategische Stoßrichtung</th>
+                            <th>Hauptaufgaben</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Strategische Güter</strong></td>
+                            <td>Hohes Einkaufsvolumen / Hohes Versorgungsrisiko</td>
+                            <td>Enge Zusammenarbeit, Partnerschaften &amp; Entwicklungskooperationen</td>
+                            <td>Präzise Bedarfsprognose, Risikomanagement, Notfallplanung, Bestandskontrolle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hebelgüter</strong></td>
+                            <td>Hohes Einkaufsvolumen / Geringes Versorgungsrisiko</td>
+                            <td>Aggressive Einkaufspolitik, Ausnutzung der Einkaufsmacht</td>
+                            <td>Aktivierung des Anbieterwettbewerbs, Produktsubstitution, Spotmarkt-Käufe</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Engpassgüter</strong></td>
+                            <td>Geringes Einkaufsvolumen / Hohes Versorgungsrisiko</td>
+                            <td>Versorgungssicherung &amp; Risikoabschwächung</td>
+                            <td>Mengensicherung (ggf. Aufpreis), Langzeitverträge, Erstellung von Ausweichplänen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unkritische Güter</strong></td>
+                            <td>Geringes Einkaufsvolumen / Geringes Versorgungsrisiko</td>
+                            <td>Effiziente Abwicklung &amp; Minimierung des Bestellaufwands</td>
+                            <td>Produktstandardisierung, Bestandsoptimierung, automatisierte Bearbeitung</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 3: Vergleich der Methoden der Bedarfsermittlung</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kriterium</th>
+                            <th>Deterministische Methode</th>
+                            <th>Stochastische Methode</th>
+                            <th>Heuristische Methode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Grundlage</strong></td>
+                            <td>Primärbedarf / Produktionsprogramm &amp; Stücklisten</td>
+                            <td>Historische Verbrauchswerte der Vergangenheit</td>
+                            <td>Subjektive Schätzungen von Experten/Mitarbeitern</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Genauigkeit</strong></td>
+                            <td>Exakt</td>
+                            <td>Prognosegenau (bei guter Datenbasis)</td>
+                            <td>Weniger genau</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Voraussetzung</strong></td>
+                            <td>Vorhandensein von Stücklisten/Rezepturen</td>
+                            <td>Ausreichende historische Verbrauchsdaten</td>
+                            <td>Erfahrungswissen der Beteiligten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anwendung</strong></td>
+                            <td>Kundeneinzelfertigung, B-Teile, hochwertige Baugruppen</td>
+                            <td>Seriennebenbedarf, C-Teile mit stetigem Verbrauch</td>
+                            <td>Neue Produkte, Produktänderungen, fehlende Daten</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 4: Vor- und Nachteile von Bestellpunkt- und Bestellrhythmusverfahren</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Verfahren</th>
+                            <th>Auslöser der Bestellung</th>
+                            <th>Hauptvorteile</th>
+                            <th>Hauptnachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bestellpunktverfahren</strong></td>
+                            <td>Unterschreiten der Meldemenge / des Bestellpunkts</td>
+                            <td>• Hohe Versorgungssicherheit<br>• Flexible Reaktion auf Bedarfsschwankungen</td>
+                            <td>• Hoher ständiger Kontrollaufwand<br>• Tendenziell höhere Lagerbestände</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bestellrhythmusverfahren</strong></td>
+                            <td>Ablauf eines festen Zeitintervalls</td>
+                            <td>• Geringerer Kontrollaufwand<br>• Optimierung von Bündelung &amp; Mengenrabatten</td>
+                            <td>• Unterdeckungsgefahr bei Verbrauchsspitzen<br>• Höhere Kapitalbindung im Lager</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Nummerierte Liste 1: Vorgehen bei der Durchführung einer ABC-Analyse</h4>
+            <ol>
+                <li><strong>Verbrauchswert ermitteln:</strong> Für jede Materialposition den Jahresverbrauchswert (Verbrauchsmenge \(\cdot\) Preis pro Stück) berechnen und die Positionen nach absteigendem Wert sortieren.</li>
+                <li><strong>Prozentanteile &amp; Kumulierung:</strong> Den prozentualen Anteil jeder Position am Gesamtwert berechnen und die Prozentwerte kumulieren.</li>
+                <li><strong>Mengenanteile ermitteln:</strong> Den prozentualen Anteil jeder Position an der Gesamtzahl aller Artikelpositionen feststellen.</li>
+                <li><strong>Klassifizierung &amp; Grafik:</strong> Die Grenzen für A-Bereiche (ca. 75–80 % Wert), B-Bereiche (ca. 15–20 % Wert) und C-Bereiche (ca. 5–10 % Wert) festlegen und grafisch darstellen.</li>
+            </ol>
+
+            <h4>Nummerierte Liste 2: Ablauf der Nettobedarfsrechnung</h4>
+            <ol>
+                <li><strong>Bruttobedarf ermitteln:</strong> Sekundärbedarf mit Zusatzbedarf (z. B. Ausschuss) und Sicherheitsbedarf addieren.</li>
+                <li><strong>Lagerbestand abziehen:</strong> Verfügbare Lagerbestände vom Bruttobedarf subtrahieren.</li>
+                <li><strong>Offene Bestellungen abziehen:</strong> Bereits bestellte, aber noch nicht gelieferte Mengen subtrahieren.</li>
+                <li><strong>Reservierte Bestände addieren:</strong> Bereits für andere Aufträge verplante Bestände wieder hinzurechnen, um den finalen Nettobedarf zu erhalten.</li>
+            </ol>
+
+            <h3>Sämtliche Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Bleistiftproduzenten-Beispiel (Bedarfsstufen):</span> Ein Bleistiftproduzent plant die Herstellung von 20 Bleistiften in einem Jahr.
+                    <ul>
+                        <li>Primärbedarf: 20 Bleistifte (das verkaufsfähige Endprodukt).</li>
+                        <li>Sekundärbedarf: 20 Graphitminen und 20 Holz-Ummantelungen (die zur Herstellung benötigten Rohstoffe und Einzelteile).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Möbelhersteller-Beispiel (Bedarfsstufen):</span> Ein Möbelhersteller beabsichtigt, 40'000 Sofas zu verkaufen.
+                    <ul>
+                        <li>Primärbedarf: 40'000 Sofas.</li>
+                        <li>Sekundärbedarf: Für jedes Sofa werden 1 Chassis, 2 Polster und 4 Stoffteile benötigt. Der gesamte Sekundärbedarf beträgt somit 40'000 Chassis, 80'000 Polster und 160'000 Stoffteile.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Gewichteter gleitender Mittelwert (Stochastik):</span> Gegeben sind Materialmengen und Gewichtungsfaktoren von 6 Perioden: Periode 1 (\(178 \cdot 4\)), Periode 2 (\(163 \cdot 8\)), Periode 3 (\(215 \cdot 12\)), Periode 4 (\(276 \cdot 20\)), Periode 5 (\(191 \cdot 26\)), Periode 6 (\(203 \cdot 30\)).
+                    $$V = \frac{712 + 1'304 + 2'580 + 5'520 + 4'966 + 6'090}{100} = \frac{21'172}{100} = \mathbf{212 \text{ Stück}}$$
+                    Der prognostizierte Vorhersagewert für die nächste Periode beträgt 212 Stück.
+                </li>
+                <li><span class="highlight-text">ABC-Klassifizierung aus Quellen:</span> Artikel 3 (155'250 CHF = 59.54 %) und Artikel 7 (41'250 CHF = 15.81 %) binden zusammen über 75 % des Kapitals \(\rightarrow\) <strong>Klassifizierung A</strong>. Artikel 6, 4, 5 bilden Klasse B (19.58 %), und Artikel 10, 2, 8, 9, 1 bilden Klasse C (5.07 %).</li>
+            </ul>
+
+            <h3>Mini-Quiz</h3>
+            <details>
+                <summary>1. Frage: Ein Fahrradhersteller möchte 500 E-Bikes produzieren. Für jedes E-Bike werden 1 Rahmen, 2 Räder und 1 Akku benötigt. Ordne die Komponenten den Begriffen Primärbedarf und Sekundärbedarf zu.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Primärbedarf: 500 E-Bikes. Sekundärbedarf: 500 Rahmen, 1'000 Räder und 500 Akkus.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>2. Frage: Wie lautet die mathematische Formel zur Berechnung des Nettobedarfs?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> $$\text{Nettobedarf} = \text{Bruttobedarf} - \text{verfügbare Lagerbestände} - \text{offene Bestellungen} + \text{reservierte Bestände}$$</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>3. Frage: In welche Kraljic-Portfolio-Kategorie fallen Güter mit einem hohen Einkaufsvolumen und einem geringen Versorgungsrisiko, und welche strategische Stoßrichtung wird hier empfohlen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Es handelt sich um Hebelgüter. Empfohlen wird eine aggressive Einkaufspolitik, Ausnutzung der Einkaufsmacht und Aktivierung des globalen Anbieterwettbewerbs.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>4. Frage: Warum ist die stochastische Bedarfsermittlung für völlig neue Produkte ungeeignet, und welches Verfahren sollte stattdessen angewendet werden?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Sie setzt eine ausreichende historische Datenbasis voraus. Bei neuen Produkten muss stattdessen die heuristische Bedarfsermittlung (Experten-Schätzungen) genutzt werden.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TEIL 5: BESCHAFFUNGSWEGE & OPTIMALE LOSGRÖSSE -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-5">
+            <h2>BELO - Teil 5: Beschaffungswege, Optimale Losgröße &amp; ICT-Systeme</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Beschaffungswege (Direktbeschaffung, Streckengeschäft, Vermittlungsgeschäft), Ermittlung und Bewertung von Bezugsquellen, Compliance und Beschaffungsrichtlinien, Analyse der Preisstruktur und Beschaffungskosten, Ermittlung der optimalen Losgröße/Bestellmenge sowie der Einsatz von ICT-Systemen im Einkauf.</p>
+            <p><strong>Lernziele:</strong></p>
+            <ul>
+                <li>Die Möglichkeiten von ICT-Systemen bei der Ermittlung von Losgrößen und Bestellzeitpunkten präzise erläutern.</li>
+                <li>Die optimale Losgröße für Bestellungen berechnen und das zugrundeliegende Kostenmodell erklären.</li>
+                <li>Systemgestützte Kalkulationen von Losgrössen und Bestellzeitpunkten kontrollieren, auf Plausibilität prüfen und freigeben.</li>
+                <li>Die Merkmale, Vor- und Nachteile der verschiedenen Beschaffungswege (Direktbeschaffung, Streckengeschäft, Vermittlungsgeschäft) unterscheiden und in der Praxis einordnen.</li>
+                <li>Den Prozess zur Ermittlung von Bezugsquellen sowie die Instrumente der Lieferantenbewertung und Angebotsevaluierung anwenden.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Merkmale, Vor- und Nachteile der Beschaffungswege</h4>
+            <p>In der Praxis unterscheidet man drei grundlegende Beschaffungswege, die sich in Bezug auf Logistikverantwortung, Warenlagerung, Eigentumsübergang und Kundenbeziehung maßgeblich voneinander unterscheiden:</p>
+            <p><strong>A. Direktbeschaffung:</strong> Bei der Direktbeschaffung kauft ein Unternehmen Waren oder Dienstleistungen direkt beim Hersteller oder Erzeuger ein – ohne Einbindung von Zwischenhändlern.</p>
+            <ul>
+                <li>Prozess &amp; Logistik: Der Händler lagert die Ware physisch in seinem eigenen Lager ein. Die gesamte Logistik (Lagerhaltung, Verpackung, Versand) liegt vollständig im Verantwortungsbereich des Händlers. Er tritt direkt mit dem Endkunden in Kontakt und beliefert diesen selbst.</li>
+                <li>Vorteile: Volle Kontrolle über die Produktqualität, die Lagerhaltung und den gesamten Versandprozess.</li>
+                <li>Nachteile: Hoher Kapitalbedarf für Lagerinfrastruktur und Logistik sowie ein damit verbundenes gebundenes Risiko.</li>
+            </ul>
+            <p><strong>B. Streckengeschäft (Dropshipping):</strong> Das Streckengeschäft ist eine spezielle Handelsform, bei der die Ware vom Händler zwar verkauft, aber von ihm weder selbst gelagert noch versendet wird.</p>
+            <ul>
+                <li>Prozess &amp; Logistik: Der Kunde bestellt beim Händler. Dieser leitet die Bestellung an den Lieferanten (Hersteller oder Großhändler) weiter. Der Lieferant versendet die Ware direkt an den Endkunden – häufig im Namen des Händlers (unter Verwendung von dessen Absenderadresse und Logo). Der Händler fungiert als Vermittler im Verkaufsprozess, bleibt rechtlich gesehen jedoch der direkte Verkäufer gegenüber dem Kunden.</li>
+                <li>Vorteile: Kein eigenes Lager erforderlich, deutlich geringere Logistikkosten, weniger gebundenes Kapital sowie hohe Flexibilität bei der Zusammenstellung des Produktsortiments.</li>
+                <li>Nachteile: Geringere Kontrolle über Lieferzeiten und die Qualität der Versandabwicklung sowie eine hohe Abhängigkeit vom ausführenden Lieferanten.</li>
+            </ul>
+            <p><strong>C. Vermittlungsgeschäft (Handelsvermittlung):</strong> Beim Vermittlungsgeschäft tritt ein Akteur (z. B. ein Handelsvertreter oder Makler) ausschließlich als Vermittler zwischen zwei Parteien (Käufer und Verkäufer/Hersteller) auf.</p>
+            <ul>
+                <li>Prozess &amp; Logistik: Der Vermittler handelt im fremden Namen und auf fremde Rechnung. Er bringt Käufer und Verkäufer zusammen und vermittelt den Kaufvertrag, schließt diesen jedoch nicht selbst ab. Die Ware wird direkt vom Hersteller/Verkäufer an den Käufer geliefert. Die Bezahlung erfolgt meist direkt zwischen Käufer und Verkäufer; der Vermittler erhält für den erfolgreichen Abschluss eine Provision.</li>
+                <li>Vorteile: Keine Produktverantwortung, kein Risiko bezüglich Warenausfall oder Zahlungsunfähigkeit der Vertragsparteien (solange die Provision bezahlt wird).</li>
+                <li>Nachteile: Das Einkommen ist direkt von der erfolgreichen Transaktion abhängig; es wird keine direkte Kundenbeziehung im eigenen Namen aufgebaut.</li>
+            </ul>
+
+            <h4>2. Ermittlung von Bezugsquellen und Lieferantenmanagement</h4>
+            <p>Die Ermittlung und Steuerung geeigneter Bezugsquellen erfolgt über einen strukturierten, dreistufigen Beschaffungsprozess:</p>
+            <ol>
+                <li>Lieferanten bewerten: Systematische Überprüfung potenzieller und bestehender Lieferanten anhand definierter Kriterien.</li>
+                <li>Lieferanten anfragen: Einholen von Angeboten auf Basis präziser kaufmännischer und technischer Vorgaben.</li>
+                <li>Angebote prüfen und verhandeln: Detaillierter Preis- und Leistungsvergleich sowie Führen von Verhandlungen zur Vertragsgestaltung.</li>
+            </ol>
+
+            <p><strong>Hilfsmittel zur Ermittlung und Bewertung:</strong></p>
+            <ul>
+                <li>Informationsquellen: Interne und externe Marktdaten zur Identifikation von Anbietern.</li>
+                <li>Bewertungskatalog &amp; Checklisten: Standardisierte Fragenkataloge zur Überprüfung von Lieferantenstandards.</li>
+                <li>Nutzwertanalyse: Punktbewertungsverfahren zum objektiven Vergleich von Angeboten unter Berücksichtigung gewichteter Kriterien (z. B. Must-have-Kriterien, Gerätefunktionen, Nutzungskriterien).</li>
+            </ul>
+
+            <h4>3. Compliance, Beschaffungsrichtlinien und rechtliche Rahmenbedingungen</h4>
+            <p>Der Einkauf unterliegt internen und externen Vorgaben, die ein rechtmäßiges und ethisches Handeln sicherstellen:</p>
+            <ul>
+                <li><span class="highlight-text">Compliance &amp; Beschaffungscodex:</span> Einhaltung von Verhaltensregeln, ethischen Grundsätzen und Antikorruptionsrichtlinien.</li>
+                <li><span class="highlight-text">Submissionsrecht:</span> Gesetzliche Vorgaben für die öffentliche Beschaffung (z. B. auf kantonaler Ebene).</li>
+                <li><span class="highlight-text">Praxisrelevante Richtlinien und Dokumente:</span> Verhaltenskodex für Unternehmen und Geschäftspartner (z. B. Coop-Gruppe), Allgemeine Kauf- und Zusammenarbeitsbedingungen (z. B. Digitec Galaxus AG), universitäre Beschaffungsrichtlinien (z. B. Universität St. Gallen), Richtlinien für nachhaltige Beschaffung und Logistikrichtlinien, Instrumente zur Lieferantenqualifikation (Lieferantenselbstauskunft, Company Letter, Artikel-Factsheets und Bildmaterial).</li>
+            </ul>
+
+            <h4>4. Einflussfaktoren auf Beschaffungsmenge, -kosten und Preisstruktur</h4>
+            <p><strong>Marktsituation und Beschaffungsformen:</strong> Bestellmengen und -zeitpunkte müssen kontinuierlich beobachtet und an die jeweilige Marktsituation angepasst werden:</p>
+            <ul>
+                <li>Marktzustände: Unterscheidung zwischen stabilen Märkten, voraussichtlich instabilen Märkten sowie volatilen Märkten (geprägt durch politische, ökonomische oder ökologische Krisen).</li>
+                <li>Beschaffungsausrichtung: Wahl zwischen fertigungssynchroner Beschaffung, Just-in-Time-Beschaffung oder Vorratsbeschaffung je nach Risikolage.</li>
+            </ul>
+            <p><strong>Die vier Komponenten der Beschaffungskosten:</strong> Beschaffungskosten i. e. S., Lagerhaltungskosten, Finanzierungskosten und Fehlmengenkosten.</p>
+            <p><strong>Analyse der Preisstruktur (Preiskalkulation):</strong> Die Ermittlung des tatsächlichen Einstandspreises erfolgt stufenweise nach folgendem Kalkulationsschema:</p>
+            $$\begin{aligned}
+            &amp; \text{Angebotspreis (Bruttoeinkaufspreis)} \\
+            - &amp; \text{Rabatt} \\
+            - &amp; \text{Bonus} \\
+            + &amp; \text{Mindermengenzuschlag} \\
+            = &amp; \mathbf{\text{Zieleinkaufspreis}} \\
+            - &amp; \text{Skonto} \\
+            = &amp; \mathbf{\text{Nettoeinkaufspreis}} \\
+            + &amp; \text{Bezugskosten} \\
+            = &amp; \mathbf{\text{Einstandspreis}}
+            \end{aligned}$$
+
+            <!-- INTERAKTIVES WIDGET 5: PREISKALKULATOR -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Einstandspreis-Kalkulator</div>
+                <div class="diagram-subtitle">Gib die Konditionen ein, um stufenweise den Einstandspreis zu ermitteln.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 1rem;">
+                        <div>
+                            <label style="font-weight:600; font-size:0.8rem;">Bruttopreis (CHF):</label>
+                            <input type="number" id="calc-brutto" value="1000" oninput="calcPrice()" style="width:100%; padding:4px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="font-weight:600; font-size:0.8rem;">Rabatt (%):</label>
+                            <input type="number" id="calc-rabatt" value="10" oninput="calcPrice()" style="width:100%; padding:4px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="font-weight:600; font-size:0.8rem;">Skonto (%):</label>
+                            <input type="number" id="calc-skonto" value="2" oninput="calcPrice()" style="width:100%; padding:4px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="font-weight:600; font-size:0.8rem;">Bezugskosten (CHF):</label>
+                            <input type="number" id="calc-bezug" value="50" oninput="calcPrice()" style="width:100%; padding:4px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                    </div>
+                    <div id="price-result" style="background: var(--tag-bg); padding: 0.75rem; border-radius: 6px; font-size:0.9rem; border-left:4px solid var(--primary-color);">
+                        <strong>Einstandspreis:</strong> 932.00 CHF
+                    </div>
+                </div>
+            </div>
+
+            <h4>5. Ermittlung der optimalen Bestellmenge (Grundmodell) &amp; ICT-Systeme</h4>
+            <p>Das Grundmodell zur Ermittlung der optimalen Bestellmenge (\(X_{opt}\)) basiert auf dem mathematischen Kostenoptimum zwischen zwei gegenläufigen Kostenverläufen:</p>
+            <ul>
+                <li><span class="highlight-text">Bestellkosten (BK):</span> Sinken pro Einheit mit steigender Bestellmenge (fallende Kurve).</li>
+                <li><span class="highlight-text">Lagerhaltungskosten (LK):</span> Steigen pro Einheit linear mit zunehmender Bestellmenge (steigende Kurve).</li>
+                <li><span class="highlight-text">Gesamtkosten (GK) &amp; Optimum:</span> Die Gesamtkostenkurve erreicht ihr Minimum genau am <strong>Schnittpunkt</strong> von Bestellkosten- und Lagerhaltungskostenkurve (\(X_{opt}\)).</li>
+            </ul>
+            <p><strong>Rolle von ICT-Systemen:</strong> Moderne ICT-Systeme ermöglichen die automatische, datengestützte Ermittlung von Losgrößen und Bestellzeitpunkten. Die Aufgabe der Fachkraft besteht darin, systemgestützte Kalkulationen nicht ungeprüft zu übernehmen, sondern diese zu kontrollieren, auf Plausibilität zu prüfen und manuell freizugeben.</p>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Vergleichende Gegenüberstellung der drei Beschaffungswege</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kriterium</th>
+                            <th>Direktbeschaffung</th>
+                            <th>Streckengeschäft (Dropshipping)</th>
+                            <th>Vermittlungsgeschäft</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Einkauf beim</strong></td>
+                            <td>Hersteller / Erzeuger (ohne Zwischenhändler)</td>
+                            <td>Lieferanten / Großhändler</td>
+                            <td>Verkäufer über Vermittler</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Physische Lagerung</strong></td>
+                            <td>Händler lagert selbst ein</td>
+                            <td>Keines beim Händler (Lagerung beim Lieferanten)</td>
+                            <td>Keine Lagerung beim Vermittler</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Versandabwicklung</strong></td>
+                            <td>Durch den Händler selbst</td>
+                            <td>Direkt vom Lieferanten an den Endkunden</td>
+                            <td>Direkt vom Verkäufer an den Käufer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vertragsrolle des Händlers</strong></td>
+                            <td>Rechtlicher Verkäufer an Endkunden</td>
+                            <td>Rechtlicher Verkäufer an Endkunden</td>
+                            <td>Rein Vermittler ("Kuppler") ohne eigenen Kaufvertrag</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hauptvorteile</strong></td>
+                            <td>Volle Kontrolle über Qualität &amp; Logistik</td>
+                            <td>Kein Lager, geringe Logistikkosten &amp; Kapitalbindung</td>
+                            <td>Kein Warenausfall- oder Zahlungsrisiko, keine Produktverantwortung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hauptnachteile</strong></td>
+                            <td>Hoher Kapitalbedarf &amp; gebundenes Risiko</td>
+                            <td>Geringe Kontrolle über Lieferzeiten/Qualität, Abhängigkeit</td>
+                            <td>Einkommen rein provisionsabhängig, keine eigene Kundenbeziehung</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Vorgaben für Lieferantenangebote</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kategorie</th>
+                            <th>Enthaltene Kriterien &amp; Variablen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Material / Leistung</strong></td>
+                            <td>Artikelbezeichnung, Material-/Leistungsbeschreibung, qualitative &amp; quantitative Eigenschaften, eingehaltene Normen/Standards, Verpackung, Transportmöglichkeiten, Bemusterung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Preis / Konditionen</strong></td>
+                            <td>Preise, Zuschläge, Rabatte, Nebenkosten, Liefer- &amp; Zahlungsbedingungen, AGB, Kundendienstleistungen (Service/Support), Gewährleistung (Garantien), Erfüllungsort.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Einflussfaktoren / Variablen</strong></td>
+                            <td>Bestellmengen (Einmalbedarf, Wiederholungsbedarf, Abrufgrößen), Liefertermine, Lieferorte, Bedarfsprognosen bzw. -entwicklung.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Nummerierte Liste 1: Prozessschritte der Bezugsquellenermittlung und Lieferantenbewertung</h4>
+            <ol>
+                <li><strong>Ermittlung der Bezugsquellen:</strong> Erfassung potenzieller Lieferanten über Informationsquellen.</li>
+                <li><strong>Lieferanten bewerten:</strong> Überprüfung der Eignung anhand von Bewertungskatalogen und Checklisten.</li>
+                <li><strong>Lieferanten anfragen:</strong> Übermittlung der standardisierten Leistungsanforderungen an ausgewählte Anbieter.</li>
+                <li><strong>Angebote prüfen und verhandeln:</strong> Durchführung von Nutzenwert-Analysen und Preisstrukturanalysen zur Entscheidungsfindung.</li>
+            </ol>
+
+            <h4>Nummerierte Liste 2: Stufen der Preiskalkulation im Einkauf</h4>
+            <ol>
+                <li><strong>Angebotspreis (Bruttoeinkaufspreis)</strong> ansetzen.</li>
+                <li><strong>Rabatte und Boni</strong> abziehen.</li>
+                <li><strong>Mindermengenzuschläge</strong> hinzurechnen \(\rightarrow\) <strong>Zieleinkaufspreis</strong>.</li>
+                <li><strong>Skonto</strong> abziehen \(\rightarrow\) <strong>Nettoeinkaufspreis</strong>.</li>
+                <li><strong>Bezugskosten</strong> hinzurechnen \(\rightarrow\) <strong>Einstandspreis</strong>.</li>
+            </ol>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Bio-Fleisch-Vermarktung vom Bauernhof (Direktbeschaffung):</span> Ein Schweizer Bio-Bauernhof zieht Rinder oder Schweine auf, schlachtet sie und verpackt das Fleisch selbst. Der Vertrieb erfolgt ohne Zwischenhändler direkt über den eigenen Hofladen, einen Online-Shop oder ein Verkaufsmobil an die Endkunden. Die Landwirte behalten die volle Kontrolle über die Qualität, den Logistikprozess und die gesamte Wertschöpfung.</li>
+                <li><span class="highlight-text">Schweizer Online-Händler (Streckengeschäft / Dropshipping):</span> Ein kleiner Schweizer Online-Shop bietet besondere Accessoires an. Bei Bestelleingang wird der Auftrag an einen Großhändler weitergeleitet, der die Ware im Namen des Schweizer Online-Shops (mit dessen Logo/Absender) direkt an den Kunden verschickt. Der Händler hält die Ware nie selbst auf Lager.</li>
+                <li><span class="highlight-text">Immobilienmakler in der Schweiz (Vermittlungsgeschäft):</span> Immobilienmakler in der Schweiz bringen Käufer und Verkäufer einer Immobilie zusammen. Der Makler handelt im fremden Namen und auf fremde Rechnung und erhält für die erfolgreiche Vermittlung eine Provision.</li>
+                <li><span class="highlight-text">Richtlinien und Verhaltenskodizes in Schweizer Unternehmen:</span> Verhaltenskodex der Coop-Gruppe, Allgemeine Kaufbedingungen der Digitec Galaxus AG, Richtlinie zur Beschaffung an der Universität St. Gallen, Submissionsrecht (Kanton Zürich).</li>
+            </ul>
+
+            <h3>Mini-Quiz</h3>
+            <details>
+                <summary>1. Frage: Worin unterscheidet sich das Streckengeschäft (Dropshipping) rechtlich und logistisch vom Vermittlungsgeschäft?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Beim Streckengeschäft wird die Logistik an den Lieferanten ausgelagert, der Händler bleibt jedoch der rechtliche Vertragspartner (Verkäufer) des Endkunden. Beim Vermittlungsgeschäft tritt der Akteur rein als Vermittler im fremden Namen auf und wird selbst nicht Vertragspartner des Kaufvertrags.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>2. Frage: Aus welchen Komponenten setzt sich der Einstandspreis ausgehend vom Zieleinkaufspreis zusammen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Vom Zieleinkaufspreis wird das Skonto abgezogen (ergibt Nettoeinkaufspreis); anschließend werden die Bezugskosten hinzugerechnet, um den Einstandspreis zu erhalten.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>3. Frage: An welchem Punkt liegt im Grundmodell die optimale Bestellmenge (\(X_{opt}\)), und wie verhalten sich dort die Bestell- und Lagerhaltungskosten?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Sie liegt am Gesamtkostenminimum, exakt am Schnittpunkt der fallenden Bestellkostenkurve und der steigenden Lagerhaltungskostenkurve.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>4. Frage: Welche Aufgabe haben Einkäufer beim Einsatz von ICT-Systemen zur Losgrößenermittlung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Sie müssen die systemgestützten Kalkulationen von Losgrößen und Bestellzeitpunkten kontrollieren, auf Plausibilität prüfen und freigeben.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- GOOGLE KALENDER INTEGRATION -->
+        <div class="content-section">
+            <section class="calendar-section">
+                <h2>📅 Lern- &amp; Prüfungskalender</h2>
+                <div class="calendar-container">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=4875202771218a7ad1f5108aa8ce1f0cb65e976732f10fc8ef094d70d9c1cf6e%40group.calendar.google.com&amp;ctz=Europe%2FZurich&amp;mode=AGENDA" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • BELO – Beschaffungslogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <!-- JAVASCRIPT FOR MOBILE NAV & INTERACTIVE WIDGETS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger Mobile Navigation
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        // WIDGET 1: 8-STUFIGER BESCHAFFUNGSPROZESS
+        const procSteps = {
+            1: { title: "1. Bedarfsermittlung (Strategisch / Anbahnung)", desc: "Feststellung, welche Materialien in welcher Menge und Qualität benötigt werden." },
+            2: { title: "2. Bezugsquelle ermitteln (Strategisch / Anbahnung)", desc: "Suche nach geeigneten Beschaffungsmärkten und potenziellen Lieferanten." },
+            3: { title: "3. Lieferantenauswahl (Strategisch / Vereinbarung)", desc: "Bewertung von Angeboten und Entscheidung für geeignete Partner." },
+            4: { title: "4. Bestellabwicklung (Operativ / Ordering)", desc: "Rechtssichere Erteilung des Kaufauftrags an den Lieferanten." },
+            5: { title: "5. Bestellüberwachung (Operativ / Abwicklung)", desc: "Kontrolle der Lieferfristen, Termine und Auftragsbestätigungen." },
+            6: { title: "6. Wareneingang (Operativ / Abwicklung)", desc: "Physikalische Annahme, Entladung, Mengen- und Qualitätsprüfung." },
+            7: { title: "7. Rechnungsprüfung (Operativ / Kontrolle)", desc: "Abgleich der Rechnungsbeträge mit Bestellung und Lieferschein." },
+            8: { title: "8. Zahlungsabwicklung (Operativ / Kontrolle)", desc: "Freigabe und Begleichung der Rechnungsbeträge im Accounting." }
+        };
+
+        function showProcStep(step) {
+            document.getElementById('proc-step-title').innerText = procSteps[step].title;
+            document.getElementById('proc-step-desc').innerText = procSteps[step].desc;
+        }
+
+        // WIDGET 2: MAKE-OR-BUY RECHNER
+        function calcMob() {
+            const fix = parseFloat(document.getElementById('mob-fix').value) || 0;
+            const varMake = parseFloat(document.getElementById('mob-var-make').value) || 0;
+            const priceBuy = parseFloat(document.getElementById('mob-price-buy').value) || 0;
+
+            const diff = priceBuy - varMake;
+            if (diff <= 0) {
+                document.getElementById('mob-result').innerText = "Make lohnt sich nicht (Variable Kosten Make >= Preis Buy).";
+            } else {
+                const breakEven = fix / diff;
+                document.getElementById('mob-result').innerText = `Kritische Menge (Break-Even): ${breakEven.toFixed(2)} Stück (Ab dieser Menge ist Make kostengünstiger).`;
+            }
+        }
+
+        // WIDGET 3: KENNZAHLEN RECHNER
+        function calcKpi() {
+            const bk = parseFloat(document.getElementById('kpi-bk').value) || 0;
+            const umsatz = parseFloat(document.getElementById('kpi-umsatz').value) || 1;
+            const mangel = parseFloat(document.getElementById('kpi-mangel').value) || 0;
+            const total = parseFloat(document.getElementById('kpi-lief-total').value) || 1;
+
+            const bkAnteil = (bk * 100) / umsatz;
+            const beanstandung = (mangel * 100) / total;
+
+            document.getElementById('kpi-result').innerHTML = `<strong>Beschaffungskosten-Anteil am Umsatz:</strong> ${bkAnteil.toFixed(2)} % | <strong>Beanstandungsquote:</strong> ${beanstandung.toFixed(2)} %`;
+        }
+
+        // WIDGET 4: KRALJIC MATRIX
+        const kraljicData = {
+            engpass: { title: "Engpassgüter (Geringes Vol. / Hohes Risiko)", desc: "<strong>Stoßrichtung:</strong> Versorgungssicherung.<br><strong>Aufgaben:</strong> Mengensicherung (ggf. Aufpreis), Langzeitverträge, Ausweichpläne." },
+            strategisch: { title: "Strategische Güter (Hohes Vol. / Hohes Risiko)", desc: "<strong>Stoßrichtung:</strong> Partnerschaften &amp; Entwicklungskooperationen.<br><strong>Aufgaben:</strong> Präzise Bedarfsprognosen, Risikomanagement, Notfallplanung, Bestandskontrolle." },
+            unkritisch: { title: "Unkritische Güter (Geringes Vol. / Geringes Risiko)", desc: "<strong>Stoßrichtung:</strong> Effiziente Abwicklung &amp; Minimierung Bestellaufwand.<br><strong>Aufgaben:</strong> Produktstandardisierung, automatisierte Bearbeitung, Bestandsoptimierung." },
+            hebel: { title: "Hebelgüter (Hohes Vol. / Geringes Risiko)", desc: "<strong>Stoßrichtung:</strong> Aggressive Einkaufspolitik.<br><strong>Aufgaben:</strong> Anbieterwettbewerb aktivieren, Einkaufsmacht ausnutzen, Spotmarkt-Käufe." }
+        };
+
+        function showKraljic(cat) {
+            document.getElementById('kraljic-title').innerHTML = kraljicData[cat].title;
+            document.getElementById('kraljic-desc').innerHTML = kraljicData[cat].desc;
+        }
+
+        // WIDGET 5: PREISKALKULATOR
+        function calcPrice() {
+            const brutto = parseFloat(document.getElementById('calc-brutto').value) || 0;
+            const rabatt = parseFloat(document.getElementById('calc-rabatt').value) || 0;
+            const skonto = parseFloat(document.getElementById('calc-skonto').value) || 0;
+            const bezug = parseFloat(document.getElementById('calc-bezug').value) || 0;
+
+            const ziel = brutto * (1 - rabatt / 100);
+            const netto = ziel * (1 - skonto / 100);
+            const einstand = netto + bezug;
+
+            document.getElementById('price-result').innerHTML = `<strong>Zieleinkaufspreis:</strong> ${ziel.toFixed(2)} CHF | <strong>Nettoeinkaufspreis:</strong> ${netto.toFixed(2)} CHF | <strong>Einstandspreis:</strong> ${einstand.toFixed(2)} CHF`;
+        }
+    </script>
+</body>
+</html>

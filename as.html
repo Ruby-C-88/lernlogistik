@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS – Arbeitssicherheit & Gesundheitsschutz | Lern-Dashboard</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0f766e;
+            --accent-color: #ccfbf1;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --highlight-bg: #fef3c7;
+            --info-bg: #f0fdf4;
+            --info-border: #86efac;
+            --info-text: #166534;
+            --alert-bg: #fee2e2;
+            --alert-border: #f87171;
+            --alert-text: #991b1b;
+            --tag-bg: #e0f2fe;
+            --tag-text: #0369a1;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .header-banner {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background-image: url('header_index.png');
+            background-size: cover;
+            background-position: center 90%;
+        }
+
+        .header-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.55) 0%, rgba(17, 94, 89, 0.75) 100%);
+        }
+
+        .header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .header-title-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-title-container h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            word-wrap: break-word;
+        }
+
+        .header-title-container p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: -20px auto 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: var(--radius) var(--radius) 0 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        nav a {
+            padding: 1rem 1.25rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 1rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .hamburger-btn {
+            display: none;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            font-size: 1.5rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            line-height: 1;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            word-wrap: break-word;
+        }
+
+        .card h4 {
+            font-size: 1.05rem;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+            color: var(--primary-color);
+        }
+
+        .calendar-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .calendar-section h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .calendar-container {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .calendar-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .badge {
+            background-color: var(--highlight-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        details {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        details[open] {
+            background-color: #ffffff;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+            outline: none;
+            word-wrap: break-word;
+        }
+
+        .answer {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        ul ul, ol ol, ul ol, ol ul {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        li {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .content-section {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* --- STYLES FÜR LESBARE, VOLL-RESPONSIVE GRAFIKEN (HTML/CSS) --- */
+
+        .diagram-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1A2A3A;
+            margin-bottom: 0.25rem;
+        }
+
+        .diagram-subtitle {
+            font-size: 0.88rem;
+            color: #666;
+            margin-bottom: 1.25rem;
+        }
+
+        /* 1. STOP-Prinzip Pyramide */
+        .stop-pyramid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stop-level {
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin: 0 auto;
+            transition: width 0.3s ease;
+        }
+
+        .stop-level.s { background-color: #d32f2f; width: 100%; }
+        .stop-level.t { background-color: #f57c00; width: 88%; }
+        .stop-level.o { background-color: #1976d2; width: 76%; }
+        .stop-level.p { background-color: #388e3c; width: 64%; }
+
+        .stop-level strong {
+            display: block;
+            font-size: 1.05rem;
+            margin-bottom: 2px;
+        }
+
+        .stop-level span {
+            font-size: 0.85rem;
+            opacity: 0.95;
+            display: block;
+        }
+
+        /* 2. Gesetzeshierarchie Schema */
+        .hierarchy-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hierarchy-card {
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .hierarchy-card.bv { background-color: #dc3545; }
+        .hierarchy-card.verordnung { background-color: #198754; }
+
+        .hierarchy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .hierarchy-card.gesetz {
+            background-color: #0d6efd;
+        }
+
+        .hierarchy-card h5 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .hierarchy-card p {
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+
+        /* 3. Durchführungsorgane Grid */
+        .org-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .org-card {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .org-header {
+            color: #ffffff;
+            padding: 10px 14px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .org-card.kiga { border-color: #0d6efd; }
+        .org-card.kiga .org-header { background-color: #0d6efd; }
+
+        .org-card.suva { border-color: #dc3545; }
+        .org-card.suva .org-header { background-color: #dc3545; }
+
+        .org-card.seco { border-color: #198754; }
+        .org-card.seco .org-header { background-color: #198754; }
+
+        .org-body {
+            padding: 12px;
+            font-size: 0.88rem;
+        }
+
+        .org-body ul {
+            padding-left: 16px;
+            margin-top: 6px;
+            margin-bottom: 0;
+        }
+
+        /* 4. Verwaltungsverfahren Workflow */
+        .process-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .process-step {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid;
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .process-step.step1 { border-color: #ffc107; background-color: #fff3cd; }
+        .process-step.step2 { border-color: #dc3545; background-color: #f8d7da; }
+        .process-step.step3 { border-color: #6c757d; background-color: #e2e3e5; }
+
+        .process-step h5 { font-size: 0.98rem; margin-bottom: 4px; }
+        .process-step p { font-size: 0.82rem; color: #333; }
+
+        .process-info {
+            background-color: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            color: #166534;
+            text-align: center;
+        }
+
+        footer {
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        /* MOBIL-OPTIMIERUNG (HANDY) */
+        @media (max-width: 767px) {
+            .hamburger-btn {
+                display: block;
+            }
+
+            .header-banner {
+                height: auto;
+                min-height: 180px;
+            }
+
+            .header-overlay {
+                position: relative;
+                padding: 1.25rem 1rem;
+            }
+
+            .header-title-container h1 {
+                font-size: 1.4rem;
+            }
+
+            .header-title-container p {
+                font-size: 0.88rem;
+            }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                border-radius: 0 0 var(--radius) var(--radius);
+                gap: 0;
+                width: 100%;
+            }
+
+            nav.mobile-active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 0.85rem 1.25rem;
+                border-bottom: 1px solid var(--border-color);
+                width: 100%;
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            nav a.active, nav a:hover {
+                border-bottom-color: transparent;
+                background-color: var(--accent-color);
+            }
+
+            main {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .calendar-container {
+                padding-bottom: 100%;
+            }
+
+            ul, ol {
+                padding-left: 18px;
+            }
+
+            .stop-level.s, .stop-level.t, .stop-level.o, .stop-level.p {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>AS – Arbeitssicherheit & Gesundheitsschutz</h1>
+                    <p>Gesetzliche Grundlagen (OR, ArG, UVG), Akteure, STOP-Prinzip, Arbeitgeberpflichten & Active Recall</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav id="main-nav">
+        <a href="scm.html" title="Supply Chain Management">SCM</a>
+        <a href="unlo.html" title="Unternehmenslogistik">UNLO</a>
+        <a href="belo.html" title="Beschaffungslogistik">BELO</a>
+        <a href="lalo.html" title="Lagerlogistik">LALO</a>
+        <a href="as.html" class="active" title="Arbeitssicherheit & Gesundheitsschutz">AS</a>
+    </nav>
+
+    <main>
+        <!-- TEIL 1 -->
+        <section class="card content-section" id="teil-1">
+            <h2>AS - Arbeitssicherheit: Teil 1</h2>
+
+            <h3>1. Thema & Lernziele dieser Einheit</h3>
+            <p>Das Hauptthema ist die Einführung in die Arbeitssicherheit (AS).</p>
+            <ul>
+                <li>Aufzeigen und Erläutern der wesentlichen Gründe für die Notwendigkeit eines Arbeitssicherheitssystems.</li>
+                <li>Nennen und Erläutern der spezifischen Rechtsgrundlagen in der Schweiz.</li>
+            </ul>
+
+            <h3>2. Detaillierter Hauptteil</h3>
+            <h4>Definitionen und Grundbegriffe</h4>
+            <ul>
+                <li><span class="highlight-text">Gesundheit (WHO):</span> Ein Zustand umfassenden körperlichen, seelischen und sozialen Wohlbefindens, nicht nur das Fehlen von Krankheit.</li>
+                <li><span class="highlight-text">Arbeitssicherheit:</span> Zustand, in dem Betriebsangehörige am Arbeitsplatz keinen Unfallgefahren (Berufsunfälle) oder gesundheitlichen Belastungen (Berufskrankheiten) ausgesetzt sind.</li>
+                <li><span class="highlight-text">Gesundheitsschutz:</span> Gesamtheit aller Massnahmen, die nach Erfahrung notwendig, technischem Stand anwendbar und betrieblich angemessen sind, um Unfälle und Krankheiten zu verhüten.</li>
+                <li><span class="highlight-text">Berufskrankheit (UVG 9):</span> Krankheiten, die bei der Arbeit ausschliesslich oder vorwiegend durch schädigende Stoffe oder bestimmte Arbeiten verursacht werden (gemäss Bundesratsliste).</li>
+            </ul>
+
+            <h4>Das Arbeitssicherheitsmanagementsystem (AMS)</h4>
+            <p>Ein AMS regelt konsequent und effizient die rechtlichen und internen Vorgaben zum Arbeits- und Gesundheitsschutz. Es ist eng mit dem Qualitäts- und Umweltmanagement verknüpft (PDCA-Zyklus).</p>
+            <ul>
+                <li><span class="highlight-text">Nutzen:</span> Senkung unfallbedingter Kosten, Steigerung von Produktivität, Mitarbeiterzufriedenheit und Wettbewerbsfähigkeit.</li>
+                <li><span class="highlight-text">Anforderungen:</span> Verantwortung der Leitung, periodische Schulung, Überwachung von Präventionsmassnahmen.</li>
+            </ul>
+
+            <h4>Kosten von Unfällen</h4>
+            <p>Ein Unfall am Arbeitsplatz kostet laut EKAS durchschnittlich CHF 600.– pro Tag.</p>
+            <ul>
+                <li><span class="highlight-text">Direkte Kosten:</span> Versicherungsprämien und unmittelbare Unfallkosten.</li>
+                <li><span class="highlight-text">Indirekte Kosten:</span> Diese sind oft mehr als doppelt so hoch wie die direkten Kosten. Dazu zählen Lohnfortzahlungen für nicht versicherten Lohn, Zeitausfall anderer Mitarbeitender, Sachschäden, Minderleistung von Ersatzpersonal und Ertragsausfälle.</li>
+            </ul>
+
+            <h4>Rechtliche Grundlagen (Gesetzeshierarchie)</h4>
+            <ol>
+                <li><span class="highlight-text">Bundesverfassung:</span> Art. 110 (Schutz der Arbeitnehmenden), Art. 117 (Unfallversicherung) und Art. 118 (Gesundheitsschutz).</li>
+                <li><span class="highlight-text">Gesetze:</span> OR, ArG und UVG bilden die drei Hauptpfeiler.</li>
+                <li><span class="highlight-text">Verordnungen:</span> Konkretisieren die Gesetze (z. B. VUV für das UVG; ArGV 1–5 für das ArG).</li>
+            </ol>
+
+            <!-- GRAFIK 2: SCHWEIZER GESETZESHIERARCHIE (HTML/CSS SCHEMATISCH) -->
+            <div class="diagram-box">
+                <div class="diagram-title">Rechtsgrundlagen der Arbeitssicherheit in der Schweiz</div>
+                <div class="diagram-subtitle">Gesetzeshierarchie vom Verfassungsrecht bis zur Verordnung</div>
+                <div class="hierarchy-container">
+                    <div class="hierarchy-card bv">
+                        <h5>1. Bundesverfassung (BV)</h5>
+                        <p>Art. 110 (Schutz der Arbeitnehmenden) | Art. 117 (Unfallversicherung) | Art. 118 (Gesundheitsschutz)</p>
+                    </div>
+                    <div class="hierarchy-grid">
+                        <div class="hierarchy-card gesetz">
+                            <h5>Obligationenrecht (OR)</h5>
+                            <p>Privatrecht (Einzelarbeitsvertrag)</p>
+                        </div>
+                        <div class="hierarchy-card gesetz">
+                            <h5>Unfallversicherung (UVG)</h5>
+                            <p>Öffentliches Recht (Prävention BU/NBU)</p>
+                        </div>
+                        <div class="hierarchy-card gesetz">
+                            <h5>Arbeitsgesetz (ArG)</h5>
+                            <p>Öffentliches Recht (Gesundheitsschutz)</p>
+                        </div>
+                    </div>
+                    <div class="hierarchy-card verordnung">
+                        <h5>3. Verordnungen (Konkretisierungen)</h5>
+                        <p>VUV (Verordnung über die Unfallverhütung) | ArGV 1–5 (Verordnungen zum Arbeitsgesetz)</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>3. Strukturierte Elemente</h3>
+            <h4>Vergleich der gesetzlichen Hauptpfeiler</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Gesetz</th>
+                            <th>Fokus</th>
+                            <th>Rechtsbereich</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Obligationenrecht (OR)</strong></td>
+                            <td>Regelt das Vertragsverhältnis und gegenseitige Pflichten von AG und AN.</td>
+                            <td>Privatrecht</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unfallversicherungsgesetz (UVG)</strong></td>
+                            <td>Verhütung von Berufs-/Nichtberufsunfällen und Krankheiten; obligatorische Versicherung.</td>
+                            <td>Öffentliches Recht</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Arbeitsgesetz (ArG)</strong></td>
+                            <td>Allgemeiner Gesundheitsschutz, Arbeits-/Ruhezeiten, Sonderschutz für Frauen/Jugendliche.</td>
+                            <td>Öffentliches Recht</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Die vier Merkmale des Gesundheitsschutzes (Generalklauseln)</h4>
+            <p>Der Arbeitgeber muss Massnahmen treffen, die folgende Kriterien erfüllen:</p>
+            <ol>
+                <li><span class="highlight-text">Nach dem Stand der Technik anwendbar:</span> Schutzmassnahmen müssen dem technischen Fortschritt angepasst werden.</li>
+                <li><span class="highlight-text">Den Verhältnissen angemessen:</span> Verhältnismässigkeit zwischen Risiko und Aufwand (objektive Kriterien).</li>
+                <li><span class="highlight-text">Nach der Erfahrung notwendig:</span> Basierend auf allgemeiner Erfahrung (z. B. Unfallstatistiken), nicht auf subjektiver Meinung.</li>
+                <li><span class="highlight-text">Mitwirkung der Arbeitnehmenden:</span> Einbezug der AN zur Nutzung ihrer Erfahrung und Steigerung der Motivation.</li>
+            </ol>
+
+            <h4>Lösungsmodelle zur Erfüllung der EKAS-Richtlinie 6508 (ASA)</h4>
+            <ol>
+                <li><span class="highlight-text">Individuallösung:</span> Firmenspezifisch auf eigene Bedürfnisse zugeschnitten; aufwendig, aber präzise.</li>
+                <li><span class="highlight-text">Branchenlösung:</span> Von Verbänden erarbeitet; bietet Checklisten mit branchenspezifischen Risiken.</li>
+                <li><span class="highlight-text">Betriebsgruppenlösung:</span> Einheitliche Vorgaben für untergeordnete Betriebe (z. B. Migros, Fenaco).</li>
+                <li><span class="highlight-text">Modelllösung:</span> Von Beratungsunternehmen angebotene fertige Systeme.</li>
+                <li><span class="highlight-text">Subsidiärmodell:</span> Von der EKAS verordnete, teure Lösung für Unternehmen, die keine eigenen Massnahmen treffen.</li>
+            </ol>
+
+            <h3>4. Praxis- oder Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Beizug von Spezialisten (ASA):</span> Ein Arbeitgeber muss Spezialisten (Arbeitsärzte, Sicherheitsingenieure) beiziehen, wenn im Betrieb besondere Gefährdungen vorliegen oder das nötige Fachwissen fehlt.</li>
+                <li><span class="highlight-text">Nachweis der Organisation:</span> Dies erfolgt in der Praxis durch Prozesshandbücher, Kursatteste über Weiterbildungen oder das Vorhandensein von Sicherheitsschildern und PSA.</li>
+                <li><span class="highlight-text">Beispiele für besondere Gefährdungen:</span> Arbeiten mit Absturzgefahr, hoher mechanischer Gefährdung (Stapler, Hochregallager) oder chemischen Einwirkungen.</li>
+            </ul>
+
+            <h3>5. Mini-Quiz</h3>
+            <details>
+                <summary>1. Frage: Wie definiert die WHO den Begriff "Gesundheit"?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Als Zustand umfassenden körperlichen, seelischen und sozialen Wohlbefindens, nicht nur als Abwesenheit von Krankheit.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>2. Frage: In welchem Verhältnis stehen indirekte Unfallkosten zu den direkten Kosten?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die indirekten Kosten sind oft mehr als einen Faktor zwei höher (Faktor > 2).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>3. Frage: Wann ist ein Arbeitgeber verpflichtet, ASA-Spezialisten beizuziehen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Wenn der Betrieb besonderen Gefährdungen ausgesetzt ist oder das erforderliche Fachwissen im Betrieb fehlt.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- TEIL 2 -->
+        <section class="card content-section" id="teil-2">
+            <h2>AS - Arbeitssicherheit: Teil 2</h2>
+
+            <h3>1. Thema & Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Arbeitssicherheit – Organisation, Akteure, Durchsetzungsverfahren, betriebliche Steuerung sowie spezifische Handlungsfelder im Betrieb.</p>
+            <p><strong>Lernziele der Lerneinheit:</strong></p>
+            <ul>
+                <li>Die ausserbetrieblichen und betrieblichen Instanzen für Arbeitssicherheit und Gesundheitsschutz mit ihren jeweiligen Aufgaben und Kompetenzen aufzeigen.</li>
+                <li>Aspekte der Planung, Umsetzung und Umsetzungskontrolle (Controlling) von Arbeitssicherheitssystemen aufzeigen und erläutern.</li>
+                <li>Anhand von Beispielen die Anforderungen an die Arbeitssicherheit aus Arbeitgeber- und Arbeitnehmersicht verständlich erklären.</li>
+            </ul>
+
+            <h3>2. Detaillierter Hauptteil</h3>
+            <h4>A. Ausserbetriebliche Akteure (Abschnitt 3.3)</h4>
+            <p>Die ausserbetriebliche Organisation gliedert sich in Aufsichts-, Steuerungs- und Durchführungsorgane sowie Fachorganisationen:</p>
+            <ol>
+                <li><span class="highlight-text">Aufsicht – Bundesamt für Gesundheit (BAG):</span>
+                    <ul>
+                        <li>Der Bundesrat hat die Oberaufsicht über die Arbeitssicherheit und den Gesundheitsschutz an das BAG delegiert.</li>
+                        <li>Zielgrössen: Befähigung von Individuen zur Wahrnehmung der Eigenverantwortung für die Gesundheit sowie Gewährleistung eines ganzheitlichen, konsistenten Gesundheitsschutzes und der Prävention für den grösstmöglichen Gesundheitsgewinn.</li>
+                        <li>Themenbereiche: Epidemien/Infektionskrankheiten, Drogen-/Suchtprävention, Lebensmittelsicherheit, Schutz vor Strahlung und Lärm, Kontrolle von Giftstoffen/Chemikalien, Stammzellenforschung, Bioterrorismus sowie Kranken- und Unfallversicherung.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Steuerung – Eidgenössische Koordinationskommission für Arbeitssicherheit (EKAS):</span>
+                    <ul>
+                        <li>Vom Bundesrat gemäss UVG als eigentliche Zentralstelle definiert; steht unter Aufsicht des Bundesrats bzw. des BAG.</li>
+                        <li>Steuert und stimmt die Aufgaben und Aktivitäten aller Beteiligten in Arbeitssicherheit und Gesundheitsschutz aufeinander ab.</li>
+                        <li>Rechte, Pflichten und Leistungen:
+                            <ul>
+                                <li>Erlass von Richtlinien zur Verhütung von Berufsunfällen/Berufskrankheiten sowie Weisungen gegenüber Versicherten und Durchführungsorganen.</li>
+                                <li>Organisation/Koordination der Weiterbildung von Spezialisten der Arbeitssicherheit (ASA).</li>
+                                <li>Aufstellen schweizweiter oder regionaler Sicherheitsprogramme.</li>
+                                <li>Finanzierung der Tätigkeiten der Durchführungsorgane im Dienst der Arbeitssicherheit.</li>
+                                <li>Bereitstellung von Hilfsmitteln zur Gefahrenermittlung und Veröffentlichung von ASA-Umsetzungslösungen (Branchen-, Betriebs-, Gruppen-, Modell- und Individuallösungen).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Durchführungsorgane:</span>
+                    <ul>
+                        <li>Kantone (Kantonale Arbeitsinspektorate / KIGA): Zuständig für die Verhütung von Berufsunfällen in Betrieben ohne spezielle Betriebsgefahren (keine Geräte mit hohem Gefährdungspotenzial; betreuen ca. 2,3 Mio. Arbeitnehmende).</li>
+                        <li>Staatssekretariat für Wirtschaft (SECO): Kompetenzzentrum des Bundes für Wirtschaftspolitik und Arbeitnehmerschutz. Zuständig für die Arbeitssicherheit in Bundesbetrieben sowie den einheitlichen Vollzug in den Kantonen (über die Direktion für Arbeit, eidgenössische Arbeitsinspektoren und das Ressort Grundlagen Arbeit und Gesundheit).</li>
+                        <li>Suva (Schweizerische Unfallversicherungsanstalt): Grösste obligatorische Unfallversicherung der Schweiz (über 100'000 Betriebe, knapp 2 Mio. Versicherte). Zuständig für die Prophylaxe von Berufsunfällen und Berufskrankheiten in Betrieben mit speziellen Betriebsgefahren bzw. komplizierten technischen Einrichtungen mit hohem Gefährdungspotenzial (ca. 1,3 Mio. Arbeitnehmende).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Fachorganisationen:</span>
+                    <ul>
+                        <li>Setzen sich für Prävention ein und engagieren Spezialisten der Arbeitssicherheit. Die meisten sind im Dachverband Suissepro zusammengeschlossen (z. B. GRMST, SGAH, SGARM, SGAS, Swiss Ergo, Arbeitssicherheit Schweiz, SGIG).</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <!-- GRAFIK 4: DURCHFÜHRUNGSORGANE KIGA / SUVA / SECO -->
+            <div class="diagram-box">
+                <div class="diagram-title">Durchführungsorgane der Arbeitssicherheit im Vergleich</div>
+                <div class="diagram-subtitle">Aufteilung nach Betriebsart, Risikoprofil und Zuständigkeit</div>
+                <div class="org-grid">
+                    <div class="org-card kiga">
+                        <div class="org-header">Kantone (KIGA)</div>
+                        <div class="org-body">
+                            <p><strong>Ohne spezielle Betriebsgefahren</strong></p>
+                            <ul>
+                                <li>Gewerbliche Betriebe & Verwaltung</li>
+                                <li>Keine hohen Risikopotenziale</li>
+                                <li>Lokale Inspektionen</li>
+                            </ul>
+                            <p style="margin-top:8px; font-weight:600; color:#0d6efd;">Betreut: ca. 2,3 Mio. AN</p>
+                        </div>
+                    </div>
+                    <div class="org-card suva">
+                        <div class="org-header">Suva</div>
+                        <div class="org-body">
+                            <p><strong>Mit speziellen Betriebsgefahren</strong></p>
+                            <ul>
+                                <li>Komplizierte Technik / Industrie</li>
+                                <li>Hohe Unfallrisiken / Bauwesen</li>
+                                <li>Prophylaxe & Prävention</li>
+                            </ul>
+                            <p style="margin-top:8px; font-weight:600; color:#dc3545;">Betreut: ca. 1,3 Mio. AN</p>
+                        </div>
+                    </div>
+                    <div class="org-card seco">
+                        <div class="org-header">SECO</div>
+                        <div class="org-body">
+                            <p><strong>Bundesbetriebe & Aufsicht</strong></p>
+                            <ul>
+                                <li>Einheitlicher Vollzug in Kantonen</li>
+                                <li>Koordination KIGA & Suva</li>
+                                <li>Kompetenzzentrum Bund</li>
+                            </ul>
+                            <p style="margin-top:8px; font-weight:600; color:#198754;">Oberaufsicht & Bund</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>B. Betriebliche Akteure (Abschnitt 3.4)</h4>
+            <ul>
+                <li><span class="highlight-text">Arbeitgeber (Gesamtverantwortung):</span>
+                    <ul>
+                        <li>Trägt die unübertragbare Gesamtverantwortung für Sicherheit und Gesundheitsschutz.</li>
+                        <li>Kann operative Aufgaben an Sicherheitsbeauftragte (SiBe / BE-SIBE) oder Vorgesetzte delegieren.</li>
+                        <li>Voraussetzungen für die Delegation (Art. 7 Abs. 1 VUV): Erteilung klarer Weisungen und Kompetenzen sowie Gewährleistung zweckmässiger Aus- und Weiterbildung.</li>
+                        <li>Rechtliche Entlastung (Art. 7 Abs. 2 VUV, Art. 7 Abs. 4 ArGV 3): Die Pflichtenübertragung entbindet den Arbeitgeber nicht von der Verantwortung. Er kann sich bei Schadensfällen zivil- und strafrechtlich nur entlasten, wenn er den Nachweis erbringt, dass er die beauftragten Personen sorgfältig ausgewählt, zweckmässig ausgebildet/instruiert und in zumutbarer Weise überwacht hat.</li>
+                        <li>Die Pflichten gliedern sich in drei Bereiche: Organisation, Kommunikation und Schulung sowie Arbeitsplatzgestaltung.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Arbeitnehmende (Pflichten):</span>
+                    <ul>
+                        <li>Befolgung von Sicherheitsweisungen des Arbeitgebers.</li>
+                        <li>Korrektes Verwenden der Sicherheitseinrichtungen und konsequentes Tragen der bereitgestellten Persönlichen Schutzausrüstung (PSA gemäss VUV 5).</li>
+                        <li>Pflicht, sich in leistungsfähigem Zustand zu halten (z. B. Verzicht auf Alkohol und Suchtmittel).</li>
+                        <li>Teilnahme an Vorsorgeuntersuchungen sowie Mangelmeldung/-behebung an Arbeitsgeräten.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Spezialisten der Arbeitssicherheit (SiBe & SGA-S):</span>
+                    <ul>
+                        <li>Interne SiBe / BE-SIBE: Ansprechperson im Betrieb für Planung, Umsetzung, Erst-Hilfe-Organisation, Nachführung der Unterlagen und Motivation der Mitarbeitenden.</li>
+                        <li>Externe Spezialistinnen (SGA-S): Arbeitsärztinnen, Arbeitshygieniker, Sicherheitsingenieure/Sicherheitsfachleute. Ihr Beizug zur Beratung der Geschäftsleitung richtet sich nach der EKAS-Richtlinie 6508 (ASA-Richtlinie).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>C. Sanktionen und Durchführungsverfahren (Abschnitt 3.5 & 3.7)</h4>
+            <p>Wenn Betriebe Vorschriften verletzen, leiten die Durchführungsorgane (Suva, SECO, kantonale Arbeitsinspektorate) förmliche Verwaltungsverfahren ein:</p>
+            <ol>
+                <li><span class="highlight-text">Ordentliches Verfahren:</span>
+                    <ul>
+                        <li>Schritt 1 (Ermahnung): Feststellung von Mängeln beim Betriebsbesuch \(\rightarrow\) schriftliche Ermahnung mit angemessener Fristansetzung zur Behebung (VUV 62, ArG 51 I).</li>
+                        <li>Schritt 2 (Verfügung): Bei verstreicher Frist oder Verzug \(\rightarrow\) Erlass einer vollstreckbaren Verfügung mit Vollzugsfrist (VUV 64, ArG 51 II).</li>
+                        <li>Schritt 3 (Rechtsmittel): Gegen VUV-Verfügungen kann innert 30 Tagen schriftlich Einsprache beim Durchführungsorgan erhoben werden (ATSG 52). Gegen ArG-Verfügungen existiert keine Einsprache; es muss innert 30 Tagen Beschwerde bei der kantonalen Rekursbehörde eingereicht werden (ArG 56 I). Nach 30 Tagen ohne Rechtsmittel wird die Verfügung rechtskräftig.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Dringliche / Schwerwiegende Fälle:</span>
+                    <ul>
+                        <li>Verzicht auf die Ermahnung und direkter Erlass einer Verfügung.</li>
+                        <li>Anordnung vorsorglicher Massnahmen: Benutzungsverbot für Maschinen oder Arbeitslokale bis hin zur vorübergehenden Schliessung des gesamten Betriebs bei unmittelbarer Gefährdung von Leben oder Gesundheit.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <!-- GRAFIK 3: ORDENTLICHES VERWALTUNGSVERFAHREN -->
+            <div class="diagram-box">
+                <div class="diagram-title">Ordentliches Verwaltungsverfahren bei Mängeln</div>
+                <div class="diagram-subtitle">Stufenweiser Ablauf bei Sicherheitsbeanstandungen</div>
+                <div class="process-flow">
+                    <div class="process-steps">
+                        <div class="process-step step1">
+                            <h5>1. Ermahnung</h5>
+                            <p>Schriftliche Feststellung & Frist zur Behebung</p>
+                        </div>
+                        <div class="process-step step2">
+                            <h5>2. Verfügung</h5>
+                            <p>Vollstreckbare Anordnung bei Fristablauf</p>
+                        </div>
+                        <div class="process-step step3">
+                            <h5>3. Rechtsmittel</h5>
+                            <p>30 Tage Frist (Einsprache oder Beschwerde)</p>
+                        </div>
+                    </div>
+                    <div class="process-info">
+                        <strong>Rechtsmittelwege (Frist jeweils 30 Tage):</strong><br>
+                        VUV-Verfügung: Einsprache beim Durchführungsorgan | ArG-Verfügung: Beschwerde an kantonale Rekursbehörde
+                    </div>
+                </div>
+            </div>
+
+            <h4>D. Betriebliches Sicherheitssystem, STOP-Prinzip & Absenzenmanagement (Abschnitt 3.6 & 3.7)</h4>
+            <ul>
+                <li><span class="highlight-text">Hierarchie der Schutzmassnahmen (STOP-Prinzip):</span> Die Massnahmenplanung muss zwingend in folgender Reihenfolge erfolgen:
+                    <ol>
+                        <li>Gefahr beseitigen (Substitution): Ersatz gefährlicher Stoffe oder Prozessschritte.</li>
+                        <li>Technische Massnahmen: Gefahr kapseln/umzäunen, Annäherungsschutzeinrichtungen (Lichtschranken, Kontaktteppiche, Schaltleisten).</li>
+                        <li>Organisatorische Massnahmen: Anpassung der Arbeitsorganisation, Weisungen.</li>
+                        <li>Personenbezogene Massnahmen: Persönliche Schutzausrüstung (PSA wie Sicherheitsschuhe, Masken, Brillen), Instruktion und Schulung.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Nichtbetriebsunfälle (NBU):</span> Obwohl Freizeitsicherheit nicht unter das Arbeitsschutzgesetz fällt, lohnt sich die Prävention für Unternehmen wegen der extrem hohen indirekten Unfallkosten.</li>
+                <li><span class="highlight-text">Absenzenmanagement & Wiedereingliederung:</span>
+                    <ul>
+                        <li>Setzt Führungswillen der obersten Stufe voraus und stützt sich auf drei Pfeiler: Arbeitssicherheit/Gesundheitsschutz, Freizeitsicherheit und betriebliche Gesundheitsförderung.</li>
+                        <li>Systematisches Absenzenmanagement verhindert Langzeitausfälle. Untersuchungen zeigen: Bei einer Absenzdauer von 6 bis 12 Monaten liegt die Wahrscheinlichkeit einer erfolgreichen Rückkehr an den Arbeitsplatz nahezu bei null.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- GRAFIK 1: DAS STOP-PRINZIP PYRAMIDE (CSS RESPONSIVE) -->
+            <div class="diagram-box">
+                <div class="diagram-title">Das STOP-Prinzip (EKAS / VUV)</div>
+                <div class="diagram-subtitle">Rangfolge der Schutzmassnahmen im Arbeitsschutz</div>
+                <div class="stop-pyramid">
+                    <div class="stop-level s">
+                        <strong>S — Substitution</strong>
+                        <span>Gefahr beseitigen / Ersatz gefährlicher Stoffe &amp; Prozesse</span>
+                    </div>
+                    <div class="stop-level t">
+                        <strong>T — Technische Massnahmen</strong>
+                        <span>Kapselung, Absauganlagen, Lichtschranken, Schutzeinrichtungen</span>
+                    </div>
+                    <div class="stop-level o">
+                        <strong>O — Organisatorische Massnahmen</strong>
+                        <span>Arbeitsorganisation, Weisungen, Schulung, Zutrittsverbote</span>
+                    </div>
+                    <div class="stop-level p">
+                        <strong>P — Personenbezogen</strong>
+                        <span>Persönliche Schutzausrüstung (PSA) &amp; Verhalten</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4>E. Spezifische betriebliche Handlungsfelder (Abschnitt 3.8)</h4>
+            <ul>
+                <li><span class="highlight-text">Medizinische Notfälle:</span> Bekanntmachung von Notfallnummern, Notfallapotheke, Ausbilden von Erste-Hilfe-Personal und Bereitstellung von Sanitätsräumen (ArGV 3 Art. 36).</li>
+                <li><span class="highlight-text">Brandschutz:</span> Beachtung der VKF-Vorgaben (Vereinigung Kantonaler Feuerversicherungen), Erstellung gebäudebezogener Brandschutzkonzepte und periodisches Üben von Löschgeräten.</li>
+                <li><span class="highlight-text">Alarmierung & Evakuierung:</span> Freihalten aller Fluchtwege, Zugangssicherung zu EDV-Räumen/Hosts bei Alarmen; Pflicht zu spezifischen Evakutationsmassnahmen in komplexen Gebäuden ab 200 Personen.</li>
+                <li><span class="highlight-text">Ergonomie & Nichtraucherschutz:</span> Schutz vor Passivrauchen am Arbeitsplatz (ArGV 3 Art. 19). Ergonomische Gestaltung von Arbeitsplätzen (ArGV 3 Art. 23–24) zwingend unter Einbezug der direkt betroffenen Mitarbeitenden.</li>
+                <li><span class="highlight-text">Handhabung von Lasten:</span> Organisatorische/technische Massnahmen zur Vermeidung von Überbeanspruchung des Muskel- und Stützapparats beim Heben und Tragen (ArGV 3 Art. 25).</li>
+                <li><span class="highlight-text">Psychosoziale Aspekte & Mutterschutz:</span>
+                    <ul>
+                        <li>Mutterschutz: Spezifische Bestimmungen gemäss Mutterschutzverordnung für Schwangere und Stillende.</li>
+                        <li>Stress, Mobbing & Belästigung: Fröhzeitiges Erkennen von Stressoren; Vorgesetzte tragen die Schlüsselrolle/Vorbildfunktion bei Konflikten, Mobbing (systematische Schikanierung über längere Zeit) und dem Schutz vor sexueller Belästigung.</li>
+                        <li>Suchtprobleme: Vorgesetzte setzen klare Grenzen bezüglich toleriertem Verhalten und begleiten Betroffene gemeinsam zu Fachstellen.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>3. Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Die Durchführungsorgane der Arbeitssicherheit im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Durchführungsorgan</th>
+                            <th>Zuständigkeitsbereich / Betriebsart</th>
+                            <th>Betreute Arbeitnehmende</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Kantonale Arbeitsinspektorate (KIGA)</strong></td>
+                            <td>Betriebe ohne spezielle Betriebsgefahren (keine Geräte mit hohem Gefährdungspotenzial).</td>
+                            <td>ca. 2,3 Millionen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Suva</strong></td>
+                            <td>Betriebe mit speziellen Betriebsgefahren (komplizierte technische Einrichtungen / Geräte mit hohem Gefährdungspotenzial).</td>
+                            <td>ca. 1,3 Millionen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SECO</strong></td>
+                            <td>Prävention in Bundesbetrieben sowie Überwachung des einheitlichen Vollzugs in den Kantonen.</td>
+                            <td>Bundespersonal / Kantonsaufsicht</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Aufgaben und Rollenverteilung im Betrieb</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rolle</th>
+                            <th>Rechtlicher Status</th>
+                            <th>Hauptaufgaben & Pflichten</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Arbeitgeber / Geschäftsleitung</strong></td>
+                            <td>Gesamtverantwortung</td>
+                            <td>Gefahren ermitteln, Massnahmen festlegen/überprüfen, PSA bereitstellen, Instruktion und Kontrolle.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sicherheitsbeauftragter (SiBe)</strong></td>
+                            <td>Delegierte Fachverantwortung</td>
+                            <td>Sicherheitsmassnahmen planen und umsetzen, Erste Hilfe organisieren, Schulung/Motivation, Unterlagen à jour halten.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Arbeitnehmende</strong></td>
+                            <td>Ausführungsverantwortung & Pflichten</td>
+                            <td>Weisungen befolgen, PSA tragen, Sicherheitseinrichtungen richtig nutzen, Mängel melden, leistungsfähig bleiben.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Nummerierte Liste 1: Ablauf des Verwaltungsverfahrens bei Sicherheitsmängeln</h4>
+            <ol>
+                <li><strong>Feststellung des Mangels:</strong> Inspektoren stellen bei Betriebsbesuchen Verstösse gegen VUV oder ArG fest.</li>
+                <li><strong>Schriftliche Ermahnung:</strong> Ansetzung einer angemessenen Frist zur Mangelbehebung (Einleitung des förmlichen Verfahrens). (Entfällt in dringenden Fällen).</li>
+                <li><strong>Förmliche Verfügung:</strong> Wenn die Frist ungenutzt verstreicht oder bei unmittelbarer Gefährdung.</li>
+                <li><strong>Eventuelle vorsorgliche Massnahmen:</strong> Benutzungsverbot für Geräte/Räume oder vorübergehende Betriebsschliessung bei schwerwiegenden Mängeln.</li>
+                <li><strong>Rechtsmittelverfahren (Frist: 30 Tage):</strong>
+                    <ul>
+                        <li>VUV-Verfügung: Einsprache beim entsprechenden Durchführungsorgan.</li>
+                        <li>ArG-Verfügung: Beschwerde bei der kantonalen Rekursbehörde.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>Nummerierte Liste 2: Die 4 Stufen des STOP-Prinzips bei Schutzmassnahmen</h4>
+            <ol>
+                <li><strong>S – Substitution (Gefahr beseitigen):</strong> Ersatz gefährlicher Stoffe durch unbedenkliche Substanzen oder Prozessanpassung.</li>
+                <li><strong>T – Technische Massnahmen:</strong> Gefahrenquelle kapseln, Umzäunungen, Lichtschranken oder Kontaktteppiche anbringen.</li>
+                <li><strong>O – Organisatorische Massnahmen:</strong> Arbeitsorganisation anpassen, Sicherheitsweisungen erlassen.</li>
+                <li><strong>P – Personenbezogene Massnahmen:</strong> Abgabe und Tragen von PSA (Sicherheitsschuhe, Brillen, Masken) sowie Instruktion/Schulung.</li>
+            </ol>
+
+            <h3>4. Praxis- und Anwendungsbeispiele aus den Unterlagen</h3>
+            <ul>
+                <li><span class="highlight-text">Delegation von Arbeitgeberpflichten:</span> Ein Arbeitgeber setzt einen internen Sicherheitsbeauftragten (SiBe) ein. Um sich bei einem Unfall rechtlich zu entlasten, muss er belegen, dass er den SiBe sorgfältig ausgewählt, zweckmässig ausgebildet (z. B. auf Kursen) und dessen Arbeit regelmässig überwacht hat.</li>
+                <li><span class="highlight-text">Anwendung des STOP-Prinzips bei Gefahrstoffen:</span>
+                    <ol>
+                        <li>Substitution: Ersetzen eines lösemittelhaltigen Reinigers durch eine ungiftige Substanz.</li>
+                        <li>Technisch: Installation einer Kapselung oder Absauganlage an der Bearbeitungsmaschine.</li>
+                        <li>Organisatorisch: Festlegung von Pausenregeln und zeitlichen Begrenzungen für Arbeiten in der Nähe der Anlage.</li>
+                        <li>Personenbezogen: Verpflichtendes Tragen einer Staubmaske oder Schutzbrille während der Arbeit.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Massnahmen zur Freizeitsicherheit (Nichtbetriebsunfälle):</span> Aufstellen von Infowänden zur Sportprävention in Pausenräumen, Abgabe von Schienbeinschonern an Betriebs-Fussballspieler, Gutscheine für Fahrradhelme oder das Angebot einer kostenlosen Skibindungskontrolle.</li>
+                <li><span class="highlight-text">Organisation mobiler Arbeitsplätze:</span> Für Unterhaltspersonal kantonaler Infrastrukturen (ohne festen Arbeitsplatz) muss die Notfallorganisation bedürfnisgerecht und flexibel sichergestellt werden.</li>
+                <li><span class="highlight-text">Evakuierungsplanung:</span> In einem komplexen Bürogebäude, in dem sich inklusive Kunden über 200 Personen aufhalten können, müssen vordefinierte Evakuationsmassnahmen getroffen und Fluchtwege stets freigehalten werden.</li>
+                <li><span class="highlight-text">Suchtprävention durch Vorgesetzte:</span> Bei Suchtproblemen eines Mitarbeitenden definiert der Vorgesetzte klare Leistungsgrenzen im Arbeitsalltag und begleitet den Betroffenen persönlich zu einer Fachstelle.</li>
+            </ul>
+
+            <h3>5. Mini-Quiz zur Selbstüberprüfung</h3>
+            <details>
+                <summary>Frage 1: Welches Durchführungsorgan ist für einen Industriebetrieb zuständig, der schwere Maschinen mit hohem Gefährdungspotenzial betreibt?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die Suva. Sie beaufsichtigt Betriebe mit speziellen Betriebsgefahren und komplizierten technischen Einrichtungen (ca. 1,3 Mio. Arbeitnehmende). (Die kantonalen Arbeitsinspektorate betreuen hingegen Betriebe ohne spezielle Betriebsgefahren).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Kann sich ein Arbeitgeber von seiner Verantwortung befreien, indem er die Aufgabe der Arbeitssicherheit komplett an einen Sicherheitsbeauftragten (SiBe) überträgt?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Nein. Die Gesamtverantwortung bleibt beim Arbeitgeber. Er kann sich rechtlich nur entlasten, wenn er nachweist, dass er die beauftragte Person sorgfältig ausgewählt, zweckmässig ausgebildet/instruiert und in zumutbarer Weise überwacht hat.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Wo liegt der Unterschied beim Rechtsmittelverfahren gegen eine Verfügung nach VUV im Vergleich zu einer Verfügung nach ArG?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Gegen VUV-Verfügungen kann innert 30 Tagen schriftlich Einsprache beim Durchführungsorgan erhoben werden. Gegen ArG-Verfügungen gibt es keine Einsprache; hier muss innert 30 Tagen Beschwerde bei der kantonalen Rekursbehörde eingereicht werden.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Warum ist die Bereitstellung einer Staubmaske (PSA) gemäss dem STOP-Prinzip nicht die erste Wahl bei der Gefahrenbekämpfung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Weil personenbezogene Massnahmen (P) an unterster Stelle der Hierarchie stehen. Gefahren müssen primär an der Quelle beseitigt (Substitution) oder durch technische (T) und organisatorische (O) Massnahmen minimiert werden.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Warum lohnt sich für Betriebe die Erstellung eines Absenzenmanagements bereits ab dem ersten Unfall- oder Krankheitstag?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Weil Untersuchungen zeigen, dass bei einer Absenzdauer von 6 bis 12 Monaten die Wahrscheinlichkeit einer erfolgreichen Rückkehr an den Arbeitsplatz nahezu bei null liegt.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- TEIL 3 -->
+        <section class="card content-section" id="teil-3">
+            <h2>AS - Arbeitssicherheit: Teil 3</h2>
+
+            <h3>1. Thema & Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Betriebliche Notfallorganisation (Erste Hilfe, Alarmsysteme, Brandschutz, Schutz allein arbeitender Personen), EKAS 10-Punkte-ASA-Systematik, EKAS STOP-Prinzip, EKAS/SUVA-Checklisten sowie Rechtsgrundlagen, Einsatz, Zumutbarkeit und Kategorien der Persönlichen Schutzausrüstung (PSA).</p>
+            <p><strong>Lernziele der Lerneinheit:</strong></p>
+            <ul>
+                <li>Nennen branchenspezifischer und betrieblicher Vorschriften zur Arbeitssicherheit und Notfallorganisation.</li>
+                <li>Erklären der EKAS 10-Punkte-ASA-Systematik.</li>
+                <li>Erläutern des EKAS STOP-Prinzips für die Planung und Umsetzung von Sicherheitsmassnahmen.</li>
+                <li>Anwenden der EKAS- und SUVA-Checklisten.</li>
+                <li>Wiedergeben aller wichtigen Grundlagen der Persönlichen Schutzausrüstung (PSA) und deren Umsetzung in der Praxis.</li>
+            </ul>
+
+            <h3>2. Detaillierter Hauptteil</h3>
+            <h4>A. Betriebliche Notfallorganisation & Alarmierung</h4>
+            <ul>
+                <li><span class="highlight-text">Notfallorganisation im Betrieb:</span> Regelt alle wichtigen Massnahmen bei unverhofft auftretenden Notfällen (Unfall, akute Erkrankung, Brand) von der Ersten Hilfe bis zum Brandschutz. Sie ist keine statische Einrichtung; Notfallszenarien und das Problembewusstsein müssen regelmässig geübt und trainiert werden. Bei nicht ortsfesten Arbeitsplätzen muss sie kontinuierlich angepasst werden.</li>
+                <li><span class="highlight-text">Zeitfaktor & Erste Hilfe:</span> Von der Alarmierung bis zum Eintreffen der Sanität am Unfallort vergehen in der Regel 10 bis 15 Minuten. Eine funktionierende Notfallorganisation überbrückt diese Zeit mit wertvollen Erste-Hilfe-Massnahmen und kann Leben retten.</li>
+                <li><span class="highlight-text">Richtig alarmieren:</span> Beschäftigte müssen in der Lage sein, Notrufnummern (Sanität, Ärzte, Feuerwehr, Spitäler, Rega) ohne Zeitverlust abzurufen. Telefonapparate sind mit den Nummern zu versehen, Infotafeln an Kontaktpunkten aufzustellen und aktuelle Listen/Notfallkarten mit Kontaktpersonen zu verteilen.</li>
+                <li><span class="highlight-text">Erste Hilfe leisten:</span>
+                    <ul>
+                        <li>Auswahl und Schulung von Mitarbeitenden für eine Ersthelfer-Ausbildung mit regelmässiger Wissensauffrischung.</li>
+                        <li>Anpassung von Zahl und Ausbildung des Erste-Hilfe-Personals an die Unfall- und Gesundheitsgefahren im Unternehmen.</li>
+                        <li>Erstellung eines Erste-Hilfe-Konzepts unter Berücksichtigung von Betriebsgefahren, Betriebsgrösse und örtlicher Lage.</li>
+                        <li>Einrichtung gut zugänglicher Notfallapotheken (regelmässige Kontrolle und Auffüllen) sowie nötigenfalls eines Sanitätsraums.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Brandschutzkonzept:</span>
+                    <ul>
+                        <li>Fluchtwege: Definieren, kennzeichnen, gut zugänglich und frei von Hindernissen halten; Sammelplatz bestimmen und bekannt machen.</li>
+                        <li>Löschgeräte: Gut gekennzeichnete Standorte festlegen, Funktionsfähigkeit periodisch überprüfen, Personal bezüglich Handhabung instruieren.</li>
+                        <li>Feuerwehr: Zugänge zum Firmenareal kennzeichnen und freihalten; Feuerwehr über Gefahrenstoffe informieren.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Schutz allein arbeitender Personen:</span>
+                    <ul>
+                        <li>Definition: Eine Person gilt als allein arbeitend, wenn ihr nach einem Unfall oder in einer kritischen Situation nicht sofort Hilfe geleistet werden kann (z. B. Arbeiten ohne Sichtverbindung und ausser Rufweite zu anderen Personen).</li>
+                        <li>Anforderungen: Entsprechende Instruktion in Sicherheitsfragen und Sicherstellung der Möglichkeit, im Notfall jederzeit Hilfe herbeirufen zu können.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>B. Die EKAS 10-Punkte-ASA-Systematik</h4>
+            <ul>
+                <li><span class="highlight-text">Grundkonzept:</span> Dient als einheitliche, in der Praxis bewährte Basis zur Übersichtlichkeit und Vergleichbarkeit unter ASA-Lösungen. Sie umfasst 10 Elemente und bildet die Grundlage für die Beurteilung sowie spätere ASA-Kontrollen durch zuständige Kontrollorgane.</li>
+                <li><span class="highlight-text">Flexibilität & Gleichwertigkeit:</span> Das Vorgehen nach der 10-Punkte-Systematik erleichtert die Erfüllung gesetzlicher Verpflichtungen, wird jedoch nicht zwingend vorausgesetzt. Andere Systematiken sind zulässig, sofern die Beurteilungskriterien erfüllt sind und der Nachweis der Gleichwertigkeit erbracht werden kann. Als Hilfsmittel dient eine Korrelationsmatrix.</li>
+            </ul>
+
+            <h4>C. Das EKAS STOP-Prinzip</h4>
+            <ul>
+                <li><span class="highlight-text">Zweck:</span> Dient als Entscheidungshilfe, welche Schutzmassnahmen für einen Arbeitsplatz erforderlich sind und in welcher Reihenfolge sie in Betracht gezogen werden müssen.</li>
+                <li><span class="highlight-text">Ausnahme:</span> In Notfällen lässt sich das Prinzip nicht immer anwenden; dort schützt oft nur eine PSA.</li>
+                <li><span class="highlight-text">Bedeutung der Buchstaben:</span>
+                    <ul>
+                        <li>S = Substitution (Ersatz von Gefahren)</li>
+                        <li>T = Technische Schutzmassnahmen</li>
+                        <li>O = Organisatorische Schutzmassnahmen</li>
+                        <li>P = Personenbezogene Schutzmassnahmen</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>D. EKAS & SUVA Checklisten und Kampagnen</h4>
+            <p>EKAS und SUVA stellen spezifische Kampagnen und Checklisten (z. B. EKAS-Checklisten, SUVA-Checklisten) als Hilfsmittel zur Gefahrenermittlung und Überprüfung bereit.</p>
+
+            <h4>E. Persönliche Schutzausrüstung (PSA)</h4>
+            <ul>
+                <li><span class="highlight-text">Verunfallungszahlen & Nutzen:</span> Täglich verunfallen mehr als 800 Personen bei der Arbeit. PSA beseitigt Gefahren zwar nicht, verringert aber deren negative Auswirkungen, verhindert persönliches Leid (Verletzungen, Berufskrankheiten) und senkt betriebliche Unfallkosten.</li>
+                <li><span class="highlight-text">Grundgedanke & Arbeitsschutzgesetz:</span> Gefährdungen müssen primär durch technische und organisatorische Massnahmen ausgeschlossen werden. Soweit dies nicht möglich ist, müssen Beschäftigte zusätzlich durch geeignete PSA gesichert werden – unabhängig davon, ob die Gefährdung dauerhaft oder kurzzeitig besteht.</li>
+                <li><span class="highlight-text">Beschaffung & Human-Centric-Ansatz:</span>
+                    <ul>
+                        <li>Der Fokus muss auf den Mitarbeitenden liegen, nicht rein auf dem Produkt. Passt die PSA der betroffenen Person nicht, wird sie nicht getragen (Folgen: Freizeitschuhe statt Sicherheitsschuhe, Verbleiben von Schutzbrille/Handschuhen in der Schublade).</li>
+                        <li>Zumutbarkeit & Physische Einschränkungen: Rücksicht auf Beschwerden nehmen (z. B. Personen mit Herz-/Lungenbeschwerden sind ungeeignet für Atemschutz; Personen mit Sehschwäche benötigen Schutzbrillen und Atemschutz-Vollmasken mit optischer Korrektur).</li>
+                        <li>Tragebelastungen beachten: PSA kann das Körpergefühl verändern oder den Körperschwerpunkt verschieben (z. B. Atemschutzgeräte); Hitze am Arbeitsplatz stellt eine zusätzliche Belastung dar.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Rollen & Zuständigkeiten:</span>
+                    <ul>
+                        <li>Arbeitgeber: Ist für sämtliche Massnahmen der Arbeitssicherheit und des Gesundheitsschutzes zuständig. Beschaffung in ausreichender Anzahl, Prüfung, Wartung, Zurverfügungstellung, Ersatz bei Bedarf sowie Übernahme aller Kosten (PSA muss kostenfrei überlassen werden; Kosten dürfen Beschäftigten nicht in Rechnung gestellt werden).</li>
+                        <li>Beschäftigte: Pflicht zum Tragen der PSA in vorgeschriebenen Situationen, sachgemässe Verwendung, Meldung von Beschädigungen und ordentliche Behandlung der PSA als Eigentum des Arbeitgebers.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Die drei Schutzniveaus (Kategorien) der PSA:</span>
+                    <ol>
+                        <li>Kategorie I (Einfache PSA): Schutz gegen kleinere Gefahren, deren Risiko der Anwender leicht selbst einschätzen kann (z. B. oberflächliche mechanische Einflüsse, geringfügige Witterung, schwach aggressive Reinigungsmittel, Sonneneinstrahlung, heisse Teile unter 50 °C, schwache Stösse/Schwingungen).</li>
+                        <li>Kategorie II (Mittlere PSA): Alle PSA, die nicht in Kategorie I oder III fallen.</li>
+                        <li>Kategorie III (Komplexe / Hochrisiko-PSA): Schutz gegen tödliche Gefahren oder ernste, irreversible Gesundheitsschäden, bei denen der Benutzer die unmittelbare Wirkung der Gefahr nicht rechtzeitig erkennen kann.</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <h3>3. Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Übersicht der drei Schutzniveaus (Kategorien) der Persönlichen Schutzausrüstung (PSA)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kategorie</th>
+                            <th>Risikostufe & Gefahrenbereich</th>
+                            <th>Einschätzung durch Benutzer</th>
+                            <th>Beispiele aus den Quellen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Kategorie I</strong></td>
+                            <td>Kleine Gefahren (oberflächliche mechanische Einflüsse, geringe Witterung, schwache Reinigungsmittel, Sonneneinstrahlung, heisse Teile &lt; 50 °C, schwache Stösse/Schwingungen).</td>
+                            <td>Leicht selbst einschätzbar.</td>
+                            <td>Sonnenbrillen (privat), Gartenhandschuhe.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kategorie II</strong></td>
+                            <td>Mittlere Gefahren (alle PSA, die weder in Kat. I noch in Kat. III fallen).</td>
+                            <td>Standard-Risikobeurteilung.</td>
+                            <td>Schutzbrillen, Fussschutz, Schnittschutz, Schutzhelme.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kategorie III</strong></td>
+                            <td>Tödliche Gefahren oder ernste, irreversible Gesundheitsschäden.</td>
+                            <td>Unmittelbare Wirkung der Gefahr nicht rechtzeitig erkennbar.</td>
+                            <td>Schutz vor chemischen/biologischen Einflüssen, Stürzen aus der Höhe, Kälte (–50 °C oder kälter), Stromschlag, Atemschutzgeräte, Gehörschutz, Tauchgeräte, Brandschutz-PSA.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Pflichtenverteilung bei der Persönlichen Schutzausrüstung (PSA)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Akteur</th>
+                            <th>Gesetzliche Verpflichtungen & Aufgaben</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Arbeitgeber</strong></td>
+                            <td>Gesamte Verantwortung; Beschaffung in ausreichender Stückzahl; Prüfung & Wartung; Bereitstellung & Ersatz; Vollständige Kostenübernahme (kostenfreie Überlassung).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beschäftigte</strong></td>
+                            <td>Tragepflicht bei Vorschrift; sachgemässe Benutzung; Meldung von Beschädigungen; sorgfältige Behandlung als Eigentum des Arbeitgebers.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Nummerierte Liste 1: Ablauf und Reihenfolge der Schutzmassnahmen nach dem STOP-Prinzip</h4>
+            <ol>
+                <li><strong>S – Substitution:</strong> Ersatz gefährlicher Arbeitsverfahren, Stoffe und Einrichtungen durch ungefährliche oder weniger gefährliche.</li>
+                <li><strong>T – Technische Schutzmassnahmen:</strong> Sicherung durch technische Mittel (z. B. Schutzvorrichtungen, Geländer, Auffangnetze, Kapselungen/Containment, Schleusen, Emissionskontrolle).</li>
+                <li><strong>O – Organisatorische Schutzmassnahmen:</strong> Beschränkung der Zeitdauer der Exposition (Arbeitswechsel, Pausenregelung), Regelung der Zuständigkeiten, Schulung und Überwachung.</li>
+                <li><strong>P – Personenbezogene Schutzmassnahmen:</strong> Abgabe und Nutzung geeigneter Persönlicher Schutzausrüstung (PSA) sowie Instruktion/Schulung.</li>
+            </ol>
+
+            <h4>Nummerierte Liste 2: Massnahmen im Brandschutzkonzept</h4>
+            <ol>
+                <li><strong>Fluchtwege regeln:</strong> Definieren, kennzeichnen, gut zugänglich und frei von Hindernissen halten; Sammelplatz bestimmen und Personal bekannt machen.</li>
+                <li><strong>Löschgeräte bereitstellen:</strong> Standorte gut kennzeichnen, Funktionsfähigkeit periodisch überprüfen, Personal bezüglich Handhabung instruieren.</li>
+                <li><strong>Feuerwehr-Einsatz vorbereiten:</strong> Zugänge zum Firmenareal kennzeichnen und freihalten; Feuerwehr über Gefahrenstoffe informieren.</li>
+            </ol>
+
+            <h3>4. Praxis- und Anwendungsbeispiele aus der Quelle</h3>
+            <ul>
+                <li><span class="highlight-text">Überbrückung der Eintreffzeit der Sanität:</span> Da Rettungskräfte 10–15 Minuten bis zum Unfallort benötigen, leistet ausgebildetes Betriebspersonal sofort Erste Hilfe, um Folgeschäden zu mindern oder Leben zu retten.</li>
+                <li><span class="highlight-text">Fehlkauf von PSA durch fehlenden Passform-Fokus:</span> Wird teure PSA beschafft, ohne auf die Passform für das Personal zu achten, tragen Mitarbeitende im Alltag Freizeitschuhe statt Sicherheitsschuhe oder lassen Handschuhe und Schutzbrillen unberührt in der Schublade liegen.</li>
+                <li><span class="highlight-text">Anpassung der PSA bei physischen Einschränkungen:</span>
+                    <ul>
+                        <li>Mitarbeitende mit Lungen- oder Herzbeschwerden sind für gewissse Arbeiten mit Atemschutz nicht geeignet.</li>
+                        <li>Mitarbeitende mit Sehschwäche benötigen Schutzbrillen und Atemschutz-Vollmasken mit optischer Korrektur.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Einschränkung durch schwere PSA:</span> Das Tragen eines Atemschutzgerätes verschiebt den Körperschwerpunkt der Mitarbeitenden, während Hitzeschutzanzüge das Körpergefühl verändern und Hitze am Arbeitsplatz die Beschäftigten zusätzlich belastet.</li>
+                <li><span class="highlight-text">Schutz allein arbeitender Personen:</span> Eine Einzelperson, die ohne Sichtverbindung und ausser Rufweite zu anderen Personen arbeitet, erhält eine spezifische Sicherheitsinstruktion und eine Möglichkeit, im Notfall jederzeit Hilfe herbeirufen zu können.</li>
+                <li><span class="highlight-text">Ausnahme vom STOP-Prinzip:</span> In Notfällen können Personen sich oft nur schützen, indem sie unmittelbar eine PSA verwenden.</li>
+            </ul>
+
+            <h3>5. Mini-Quiz zur Selbstüberprüfung</h3>
+            <details>
+                <summary>Frage 1: Wie viel Zeit vergeht in der Regel von der Alarmierung bis zum Eintreffen der Sanität am Unfallort, und welche Bedeutung hat dies für den Betrieb?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Es vergehen in der Regel 10 bis 15 Minuten. Eine funktionierende betriebliche Notfallorganisation überbrückt diese Zeit mit wertvollen Erste-Hilfe-Massnahmen und kann Leben retten.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Ist ein Unternehmen verpflichtet, exakt die EKAS 10-Punkte-ASA-Systematik anzuwenden?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Nein. Die 10-Punkte-Systematik ist eine bewährte Praxis-Basis, wird jedoch nicht zwingend vorausgesetzt. Andere Systematiken sind zulässig, sofern die Kriterien erfüllt sind und der Nachweis der Gleichwertigkeit (z. B. mittels Korrelationsmatrix) erbracht werden kann.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Zu welcher PSA-Kategorie gehören Ausrüstungen für Stürze aus der Höhe, Atemschutzgeräte und Gehörschutz?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Zur PSA-Kategorie III (Schutz gegen tödliche Gefahren oder ernste, irreversible Gesundheitsschäden, bei denen die Benützer die unmittelbare Wirkung der Gefahr nicht rechtzeitig erkennen können).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Darf ein Arbeitgeber einen Teil der Kosten für die Sicherheitsschuhe oder Schutzbrillen von den Mitarbeitenden zurückverlangen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Nein. Der Arbeitgeber muss eine geeignete PSA den Mitarbeitenden kostenfrei überlassen und darf die Kosten den Beschäftigten nicht in Rechnung stellen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Wann gilt eine Person im betrieblichen Kontext als "allein arbeitend"?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Wenn ihr nach einem Unfall oder in einer kritischen Situation nicht sofort Hilfe geleistet werden kann (z. B. bei Arbeiten ohne Sichtverbindung und ausser Rufweite zu anderen Personen).</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- TEIL 3: GOOGLE KALENDER INTEGRATION -->
+        <div class="content-section">
+            <section class="calendar-section">
+                <h2>📅 Lern- & Prüfungskalender</h2>
+                <div class="calendar-container">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=4875202771218a7ad1f5108aa8ce1f0cb65e976732f10fc8ef094d70d9c1cf6e%40group.calendar.google.com&ctz=Europe%2FZurich&mode=AGENDA" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • AS – Arbeitssicherheit & Gesundheitsschutz</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    if (mainNav.classList.contains('mobile-active')) {
+                        toggleBtn.innerHTML = '✕';
+                    } else {
+                        toggleBtn.innerHTML = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

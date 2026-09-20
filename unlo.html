@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNLO – Unternehmenslogistik | Lern-Dashboard</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a;
+            --accent-color: #3b82f6;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --highlight-bg: #fef3c7;
+            --info-bg: #f8fafc;
+            --info-border: #cbd5e1;
+            --info-text: #1e293b;
+            --alert-bg: #fee2e2;
+            --alert-border: #f87171;
+            --alert-text: #991b1b;
+            --tag-bg: #e0f2fe;
+            --tag-text: #0369a1;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* Header & Hero Section mit Bild und Dunkelblau-Overlay für UNLO */
+        header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .header-banner {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background-image: url('header_index.png');
+            background-size: cover;
+            background-position: center 90%;
+        }
+
+        .header-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.55) 0%, rgba(23, 37, 84, 0.75) 100%);
+        }
+
+        .header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .header-title-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-title-container h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            word-wrap: break-word;
+        }
+
+        .header-title-container p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Navigationsleiste Desktop */
+        nav {
+            max-width: 1200px;
+            margin: -20px auto 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: var(--radius) var(--radius) 0 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        nav a {
+            padding: 1rem 1.25rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 1rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Hamburger-Button (standardmäßig versteckt) */
+        .hamburger-btn {
+            display: none;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            font-size: 1.5rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            line-height: 1;
+        }
+
+        /* Main Layout */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* Card Component */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eff6ff;
+            padding-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            word-wrap: break-word;
+        }
+
+        /* Special Boxes */
+        .alert-box, .formula-box {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .alert-box {
+            background-color: var(--alert-bg);
+            border-left: 4px solid var(--alert-border);
+            color: var(--alert-text);
+        }
+
+        .alert-box h3 {
+            margin-top: 0;
+            color: var(--alert-text);
+        }
+
+        .formula-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            border-left: 4px solid var(--primary-color);
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .badge {
+            background-color: var(--highlight-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #92400e;
+            display: inline-block;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Grid for 9-R */
+        .r-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        .r-item {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .r-item strong {
+            color: var(--primary-color);
+        }
+
+        /* Table Styling */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+        }
+
+        /* Audio Player Styling */
+        .audio-section {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Google Calendar Section */
+        .calendar-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .calendar-container {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .calendar-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Active Recall Toggles */
+        details {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        details[open] {
+            background-color: #ffffff;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+            outline: none;
+            word-wrap: break-word;
+        }
+
+        .answer {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        .answer ul, .answer ol {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .content-section {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        /* Responsive Breakpoints (< 768px Mobile) */
+        @media (max-width: 767px) {
+            .hamburger-btn {
+                display: block;
+            }
+
+            .header-banner {
+                height: auto;
+                min-height: 180px;
+            }
+
+            .header-overlay {
+                position: relative;
+                padding: 1.25rem 1rem;
+            }
+
+            .header-title-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-title-container p {
+                font-size: 0.9rem;
+            }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                border-radius: 0 0 var(--radius) var(--radius);
+                gap: 0;
+                width: 100%;
+            }
+
+            nav.mobile-active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 0.85rem 1.25rem;
+                border-bottom: 1px solid var(--border-color);
+                width: 100%;
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            nav a.active, nav a:hover {
+                border-bottom-color: transparent;
+                background-color: #eff6ff;
+            }
+
+            main {
+                margin: 1rem auto;
+                padding: 0 0.75rem;
+            }
+
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .r-grid {
+                grid-template-columns: 1fr;
+            }
+
+            ul, ol {
+                padding-left: 18px;
+            }
+
+            .calendar-container {
+                padding-bottom: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header mit Bild und Dunkelblau-Overlay -->
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>UNLO – Unternehmenslogistik</h1>
+                    <p>Grundlagen, 9-R, Klassifizierungen, Stücklisten, Kennzahlen & Active Recall</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hauptnavigation -->
+    <nav id="main-nav">
+        <a href="scm.html" title="Supply Chain Management">SCM</a>
+        <a href="unlo.html" class="active" title="Unternehmenslogistik">UNLO</a>
+        <a href="belo.html" title="Beschaffungslogistik">BELO</a>
+        <a href="lalo.html" title="Lagerlogistik">LALO</a>
+        <a href="as.html" title="Arbeitssicherheit & Gesundheitsschutz">AS</a>
+    </nav>
+
+    <!-- Hauptbereich -->
+    <main>
+
+        <!-- WICHTIGE PRÜFUNGSHINWEISE -->
+        <section class="alert-box">
+            <h3>🚨 Wichtige Prüfungshinweise (UNLO)</h3>
+            <ul>
+                <li><span class="badge">Einheiten-Falle:</span> Vor jeder Berechnung Maßeinheiten prüfen & vereinheitlichen (z. B. Stunden <code>h</code> vs. Minuten <code>min</code> | Tonnen <code>t</code> vs. Kilogramm <code>kg</code>).</li>
+                <li><span class="badge">Fallstudien & Methodenauswahl:</span> Aufgabenstellung präzise lesen! Insbesondere Skript <strong>S. 69 ff., 79–83</strong> sowie die Cases zu ABC-Analyse, Stücklisten und Durchlaufzeiten (DLZ) beachten.</li>
+            </ul>
+        </section>
+
+
+        <!-- TEIL 1: ALLGEMEIN & PRÜFUNGSFOKUS -->
+        <div class="content-section">
+            
+            <section class="card audio-section">
+                <h2>🎧 NotebookLM Podcast: UNLO Übersicht</h2>
+                <p>Hörempfehlung zur Festigung der allgemeinen Prüfungsfaktoren:</p>
+                <audio controls>
+                    <source src="unlo_podcast.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+            </section>
+
+            <section class="card">
+                <h2>Prüfungsrelevante Kernkonzepte (Allgemein)</h2>
+                
+                <h3>1. Klassifizierungsverfahren</h3>
+                <ul>
+                    <li>
+                        <span class="highlight-text">ABC-Analyse</span> (Wertbedeutung):
+                        <ul>
+                            <li><strong>A-Güter:</strong> Hoher Wertanteil (höchste Priorität).</li>
+                            <li><strong>B-Güter:</strong> Mittlerer Wertanteil.</li>
+                            <li><strong>C-Güter:</strong> Niedriger Wertanteil / geringe Bedeutung.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="highlight-text">XYZ-Analyse</span> (Verbrauch & Vorhersagbarkeit):
+                        <ul>
+                            <li><strong>X-Güter:</strong> Konstanter Bedarf, geringe Schwankungen (hohe Vorhersagegenauigkeit).</li>
+                            <li><strong>Y-Güter:</strong> Schwankender Bedarf (saisonal/Trend, mittlere Vorhersagegenauigkeit).</li>
+                            <li><strong>Z-Güter:</strong> Unregelmäßiger Bedarf, hohe Schwankungen (niedrige Vorhersagegenauigkeit).</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>2. Kombinierte ABC-XYZ-Entscheidungstabelle</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kategorie</th>
+                                <th>Charakteristik</th>
+                                <th>Empfohlene Beschaffungsstrategie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>AX</strong></td>
+                                <td>Hoher Wert + Konstanter Bedarf</td>
+                                <td><span class="badge">Fertigungssynchrone Beschaffung (Just-in-Time)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>BX / CX</strong></td>
+                                <td>Mittlerer/Niedriger Wert + Konstanter Bedarf</td>
+                                <td>Beschaffung der optimalen Losgröße</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AY</strong></td>
+                                <td>Hoher Wert + Schwankender Bedarf</td>
+                                <td>Abruf-Rahmenverträge</td>
+                            </tr>
+                            <tr>
+                                <td><strong>BY, CY, AZ, BZ, CZ</strong></td>
+                                <td>Unregelmäßig od. mittlerer/niedriger Wert</td>
+                                <td>Bevorratung auf längere Zeit bzw. Abruf-Rahmenverträge bei hohem Wert (AZ)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="image-container">
+                    <img src="abc_xyz_uebersicht.png" alt="Übersichtstabelle der kombinierten ABC-XYZ-Analyse mit Wertanteil, Bedarfsverlauf und Beschaffungsstrategien">
+                </div>
+            </section>
+        </div>
+
+
+        <!-- TEIL 2: BLATT 1 GRUNDLAGEN DER UNTERNEHMENSLOGISTIK -->
+        <div class="content-section">
+            
+            <section class="card audio-section">
+                <h2>🎧 NotebookLM Podcast: Grundlagen & 9-R</h2>
+                <p>Vertiefende Erklärung zu TUL, Leistungsdreieck und Prozessketten:</p>
+                <audio controls>
+                    <source src="unlo_blatt1_podcast.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+            </section>
+
+            <section class="card">
+                <h2>Blatt 1: Grundlagen der Unternehmenslogistik</h2>
+                
+                <h3>1. Grundlagen & Begriffe</h3>
+                <p>
+                    <strong>Unternehmenslogistik:</strong> Umfasst die Planung, Steuerung und Überwachung aller logistischen Aktivitäten innerhalb eines Unternehmens (Transport, Lagerung und Verteilung).
+                </p>
+                <p>
+                    <strong>Hauptziel:</strong> Maximierung der Effizienz und Effektivität der Lieferkette, Kostenminimierung sowie Erhöhung der Kundenzufriedenheit.
+                </p>
+
+                <h3>Leistungsdreieck der Logistik (Zielkonflikt)</h3>
+                <p>Logistische Entscheidungen bewegen sich stets im Spannungsfeld zwischen:</p>
+                <ul>
+                    <li><span class="badge">Zeit</span> (Schnelligkeit & Termintreue)</li>
+                    <li><span class="badge">Kosten</span> (Lager- & Transportkosten)</li>
+                    <li><span class="badge">Qualität</span> (Lieferqualität & Fehlerfreiheit)</li>
+                </ul>
+
+                <h3>Produktionsfaktoren</h3>
+                <p>Klassische & erweiterte Faktoren: <strong>Boden</strong>, <strong>Kapital</strong>, <strong>Arbeit</strong> sowie <strong>Umwelt</strong>.</p>
+
+                <h3>2. Die 6-R- bzw. 9-R-Definition der Logistik</h3>
+                <p>Die Kernaufgabe der Logistik ist die Bereitstellung der richtigen Elemente:</p>
+                
+                <div class="r-grid">
+                    <div class="r-item">1. <strong>Menge:</strong> Richtige Menge</div>
+                    <div class="r-item">2. <strong>Objekte:</strong> Richtiges Gut / Ware</div>
+                    <div class="r-item">3. <strong>Ort:</strong> Richtiger Ort</div>
+                    <div class="r-item">4. <strong>Zeit:</strong> Richtiger Zeitpunkt</div>
+                    <div class="r-item">5. <strong>Qualität:</strong> Richtige Qualität</div>
+                    <div class="r-item">6. <strong>Kosten:</strong> Richtige Kosten</div>
+                    <div class="r-item">7. <strong>Kunde:</strong> Richtiger Kunde</div>
+                    <div class="r-item">8. <strong>Umwelt:</strong> Richtige Umweltgerechtigkeit</div>
+                    <div class="r-item">9. <strong>Soziales:</strong> Richtige soziale Bedingungen</div>
+                </div>
+
+                <h3>3. Funktionen und Aufgaben der Logistik</h3>
+                <ul>
+                    <li>
+                        <span class="highlight-text">Basisfunktion (TUL-Logistik):</span> Transport – Umschlag – Lagerung (werden häufig ausgelagert / ge-outsourced).
+                        <ul>
+                            <li><span class="tag">Crossdocking</span> Reiner Umschlag von Gütern ohne klassische Zwischenlagerung zur Minimierung von Durchlaufzeiten.</li>
+                        </ul>
+                    </li>
+                    <li><span class="highlight-text">Steuerungs- und Kontrollfunktion:</span> Aufgaben der operativen Auftragsabwicklung.</li>
+                    <li><span class="highlight-text">Administrative & strategische Funktion:</span> Ausgestaltung und Planung des gesamten Logistiksystems (Prozesse, Ressourcen und Netzwerke).</li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="unlo_blatt1_logistikkette.png" alt="Flussdiagramm der Logistikkette von Beschaffung über Produktion und Verteilung bis zur Entsorgung mit TUL-Elementen">
+                </div>
+
+                <h3>4. Management- und Steuerungswerkzeuge</h3>
+                
+                <h3>SMART-Formel (Zielformulierung)</h3>
+                <ul>
+                    <li><strong>S</strong>pezifisch</li>
+                    <li><strong>M</strong>essbar</li>
+                    <li><strong>A</strong>ttraktiv</li>
+                    <li><strong>R</strong>ealistisch</li>
+                    <li><strong>T</strong>erminiert</li>
+                </ul>
+
+                <h3>PDCA-Zyklus (Kontinuierlicher Verbesserungsprozess / KVP)</h3>
+                <ol>
+                    <li><strong>Plan (Planen):</strong> Ist-Analyse & Zielfestlegung</li>
+                    <li><strong>Do (Durchführen):</strong> Maßnahmen testen & umsetzen</li>
+                    <li><strong>Check (Prüfen):</strong> Ergebnisse kontrollieren</li>
+                    <li><strong>Act (Verbessern):</strong> Standard etablieren & anpassen</li>
+                </ol>
+            </section>
+        </div>
+
+
+        <!-- TEIL 3: BLATT 2 MATERIAL-KLASSIFIZIERUNG & STÜCKLISTEN -->
+        <div class="content-section">
+            
+            <section class="card audio-section">
+                <h2>🎧 NotebookLM Podcast: Klassifizierung & Stücklisten</h2>
+                <p>Vertiefende Zusammenfassung der Methoden und Typen:</p>
+                <audio controls>
+                    <source src="unlo_blatt2_podcast.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+            </section>
+
+            <section class="card">
+                <h2>Blatt 2: Material-Klassifizierung & Stücklisten</h2>
+                
+                <h3>1. Material-Klassifizierung (ABC / XYZ / Pareto)</h3>
+                
+                <p>
+                    <span class="highlight-text">Pareto-Prinzip (80/20-Regel):</span> 
+                    Besagt, dass ca. <strong>80 % der Gesamtwirkung</strong> (z. B. des Gesamtwertes) von nur <strong>20 % der Ursachen</strong> (z. B. der Artikelmenge) erzeugt werden. Es bildet das Grundprinzip der ABC-Analyse.
+                </p>
+
+                <h3>ABC-Analyse (Klassifizierung nach Wertbedeutung)</h3>
+                <ul>
+                    <li><strong>A-Güter:</strong> Hoher Wertanteil (Wichtig – höchste Priorität).</li>
+                    <li><strong>B-Güter:</strong> Mittlerer Wertanteil (Moderate Priorität).</li>
+                    <li><strong>C-Güter:</strong> Niedriger Wertanteil (Geringe Bedeutung).</li>
+                </ul>
+
+                <h3>XYZ-Analyse (Klassifizierung nach Bedarfsverlauf & Vorhersagbarkeit)</h3>
+                <ul>
+                    <li><strong>X-Güter:</strong> Konstanter Bedarf, geringe Schwankungen (hohe Vorhersagegenauigkeit).</li>
+                    <li><strong>Y-Güter:</strong> Schwankender Bedarf (Saisonalität/Trend, mittlere Vorhersagegenauigkeit).</li>
+                    <li><strong>Z-Güter:</strong> Unregelmäßiger Bedarf, große Schwankungen (niedrige Vorhersagegenauigkeit).</li>
+                </ul>
+
+                <h3>Kombinierte ABC-XYZ-Entscheidungstabelle</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kombination</th>
+                                <th>Klassifizierung</th>
+                                <th>Empfohlene Beschaffungsstrategie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>AX</strong></td>
+                                <td>Hoher Wert / Konstanter Bedarf</td>
+                                <td><span class="tag">Just-in-Time (Fertigungssynchron)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>BX / CX</strong></td>
+                                <td>Mittel-Niedriger Wert / Konstanter Bedarf</td>
+                                <td>Beschaffung der optimalen Losgröße</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AY / AZ</strong></td>
+                                <td>Hoher Wert / Schwankend od. unregelmäßig</td>
+                                <td>Abruf-Rahmenverträge (Risikominimierung)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>BY / CY / BZ / CZ</strong></td>
+                                <td>Mittlerer-Niedriger Wert / Schwankend od. unregelmäßig</td>
+                                <td>Bevorratung auf längere Zeit (Sicherheitsbestand)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="image-container">
+                    <img src="unlo_blatt2_abc_xyz_matrix.png" alt="Entscheidungstabelle der kombinierten ABC-XYZ-Analyse für alle 9 Felder">
+                </div>
+
+                <h3>2. Stücklisten (Skript S. 69 ff.)</h3>
+                <p>
+                    <strong>Definition:</strong> Eine Stückliste ist eine strukturierte Auflistung aller Komponenten, Baugruppen und Materialien, die zur Herstellung eines Endprodukts erforderlich sind. Sie enthält Mengenangaben und Hierarchiestufen.
+                </p>
+                <p>
+                    <strong>Hauptzweck:</strong> Vollständigkeitsprüfung, Produktionsplanung, Materialbedarfsermittlung (MRP) und Kalkulation.
+                </p>
+
+                <h3>Stücklistenarten im Vergleich</h3>
+                <ul>
+                    <li>
+                        <span class="highlight-text">Mengenstückliste:</span> 
+                        Listet lediglich die unstrukturierten Gesamtmengen aller Komponenten auf. Vergleicht nicht die Fertigungsebenen.
+                    </li>
+                    <li>
+                        <span class="highlight-text">Strukturstückliste:</span> 
+                        Zeigt die genaue Fertigungsstruktur, Baugruppenbeziehungen und Hierarchie-Ebenen (Ebene 0, 1, 2 ...) des Produkts auf.
+                    </li>
+                    <li>
+                        <span class="highlight-text">Baukastenstückliste:</span> 
+                        Enthält jeweils nur die direkt untergeordneten Komponenten für eine spezifische Baugruppe. Es gibt somit mehrere Stücklisten pro Endprodukt.
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+
+        <!-- TEIL 4: BLATT 3 KENNZAHLEN, JIT VS. JIS & LOGISTIKFUNKTIONEN -->
+        <div class="content-section">
+            
+            <section class="card audio-section">
+                <h2>🎧 NotebookLM Podcast: Kennzahlen & Lean Production</h2>
+                <p>Erklärung der Kennzahlen-Funktionen sowie JIT/JIS-Strategien:</p>
+                <audio controls>
+                    <source src="unlo_blatt3_podcast.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+            </section>
+
+            <section class="card">
+                <h2>Blatt 3: Kennzahlen, JIT vs. JIS & Logistikfunktionen</h2>
+                
+                <h3>1. Logistische Kennzahlen (Kategorien)</h3>
+                <ul>
+                    <li>
+                        <span class="highlight-text">Struktur- und Rahmenkennzahlen:</span> 
+                        Messen Kapazitäten und Budgets (z. B. Budgetverteilung, Finanzkompetenzen).
+                    </li>
+                    <li>
+                        <span class="highlight-text">Produktivitätskennzahlen:</span> 
+                        Setzen Output ins Verhältnis zum Input (z. B. Personalproduktivität, Picking-Leistung pro AP, Umschlag pro Artikel).
+                    </li>
+                    <li>
+                        <span class="highlight-text">Wirtschaftlichkeitskennzahlen:</span> 
+                        Bewerten monetäre Erträge und Aufwände (z. B. Logistikkosten von Leistungen).
+                    </li>
+                    <li>
+                        <span class="highlight-text">Qualitätskennzahlen:</span> 
+                        Messen den Zielerreichungsgrad logistischer Prozesse (z. B. Fehlerquote, Liefertreue).
+                    </li>
+                </ul>
+
+                <h3>2. Just-in-Time (JIT) vs. Just-in-Sequence (JIS)</h3>
+                <p>Beide Konzepte stammen aus der <em>Lean Production</em> (Toyota) zur Reduzierung von Lagerbeständen und Durchlaufzeiten.</p>
+
+                <h3>Just-in-Time (JIT)</h3>
+                <p>
+                    <strong>Prinzip:</strong> Güter werden genau in der benötigten Menge zeitgerecht am Bedarfsort (Montageband) angeliefert.<br>
+                    <strong>Fokus:</strong> Lagervermeidung und Durchlaufzeitreduzierung.<br>
+                    <em>Beispiel:</em> Anlieferung von 500 Scheinwerfern exakt bei Neige des Bandbestands (Reihenfolge ist dabei egal).
+                </p>
+
+                <h3>Just-in-Sequence (JIS)</h3>
+                <p>
+                    <strong>Prinzip:</strong> Verschärfung von JIT. Güter werden zeitgerecht <strong>und in der exakten Einbau-Reihenfolge (Sequenz)</strong> angeliefert.<br>
+                    <strong>Fokus:</strong> Eliminierung von Sortieraufwand am Band.<br>
+                    <strong>Voraussetzung:</strong> Hochgradig synchronisierte IT-Schnittstellen zwischen OEM und Zulieferer.<br>
+                    <em>Beispiel:</em> Autositze werden exakt in der Reihenfolge abgeladen, wie die spezifisch konfigurierten Fahrzeuge das Montageband passieren.
+                </p>
+
+                <h3>Vergleichstabelle: JIT vs. JIS</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Merkmal</th>
+                                <th>Just-in-Time (JIT)</th>
+                                <th>Just-in-Sequence (JIS)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ziel</strong></td>
+                                <td>Bedarfsgerechte Anlieferung</td>
+                                <td><span class="badge">Sequenzgenaue Anlieferung</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sortieraufwand am Band</strong></td>
+                                <td>Vorhanden</td>
+                                <td><strong>Nahezu null</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>IT-Integration & Komplexität</strong></td>
+                                <td>Mittel</td>
+                                <td><span class="tag">Sehr hoch</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>3. Funktionen von Logistikkennzahlen</h3>
+                <p><strong>Grundsatz:</strong> Die Qualität wird immer durch den <strong>Kunden</strong> definiert (Leistungsdreieck: Zeit / Kosten / Qualität).</p>
+
+                <ul>
+                    <li><span class="highlight-text">Anregungsfunktion:</span> Identifiziert Abweichungen und Handlungsbedarf (z. B. Überwachung des Lagerbestands oder offener Lieferantenbestellungen).</li>
+                    <li><span class="highlight-text">Kontrollfunktion:</span> Vergleicht Ist- und Soll-Zustände (z. B. Lieferscheinmenge vs. Rechnungsmenge, Arbeitszeit, Fehlerquote).</li>
+                    <li><span class="highlight-text">Informationsfunktion:</span> Bereitstellung prozessrelevanter Daten für Entscheidungen (z. B. Anlieferungs- und Abholzeiten).</li>
+                    <li><span class="highlight-text">Koordinationsfunktion:</span> Abstimmung logistischer Teilsysteme (z. B. Abstimmung von Liefertermin und Liefermenge pro Auftrag).</li>
+                    <li><span class="highlight-text">Operationalisierungsfunktion:</span> Macht abstrakte Zieldimensionen messbar (z. B. Picking-Leistung pro AP, Umschlag pro Artikel).</li>
+                    <li><span class="highlight-text">Vorgabefunktion:</span> Setzt konkrete Zielwerte für Betriebseinheiten (z. B. Soll-Lieferzeit).</li>
+                    <li><span class="highlight-text">Steuerungsfunktion:</span> Auslösung gezielter Korrekturmaßnahmen bei Zielabweichungen.</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- TEIL 5: GOOGLE KALENDER INTEGRATION -->
+        <div class="content-section">
+            <section class="calendar-section">
+                <h2>📅 Lern- & Prüfungskalender</h2>
+                <div class="calendar-container">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=4875202771218a7ad1f5108aa8ce1f0cb65e976732f10fc8ef094d70d9c1cf6e%40group.calendar.google.com&ctz=Europe%2FZurich&mode=AGENDA" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </section>
+        </div>
+
+        <!-- TEIL 6: ACTIVE RECALL - PRÜFUNGSFRAGEN -->
+        <div class="content-section">
+            
+            <section class="card">
+                <h2>🧠 Active Recall – Gesamte Prüfungsfragen</h2>
+
+                <details>
+                    <summary>Frage 1: Wonach unterscheiden sich die Kategorien A, B, C und X, Y, Z?</summary>
+                    <div class="answer">
+                        <ul>
+                            <li><strong>ABC-Analyse:</strong> Teilt Güter nach ihrem <em>Wertanteil</em> ein (A = hoch, B = mittel, C = niedrig).</li>
+                            <li><strong>XYZ-Analyse:</strong> Teilt Güter nach der <em>Planbarkeit/Schwankung des Bedarfs</em> ein (X = konstant/hohe Genauigkeit, Y = saisonal/mittlere Genauigkeit, Z = unregelmäßig/niedrige Genauigkeit).</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 2: Welche Beschaffungsstrategie wird für AX-Güter empfohlen und warum?</summary>
+                    <div class="answer">
+                        <p><strong>Strategie:</strong> Fertigungssynchrone Beschaffung (Just-in-Time).</p>
+                        <p><strong>Begründung:</strong> Da es sich um sehr wertvolle Güter (A) mit extrem hoher Vorhersagegenauigkeit und konstantem Bedarf (X) handelt, lässt sich Kapitalbindung im Lager ohne hohes Lieferrisiko vermeiden.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 3: Worauf muss bei Rechenaufgaben und Fallstudien in der Prüfung besonders geachtet werden?</summary>
+                    <div class="answer">
+                        <ol>
+                            <li><strong>Maßeinheiten kontrollieren und vereinheitlichen:</strong> Immer auf Einheiten achten (z. B. <code>h</code> vs. <code>min</code>, <code>t</code> vs. <code>kg</code>).</li>
+                            <li><strong>Methodenauswahl & Fragestellung genau prüfen:</strong> Welches spezifische Verfahren ist gefordert? (Besonders S. 83 sowie Cases zu ABC-Analyse, Stücklisten und Durchlaufzeiten beachten).</li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 4: Was sind die drei Eckpfeiler des logistischen Leistungsdreiecks?</summary>
+                    <div class="answer">
+                        <p>Die drei Eckpfeiler, die in ständiger Konkurrenz zueinander stehen, sind:</p>
+                        <ul>
+                            <li><strong>Zeit</strong></li>
+                            <li><strong>Kosten</strong></li>
+                            <li><strong>Qualität</strong></li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 5: Was versteht man unter der TUL-Logistik?</summary>
+                    <div class="answer">
+                        <p>Unter TUL versteht man die operativen Basisfunktionen der Logistik:</p>
+                        <ul>
+                            <li><strong>T</strong>ransport</li>
+                            <li><strong>U</strong>mschlag</li>
+                            <li><strong>L</strong>agerung</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 6: Wofür stehen die 6 Kern-„R“ der Logistikdefinition?</summary>
+                    <div class="answer">
+                        <p>Bereitstellung der...</p>
+                        <ol>
+                            <li>richtigen <strong>Objekte/Waren</strong>,</li>
+                            <li>in der richtigen <strong>Menge</strong>,</li>
+                            <li>am richtigen <strong>Ort</strong>,</li>
+                            <li>zum richtigen <strong>Zeitpunkt</strong>,</li>
+                            <li>in der richtigen <strong>Qualität</strong> und</li>
+                            <li>zu den richtigen <strong>Kosten</strong>.</li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 7: Was bedeutet Crossdocking in der Umschlaglogistik?</summary>
+                    <div class="answer">
+                        <p>Beim <strong>Crossdocking</strong> werden ankommende Waren direkt am Umschlagspunkt für den Weiterversand konsolidiert und verteilt, <em>ohne</em> dass eine klassische Zwischenlagerung stattfindet.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 8: Welche Phasen umfasst der PDCA-Zyklus?</summary>
+                    <div class="answer">
+                        <ol>
+                            <li><strong>Planen (Plan):</strong> Ursachen analysieren & Konzept erstellen.</li>
+                            <li><strong>Durchführen (Do):</strong> Konzept testen & umsetzen.</li>
+                            <li><strong>Prüfen (Check):</strong> Zielerreichung kontrollieren.</li>
+                            <li><strong>Verbessern (Act):</strong> Neuen Standard verankern oder nachjustieren.</li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 9: Was besagt das Pareto-Prinzip im Kontext der ABC-Analyse?</summary>
+                    <div class="answer">
+                        <p>Es besagt, dass typischerweise <strong>80 % der Gesamtwirkung</strong> (z. B. des Werts oder Verbrauchs) durch lediglich <strong>20 % der Ursachen</strong> (z. B. der Artikelanzahl) verursacht werden.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 10: Worin unterscheidet sich eine Strukturstückliste von einer Mengenstückliste?</summary>
+                    <div class="answer">
+                        <ul>
+                            <li><strong>Mengenstückliste:</strong> Fasst nur die reine Summe der benötigten Mengen aller Teile zusammen (keine Hierarchie).</li>
+                            <li><strong>Strukturstückliste:</strong> Bildet zusätzlich den genauen mehrstufigen Aufbau und die Abhängigkeiten der Fertigungsstufen ab.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 11: Wann nutzt man eine Baukastenstückliste?</summary>
+                    <div class="answer">
+                        <p>Man nutzt sie bei komplexen Produkten mit vielen Baugruppen. Jede Baukastenstückliste betrachtet immer nur eine einzige Ebene (eine Baugruppe und deren direkt untergeordnete Teile), was die Pflege und Wiederverwendbarkeit vereinfacht.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 12: Welche Beschaffungsstrategien wählen Sie für AX-Güter und CX-Güter?</summary>
+                    <div class="answer">
+                        <ul>
+                            <li><strong>AX-Güter:</strong> Fertigungssynchrone Beschaffung (<em>Just-in-Time</em>) zur Verringerung der Kapitalbindung bei hoher Vorhersagbarkeit.</li>
+                            <li><strong>CX-Güter:</strong> Beschaffung nach der <em>optimalen Losgröße</em> (oder Sammelbestellung), da bei geringem Wert der Dispositionsaufwand minimiert werden soll.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 13: Was unterscheidet Just-in-Sequence (JIS) im Kern von Just-in-Time (JIT)?</summary>
+                    <div class="answer">
+                        <p>Bei <strong>JIT</strong> kommen die Teile zwar pünktlich am Band an, müssen aber ggf. noch manuell sortiert werden. Bei <strong>JIS</strong> erfolgt die Anlieferung pünktlich <em>und</em> in der exakten Reihenfolge des Einbaus, wodurch jeglicher Sortieraufwand am Band entfällt.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 14: Wer bestimmt letztlich die Qualitätsansprüche in der Logistik?</summary>
+                    <div class="answer">
+                        <p>Der <strong>Kunde</strong> definiert, was als Qualität gilt (anhand der Kriterien Zeit, Kosten und Fehlerfreiheit).</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 15: Welchen Kennzahlen-Kategorien ordnet man die Messgrößen „Logistikkosten“ und „Picking pro AP“ zu?</summary>
+                    <div class="answer">
+                        <ul>
+                            <li><strong>Logistikkosten:</strong> Wirtschaftlichkeitskennzahl (Ertrag vs. Aufwand)</li>
+                            <li><strong>Picking pro AP:</strong> Produktivitätskennzahl (Output vs. Input / Operationalisierung)</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 16: Was ist die Aufgabe der Kontrollfunktion von Kennzahlen?</summary>
+                    <div class="answer">
+                        <p>Der kontinuierliche Abgleich zwischen <strong>Soll- und Ist-Werten</strong> zur Aufdeckung von Prozessabweichungen (z. B. Mengendifferenzen zwischen Lieferschein und Rechnungsstellung).</p>
+                    </div>
+                </details>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Fußzeile -->
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • UNLO – Unternehmenslogistik</p>
+    </footer>
+
+    <!-- JavaScript für die mobile Hamburger-Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    if (mainNav.classList.contains('mobile-active')) {
+                        toggleBtn.innerHTML = '✕';
+                    } else {
+                        toggleBtn.innerHTML = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

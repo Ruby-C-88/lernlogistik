@@ -1,0 +1,2546 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LALO – Lagerlogistik | Lern-Dashboard</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a; /* Deep Slate Blue für LALO */
+            --secondary-color: #3b82f6;
+            --accent-color: #dbeafe;
+            --tag-bg: #eff6ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --highlight-bg: #fef3c7;
+            --info-bg: #f0fdf4;
+            --info-border: #86efac;
+            --info-text: #166534;
+            --alert-bg: #fee2e2;
+            --alert-border: #f87171;
+            --alert-text: #991b1b;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .header-banner {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        }
+
+        .header-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%);
+        }
+
+        .header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .header-title-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-title-container h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            word-wrap: break-word;
+        }
+
+        .header-title-container p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: -20px auto 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: var(--radius) var(--radius) 0 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        nav a {
+            padding: 1rem 1.25rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 1rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .hamburger-btn {
+            display: none;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            font-size: 1.5rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            line-height: 1;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            word-wrap: break-word;
+        }
+
+        .card h4 {
+            font-size: 1.05rem;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+            color: var(--primary-color);
+        }
+
+        .calendar-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .calendar-section h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .calendar-container {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .calendar-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        details {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        details[open] {
+            background-color: #ffffff;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+            outline: none;
+            word-wrap: break-word;
+        }
+
+        .answer {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .content-section {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* --- STYLES FÜR INTERAKTIVE GRAFIKEN & WIDGETS --- */
+        .diagram-box {
+            background: #f8fafc;
+            border: 2px dashed var(--secondary-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .diagram-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .interactive-widget {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        .btn-interactive {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin: 0.25rem;
+        }
+
+        .btn-interactive:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-interactive.active {
+            background-color: #059669;
+        }
+
+        .interactive-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .slider-group {
+            margin-bottom: 1rem;
+        }
+
+        .slider-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .slider-group input[type=range] {
+            width: 100%;
+        }
+
+        .saegezahn-canvas {
+            width: 100%;
+            height: 220px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        footer {
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .hamburger-btn {
+                display: block;
+            }
+
+            .header-banner {
+                height: auto;
+                min-height: 180px;
+            }
+
+            .header-overlay {
+                position: relative;
+                padding: 1.25rem 1rem;
+            }
+
+            .header-title-container h1 {
+                font-size: 1.4rem;
+            }
+
+            .header-title-container p {
+                font-size: 0.88rem;
+            }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                border-radius: 0 0 var(--radius) var(--radius);
+                gap: 0;
+                width: 100%;
+            }
+
+            nav.mobile-active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 0.85rem 1.25rem;
+                border-bottom: 1px solid var(--border-color);
+                width: 100%;
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            nav a.active, nav a:hover {
+                border-bottom-color: transparent;
+                background-color: var(--accent-color);
+            }
+
+            main {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .calendar-container {
+                padding-bottom: 100%;
+            }
+
+            ul, ol {
+                padding-left: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>LALO – Lagerlogistik</h1>
+                    <p>Materialwirtschaft, Kommissionierung, Transportsysteme, Lagerstrategien, Distribution & Risikomanagement</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav id="main-nav">
+        <a href="scm.html" title="Supply Chain Management">SCM</a>
+        <a href="unlo.html" title="Unternehmenslogistik">UNLO</a>
+        <a href="belo.html" title="Beschaffungslogistik">BELO</a>
+        <a href="lalo.html" class="active" title="Lagerlogistik">LALO</a>
+        <a href="as.html" title="Arbeitssicherheit & Gesundheitsschutz">AS</a>
+    </nav>
+
+    <main>
+        <!-- ========================================== -->
+        <!-- TEIL 1: LAGER- & MATERIALWIRTSCHAFT         -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-1">
+            <h2>LALO - Teil 1: Lager- & Materialwirtschaft</h2>
+
+            <h3>Thema & Lernziele dieser Einheit</h3>
+            <p>Der <strong>1. Unterrichtstag</strong> umfasst den <strong>Inhaltsbereich Kapitel 9 / Teil 1 (Lehrmittel S. 224)</strong> mit dem Schwerpunkt <strong>Lager und Materialwirtschaft</strong>.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li><strong>Ziele und Kernbegriffe der Lagerlogistik</strong> präzise definieren und erläutern.</li>
+                <li><strong>Operative Aufgaben und Funktionen</strong> der innerbetrieblichen Logistik systematisch überblicken.</li>
+                <li><strong>Prozesse im Wareneingang</strong> und bei der Wareneinlagerung strukturiert beschreiben.</li>
+                <li><strong>Bestandsarten, Bestandsüberwachung</strong> und die <strong>Berechnung logistischer Kennzahlen</strong> beherrschen.</li>
+                <li><strong>Auslagerungs- und Kommissionierkonzepte</strong> sowie Steuerungsmodelle (z. B. Sägezahnmodell, Bullwhip-Effekt) analysieren.</li>
+                <li>Als <strong>Logistikfachleute FA</strong> die operative und dispositive Leistungserbringung im Unternehmen sicherstellen sowie Optimierungspotenziale in den Wertschöpfungsprozessen erkennen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Grundlagen, Abgrenzungen & Kernprinzip der Lagerlogistik</h4>
+            <ul>
+                <li><span class="highlight-text">Materialwirtschaft vs. Lagerwirtschaft:</span> Die Materialwirtschaft gliedert sich in Materialdisposition und Materialbeschaffung. Die Lagerwirtschaft bildet einen zentralen Bestandteil der innerbetrieblichen Wertschöpfungskette.</li>
+                <li><span class="highlight-text">Innerbetriebliche Logistik:</span> Erstreckt sich vom Beschaffungs- bis zum Absatzmarkt und beinhaltet die interne Lagerung, Kommissionierung/Konfektionierung sowie die Warenbeförderung.</li>
+                <li><span class="highlight-text">Kerndiktum:</span> <em>„Das beste Lager ist kein Lager!“</em>.</li>
+                <li><span class="highlight-text">Übergeordnetes Ziel:</span> Materialien und Waren müssen unter Berücksichtigung von Qualität und Wirtschaftlichkeit rechtzeitig in den richtigen Mengen am gewünschten Ort für den Leistungsprozess bereitstehen.</li>
+                <li><span class="highlight-text">Zentraler Zielkonflikt:</span> Spannungsfeld zwischen der Aufrechterhaltung einer <strong>hohen Lieferbereitschaft</strong> und der Erzielung <strong>tiefer Lagerkosten</strong> bzw. geringer Kapitalbindung.</li>
+            </ul>
+
+            <h4>2. Strategische Lagerausgestaltung & Distributionsstrukturen</h4>
+            <p>Bei der Festlegung der Lagerstrategie stehen drei Dimensionen im Fokus:</p>
+            <ul>
+                <li><span class="highlight-text">Automatisierungsgrad:</span> Manuell (Mensch / Stapler, RBG), Mechanisiert (mechanische Geräte / schienengeführte RBG) oder Automatisiert (ohne Mensch / ICT-gesteuert).</li>
+                <li><span class="highlight-text">Einbindungsgrad (Outsourcing):</span> Eigenlager (selbstgeführt), Fremdlager (externer Dienstleister) oder Speditionslager (Abruflager).</li>
+                <li><span class="highlight-text">Zentralisierungsgrad:</span> Hoch (ein Zentrallager) vs. Tief (mehrere Dezentrallager/Standorte).</li>
+            </ul>
+
+            <p><strong>Lagerstufen im Fertigungsunternehmen:</strong></p>
+            <ol>
+                <li><span class="highlight-text">Lagerstufe 1:</span> Einlagerung (Eingangslager für Roh-, Hilfs- und Betriebsstoffe).</li>
+                <li><span class="highlight-text">Lagerstufe 2:</span> Lager im Fertigungs- und Montagebereich (Zwischen-/Pufferlager).</li>
+                <li><span class="highlight-text">Lagerstufe 3:</span> Ausgangslager (Fertigerzeugnisse).</li>
+                <li><span class="highlight-text">Lagerstufe 4:</span> Handelsware (ohne eigene Bearbeitung).</li>
+                <li><span class="highlight-text">Lagerstufe 5:</span> Verwaltungsmaterial (Büromaterial, Archiv).</li>
+            </ol>
+            <p><span class="highlight-text">Distributionsstruktur:</span> Die <strong>vertikale Struktur</strong> entspricht der Anzahl der Lagerstufen nach der Produktion; die <strong>horizontale Struktur</strong> beschreibt die Anzahl der Lager pro Stufe. Es gilt der Grundsatz: <em>So viele Lagerstufen wie nötig und so wenige Lagerstufen wie möglich</em>, um Investitions- und Betriebskosten zu minimieren.</p>
+
+            <h4>3. Die 7 Lagerfunktionen</h4>
+            <ol>
+                <li><span class="highlight-text">Sicherungsfunktion:</span> Schützt die Produktion und Distribution vor Lieferverzögerungen, Transportschwierigkeiten oder plötzlichen Nachfragespitzen. Das wesentliche Steuerungsinstrument hierfür ist der <strong>Mindestbestand</strong>.</li>
+                <li><span class="highlight-text">Ausgleichsfunktion / Überbrückungsfunktion (Pufferfunktion):</span> Gleicht zeitliche Differenzen zwischen der optimalen Herstellungs-/Bestellmenge und dem tatsächlichen Verbrauchszeitpunkt aus (z. B. zur Minimierung von Maschinen-Rüstzeiten). Durch Just-in-Time-Konzepte (JIT) kann diese Funktion eliminiert werden.</li>
+                <li><span class="highlight-text">Spekulationsfunktion:</span> Dient dem Einkauf und der Einlagerung von Waren vor erwarteten Preissteigerungen oder zur Erzielung von Mengenrabatten und Sonderpreisen.</li>
+                <li><span class="highlight-text">Umformungsfunktion (Sortimentsfunktion):</span> Übernimmt produktionswirtschaftliche Aufgaben wie das Umfüllen, Mischen, Sortieren oder Umverpacken von Großgebinden in kleinere Verbrauchseinheiten (Konfektionierung).</li>
+                <li><span class="highlight-text">Veredelungsfunktion (Produktionsfunktion):</span> Verleiht Waren erst durch die Einlagerung ihre endgültige Qualität (Produktivlager).</li>
+                <li><span class="highlight-text">Darbietungsfunktion / Marketingfunktion:</span> Präsentiert die Ware im Verkaufslager direkt dem Kunden (z. B. im Einzelhandel).</li>
+                <li><span class="highlight-text">Entsorgungsfunktion:</span> Erfasst und sammelt betriebliche Abfall- und Reststoffe bis zur weiteren Verwendung, Wiederverwertung oder endgültigen Entsorgung.</li>
+            </ol>
+
+            <!-- NEU: INTERAKTIVES SÄGEZAHNMODELL (HTML5 CANVAS + CONTROLS) -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Sägezahnmodell-Simulator</div>
+                <div class="diagram-subtitle">Bewege die Regler, um zu sehen, wie sich Meldebestand, Sicherheitsbestand und Wiederbeschaffungszeit verhalten.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="slider-group" style="flex: 1; min-width: 180px;">
+                            <label>Tagesverbrauch: <span id="lbl-tagesverbrauch">10</span> Stk/Tag</label>
+                            <input type="range" id="rng-tagesverbrauch" min="5" max="30" value="10" oninput="updateSaegezahn()">
+                        </div>
+                        <div class="slider-group" style="flex: 1; min-width: 180px;">
+                            <label>Wiederbeschaffung (Tage): <span id="lbl-wbzeit">6</span> Tage</label>
+                            <input type="range" id="rng-wbzeit" min="2" max="12" value="6" oninput="updateSaegezahn()">
+                        </div>
+                        <div class="slider-group" style="flex: 1; min-width: 180px;">
+                            <label>Sicherheitsbestand: <span id="lbl-sicherheitsbestand">50</span> Stk</label>
+                            <input type="range" id="rng-sicherheitsbestand" min="10" max="150" value="50" oninput="updateSaegezahn()">
+                        </div>
+                    </div>
+                    
+                    <canvas id="saegezahnCanvas" class="saegezahn-canvas"></canvas>
+                    
+                    <div style="margin-top: 0.75rem; font-size: 0.9rem; background: var(--tag-bg); padding: 0.75rem; border-radius: 6px;">
+                        <strong>Berechneter Meldebestand:</strong> <span id="calc-meldebestand" style="color:var(--primary-color); font-weight:bold;">110</span> Stück 
+                        <em>(Formel: [Verbrauch/Tag × Beschaffungszeit] + Sicherheitsbestand)</em>
+                    </div>
+                </div>
+            </div>
+
+            <h4>4. Wareneingang & Bestandsüberwachung</h4>
+            <ul>
+                <li><span class="highlight-text">Kernaufgaben im Wareneingang:</span> Wareneingangskontrolle, Mengenkontrolle und Qualitätskontrolle.</li>
+                <li><span class="highlight-text">Bestandsüberwachung und -pflege:</span>
+                    <ul>
+                        <li><em>Materialeingänge:</em> Qualitätsprüfungen (Menge, Schäden), Rechnungsprüfungen und buchungstechnische Erfassung (Menge, Artikel, Lieferscheinnummer).</li>
+                        <li><em>Materialausgänge:</em> Überwachung geplanter/ungeplanter Entnahmen (Schwund, Diebstahl), Bestandskorrekturbuchungen und Meldung an die Betriebsbuchhaltung.</li>
+                        <li><em>Verfügbarkeit:</em> Terminkontrolle ausstehender Lieferungen externer Lieferanten sowie der internen Materialversorgung der Fertigung.</li>
+                        <li><em>Kennzahlen:</em> Regelmäßige Erfassung, Bewertung und Analyse der Lagerkennzahlen.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>5. Auslagerung, Sägezahnmodell & Bullwhip-Effekt</h4>
+            <ul>
+                <li><span class="highlight-text">Dimensionen der Auslagerung:</span>
+                    <ul>
+                        <li><em>Orientierung:</em> Artikelorientiert (mehrere Aufträge zusammengefasst zur Wegoptimierung) vs. Auftragsorientiert (Zusammenstellung für einen konkreten Kunden-/Produktionsauftrag).</li>
+                        <li><em>Bereitstellung:</em> Dynamisch (Ware-zu-Person via Vertikal-/Horizontalförderer, Karussell, Paternoster) vs. Statisch (Person-zu-Ware).</li>
+                        <li><em>Entnahme:</em> Manuell, mechanisch oder automatisch sowie horizontal (Greifhöhe) oder vertikal (Leitern, Regalbediengeräte).</li>
+                        <li><em>Ausführungsart:</em> Realtime (jeder Auftrag einzeln sofort) vs. Batch-Aufbereitung (Auftragssammlung).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Sägezahnmodell:</span> Visualisiert den Bestandsverlauf bei verbrauchsgesteuerter Bedarfsermittlung im <strong>Bestellpunktverfahren</strong> unter Berücksichtigung von Höchstbestand, Meldebestand, Sicherheitsbestand und Beschaffungszeit.</li>
+                <li><span class="highlight-text">Bullwhip-Effekt (Peitscheneffekt):</span> Beschreibt die sich aufschaukelnde Verzerrung der Nachfrageinformationen entlang der Lieferkette vom Endverbraucher zurück zum Hersteller.</li>
+            </ul>
+
+            <h4>6. Formelsammlung & Berechnungen der Lagerlogistik</h4>
+            <p><strong>Verfügbarer Lagerbestand:</strong></p>
+            <p>\[\text{Verfügbarer Lagerbestand} = \text{Lagerbestand} + \text{disponierter Bestand} - \text{reservierter Bestand} - \text{Rückstände}\]</p>
+
+            <p><strong>Sicherheitsbestand (bei Durchschnittsverbrauch):</strong></p>
+            <p>\[\text{Sicherheitsbestand} = \text{durchschnittlicher Verbrauch pro Periode} \times \text{Beschaffungszeit}\]</p>
+
+            <p><strong>Sicherheitsbestand (bei Verbrauchsschwankungen):</strong></p>
+            <p>\[\text{Sicherheitsbestand} = \text{Verbrauch während Beschaffungszeit} + \text{Zuschlag für Verbrauchsschwankungen}\]</p>
+
+            <p><strong>Meldebestand:</strong></p>
+            <p>\[\text{Meldebestand} = (\text{Verbrauch pro Periode} \times \text{Beschaffungszeit}) + \text{Sicherheitsbestand}\]</p>
+
+            <p><strong>Reichweite des Lagerbestands:</strong></p>
+            <p>\[\text{Reichweite} = \frac{\text{durchschnittlicher Lagerbestand}}{\text{durchschnittlicher Bedarf}}\]</p>
+
+            <p><strong>Lagerbestand in % des Umsatzes:</strong></p>
+            <p>\[\text{Lagerbestand in \% des Umsatzes} = \frac{\text{Lagerbestand}}{\text{Umsatz}} \times 100\]</p>
+
+            <p><strong>Sicherheitskoeffizient:</strong></p>
+            <p>\[\text{Sicherheitskoeffizient} = \frac{\text{Mindestbestand}}{\text{durchschnittlicher Lagerbestand}} \times 100\]</p>
+
+            <p><strong>Lagerbestandsstrukturen:</strong></p>
+            <ul>
+                <li>Nach Versorgungssicherheit: \[\frac{\text{Sicherheitsbestand}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+                <li>Nach Reichweite (1 Monat): \[\frac{\text{Lagerbestand mit Reichweite 1 Monat}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+                <li>Nach Qualität/Lagerfähigkeit: \[\frac{\text{Lagerbestand verderblicher Waren}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+                <li>Nach Verkäuflichkeit: \[\frac{\text{Lagerbestand leicht verkäuflicher Waren}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+            </ul>
+
+            <p><strong>Lagerumschlag (Umschlagshäufigkeit):</strong></p>
+            <p>\[\text{Umschlag 1} = \frac{\text{Lagerabgang}}{\text{durchschnittlicher Lagerbestand}}\]</p>
+            <p>\[\text{Umschlag 2} = \frac{\text{Umsatz}}{\text{durchschnittlicher Lagerbestand}}\]</p>
+            <p>\[\text{Umschlag 3} = \frac{\text{mengenmässiger Umsatz}}{\text{durchschnittlicher mengenmässiger Lagerbestand}}\]</p>
+
+            <p><strong>Materialumschlag:</strong></p>
+            <p>\[\text{Materialumschlag} = \frac{\text{Materialverbrauch}}{\text{durchschnittlicher Materialbestand}}\]</p>
+
+            <p><strong>Lagerdauer (in Tagen):</strong></p>
+            <p>\[\text{Lagerdauer 1} = \frac{\text{Anzahl Tage des Rechnungszeitraums}}{\text{Umschlagshäufigkeit}}\]</p>
+            <p>\[\text{Lagerdauer 2} = \frac{\text{durchschnittlicher Lagerbestand}}{\text{Jahresumsatz}} \times 360\]</p>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Gegenüberstellung Zentraler vs. Dezentraler Wareneingang</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aufgabe / Kriterium</th>
+                            <th>Zentraler Wareneingang</th>
+                            <th>Dezentraler Wareneingang</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Warenanfuhr</strong></td>
+                            <td>Bietet sich bei Anlieferung per Lkw oder Bahn an; erfordert Anlieferungs-/Umschlagsstellen sowie interne Transportmittel.</td>
+                            <td>Bietet sich bei Anlieferung über Kleinfahrzeuge an; Infrastruktur muss mehrfach vorhanden sein (Mehrkosten).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wareneingangskontrolle</strong></td>
+                            <td>Nimmt wichtige Stellung ein; Funktion muss organisatorisch stark verankert und ausgebaut werden.</td>
+                            <td>Auf verschiedene Prüfstellen verteilt; setzt mengen-, termin- und qualitätsgerechte Lieferungen der Lieferanten voraus.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mengenkontrolle</strong></td>
+                            <td>Systematische Überprüfung sämtlicher Warenmengen erforderlich.</td>
+                            <td>Stichprobenartige Kontrolle der Warenmengen ausreichend.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Qualitätskontrolle</strong></td>
+                            <td>Erfordert Spezialkenntnisse und aufwendige Messeinrichtungen (z. B. Laborprüfungen).</td>
+                            <td>Kann auf Lieferanten übertragen werden (Prüfabkommen, Prüfzertifikate, festgelegte Toleranzbereiche).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Lagerplatzzuordnungssysteme im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>Funktionsweise</th>
+                            <th>Vorteile (+) / Nachteile (-)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Festplatzordnung</strong></td>
+                            <td>Jeder Artikel erhält einen fest zugewiesenen Lagerplatz.</td>
+                            <td><strong>+</strong> Einfaches manuelles Auffinden der Artikel.<br><strong>-</strong> Unnötige Kapazitätsreservierung für Maximalbestände.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chaotische Lagerordnung</strong></td>
+                            <td>Jeder Artikel kann auf jedem freien Lagerplatz eingelagert werden.</td>
+                            <td><strong>+</strong> Keine unnötigen Reservekapazitäten, kleineres Gesamtlager.<br><strong>-</strong> Gefahr der Blockade nah gelegener Plätze durch Langsamdreher.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerzonen</strong></td>
+                            <td>Artikelarten werden in vordefinierten Zonen frei eingelagert.</td>
+                            <td><strong>+</strong> Schnelldreher nahe beim Ein-/Ausgang verkürzen Wege.<br><strong>-</strong> Höhere Reservekapazitäten als bei rein chaotischer Ordnung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamische Zonen</strong></td>
+                            <td>Lagerzonen werden zeitlich an aktuelle Bedürfnisse angepasst.</td>
+                            <td><strong>+</strong> Reservekapazitäten nur für aktuelle Planungsperiode nötig.<br><strong>-</strong> Steuerung der Ein-/Ausgangsnähe erfordert aktives Nachfragemanagement.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Die 7 Schritte der ABC-Analyse nach Zugriffshäufigkeit</h4>
+            <ol>
+                <li><strong>Artikelzugriffe pro Jahr</strong> für alle Sortimentspositionen ermitteln.</li>
+                <li>Artikelliste <strong>nach Anzahl der Zugriffe absteigend sortieren</strong>.</li>
+                <li><strong>Prozentualen Anteil</strong> jedes Artikels an der Totalsumme aller Artikel berechnen.</li>
+                <li><strong>Prozentuale Artikelanteile kumulieren</strong>.</li>
+                <li><strong>Zugriffsanteil</strong> jedes Artikels an der Gesamtsumme aller Zugriffe berechnen.</li>
+                <li><strong>Prozentuale Zugriffsanteile kumulieren</strong>.</li>
+                <li><strong>ABC-Bereiche festlegen und zuordnen</strong> (A-Artikel: 5–20 % Artikel für 60–90 % Zugriffe; B-Artikel: 15–20 % Artikel für 15–25 % Zugriffe; C-Artikel: 60–80 % Artikel für 5–10 % Zugriffe).</li>
+            </ol>
+
+            <h4>Prozess 2: Maßnahmen zur Vermeidung des Bullwhip-Effekts</h4>
+            <ol>
+                <li>Herstellen vollständiger <strong>Informationstransparenz</strong> über alle Stufen der Supply Chain.</li>
+                <li>Gewährleistung von <strong>Preisgestaltungstransparenz</strong>.</li>
+                <li><strong>Bestellmengen verringern</strong> (kleinere Bestelleinheiten).</li>
+                <li><strong>Hamsterkäufe</strong> und künstliche Bestellspitzen <strong>vermeiden</strong>.</li>
+                <li>Aufsetzen einer einfachen Kommunikation mittels <strong>E-Procurement-System</strong>.</li>
+            </ol>
+
+            <h3>Praxis- und Anwendungsbeispiele aus den Quellen</h3>
+            <ul>
+                <li><span class="highlight-text">Rohwaren-Spekulation:</span> Der gezielte vorausschauende Einkauf und die Lagerung von <strong>Kaffee, Mineralöl oder Edelmetallen</strong> vor erwarteten Marktpreissteigerungen oder zur Ausnutzung von Mengenrabatten.</li>
+                <li><span class="highlight-text">Produktivlagerung (Veredelung):</span> Die Reifung von <strong>Käse oder Wein</strong> im Lager; die Ware erreicht erst durch den zeitlichen Lagerprozess ihren verkaufs- und verzehrfähigen Zustand.</li>
+                <li><span class="highlight-text">Verkaufslager (Einzelhandel):</span> Direkte Präsentation der Ware im Verkaufsraum; die Warenentnahme durch den Kunden führt an der Kasse zu einer automatischen Entnahmebuchung.</li>
+                <li><span class="highlight-text">Betriebliche Entsorgungsstelle:</span> Sammeln von Ausschuss, Verpackungsresten oder Altmaterialien in Abfallsammelstellen des Betriebs bis zur Entscheidung über Recycling oder Endentsorgung.</li>
+                <li><span class="highlight-text">Verwaltungsmaterial (Lagerstufe 5):</span> Bereithaltung von <strong>Büromaterial und Archivgut</strong> für administrative Zwecke im Unternehmen.</li>
+                <li><span class="highlight-text">Praxisanwendungen in der Kommissionierung &amp; Fördertechnik:</span> Automatisiertes Logistikzentrum bei <strong>Brack</strong>, Nutzung von <strong>Pick by Vision</strong> über Datenbrillen, Einsatz von <strong>Exoskeletten</strong> zur körperlichen Entlastung der Lagermitarbeiter, Betrieb von <strong>Hochregallagern</strong> mit schienengeführten Regalbediengeräten sowie visuelle Entnahmehilfe via <strong>Pick by Light</strong> und sprachgesteuerte Führung mittels <strong>Pick by Voice</strong>.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Warum gilt das Diktum „Das beste Lager ist kein Lager!“ und welcher zentrale Zielkonflikt entsteht daraus für die Betriebsführung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Lager verursachen Kapitalbindung, Speicherplatzkosten und Lagerausschuss. Der zentrale Zielkonflikt besteht zwischen dem Wunsch nach maximaler <strong>Lieferbereitschaft/Versorgungssicherheit</strong> und dem Ziel möglichst <strong>tiefer Lagerkosten</strong> bzw. geringer Kapitalbindung.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Ein Lagerverwalter ermittelt einen Lagerbestand von 500 Stück. 100 Stück sind für Kundenaufträge reserviert, 50 Stück sind bereits bestellt (disponiert), und es bestehen 20 Stück Rückstände. Wie hoch ist der verfügbarer Lagerbestand?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> \[\text{Verfügbarer Bestand} = 500 + 50 - 100 - 20 = \mathbf{430\text{ Stück}}\]</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Worin unterscheiden sich die Veredelungsfunktion und die Umformungsfunktion eines Lagers? Nenne jeweils ein Praxisbeispiel.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei der <strong>Veredelungsfunktion</strong> verändert die Ware während der Lagerung ihre biochemische/physikalische Qualität als Teil des Fertigungsprozesses (Beispiel: Reifung von Käse oder Wein). Bei der <strong>Umformungsfunktion</strong> wird die Ware ohne qualitative Eigenveränderung konfektioniert, gemischt oder umverpackt (Beispiel: Umpacken von Großgebinden in Kleinverbraucheinheiten).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Nenne die 7 Schritte zur Durchführung einer ABC-Analyse nach Zugriffshäufigkeit in der richtigen Reihenfolge.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    1. Artikelzugriffe pro Jahr ermitteln.<br>
+                    2. Nach Anzahl Zugriffe absteigend sortieren.<br>
+                    3. Anteil an Totalsumme der Artikel ermitteln.<br>
+                    4. Prozentuale Anteile der Artikel kumulieren.<br>
+                    5. Anteile an Zugriffen jedes Artikels auf Summe aller Zugriffe ermitteln.<br>
+                    6. Prozentuale Anteile der Artikelzugriffe kumulieren.<br>
+                    7. ABC-Bereiche festlegen und zuordnen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Welche 5 konkreten Maßnahmen verhindern das Auftreten des Bullwhip-Effekts in der Supply Chain?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Informationstransparenz schaffen, 2. Preisgestaltungstransparenz bieten, 3. Bestellmengen verringern, 4. Hamsterkäufe vermeiden, 5. Kommunikation über ein E-Procurement-System abwickeln.</p>
+                </div>
+            </details>
+        </section>
+
+<!-- HIER ENDET BLOCK 1. FÜGE AN DIESER STELLE DEN BLOCK 2 EIN! -->
+        <!-- ========================================== -->
+        <!-- TEIL 2: KOMMISSIONIERUNG & INVENTUR        -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-2">
+            <h2>LALO - Teil 2: Kommissionierung, Bestandsüberwachung & Inventur</h2>
+
+            <h3>Thema & Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 2. Unterrichtstag – Inhaltsbereich: Kommissionierung, Bestandsüberwachung & Inventur (Kapitel 9 / Teil 2: Lager und Materialwirtschaft). Dozent: Charly Mettler.</p>
+            <p><strong>Leistungskriterien & Lernziele:</strong></p>
+            <ul>
+                <li><strong>Zusammenhänge der Kommissionierung</strong> (Warenfluss, Fortbewegung, Bereitstellung, Entnahme, Abgabe und Organisation) umfassend verstehen und differenzieren.</li>
+                <li><strong>Kommissioniermethoden</strong> (seriell vs. parallel, auftrags- vs. serienbezogen) sowie den <strong>Datenfluss</strong> (Batch vs. Real Time, Online vs. Offline) systematisch unterscheiden und anwenden.</li>
+                <li>Die <strong>Teilzeiten der Kommissionierzeit</strong> (Basis-, Weg-, Greif-, Tot- und Verteilzeit) identifizieren, berechnen und Optimierungsmaßnahmen ableiten.</li>
+                <li><strong>Kommissionierfehler</strong>, deren Ursachen und betriebswirtschaftliche Konsequenzen kennen.</li>
+                <li><strong>Lagerplatzzuordnung und ABC-Analyse</strong> nach Zugriffshäufigkeit in 7 Schritten durchführen.</li>
+                <li><strong>Bestandsüberwachung und Bestandspflege</strong> (Materialeingänge, Materialausgänge, Verfügbarkeit und Kennzahlen) strukturieren.</li>
+                <li><strong>Bestandsarten</strong> präzise definieren und berechnen (z. B. durchschnittlicher Lagerbestand, verfügbarer Bestand, Meldebestand).</li>
+                <li><strong>Inventurarten</strong> und <strong>Methoden der Verbrauchsrechnung</strong> (Inventurmethode, Rückrechnungsmethode, Fortschreibungsmethode) beherrschen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Grundsatz & Definition der Kommissionierung</h4>
+            <p>Die <strong>Kommissionierung</strong> ist das Zusammenstellen von Aufträgen aus einem vorhandenen Artikelsortiment. Die Aufträge können für <strong>interne Kunden</strong> (z. B. Montage oder Produktion) oder für <strong>externe Kunden</strong> (z. B. Handelsunternehmen) bestimmt sein.</p>
+
+            <h4>2. Dimensionen der Kommissionierung (Warenfluss, Fortbewegung, Bereitstellung)</h4>
+            <ul>
+                <li><span class="highlight-text">Bereitstellung der Waren:</span>
+                    <ul>
+                        <li><em>Statische Bereitstellung („Mensch zu Ware“):</em> Die Ware lagert unbeweglich an einem festen Ort. Der Kommissionierer bewegt sich zur Ware hin, um die Artikel zu entnehmen.</li>
+                        <li><em>Dynamische Bereitstellung („Ware zu Mensch“):</em> Die Ware lagert in einem Lagergestell oder System, welches die benötigte Ware selbstständig holt. Der Kommissionierer entnimmt den Artikel, und das System lagert nicht benötigte Artikel automatisch wieder ein.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Fortbewegung:</span>
+                    <ul>
+                        <li><em>Eindimensionale Fortbewegung:</em> Die Kommissionierung erfolgt rein horizontal auf Bodenplätzen. Hierbei kommen in der Regel Horizontal-Kommissionierer zum Einsatz; kleine Artikel werden mit Rollwagen oder Rolltischen kommissioniert.</li>
+                        <li><em>Mehrdimensionale Fortbewegung:</em> Die Bewegung erfolgt sowohl horizontal als auch vertikal. Der Kommissionierer erhält dadurch Zugriff auf verschiedene Bereitstellungsebenen (z. B. mit Regalbediengeräten).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Entnahme:</span>
+                    <ul>
+                        <li><em>Manuelle Entnahme:</em> Der Artikel wird von Hand aus dem Lagerplatz entnommen und in einen Kommissionierbehälter oder Ladungsträger gelegt.</li>
+                        <li><em>Automatische Entnahme:</em> Die Artikel gelangen vollautomatisch in den Kommissionierbehälter (z. B. über Sorter/Sortieranlagen).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Abgabe der Ware:</span>
+                    <ul>
+                        <li><em>Zentrale Abgabe:</em> Die kommissionierten Güter werden an einem einzigen zentralen Ort zur Verpackung und Bereitstellung übergeben.</li>
+                        <li><em>Dezentrale Abgabe:</em> Die kommissionierte Ware wird am Ende des Ganges an eine Fördereinrichtung weitergegeben und gelangt von dort zum zentralen Ort (kurze Wege).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Organisation (Kommissionierzonen):</span>
+                    <ul>
+                        <li><em>Einzonige Kommissionierung:</em> Das Kommissioniergut wird ausschließlich aus einer einzigen festgelegten Zone gesammelt.</li>
+                        <li><em>Mehrzonige Kommissionierung:</em> Das Kommissioniergut wird aus zwei oder mehreren separaten Zonen gesammelt.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- NEU: INTERAKTIVES REFA-ZEITEN EXPLORER WIDGET -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver REFA-Teilzeiten-Explorer</div>
+                <div class="diagram-subtitle">Klicke auf ein Zeitsegment, um Details und Optimierungshebel im Lager einzublenden.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: flex; height: 40px; border-radius: 6px; overflow: hidden; margin-bottom: 1rem; cursor: pointer; text-align: center; color: white; font-weight: bold; font-size: 0.85rem;">
+                        <div onclick="selectRefaTime('basis')" style="width: 14%; background-color: #0284c7; line-height: 40px;" title="Basiszeit (14%)">Basis (14%)</div>
+                        <div onclick="selectRefaTime('weg')" style="width: 28%; background-color: #1e3a8a; line-height: 40px;" title="Wegzeit (28%)">Wegzeit (28%)</div>
+                        <div onclick="selectRefaTime('greif')" style="width: 16%; background-color: #059669; line-height: 40px;" title="Greifzeit (16%)">Greif (16%)</div>
+                        <div onclick="selectRefaTime('tot')" style="width: 17%; background-color: #d97706; line-height: 40px;" title="Totzeit (17%)">Tot (17%)</div>
+                        <div onclick="selectRefaTime('verteil')" style="width: 25%; background-color: #dc2626; line-height: 40px;" title="Verteilzeit (25%)">Verteil (25%)</div>
+                    </div>
+                    
+                    <div id="refa-info-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="refa-title" style="margin-bottom: 0.25rem; color: var(--primary-color);">Wegzeit (28% der Gesamtarbeitszeit = 142.8 Min.)</h5>
+                        <p id="refa-desc" style="font-size: 0.9rem; margin: 0;"><strong>Beschreibung:</strong> Zeit für das Zurücklegen der Strecke zwischen zwei Entnahmestellen.<br><strong>Optimierungsansatz:</strong> Schnelldreher nahe am Ausgang platzieren (ABC-Zonung), Wegoptimierung via WMS, Pick-by-Voice/Light nutzen, zweidimensionales Kommissionieren.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>3. Kommissioniermethoden</h4>
+            <ul>
+                <li><span class="highlight-text">Auftragsbezogene, serielle Kommissionierung:</span> Der Auftrag wird positionsweise nacheinander von demselben Mitarbeiter oder durch Übergabepunkte zwischen Bereichen von mehreren Mitarbeitern nacheinander bis zum Ende abgearbeitet. Der Kommissionierschein ist vollständig einem einzelnen Auftrag zugeordnet.</li>
+                <li><span class="highlight-text">Auftragsbezogene, parallele Kommissionierung:</span> Der Auftrag wird in der Arbeitsvorbereitung in verschiedene Zonen/Bereiche aufgeteilt. Mehrere Kommissionierer arbeiten die Teilaufträge parallel positionsweise ab. Anschließend werden die Teilaufträge zu einem Gesamtauftrag zusammengefasst. Vorteil: Hohe Kommissionierleistung; Gefahr: Engpassbildung durch einseitige Belastung eines einzelnen Bereichs.</li>
+                <li><span class="highlight-text">Serienbezogene, parallele Kommissionierung:</span> Mehrere Kommissionierscheine werden zu einer Serie zusammengefasst. Die Positionen werden artikelweise über die Lagerzonen aufgeteilt, sodass ein Artikel, der in mehreren Aufträgen vorkommt, in einer einzigen Tour gesammelt (gerüstet) werden kann. Danach werden die gesammelten Artikel auf die einzelnen Kundenaufträge verteilt.</li>
+            </ul>
+
+            <h4>4. Datenfluss & Moderne Kommissionierverfahren</h4>
+            <ul>
+                <li><span class="highlight-text">Datenaufbereitung:</span>
+                    <ul>
+                        <li><em>Batch-Aufbereitung:</em> Auftragsinformationen werden gesammelt und stapelweise verarbeitet (Änderungen wirken erst im folgenden Lauf).</li>
+                        <li><em>Real Time (Echtzeit):</em> Eingehende Daten werden direkt vom Rechner an den Kommissionierer übermittelt (ständige Anpassung und direkte Bestandsaktualisierung).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Datenweitergabe:</span>
+                    <ul>
+                        <li><em>Offline:</em> Daten werden mittels Listen und Belegen an eine zentrale Datenverarbeitungsstelle weitergeleitet und dort manuell erfasst.</li>
+                        <li><em>Online:</em> Direkter, beidseitiger Zugriff auf den zentralen Rechner ist gegeben. Änderungen können unmittelbar im laufenden Vorgang berücksichtigt werden.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Moderne, beleglose Kommissionierverfahren:</span> Pick by Voice (Sprachsteuerung), Pick by Light (Optische Signale am Fach), Pick by Vision (Datenbrillen).</li>
+                <li><span class="highlight-text">Kommissionieren mit Sortern:</span> Sortieranlagen verteilen Stückgüter automatisch an festgelegte Zielorte via Barcode-Scan (Kippschalen-, Gleitschuh-, Schwenkrollen-, Quergurt- und Fallklappen-Sorter).</li>
+            </ul>
+
+            <h4>5. Kommissionierzeit & Kennzahlen</h4>
+            <p>Die gesamte Kommissionierzeit setzt sich aus fünf Teilzeiten zusammen:</p>
+            <ol>
+                <li><span class="highlight-text">Basiszeit:</span> Organisatorische Arbeiten vor und nach dem Kommissionieren.</li>
+                <li><span class="highlight-text">Wegzeit:</span> Zurücklegen der Strecke zwischen zwei Entnahmestellen (oft der größte Zeitanteil).</li>
+                <li><span class="highlight-text">Greifzeit (Pickzeit):</span> Unterteilt in Greifvorgang (aus Regal nehmen) und Ablagevorgang (in Behälter legen).</li>
+                <li><span class="highlight-text">Totzeit (Nebenzeit / Organisationszeit):</span> Belege lesen, Anbrüche erstellen, Zählen, Kontrollieren, Fehler melden.</li>
+                <li><span class="highlight-text">Verteilzeit:</span> Unproduktive Zeit (persönlich und sachlich).</li>
+            </ol>
+            <p><em>Prozentuales Rechenbeispiel (8,5-Stunden-Arbeitstag = 510 Minuten):</em> Basiszeit: 14 % (71,4 Min.), Greifzeit: 16 % (81,6 Min.), Totzeit: 17 % (86,7 Min.), Wegzeit: 28 % (142,8 Min.), Verteilzeit: 25 % (127,5 Min.).</p>
+
+            <h4>6. Kommissionierfehler</h4>
+            <ul>
+                <li><span class="highlight-text">Ursachen:</span> Stress, Gleichgültigkeit, fehlende Nachkontrolle, mangelnde Konzentration.</li>
+                <li><span class="highlight-text">Folgen / Auswirkungen:</span> Konventionalstrafen, Aufwand für Austausch/Nachlieferung, falsche Lagerbestandsdaten im System, Imageverlust, verärgerte Kunden.</li>
+            </ul>
+
+            <h4>7. Bestandsüberwachung, Bestandspflege & SCM</h4>
+            <ul>
+                <li><span class="highlight-text">Führen durch Kennzahlen:</span> SOLL-/IST-Vergleich zur Festlegung zielgerichteter Maßnahmen.</li>
+                <li><span class="highlight-text">Aufgaben der Bestandsüberwachung:</span> Kontrolle der Materialeingänge (Qualität, Menge, Preis), Überwachung der Materialausgänge (Schwund, Diebstahl, Buchungen), Verfügbarkeitskontrolle extern/intern, Analyse von Lagerkennzahlen.</li>
+            </ul>
+
+            <h4>8. Arten des Lager- und Materialbestands</h4>
+            <p>Systematische Definition der Bestandsarten:</p>
+            <ul>
+                <li><span class="highlight-text">Disponierter Bestand:</span> Reservierte Menge oder bestellte Ware, die sich noch nicht im Lager befindet.</li>
+                <li><span class="highlight-text">Durchschnittlicher Lagerbestand:</span>
+                    <ul>
+                        <li>Effektiver mittlerer Bestand = \(\frac{\text{Anfangsbestand} + \text{Endbestand}}{2}\)</li>
+                        <li>Mittlerer Bestand pro Jahr = \(\frac{\text{Anfangsbestand} + 12 \text{ Monatsbestände}}{13}\)</li>
+                        <li>Theoretischer mittlerer Bestand = \(\frac{\text{Losgröße}}{2} + \text{Sicherheitsbestand}\)</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Höchstbestand:</span> Obergrenze zur Vermeidung von Kapitalbindung und hohen Lagerkosten.</li>
+                <li><span class="highlight-text">Inventurbestand:</span> Effektiv durch Zählung ermittelter Ist-Bestand.</li>
+                <li><span class="highlight-text">Lagerbestand:</span> Rechnerisch im WMS geführter Bestand.</li>
+                <li><span class="highlight-text">Meldebestand:</span> Schwellenwert zur Auslösung einer Nachbestellung.</li>
+                <li><span class="highlight-text">Reservierter Bestand:</span> Für konkrete Aufträge gebundener Teilbestand.</li>
+                <li><span class="highlight-text">Sicherheitsbestand:</span> Reservemenge zur Abfederung von Schwankungen.</li>
+                <li><span class="highlight-text">Sperrbestand:</span> Wegen Qualitätsprüfung oder Mängeln gesperrtes Material.</li>
+                <li><span class="highlight-text">Verfügbarer Bestand:</span> Rechnerisch frei nutzbare Restmenge.</li>
+            </ul>
+
+            <h4>9. Inventur & Methoden der Verbrauchsrechnung</h4>
+            <ul>
+                <li><span class="highlight-text">Inventurarten:</span> Permanente/rollende Inventur, Stichprobeninventur, Stichtagsinventur, Verlegte Inventur, Buch-Inventur.</li>
+                <li><span class="highlight-text">Methoden der Verbrauchsrechnung:</span>
+                    <ul>
+                        <li><em>Inventurmethode:</em> \(\text{Materialverbrauch} = \text{Anfangsbestand} + \text{Zugänge} - \text{Endbestand}\)</li>
+                        <li><em>Rückrechnungsmethode (retrograd):</em> \(\text{Materialverbrauch} = \text{Materialverbrauch pro Periode} \times \text{Produktionsmenge}\)</li>
+                        <li><em>Fortschreibungsmethode (Skontrahierung):</em> \(\text{Endbestand/Verbrauch} = \text{Anfangsbestand} + \text{Zugänge} - \text{Abgänge}\)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Systematischer Vergleich der Kommissioniermethoden</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kommissioniermethode</th>
+                            <th>Ablauf & Merkmale</th>
+                            <th>Vorteil</th>
+                            <th>Nachteil / Risiko</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Auftragsbezogen, seriell</strong></td>
+                            <td>Ein Auftrag wird positionsweise nacheinander von einer Person oder nacheinander über mehrere Zonen hinweg abgearbeitet.</td>
+                            <td>Einfache Zuordnung; der Kommissionierschein gehört vollständig zu einem Auftrag.</td>
+                            <td>Lange Wegzeiten, da ein Mitarbeiter die gesamten Auftragspositionen nacheinander abläuft.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Auftragsbezogen, parallel</strong></td>
+                            <td>Der Auftrag wird in der Arbeitsvorbereitung aufgeteilt und in verschiedenen Zonen gleichzeitig bearbeitet.</td>
+                            <td><strong>Hohe Kommissionierleistung</strong> durch zeitgleiche Bearbeitung.</td>
+                            <td><strong>Engpassgefahr</strong> durch einseitige Belastung einzelner Zonen; Zusammenführung der Teilaufträge nötig.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Serienbezogene, parallele Kommissionierung</strong></td>
+                            <td>Mehrere Aufträge werden zu Serien zusammengefasst. Artikel werden zonenseitig gesammelt und danach auf Einzelaufträge verteilt.</td>
+                            <td>Sehr effiziente Wegnutzung, da gleiche Artikel für mehrere Kunden in einer Tour gerüstet werden.</td>
+                            <td>Aufwendige Arbeitsvorbereitung und zweistufiger Verteilprozess auf Kundenaufträge nötig.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Vergleichende Übersicht der Bestandsarten</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bestandsart</th>
+                            <th>Definition & Zweck</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Disponierter Bestand</strong></td>
+                            <td>Reservierte Menge oder bereits bestellte Ware, die noch nicht im Lager eingetroffen ist.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Höchstbestand</strong></td>
+                            <td>Maximal zulässige Lagermenge zur Vermeidung hoher Kapitalbindung und Lagerkosten.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Meldebestand</strong></td>
+                            <td>Schwellenwert, bei dessen Erreichen die Materialbeschaffung ausgelöst wird.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sicherheitsbestand</strong></td>
+                            <td>Unantastbare Reservemenge zum Ausgleich unvorhergesehener Schwankungen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sperrbestand</strong></td>
+                            <td>Bestand, der wegen Prüfung oder Qualitätsproblemen für die Entnahme gesperrt ist.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verfügbarer Bestand</strong></td>
+                            <td>Rechnerisch frei nutzbarer Teil des Lagerbestands.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Die 7 Schritte der ABC-Analyse nach Zugriffshäufigkeit</h4>
+            <ol>
+                <li><strong>Artikelzugriffe pro Jahr</strong> für alle Artikelpositionen ermitteln.</li>
+                <li>Artikelliste <strong>nach Anzahl der Zugriffe absteigend sortieren</strong>.</li>
+                <li><strong>Prozentualen Anteil</strong> jedes Artikels an der Totalsumme aller Artikel ermitteln.</li>
+                <li><strong>Prozentuale Anteile</strong> der Artikel <strong>kumulieren</strong>.</li>
+                <li><strong>Anteile an den Zugriffen</strong> jedes Artikels auf die Summe aller Zugriffe ermitteln.</li>
+                <li><strong>Prozentuale Anteile der Artikelzugriffe kumulieren</strong>.</li>
+                <li><strong>ABC-Bereiche festlegen und zuordnen</strong> (Klassifizierung der Artikel zur optimalen Lagerplatzzuordnung).</li>
+            </ol>
+
+            <h4>Prozess 2: Ablauf der Serienbezogenen Kommissionierung</h4>
+            <ol>
+                <li><strong>Zusammenfassung</strong> mehrerer Kommissionierscheine/Kundenaufträge zu einer Serie in der Arbeitsvorbereitung.</li>
+                <li><strong>Aufteilung</strong> der Positionen nach Lagerzonen und Artikeln.</li>
+                <li><strong>Sammeln (Rüsten)</strong> der Gesamtmenge eines Artikels für alle Aufträge der Serie in einem Durchgang.</li>
+                <li><strong>Transport</strong> der gesammelten Artikelmengen zur Verteilstelle.</li>
+                <li><strong>Verteilen</strong> der gesammelten Artikel anhand der Kommissionierscheine auf die einzelnen Kundenaufträge.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Brack & Lyreco:</span> Logistikzentren mit moderner Fördertechnik und automatisierten Kommissionieranlagen.</li>
+                <li><span class="highlight-text">Serienbezogene Getränke-Kommissionierung (Coca-Cola):</span> Ein Gesamtauftrag von <strong>55 Paletten Coca-Cola</strong> wird gesammelt entnommen und auf Einzelkunden aufgeteilt (Kunde A: 15 Pal., Kunde B: 20 Pal., Kunde C: 20 Pal.). Sortimentsverteilung von 90 Fl. Fanta, 150 Fl. Sprite, 120 Fl. Cola, 30 Fl. Henniez, 180 Fl. Passaia auf Kunden A–F.</li>
+                <li><span class="highlight-text">Pick by Vision:</span> Datenbrillen blenden Entnahmeort und Menge direkt im Sichtfeld ein.</li>
+                <li><span class="highlight-text">Exoskelett:</span> Robotische Trageunterstützung für Lagermitarbeiter bei Hebevorgängen.</li>
+                <li><span class="highlight-text">Hochregallager:</span> Schienengeführte Regalförderzeuge für mehrdimensionale Bewegung.</li>
+                <li><span class="highlight-text">Pick by Light & Pick by Voice:</span> Signalgeber am Regal bzw. sprachgesteuerte Headsets.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Worin besteht der genaue Unterschied zwischen der statischen und der dynamischen Bereitstellung bei der Kommissionierung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei der <strong>statischen Bereitstellung</strong> („Mensch zu Ware“) lagert die Ware unbeweglich an einem festen Platz, und der Kommissionierer läuft zur Ware. Bei der <strong>dynamischen Bereitstellung</strong> („Ware zu Mensch“) lagert die Ware in Regalsystemen, die das Gut selbstständig zum Kommissionierer bringen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Welche 5 Teilzeiten bilden zusammen die gesamte Kommissionierzeit? Welcher Teilzeit wird im gezeigten Rechenbeispiel der höchste prozentuale Anteil an einem 8,5-Stunden-Arbeitstag zugeschrieben?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die 5 Teilzeiten sind <strong>Basiszeit</strong>, <strong>Wegzeit</strong>, <strong>Greifzeit</strong>, <strong>Totzeit</strong> und <strong>Verteilzeit</strong>. Der höchste Anteil entfällt auf die <strong>Wegzeit mit 28 %</strong> (142,8 Minuten bei 510 Minuten Gesamtarbeitszeit).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Welche Gefahr besteht bei der auftragsbezogenen, parallelen Kommissionierung trotz ihrer hohen Kommissionierleistung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Es besteht die <strong>Engpassgefahr durch einseitige Belastung</strong> eines einzelnen Lagerbereiches bzw. einer einzelnen Kommissionierzone.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Wie berechnet sich der Materialverbrauch nach den drei Methoden der Verbrauchsrechnung (Inventur-, Rückrechnungs- und Fortschreibungsmethode)?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • <strong>Inventurmethode:</strong> \(\text{Anfangsbestand} + \text{Zugänge} - \text{Endbestand}\)<br>
+                    • <strong>Rückrechnungsmethode:</strong> \(\text{Materialverbrauch pro Periode} \times \text{Produktionsmenge}\)<br>
+                    • <strong>Fortschreibungsmethode:</strong> \(\text{Anfangsbestand} + \text{Zugänge} - \text{Abgänge}\)</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Nenne 4 Ursachen für Kommissionierfehler sowie 4 mögliche betriebswirtschaftliche Konsequenzen.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • <em>Ursachen:</em> Stress, Gleichgültigkeit, fehlende Nachkontrolle, mangelnde Konzentration.<br>
+                    • <em>Konsequenzen:</em> Konventionalstrafen, Austausch/Nachlieferung, falsche Lagerbestände im System, Imageverlust/verärgerte Kunden.</p>
+                </div>
+            </details>
+        </section>
+
+<!-- HIER ENDET BLOCK 2. FÜGE AN DIESER STELLE BLOCK 3 EIN! -->
+        <!-- ========================================== -->
+        <!-- TEIL 3: LAGER- & TRANSPORTSYSTEME         -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-3">
+            <h2>LALO - Teil 3: Lager- &amp; Transportsysteme</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 3. Unterrichtstag – Inhaltsbereich: Lager- und Transportsysteme. Dozent: Charly Mettler.</p>
+            <p><strong>Qualifikations- und Lernziele (Leistungskriterien):</strong></p>
+            <ul>
+                <li><strong>Lagerfunktionen erläutern:</strong> Die verschiedenen betriebswirtschaftlichen und logistischen Funktionen eines Lagers im Detail verstehen und unterscheiden.</li>
+                <li><strong>Lagerstufen beschreiben:</strong> Die unterschiedlichen Lagerstufen innerhalb eines Fertigungs- und Industriebetriebs identifizieren.</li>
+                <li><strong>Lagerarten &amp; Standortwahl darlegen:</strong> Die Vielfalt der Lagerarten anhand verschiedener Kriterien sowie die Einflussfaktoren auf den Lagerstandort analysieren.</li>
+                <li><strong>Innerbetriebliche Transportsysteme aufzeigen:</strong> Die Elemente, Ziele und Einflussfaktoren des innerbetrieblichen Materialflusses und der Fördertechnik verstehen.</li>
+                <li><strong>Lagertechniken &amp; -systeme bewerten:</strong> Grundlegende statische und dynamische Lagersysteme erklären und deren Eignung (z. B. Mensch-zu-Ware vs. Ware-zu-Mensch) beurteilen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Die 7 Lagerfunktionen</h4>
+            <ul>
+                <li><span class="highlight-text">Sicherungsfunktion:</span> Stellt die Lieferbereitschaft sicher. Schutz vor Lieferverzögerungen und Nachfragespitzen durch den <strong>Mindestbestand</strong>.</li>
+                <li><span class="highlight-text">Ausgleichsfunktion / Überbrückungsfunktion (Pufferfunktion):</span> Gleicht zeitliche Differenzen zwischen Produktionslosgrößen und Verbrauchszeitpunkt aus. Kann durch Just-in-Time (JIT) eliminiert werden.</li>
+                <li><span class="highlight-text">Spekulationsfunktion:</span> Nutzung von Marktpreisschwankungen oder Mengenrabatten durch Vorab-Einkauf.</li>
+                <li><span class="highlight-text">Umformungsfunktion (Sortimentsfunktion):</span> Überführung von Waren in verwendungsfähige Zustände (Mischen, Umfüllen, Sortieren, Konfektionieren).</li>
+                <li><span class="highlight-text">Veredelungsfunktion (Produktionsfunktion):</span> Qualitätsverbesserung während der Lagerzeit (Produktivlager).</li>
+                <li><span class="highlight-text">Darbietungsfunktion / Marketingfunktion:</span> Direkte Präsentation im Verkaufslager / POS.</li>
+                <li><span class="highlight-text">Entsorgungsfunktion:</span> Zwischenlagerung betrieblicher Reststoffe bis zur Verwertung oder Entsorgung.</li>
+            </ul>
+
+            <h4>2. Lagerstufen &amp; Distributionsstrukturen</h4>
+            <p><strong>5 Lagerstufen im Fertigungsunternehmen:</strong></p>
+            <ol>
+                <li>Lagerstufe 1 (Vor Produktion): Wareneingang, Roh-, Hilfs-, Betriebsstofflager.</li>
+                <li>Lagerstufe 2 (In Produktion): Handlager, Zwischenlager, Montagebereich.</li>
+                <li>Lagerstufe 3 (Nach Produktion): Fertigwarenlager, Versandlager.</li>
+                <li>Lagerstufe 4: Handelswaren.</li>
+                <li>Lagerstufe 5: Verwaltungsmaterial (Büromaterial, Archiv).</li>
+            </ol>
+            <p><strong>Distributionsstruktur:</strong> Vertikale Struktur = Anzahl Lagerstufen; Horizontale Struktur = Anzahl Lager pro Stufe. Grundsatz: <em>„So viele Lagerstufen wie nötig und so wenige Lager(stufen) wie möglich“</em>.</p>
+
+            <h4>3. Systematisierung der Lagerarten</h4>
+            <p>Gliederung nach 12 Kriterien: Bauweise, Eigentum, Einrichtung, Fördermittel, Funktion, Lagertechnik, Marktbezug, Materialart, Materialeigenschaft, Materialfluss, Standort, Wirtschaftliche Bedeutung.</p>
+
+            <h4>4. Transportsysteme &amp; Fördertechnik</h4>
+            <ul>
+                <li><span class="highlight-text">Grundsätze des Materialflusses:</span> Wartezeiten vermeiden, Durchlaufzeiten verkürzen, Kapitalbindung senken.</li>
+                <li><span class="highlight-text">Einflussfaktoren der Fördertechnik:</span> Transportgut, Förderintensität, Transportstrecke, Normen &amp; Gesetze.</li>
+                <li><span class="highlight-text">Ziele der Fördertechnik (4 Säulen):</span>
+                    <ol>
+                        <li><em>Nutzung:</em> Minimale Leerwege, optimale Auslastung, optimale Wegführung.</li>
+                        <li><em>Servicegrad:</em> Kurze Wartezeiten, rasche Reaktion, Schadensvermeidung.</li>
+                        <li><em>Flexibilität:</em> Breites Güterspektrum, einfache Anpassung.</li>
+                        <li><em>Transparenz:</em> Schnelle Informationen, klare Kennzahlen, Verursachergerechtigkeit.</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <!-- NEU: INTERAKTIVER FÖRDERMITTEL-KLASSIFIKATOR -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Fördermittel-Klassifikator</div>
+                <div class="diagram-subtitle">Wähle die Kriterien, um passende innerbetriebliche Fördermittel zu filtern.</div>
+                
+                <div class="interactive-widget">
+                    <div class="interactive-controls">
+                        <button class="btn-interactive active" onclick="filterFoerdermittel('all', this)">Alle anzeigen</button>
+                        <button class="btn-interactive" onclick="filterFoerdermittel('stetig-flurfrei', this)">Stetig / Flurfrei</button>
+                        <button class="btn-interactive" onclick="filterFoerdermittel('stetig-flurgebunden', this)">Stetig / Flurgebunden</button>
+                        <button class="btn-interactive" onclick="filterFoerdermittel('unstetig-flurfrei', this)">Unstetig / Flurfrei</button>
+                        <button class="btn-interactive" onclick="filterFoerdermittel('unstetig-flurgebunden', this)">Unstetig / Flurgebunden</button>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem;" id="foerdermittel-container">
+                        <div class="grid-card fmt-item stetig-flurfrei">
+                            <h5>Kreisförderer / EHB</h5>
+                            <p><strong>Kategorie:</strong> Stetigförderer (Flurfrei)<br><strong>Merkmale:</strong> Kontinuierlicher Fluss ohne Bodenkontakt, spart Grundfläche.</p>
+                        </div>
+                        <div class="grid-card fmt-item stetig-flurgebunden">
+                            <h5>Rollenbahn / Gurtband</h5>
+                            <p><strong>Kategorie:</strong> Stetigförderer (Flurgebunden)<br><strong>Merkmale:</strong> Feste Bahn auf Bodenhöhe, ideal für hohe Durchsätze.</p>
+                        </div>
+                        <div class="grid-card fmt-item unstetig-flurfrei">
+                            <h5>Brückenkran / Power &amp; Free</h5>
+                            <p><strong>Kategorie:</strong> Unstetigförderer (Flurfrei)<br><strong>Merkmale:</strong> Intermittierender Transport über Kopf, hohe Traglasten.</p>
+                        </div>
+                        <div class="grid-card fmt-item unstetig-flurgebunden">
+                            <h5>Gabelstapler / AGV (FTF)</h5>
+                            <p><strong>Kategorie:</strong> Unstetigförderer (Flurgebunden)<br><strong>Merkmale:</strong> Maximale Wegflexibilität am Boden, Chargen-Transport.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>5. Lagersysteme &amp; Fördermittel-Klassifizierung</h4>
+            <ul>
+                <li><span class="highlight-text">Kategorisierung der Lagersysteme:</span>
+                    <ul>
+                        <li><em>Mensch/Roboter zu Ware (Statisch):</em> Kompaktlagerung (Bodenblock, Einfahrregal), Zeilenlagerung (Bodenzeile, Regallager).</li>
+                        <li><em>Ware zu Mensch/Roboter (Dynamisch):</em> Kompaktlagerung (Blockregal, Durchlaufregal), Zeilenlagerung (Umlaufregal, Verschieberegal).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Fördermittel-Klassifizierung:</span>
+                    <ul>
+                        <li><em>Stetigförderer:</em> Flurfrei (Kreisförderer, EHB) vs. Flurgebunden (Gurtbänder, Rollbahnen, Paternoster).</li>
+                        <li><em>Unstetigförderer:</em> Flurfrei (Krane, EHB) vs. Flurgebunden (Hubwagen, Stapler, FTF/AGV).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>6. Schweizer Vorschriften, Standards &amp; Ökologie</h4>
+            <ul>
+                <li><span class="highlight-text">Gefahrgutlagerung (Schweiz):</span> Geregelt durch ChemG, ChemV, GSchV, LagerV und GGV.</li>
+                <li><span class="highlight-text">Inventurvorschriften (Schweiz):</span>
+                    <ul>
+                        <li><strong>Art. 957a OR:</strong> Inventar muss vollständig, wahrheitsgetreu, klar und nachprüfbar sein.</li>
+                        <li><strong>Art. 958c OR &amp; 958f OR:</strong> Ordnungsgemäße Rechnungslegung sowie <strong>10 Jahre Aufbewahrungspflicht</strong> für alle Geschäftsbücher und Inventare.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Lebensmittelrecht:</span> LMEV, VLH, LK, LagerV (Temperaturführung und Hygiene).</li>
+                <li><span class="highlight-text">Objektidentifikation:</span> GS1-Standards (GTIN, GLN, SSCC), RFID, QR-Codes.</li>
+                <li><span class="highlight-text">Ökologische Aspekte:</span> Energieeffizienz (LED, Solar), Mehrwegbehälter, CO2-Reduzierung, Ökobilanzierung.</li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Vergleichende Übersicht der Fördermitteltypen</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fördermittel-Kategorie</th>
+                            <th>Führungsebene</th>
+                            <th>Typische Fördermittel-Beispiele</th>
+                            <th>Einsatzmerkmale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Stetigförderer</strong></td>
+                            <td><strong>Flurfrei</strong></td>
+                            <td>Kreisförderer, Kleinbehältertransportsystem, Elektrohängebahn (EHB), Hängewagenförderer, Dreh-/Portalkran</td>
+                            <td>Kontinuierlicher Materialfluss ohne Bodenkontakt; spart Bodenfläche.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stetigförderer</strong></td>
+                            <td><strong>Flurgebunden</strong></td>
+                            <td>Gurt- und Plattenbänder, Rutschen, Tragkettenförderer, Schleppkettenförderer, Rollbahnen, Paternoster</td>
+                            <td>Kontinuierlicher Transport auf dem Boden oder fix montierten Bahnen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unstetigförderer</strong></td>
+                            <td><strong>Flurfrei</strong></td>
+                            <td>Elektrohängebahn (EHB), Power &amp; Free, Hubförderer, Krane</td>
+                            <td>Intermittierender (zyklischer) Transport über Kopf.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unstetigförderer</strong></td>
+                            <td><strong>Flurgebunden</strong></td>
+                            <td>Handgabel-Hubwagen, Elektro-Hubwagen, Gabelstapler, Fahrerlose Flurförderzeuge (FFZ), Hochregalstapler, Elektro-Schlepper</td>
+                            <td>Flexibler, zyklischer Transport am Boden mit variabler Wegführung.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Gesetzliche Rahmenbedingungen für Lagerung &amp; Inventur in der Schweiz</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Regelungsbereich</th>
+                            <th>Relevant Gesetz / Verordnung</th>
+                            <th>Hauptanforderung &amp; Inhalt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Inventur &amp; Buchführung</strong></td>
+                            <td><strong>Art. 957a OR</strong></td>
+                            <td>Das Inventar muss vollständig, wahrheitsgetreu, klar, zweckmäßig und nachprüfbar sein.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inventur &amp; Buchführung</strong></td>
+                            <td><strong>Art. 958c OR &amp; Art. 958f OR</strong></td>
+                            <td>Ordnungsmäßige Rechnungslegung sowie <strong>10 Jahre Aufbewahrungspflicht</strong> für Inventarlisten.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gefahrgutlagerung</strong></td>
+                            <td><strong>ChemG, ChemV, GSchV, LagerV, GGV</strong></td>
+                            <td>Regelung des Umgangs, der Verpackung, Kennzeichnung und sicheren Lagerung zur Unfall- und Umweltschutzvermeidung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lebensmittel-Lagerung</strong></td>
+                            <td><strong>LMEV, VLH, LK, LagerV</strong></td>
+                            <td>Hygieneanforderungen, Temperaturkontrollen und korrekte Kennzeichnung von Frischwaren.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Die 7 Schritte der technischen Einlagerung</h4>
+            <ol>
+                <li><strong>Wareneingangskontrolle:</strong> Überprüfung auf Vollständigkeit und Unversehrtheit.</li>
+                <li><strong>Qualitätskontrolle:</strong> Prüfung auf Qualität und Abgleich mit Bestelldaten.</li>
+                <li><strong>Erfassung und Dokumentation:</strong> Einbuchen im WMS.</li>
+                <li><strong>Zuordnung von Lagerplätzen:</strong> Zuweisung nach Größe, Gewicht und Umschlag.</li>
+                <li><strong>Transport zum Lagerplatz:</strong> Bewegung zum Stellplatz.</li>
+                <li><strong>Lagerung:</strong> Unterbringung im Regal oder Block.</li>
+                <li><strong>Bestandsaktualisierung:</strong> Finale Buchung im System.</li>
+            </ol>
+
+            <h4>Prozess 2: Die 9 Hauptaufgaben des Wareneingangs</h4>
+            <ol>
+                <li>Annahme der Lieferung und Dokumentenabgleich.</li>
+                <li>Sichtprüfung auf äußere Schäden.</li>
+                <li>Qualitätskontrolle gemäß Standards.</li>
+                <li>Mengenprüfung gegen Bestelldaten.</li>
+                <li>Erfassung im WMS.</li>
+                <li>Lagerplatzzuweisung.</li>
+                <li>Transport und Einlagerung.</li>
+                <li>Erfassung und Meldung von Abweichungen/Schäden.</li>
+                <li>Koordination mit Einkauf, Produktion oder QS.</li>
+            </ol>
+
+            <h4>Prozess 3: Die 10 Schritte des Warenausgangs / der Auslagerung</h4>
+            <ol>
+                <li>Auftragserfassung.</li>
+                <li>Bestandsprüfung.</li>
+                <li>Lagerplatzsuche.</li>
+                <li>Kommissionierung.</li>
+                <li>Qualitätskontrolle der Entnahme.</li>
+                <li>Verpackung.</li>
+                <li>Etikettierung (Barcodes/Adressen).</li>
+                <li>Versandvorbereitung.</li>
+                <li>Dokumentation (Lieferschein, Rechnung).</li>
+                <li>Bestandsaktualisierung (Ausbuchung).</li>
+            </ol>
+
+            <h4>Prozess 4: Entscheidungskriterien für Transportsysteme</h4>
+            <ol>
+                <li>Anzahl der Lagerstandorte analysieren.</li>
+                <li>Art des Förderguts (Gewicht, Maße, Aggregatzustand) bestimmen.</li>
+                <li>Automatisierungsgrad festlegen.</li>
+                <li>Fertigungsart berücksichtigen.</li>
+                <li>Förderstrecke und -intensität berechnen.</li>
+                <li>Gesetzliche Bestimmungen prüfen.</li>
+                <li>Finanzielle Mittel und Unternehmensgröße abgleichen.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Spekulationslagerung:</span> Einkauf von <strong>Kaffee, Mineralöl, Edelmetallen</strong> vor Preissteigerungen.</li>
+                <li><span class="highlight-text">Produktivlagerung:</span> Reifung von <strong>Käse oder Wein</strong>.</li>
+                <li><span class="highlight-text">Darbietung:</span> Präsentation im Einzelhandel/Verkaufslager mit automatischer Entnahmebuchung an der Kasse.</li>
+                <li><span class="highlight-text">Entsorgung:</span> Betriebliche Wertstoff-Sammelstelle.</li>
+                <li><span class="highlight-text">Vollautomatisches Hochregallager:</span> Praxisbeispiel der Firma <strong>Schott Ceran</strong>.</li>
+                <li><span class="highlight-text">Objektidentifikation:</span> Einsatz des <strong>RRU 4500 Readers von Kathrein Solutions</strong> für RFID im Lager.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Welcher Unterschied besteht zwischen der Veredelungsfunktion und der Umformungsfunktion eines Lagers? Nenne je ein Beispiel aus den Quellen.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei der <strong>Veredelungsfunktion</strong> verändert die Ware während der Lagerzeit ihre Qualität im Rahmen des Produktionsprozesses (z. B. Reifung von Käse oder Wein). Bei der <strong>Umformungsfunktion</strong> wird die Ware ohne qualitative Veränderung konfektioniert, gemischt oder umverpackt (z. B. Umpacken von Großgebinden in Verbrauchseinheiten).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Welche gesetzlichen Vorschriften regeln die Aufbewahrungsfrist von Inventarlisten in der Schweiz und wie lange müssen diese aufbewahrt werden?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Gemäß <strong>Art. 958f OR</strong> (Obligationenrecht) müssen Buchhaltungsunterlagen und Inventarlisten für <strong>mindestens 10 Jahre</strong> aufbewahrt werden.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Wie unterscheiden sich die vertikale und die horizontale Distributionsstruktur in einem Unternehmen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die <strong>vertikale Distributionsstruktur</strong> beschreibt die Anzahl der aufeinanderfolgenden Lagerstufen nach der Produktion. Die <strong>horizontale Distributionsstruktur</strong> beschreibt die Anzahl der Lager pro Stufe (z. B. Anzahl der Auslieferungslager).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Nenne die vier Zielkategorien der Fördertechnik und ordne ihnen jeweils zwei konkrete Unterziele zu.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    1. <em>Nutzung:</em> Minimale Leerwege, optimale Auslastung.<br>
+                    2. <em>Servicegrad:</em> Kurze Wartezeiten, Schadensvermeidung.<br>
+                    3. <em>Flexibilität:</em> Breites Güterspektrum, einfache Anpassung.<br>
+                    4. <em>Transparenz:</em> Schnelle Informationen, klare Kennzahlen.</p>
+                </div>
+            </details>
+        </section>
+
+<!-- HIER ENDET BLOCK 3. FÜGE AN DIESER STELLE BLOCK 4 EIN! -->
+        <!-- ========================================== -->
+        <!-- TEIL 4: LAGERSTRATEGIEN & CONTROLLING     -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-4">
+            <h2>LALO - Teil 4: Lagerstrategien &amp; Lagercontrolling</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 4. Unterrichtstag – Inhaltsbereich: Lagerstrategien &amp; Lagercontrolling (Kapitel 11 / S. 261). Dozent: Charly Mettler.</p>
+            <p><strong>Qualifikations- und Lernziele (Leistungskriterien):</strong></p>
+            <ul>
+                <li><strong>Strategische Aspekte der Lagerlogistik:</strong> Entscheidungen bezüglich Automatisierungsgrad, Einbindungsgrad und Zentralisierungsgrad klären und festlegen.</li>
+                <li><strong>Prinzipien der Lagerplatzzuordnung:</strong> Die verschiedenen Lagerplatzzuordnungen (Festplatz, chaotisch, Zonung, Querverteilung etc.) mitsamt ihren Vor- und Nachteilen analysieren.</li>
+                <li><strong>Prinzipien der Warenentnahme &amp; Auslagerung:</strong> Auslagerungsstrategien (FeFo, FiFo, HiFo, LiFo, LoFo) sowie Mengen- und Wegoptimierungen unterscheiden.</li>
+                <li><strong>Materialflussanalyse &amp; Wertstrom:</strong> Zweck, formale und sachliche Ziele der Materialflussanalyse sowie die Werkzeuge zur Darstellung beherrschen.</li>
+                <li><strong>Lean Production / Lean Management:</strong> Die Werkzeuge zur Verschwendungsreduktion (Wertstromanalyse, 5S-Methode, Kanban, Push- vs. Pull-Produktion) verstehen und anwenden.</li>
+                <li><strong>Lagerkostenoptimierung:</strong> Kostenarten (Personal-, Sach- und kalkulatorische Kosten) abgrenzen sowie Ansatzpunkte zur Senkung von Fixkosten und variablen Kosten nutzen.</li>
+                <li><strong>Kennzahlen der Lagerverwaltung und -steuerung:</strong> Logistische Kennzahlen (Lagerdauer, Reichweite, Umschlag, Flächennutzungsgrad, Prozesswirkungsgrad etc.) berechnen und im Rahmen des Lagercontrollings („Führen durch Kennzahlen“) einsetzen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Strategische Aspekte der Lagerlogistik</h4>
+            <p>Bei der Ausgestaltung der Lagerstrategie müssen drei grundlegende Dimensionen definiert werden:</p>
+            <ul>
+                <li><span class="highlight-text">Automatisierungsgrad:</span> Manuell (Mensch mit Stapler/RBG), Mechanisiert (mechanische Geräte/schienengeführte RBG) oder Automatisiert (vollautomatisch ohne Mensch via ICT).</li>
+                <li><span class="highlight-text">Einbindungsgrad (In-/Outsourcing):</span> Eigenlager, Fremdlager oder Speditionslager (Abruflager).</li>
+                <li><span class="highlight-text">Zentralisierungsgrad:</span> Hoch (Zentrallager) vs. Tief (mehrere dezentrale Standorte).</li>
+            </ul>
+
+            <h4>2. Prinzipien der Wareneinlagerung &amp; Lagerplatzzuordnung</h4>
+            <ul>
+                <li><span class="highlight-text">ABC-Verteilung:</span> Zuweisung nach Umschlagshäufigkeit.</li>
+                <li><span class="highlight-text">Chaotische Lagerung (Lokalisierprinzip):</span> Jeder Artikel kann auf jeden freien Platz (zwingend IT-gesteuert via WMS).</li>
+                <li><span class="highlight-text">Festplatzlagerung (Magazinierprinzip):</span> Fester Stammplatz für jeden Artikel.</li>
+                <li><span class="highlight-text">Querverteilung:</span> Verteilung der Bestände eines Artikels über mehrere Gänge (Zugriffssicherheit bei Ausfall).</li>
+                <li><span class="highlight-text">Zonung:</span> Feste Lagerzonen, innerhalb derer chaotisch gelagert wird.</li>
+                <li><span class="highlight-text">Dynamische Zonen:</span> Periodische Anpassung der Zonen an aktuelle Bedürfnisse.</li>
+            </ul>
+
+            <h4>3. Prinzipien der Warenentnahme &amp; Warenauslagerung</h4>
+            <ul>
+                <li><span class="highlight-text">FeFo (First expired – First out):</span> Kürzestes Verfallsdatum (MHD) wird zuerst ausgelagert.</li>
+                <li><span class="highlight-text">FiFo (First in – First out):</span> Älteste Ware wird zuerst ausgelagert.</li>
+                <li><span class="highlight-text">HiFo (Highest in – First out):</span> Höchster Wert zuerst.</li>
+                <li><span class="highlight-text">LiFo (Last in – First out):</span> Neueste Ware zuerst.</li>
+                <li><span class="highlight-text">LoFo (Lowest in – First out):</span> Niedrigster Wert zuerst.</li>
+                <li><span class="highlight-text">Mengenanpassung &amp; Restmengenbevorzugung:</span> Exakte Kundenbestellmengen oder Anbrüche zuerst entnehmen.</li>
+                <li><span class="highlight-text">Wegoptimierung:</span> Entnahme der Ware mit dem kürzesten Transportweg.</li>
+            </ul>
+
+            <!-- NEU: INTERAKTIVER AUSLAGERUNGS-STRATEGIE SIMULATOR -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Auslagerungs-Strategie-Simulator</div>
+                <div class="diagram-subtitle">Wähle eine Strategie, um zu sehen, welche Palette aus dem Regalfach entnommen wird.</div>
+                
+                <div class="interactive-widget">
+                    <div class="interactive-controls">
+                        <button class="btn-interactive active" onclick="simAuslagerung('fifo', this)">FiFo (First In)</button>
+                        <button class="btn-interactive" onclick="simAuslagerung('lifo', this)">LiFo (Last In)</button>
+                        <button class="btn-interactive" onclick="simAuslagerung('fefo', this)">FeFo (First Expired)</button>
+                        <button class="btn-interactive" onclick="simAuslagerung('hifo', this)">HiFo (Highest In)</button>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 15px 0;" id="paletten-regal">
+                        <div class="grid-card palette-card" id="pal-1" style="border-left: 5px solid #0284c7;">
+                            <h5>Palette A</h5>
+                            <p style="font-size:0.8rem;">Einlagerung: Tag 1<br>MHD: 10.12.<br>Wert: 500 CHF</p>
+                        </div>
+                        <div class="grid-card palette-card" id="pal-2" style="border-left: 5px solid #0284c7;">
+                            <h5>Palette B</h5>
+                            <p style="font-size:0.8rem;">Einlagerung: Tag 3<br>MHD: 01.11.<br>Wert: 1'200 CHF</p>
+                        </div>
+                        <div class="grid-card palette-card" id="pal-3" style="border-left: 5px solid #0284c7;">
+                            <h5>Palette C</h5>
+                            <p style="font-size:0.8rem;">Einlagerung: Tag 5<br>MHD: 15.01.<br>Wert: 300 CHF</p>
+                        </div>
+                    </div>
+
+                    <div id="strat-result-display" style="background: var(--tag-bg); padding: 0.75rem; border-radius: 6px; font-size: 0.9rem;">
+                        <strong>FiFo-Prinzip:</strong> Palette A wird entnommen, da sie am längsten im Lager liegt (Tag 1).
+                    </div>
+                </div>
+            </div>
+
+            <h4>4. Materialflussanalyse &amp; Lean Production (Wertstrom)</h4>
+            <ul>
+                <li><span class="highlight-text">Zweck &amp; Ziele der Materialflussanalyse:</span> Schwachstellen erkennen, Durchlaufzeiten verkürzen, Transportvorgänge optimieren, Kapitalbindung um 20 % verringern, Auslastung um 30 % erhöhen.</li>
+                <li><span class="highlight-text">Werkzeuge:</span> Materialflussmatrix (mit/ohne Mengen), Sankey-Diagramm, Mengen-Wege-Bild.</li>
+                <li><span class="highlight-text">Lean Management:</span>
+                    <ul>
+                        <li><em>Prozesswirkungsgrad:</em> \(\text{Wirkungsgrad in \%} = \frac{\text{Wertschöpfende Zeit}}{\text{Durchlaufzeit}} \times 100\)</li>
+                        <li><em>Push-Produktion:</em> Zentrale Auftragsauslösung (Input \(\rightarrow\) Bestand \(\rightarrow\) Output).</li>
+                        <li><em>Pull-Produktion:</em> Bedarfsorientierte Auslösung durch den Verbraucher (Kanban).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>5. Lagerverwaltung, Kostenkontrolle &amp; Kennzahlenberechnungen</h4>
+            <ul>
+                <li><span class="highlight-text">Kostenarten:</span> Personalkosten (Löhne), Sachkosten (Gebäude, Systeme), Kalkulatorische Kosten (Zinsen, Abschreibungen).</li>
+                <li><span class="highlight-text">Fixe vs. Variable Kosten:</span> Fixkosten durch Outsourcing/Systeme senken; variable Kosten durch Bestandsreduktion/ABC-Analysen minimieren.</li>
+                <li><span class="highlight-text">Formelsammlung des 4. Unterrichtstages:</span>
+                    <ul>
+                        <li>Zinskosten (CHF) = \(\frac{\text{durchschnittlich gebundenes Kapital} \times \text{Zinssatz}}{100}\)</li>
+                        <li>Lagerkostensatz (%) = \(\frac{\text{Lagerkosten} \times 100}{\text{durchschnittlich gebundenes Kapital}}\)</li>
+                        <li>Lagerkosten (CHF) = \(\frac{\text{durchschnittlich gebundenes Kapital} \times \text{Lagerkostensatz}}{100}\)</li>
+                        <li>Lagerhaltungskostensatz (%) = \(\text{Lagerkostensatz} + \text{Zinssatz}\)</li>
+                        <li>Lagerzinssatz (%) = \(\frac{\text{Zinssatz (p.a.)} \times \text{durchschnittliche Lagerdauer}}{360}\)</li>
+                        <li>Kosten pro Lagerplatz = \(\frac{\text{Gesamtkosten Lagereinrichtungen}}{\text{Anzahl Lagerplätze}}\)</li>
+                        <li>Kosten pro Lagerbewegung = \(\frac{\text{Personal- und Sachkosten}}{\text{Anzahl Zu-/Abgänge}}\)</li>
+                        <li>Lagerbewegungen pro Mitarbeiter = \(\frac{\text{Anzahl Zu-/Abgänge}}{\text{Anzahl Mitarbeiter}}\)</li>
+                        <li>Lagerreichweite (Tage) = \(\frac{\text{Lagerbestand} + \text{offene Bestellungen}}{\text{Materialeinsatz}} \times \text{Produktionstage}\)</li>
+                        <li>Flächennutzungsgrad (%) = \(\frac{\text{belegte Lagerfläche} \times 100}{\text{gesamte Lagerfläche}}\)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Vor- und Nachteile der Lagerplatzzuordnungen im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prinzip</th>
+                            <th>Beschreibung</th>
+                            <th>Vorteile (+)</th>
+                            <th>Nachteile (-)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ABC-Verteilung</strong></td>
+                            <td>Zuordnung zu Lagerbereichen aufgrund der Umschlagshäufigkeit.</td>
+                            <td><strong>+</strong> Hohe Umschlagsleistung<br><strong>+</strong> Geringes Risiko von Überalterung<br><strong>+</strong> Schneller Zugriff.</td>
+                            <td><strong>-</strong> Aufwendige Analyse und regelmäßige Überprüfung nötig.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chaotische Lagerung</strong></td>
+                            <td>Freie Lagerplatzzuordnung im ganzen Lager auf beliebigen freien Plätzen (IT-gesteuert).</td>
+                            <td><strong>+</strong> Optimale Flächen- und Raumnutzung<br><strong>+</strong> Schnelle Ein-/Auslagerung durch Wegoptimierung<br><strong>+</strong> Kein unnötiges Reservieren von Kapazitäten.</td>
+                            <td><strong>-</strong> Gefahr, dass Artikel mit langer Verweilzeit Plätze nahe beim Ein-/Ausgang blockieren.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Festplatzlagerung</strong></td>
+                            <td>Jeder Artikel erhält einen genau definierten eigenen Lagerplatz.</td>
+                            <td><strong>+</strong> Hohe Zugriffssicherheit<br><strong>+</strong> Erleichterte Inventur<br><strong>+</strong> Rasches manuelles Auffinden.</td>
+                            <td><strong>-</strong> Unnötige Lagerkapazitäten werden für Maximalbestände reserviert.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Querverteilung</strong></td>
+                            <td>Artikel werden über mehrere Gänge eines Lagers verteilt.</td>
+                            <td><strong>+</strong> Hohe Zugriffssicherheit bei Ausfall eines Fördermittels<br><strong>+</strong> Hohe Kommissionierleistung.</td>
+                            <td><strong>-</strong> Aufwendigere Steuerung bei Einlagerung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zonung</strong></td>
+                            <td>Zuweisung einer Lagerzone; innerhalb dieser Zone wird chaotisch gelagert.</td>
+                            <td><strong>+</strong> Kurze Transportzeiten &amp; schnelle Entnahme<br><strong>+</strong> Einfache Einarbeitung des Personals.</td>
+                            <td><strong>-</strong> Reservekapazitäten steigen gegenüber rein chaotischer Ordnung an.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamische Zonen</strong></td>
+                            <td>Anpassung der Lagerzonen in vordefinierten Zeitabständen an aktuelle Bedürfnisse.</td>
+                            <td><strong>+</strong> Reservekapazitäten werden nur für die aktuelle Planungsperiode benötigt.</td>
+                            <td><strong>-</strong> Nähe der Artikel zum Ein-/Ausgang muss aktiv gesteuert werden.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Prinzipien der Warenauslagerung im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prinzip</th>
+                            <th>Steuerungslogik</th>
+                            <th>Hauptvorteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>FeFo</strong></td>
+                            <td>Ablaufdatum (MHD) maßgebend.</td>
+                            <td>Keine Qualitätseinbußen, Einhaltung von Verbrauchsvorschriften.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FiFo</strong></td>
+                            <td>Zuerst eingelagert \(\rightarrow\) zuerst wieder raus.</td>
+                            <td>Vermeidung von Ladenhütern/Veralterung, geringe Kapitalbindung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HiFo</strong></td>
+                            <td>Höchster Wert zuerst ausgelagert.</td>
+                            <td>Rascher Kapitalrückfluss, geringe Kapitalbindung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LiFo</strong></td>
+                            <td>Zuletzt eingelagert \(\rightarrow\) zuerst wieder raus.</td>
+                            <td>Vorteilhaft bei LKW-Beladungen, Umlagerungen, Vorausbestellungen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LoFo</strong></td>
+                            <td>Niedriger Wert zuerst ausgelagert.</td>
+                            <td>Höhere Bewertung des Restlagers, weniger Ladenhüter.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mengenanpassung</strong></td>
+                            <td>Exakte Auslagerung der Kundenauftragsmenge.</td>
+                            <td>Weniger Rück-/Umlagerungen, bessere Ladekapazitätsnutzung beim Transport.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Restmengenbevorzugung</strong></td>
+                            <td>Angebrochene Ladeeinheiten zuerst auslagern.</td>
+                            <td>Bessere Raumausnutzung, Zusammenfassen angebrochener Einheiten.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wegoptimierung</strong></td>
+                            <td>Ware mit kürzestem Transportweg zuerst auslagern.</td>
+                            <td>Minimierung der Transportwege, schnellere Auftragsabarbeitung.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 3: Steuerungskonzepte im Lean Production</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kriterium</th>
+                            <th>Push-Produktion</th>
+                            <th>Pull-Produktion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Auslöser</strong></td>
+                            <td>Zentrale Stelle löst Aufträge aus.</td>
+                            <td>Bedarfsträger (Kunde, Montage) löst Herstellung aus.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Synchronität</strong></td>
+                            <td>Meist nicht synchron mit Produktionsmöglichkeiten.</td>
+                            <td>Synchron mit tatsächlichem Verbrauch/Bedarf.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bestand im Lager</strong></td>
+                            <td>Crossover-Aufbau von Zwischenbeständen in der Produktion.</td>
+                            <td>Bestandskontrolliert, Nachlieferung in vereinbarter Zeit.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Liste 1: Die 5 Schritte der Verschwendungsreduktion im Lean Production</h4>
+            <ol>
+                <li><strong>Aufnahme und Gestaltung des Wertstroms</strong>.</li>
+                <li><strong>Reduktion der Rüstzeiten</strong> und damit Verringerung der Losgrößen.</li>
+                <li><strong>Einführung von Kanban</strong> für die vereinfachte Steuerung der Produktion.</li>
+                <li><strong>Gestaltung der Arbeitsplätze mit der 5S-Methode</strong>.</li>
+                <li><strong>Einführung der kontinuierlichen Verbesserung (KVP)</strong> in den einzelnen Teams.</li>
+            </ol>
+
+            <h4>Liste 2: Die 5S-Methode zur Arbeitsplatzgestaltung</h4>
+            <ol>
+                <li><strong>Seiri (Sortieren / Sort):</strong> Aussortieren nicht benötigter Gegenstände.</li>
+                <li><strong>Seiton (Systematisieren / Set in order):</strong> Ordnen und Ergonomie sicherstellen.</li>
+                <li><strong>Seiso (Saubermachen / Shine):</strong> Reinigung und Überprüfung des Arbeitsplatzes.</li>
+                <li><strong>Seiketsu (Standardisieren / Standardize):</strong> Standards für Ordnung und Sauberkeit definieren.</li>
+                <li><strong>Shitsuke (Selbstdisziplin / Sustain):</strong> Einhalten und ständiges Verbessern der Standards.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">LiFo-Anwendung:</span> Entladen von Lkw oder kurzfristige Umlagerungen.</li>
+                <li><span class="highlight-text">FeFo bei verderblichen Gütern:</span> Auslagerung nach MHD im Lebensmittel- und Pharmabereich.</li>
+                <li><span class="highlight-text">Restmengenbevorzugung:</span> Auslagerung einer halb vollen Palette bei kleiner Kundenbestellung.</li>
+                <li><span class="highlight-text">Wertstromanalyse Apparatebau:</span> Wertschöpfende Zeit 47,25 h (5,9 Tage) bei 42 Tagen Liegezeit \(\rightarrow\) Gesamtdurchlaufzeit 47,9 Tage = <strong>Prozesswirkungsgrad von 12,3 %</strong>.</li>
+                <li><span class="highlight-text">Mehrwegsystem statt Stretchfolie:</span> Praxis-Gruppenarbeit zur Vermeidung von Einwegfolien.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Ein Lagerbereich wird nach der chaotischen Lagerung verwaltet. Nenne zwei wesentliche Vorteile sowie einen entscheidenden Nachteil dieses Systems.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • <em>Vorteile:</em> Optimale Flächen-/Raumnutzung; schnelle Ein-/Auslagerung durch Wegoptimierung; keine Kapazitätsreservierung.<br>
+                    • <em>Nachteil:</em> Langsamdreher können Plätze nahe beim Ein-/Ausgang blockieren.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: In einer Wertstromanalyse wurde eine wertschöpfende Bearbeitungszeit von insgesamt 6 Tagen und eine Übergangszeit (Liege- und Transportzeiten) von 34 Tagen ermittelt. Wie hoch ist die Gesamtdurchlaufzeit (DLZ) und wie hoch ist der Prozesswirkungsgrad?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • \(\text{Durchlaufzeit (DLZ)} = 6 + 34 = \mathbf{40\text{ Tage}}\)<br>
+                    • \(\text{Prozesswirkungsgrad} = \frac{6}{40} \times 100 = \mathbf{15\,\%}\)</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Worin unterscheiden sich die Entnahmeprinzipien FiFo, FeFo und LiFo hinsichtlich ihrer Auslöserkriterien?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei <strong>FiFo</strong> entscheidet das älteste Einlagerungsdatum, bei <strong>FeFo</strong> das am nächsten liegende Verfallsdatum (MHD) und bei <strong>LiFo</strong> das neueste Einlagerungsdatum.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Ein Betrieb weist ein durchschnittlich gebundenes Kapital von 2'000'000 CHF auf. Die jährlichen Lagerkosten betragen 160'000 CHF und der kalkulatorische Zinssatz liegt bei 5 %. Berechne den Lagerkostensatz sowie den Lagerhaltungskostensatz.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • \(\text{Lagerkostensatz} = \frac{160'000 \times 100}{2'000'000} = \mathbf{8\,\%}\)<br>
+                    • \(\text{Lagerhaltungskostensatz} = 8\,\% + 5\,\% = \mathbf{13\,\%}\)</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Welche 5 Schritte umfasst die 5S-Methode im Lean Management (japanischer Begriff und deutsche Bedeutung)?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Seiri (Sortieren), 2. Seiton (Systematisieren), 3. Seiso (Saubermachen), 4. Seiketsu (Standardisieren), 5. Shitsuke (Selbstdisziplin/Einhalten).</p>
+                </div>
+            </details>
+        </section>
+
+              <!-- ========================================== -->
+        <!-- TEIL 5: DISTRIBUTIONSFÜHRUNG & CONTROLLING -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-5">
+            <h2>LALO - Teil 5: Distributionsdurchführung &amp; Controlling</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 5. Unterrichtstag – Inhaltsbereich: Distributionslogistik, Warenausgang &amp; Auftragsabwicklung, Verpackungslogistik, Ladungsbildung &amp; Ladungssicherung, Transportketten, Gefahrengut sowie Logistik-Controlling ("Führen durch Kennzahlen"). Dozent: Charly Mettler.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li><strong>Distributionslogistik einordnen &amp; abgrenzen:</strong> Die Distributionslogistik im Gesamtsystem der Unternehmenslogistik verorten, Vertrieb (akquisitorisch) von Logistik (TUL-Prozesse) abgrenzen sowie vertikale und horizontale Distributionsstrukturen unterscheiden.</li>
+                <li><strong>Ziele &amp; POS-Spannungsfeld beherrschen:</strong> Die Hauptaufgabe am Point of Sale (POS) nach der 6-R-Regel verstehen, Kundenansprüche gegenüber Unternehmensanforderungen abwägen und die Hauptziele aus dem logistischen Dreieck ableiten.</li>
+                <li><strong>Warenausgang abwickeln &amp; optimieren:</strong> Die 7 operativen Warenausgangsaufgaben in ihrer Abfolge beherrschen und Optimierungsansätze in den Bereichen Bauten, Organisation, Technik und Waren systematisch anwenden.</li>
+                <li><strong>Verpackungssystematiken &amp; Beanspruchungen analysieren:</strong> Die 6 Teilfunktionen der Verpackung unterscheiden, Einflussfaktoren zur Verpackungsauswahl kennen sowie mechanische, klimatische und Schädlings-Beanspruchungen bewerten.</li>
+                <li><strong>Ladungsbildung &amp; -sicherung anwenden:</strong> Die fünfstufenübergreifende Systematik der Ladungsbildung verstehen sowie Anbring-Methoden und Sicherungsmittel zur Ladungssicherung beim Verladen einsetzen.</li>
+                <li><strong>Transportketten &amp; Verkehrsträger bewerten:</strong> Die Verkehrsträger (Luft, Schiene, Schiff, Straße) anhand von Vor- und Nachteilen gegenüberstellen sowie eingliedrige von mehrgliedrigen Transportketten (gebrochener vs. kombinierter Verkehr) unterscheiden.</li>
+                <li><strong>Gefahrengutregeln einhalten:</strong> Vorgaben für Transport und Lagerung von Gefahrstoffen kennen, die Kemmler-Zahl sowie UN-Nummer auf Warntafeln entziffern und Piktogramme/GHS-Symbole korrekt zuordnen.</li>
+                <li><strong>Logistikcontrolling anwenden:</strong> Kenngrößen in den Bereichen Qualität, Kosten, Zeit und Mitarbeiter durch Mess- und Bezugsgrößen operationalisieren („Führen durch Kennzahlen“).</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Einbettung der Distributionslogistik &amp; Abgrenzung zum Vertrieb</h4>
+            <p>Die Distributionslogistik (auch Absatz-, Verteil- oder Vertriebslogistik genannt) stellt das Bindeglied zwischen der Produktion/dem Lager und den Kunden bzw. Handelspartnern dar. Sie regelt die Belieferung mit Gütern ab Zentral- oder Dezentral-Lagern gemäß den Kundenanforderungen (Lieferservice).</p>
+            <ul>
+                <li><span class="highlight-text">Die 3 Teilsysteme der Distribution:</span>
+                    <ol>
+                        <li><em>Vertrieb mit den Vertriebskanälen (akquisitorische Distribution):</em> Beschäftigt sich mit der Frage, <strong>wann</strong> und <strong>wie</strong> Produkte/Dienstleistungen verfügbar gemacht werden (Handelsstufen, Direkt- vs. Indirektvertrieb).</li>
+                        <li><em>Distributionslogistik mit den Lieferkanälen (logistische Distribution):</em> Beschäftigt sich damit, <strong>wie</strong> Produkte vom Produzenten zum Endverbraucher gelangen (TUL-Prozesse: Transport, Umschlag, Lagerung).</li>
+                        <li><em>Distributionsnetz der Standorte:</em> Legt fest, <strong>wo</strong> produziert, gelagert und verkauft wird.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Distributionsstrukturen:</span>
+                    <ul>
+                        <li><em>Vertikale Distributionsstruktur:</em> Kennzeichnet die <strong>Anzahl der Lagerstufen</strong> nach der Produktion (z. B. Werkslager \(\rightarrow\) Zentrallager \(\rightarrow\) Regionallager \(\rightarrow\) Auslieferungslager).</li>
+                        <li><em>Horizontale Distributionsstruktur:</em> Kennzeichnet die <strong>Anzahl der Lager pro Stufe</strong>.</li>
+                        <li><em>Strategischer Grundsatz:</em> „So viele Lagerstufen wie nötig und so wenige Lager(stufen) wie möglich“, um Investitions- und Betriebskosten zu minimieren.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Distributionsformen:</span>
+                    <ul>
+                        <li><em>Einweg-Distribution:</em> Waren werden in einem Distributionskanal auf <strong>einem</strong> Transportweg geleitet.</li>
+                        <li><em>Mehrweg-Distribution:</em> Waren werden in einem Distributionskanal auf <strong>mehreren</strong> Transportwegen geleitet.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>2. Zielsetzungen &amp; POS-Spannungsfeld</h4>
+            <p>An der Schnittstelle des Point of Sale (POS) treffen die Anforderungen des produzierenden Unternehmens und die Ansprüche der Kunden aufeinander:</p>
+            <ul>
+                <li><span class="highlight-text">Kundenansprüche:</span> Hervorragende Lieferqualität, Einhaltung angekündigter Liefertermine, hohe Lieferflexibilität, Auftragsstatus-Informationen (Tracking), Ökologie (Verpackung, Entsorgung, Vermeidung von Leerfahrten), zusätzliche Serviceleistungen (Montage, Regale auffüllen, Displays aufbauen) sowie Integration der Daten in die Kunden-IT.</li>
+                <li><span class="highlight-text">Unternehmensanforderungen:</span> Einhalten der Wirtschaftlichkeit, Termineinhaltung, tiefe Lager- und Transportkosten, einfache Auftragsabwicklung, lückenlose Sendungsverfolgung, Flexibilität bezüglich Kundenwünschen und ein einfaches Distributionssystem.</li>
+                <li><span class="highlight-text">Hauptziele aus dem logistischen Dreieck:</span>
+                    <ul>
+                        <li><em>Lieferqualität sicherstellen:</em> Beschaffenheit der Lieferung (Qualität &amp; Kosten), Flexibilität (Zeit &amp; Kosten) und Zuverlässigkeit (Zeit &amp; Kosten).</li>
+                        <li><em>Lieferzeiten einhalten:</em> Die Lieferzeit ist der Zeitraum zwischen Kundenauftrag und Wareneingang. Je kürzer die Lieferzeit ist, desto kurzfristiger kann der Kunde disponieren.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Die 6-R-Regel der Distributionslogistik:</span> Hauptaufgabe ist es, Waren und Dienstleistungen <strong>effizient</strong> (richtige Leistung zu richtigen Kosten), <strong>räumlich</strong> (am richtigen Ort), <strong>zeitlich</strong> (zur richtigen Zeit), <strong>quantitativ</strong> (in der richtigen Menge) und <strong>qualitativ</strong> (in der richtigen Qualität) nach den Kundenbedürfnissen verfügbar zu machen.</li>
+            </ul>
+
+            <h4>3. Warenausgang &amp; Optimierungsmöglichkeiten</h4>
+            <p>Der Warenausgang umfasst die operative Bereitstellung und Übergabe der Güter an den Transporteur oder Kunden (Holsystem oder Bringsystem).</p>
+            <ul>
+                <li><span class="highlight-text">Die 7 operativen Aufgaben im Warenausgang:</span>
+                    <ol>
+                        <li>Waren kontrollieren (Identität und Quantität).</li>
+                        <li>Fehlerhafte Waren zurückweisen (Fehlanzeige / Mängelrüge).</li>
+                        <li>Versandpapiere erstellen.</li>
+                        <li>Sendungen zusammenstellen / Packzettel erstellen.</li>
+                        <li>Waren zum Versand verpacken.</li>
+                        <li>Transport disponieren.</li>
+                        <li>Waren verladen. <em>(Hinweis: Die Reihenfolge kann betrieblich variieren)</em>.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Ansatzpunkte zur Optimierung im Warenausgang:</span>
+                    <ul>
+                        <li><em>Bauten / Einrichtungen:</em> Optimierung von Anzahl Lagerräumen/Regalen, Lagereinheiten und -kapazitäten, baulichen Sicherheitsvorkehrungen sowie räumlicher Anordnung von Bereitstellungs-, Entnahme-, Verlade- und Verpackungszonen.</li>
+                        <li><em>Organisation:</em> Abgrenzung von A/K/V (Aufgaben, Kompetenzen, Verantwortlichkeiten), transparenter Belegfluss, genaue Prozessdefinitionen, Richtlinien für Sicherheit und Durchlaufzeit (DLZ), Festlegung des Daten- und Informationsaustausches sowie Einbindung in die Auftragsabwicklung.</li>
+                        <li><em>Technik:</em> Einsatz moderner Lager-, Transport- und Fördersysteme, geeigneter Arbeits- und Hilfsmittel, Prüf- und Messgeräte sowie Sicherheitstechnik.</li>
+                        <li><em>Waren:</em> Berücksichtigung von Art und Anzahl der Sendungen, Kundenanforderungen, Ladeeinheiten, Verpackungsart, physischen Eigenschaften und notwendigen Kontrollen.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>4. Verpackungslogistik: Funktionen &amp; Beanspruchungen</h4>
+            <p>Verpackungen verbinden logistische Schutz- und Transportaufgaben mit vertrieblichen Marketingzielen.</p>
+            <ul>
+                <li><span class="highlight-text">Die 6 Teilfunktionen der Verpackung:</span>
+                    <ol>
+                        <li><em>Gebrauchsfunktion:</em> Einfache Handhabung und Nutzung, Geringhalten des TUL-Aufwands, Eignung für automatische Transport- und Lagersysteme.</li>
+                        <li><em>Informationsfunktion:</em> Erleichtert die Warenidentifikation, unterstützt Sicherheits- und Vorsichtsmaßnahmen, informiert über Herkunft, Bestandteile, Verderblichkeit, Gebrauch und Verbrauch.</li>
+                        <li><em>Lagerfunktion:</em> Ermöglicht raumsparende und dauerhafte Lagerung (Stapelbarkeit, Isolation) sowie die Bildung verkaufsgerechter Einheiten.</li>
+                        <li><em>Marketingfunktion:</em> Präsentiert die Ware im besten Licht, hebt Eigenschaften/Leistungen hervor, fördert den Absatz/Verkauf, pflegt das Image und weckt Begierden beim Kunden.</li>
+                        <li><em>Schutzfunktion:</em> Unterteilt in <strong>Immissionsschutz</strong> (Schutz der Ware vor Witterung, Stößen, Schlägen, Schmutz) und <strong>Emissionsschutz</strong> (Schutz der Umwelt vor Strahlung, Geruch oder chemischen Einflüssen der Ware).</li>
+                        <li><em>Transportfunktion:</em> Ermöglicht einen raumsparenden, sicheren Transport durch Zusammenfassung zu standardisierten Lager- und Ladeeinheiten.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Einflussfaktoren zur Verpackungswahl:</span> Empfindlichkeit der Ware, Transportart, Transportstrecke, Transportdauer, Transportvorschriften, Gewicht, Preis und Kundenwünsche.</li>
+                <li><span class="highlight-text">Beanspruchungsarten von Verpackung und Ladung:</span>
+                    <ul>
+                        <li><em>Mechanische Beanspruchungen:</em> Einwirkung von Kräften bei Fall, Schub, Stoß, Druck, Schlag oder Schwingung. Die Stärke der Belastung hängt ab von <strong>Fallhöhe (Geschwindigkeit)</strong>, <strong>Masse (Gewicht)</strong>, <strong>Untergrundbeschaffenheit</strong> und <strong>Aufprallart (Ecke, Kante, Fläche)</strong>. Die Verpackung wirkt dabei als verformbare Knautschzone, die Energie aufnimmt.</li>
+                        <li><em>Klimatische Beanspruchungen:</em> Witterungs- und geographisch bedingte Einflüsse (Nässe, Licht, Kälte/Wärme, Korrosion).</li>
+                        <li><em>Beanspruchung durch Schädlinge:</em> Befall oder Fraß durch Schädlinge.</li>
+                        <li><em>Sonstige Risiken:</em> Schutz vor Diebstahl, Verkratzen, Verschmutzung oder Bakterienbefall.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Verkehrsträger-Vergleicher</div>
+                <div class="diagram-subtitle">Klicke auf einen Verkehrsträger, um Stärken, Schwächen und Best-Use-Cases anzuzeigen.</div>
+                
+                <div class="interactive-widget">
+                    <div class="interactive-controls">
+                        <button class="btn-interactive active" onclick="showModus('lkw', this)">Straße (LKW)</button>
+                        <button class="btn-interactive" onclick="showModus('bahn', this)">Schiene (Bahn)</button>
+                        <button class="btn-interactive" onclick="showModus('schiff', this)">Wasser (Schiff)</button>
+                        <button class="btn-interactive" onclick="showModus('flug', this)">Luft (Flugzeug)</button>
+                    </div>
+
+                    <div id="modus-info-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="modus-title" style="color:var(--primary-color); margin-bottom: 0.25rem;">Straßenverkehr (LKW)</h5>
+                        <p id="modus-desc" style="font-size: 0.9rem; margin:0;"><strong>Vorteile:</strong> Höchste zeitliche/räumliche Flexibilität, günstig.<br><strong>Nachteile:</strong> Stauaufkommen, negatives Umwelt-Image, Gewichtsbeschränkungen, Nachtfahrverbot in der Schweiz.<br><strong>Ideal für:</strong> Feindistribution, Stückgut und Nahverkehr.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>5. Systematik der Ladungsbildung &amp; Ladungssicherung</h4>
+            <p>Die Erstellung einer transportfähigen Ladung verläuft schrittweise von der kleinsten Einheit bis zur gesicherten Gesamtladung:</p>
+            <ul>
+                <li><span class="highlight-text">Fünfstufige Systematik der Ladungsbildung:</span>
+                    <ol>
+                        <li><em>Ausgangsgut:</em> Stückgut, Flüssigkeit, Gas oder Schüttgut.</li>
+                        <li><em>Packstück (Stückgut):</em> Entsteht durch Hinzufügen von Verpackung zum Ausgangsgut.</li>
+                        <li><em>Einzelstückgut / Sammelpackung:</em> Entsteht durch Hinzufügen von Transporthilfsmitteln (zum Einzelstückgut) oder weiterer Verpackung (zur Sammelpackung).</li>
+                        <li><em>Ladeeinheit:</em> Einzelstückgüter oder Sammelpackungen werden mittels <strong>Ladehilfsmitteln</strong> und <strong>Sicherungsmitteln</strong> zusammengefasst.</li>
+                        <li><em>Ladung:</em> Die Ladeeinheit wird durch finale <strong>Ladungssicherung</strong> transportfähig gemacht.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Verlademethoden &amp; Sicherungsmittel:</span>
+                    <ul>
+                        <li><em>Aufsetzen / Aufstecken:</em> Rahmen / Faltboxen, Stecklinge, Keile.</li>
+                        <li><em>Einhüllen / Überwerfen:</em> Hüllen, Netze, Stülphauben, Stretch- und Schrumpffolie.</li>
+                        <li><em>Umschnüren / Umreifen:</em> Draht und Manschetten, Gummi-, Klebe-, Kunststoff- &amp; Stahlbänder, Ketten, Seile, Schnur, Zurrgurte, Spanset.</li>
+                        <li><em>Ergänzende Sicherungsmittel:</em> Anfeuchten, Antirutschmatten, Kantenschutz, Sicherungshaken, Zwischenlagen/-decken, Distanzhalter.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>6. Transportketten, Verkehrsträger &amp; Gefahrengut</h4>
+            <ul>
+                <li><span class="highlight-text">Systematik der Transportketten:</span>
+                    <ul>
+                        <li><em>Eingliedrige Transportkette:</em> Einsatz von nur 1 Verkehrsträger (z. B. reine LKW-Beförderung).</li>
+                        <li><em>Mehrgliedrige Transportkette:</em> Einsatz von mindestens 2 Verkehrsträgern:
+                            <ul>
+                                <li><strong>Gebrochener Verkehr:</strong> Mindestens 2 Verkehrsträger, wobei das Transportgut selbst umgeladen und/oder neu verpackt werden muss.</li>
+                                <li><strong>Kombinierter Verkehr:</strong> Mindestens 2 Verkehrsträger, wobei die vollständige, genormte Ladeeinheit (Container, Wechselbehälter, Auflieger, LKW Ro-Ro / Roll on - Roll off) unverändert ausgetauscht wird.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Gefahrengut-Transport &amp; -Lagerung:</span>
+                    <ul>
+                        <li><em>Transportanforderungen:</em> Mitführen der Begleitpapiere in der Führerkabine, vorschriftsgemäße Ladungssicherung und nachgewiesene Qualifikation als Fahrer.</li>
+                        <li><em>Orangefarbene Warntafel (Kennzeichnung):</em>
+                            <ul>
+                                <li>Obere Zeile = <strong>Kemmler-Zahl (Gefahrnummer):</strong> Die 1. Zahl zeigt die Hauptgefahr an (\(3 = \text{entzündbarer flüssiger Stoff}\), \(2 = \text{Gas}\), \(6 = \text{giftig}\)). Die 2. Zahl zeigt Zusatzgefahren an (\(0 = \text{ohne Bedeutung}\), \(8 = \text{ätzende Wirkung}\)). Eine Verdoppelung der Ziffer weist auf eine erhebliche Zunahme der Gefahr hin (\(33\) oder \(66 = \text{sehr giftig}\)).</li>
+                                <li>Untere Zeile = <strong>4-stellige UN-Stoffnummer / Sammelnummer</strong> (z. B. \(1202\) für Dieselöl/Heizöl) unter dem waagrechten Strich.</li>
+                            </ul>
+                        </li>
+                        <li><em>Lagerung von Gefahrengut:</em> Sichere Ein- und Auslagerung gewährleisten, einfache Arbeitsprozesse definieren, möglichst geringe Mengen lagern, Sicherheitsdatenblätter bereithalten, Schutzeinrichtungen installieren und Mitarbeitende regelmäßig instruieren.</li>
+                        <li><em>Piktogramme &amp; Symbole:</em> Unterscheidung von Gebotszeichen (blau), Warnzeichen (gelb), Verbotszeichen (rot) und Rettungszeichen (grün) sowie der Wechsel vom alten System (orange Rechtecke) zum neuen <strong>GHS-System</strong> (weiße Raute mit rotem Rand).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>7. Distributionscontrolling ("Führen durch Kennzahlen")</h4>
+            <p>Logistische Kenngrößen werden im Supply Chain Management (SCM) durch Mess- und Bezugsgrößen operationalisiert, um Soll- und Ist-Werte zu vergleichen und steuernde Maßnahmen abzuleiten:</p>
+            <ul>
+                <li><span class="highlight-text">Systematik der Logistikkennzahlen:</span>
+                    <ul>
+                        <li><em>Bereich Qualität:</em>
+                            <p>\[\text{Ausschussquote (\%)} = \frac{\text{Anzahl Teile}}{\text{Gesamtzahl Teile}} \times 100\]</p>
+                            <p>\[\text{Reklamationsquote (\%)} = \frac{\text{Anzahl Reklamationen}}{\text{Anzahl Auslieferungen}} \times 100\]</p>
+                        </li>
+                        <li><em>Bereich Kosten:</em>
+                            <p>\[\text{Ausschusskosten (\%)} = \frac{\text{Kosten für Ausschuss}}{\text{Herstellkosten}} \times 100\]</p>
+                            <p>\[\text{Prüfkostenanteil (CHF/Einheit)} = \frac{\text{Prüf- und Inspektionskosten}}{\text{Anzahl produzierter Teile}}\]</p>
+                        </li>
+                        <li><em>Bereich Zeit:</em>
+                            <p>Durchlaufzeit: Total Produktionszeit für die gesamte Lieferung.</p>
+                            <p>\[\text{Prüfanteil (\%)} = \frac{\text{Zeit für Prüfung}}{\text{Total Produktionszeit}} \times 100\]</p>
+                            <p>\[\text{Termintreue (\%)} = \frac{\text{Termingerechte Lieferungen}}{\text{Total Lieferungen}} \times 100\]</p>
+                        </li>
+                        <li><em>Bereich Mitarbeiter:</em>
+                            <p>Zufriedenheitsindex: Bewertung von Aufgabe, Umfang etc. (Einheit: Note).</p>
+                            <p>\[\text{Vorschlagsquote (\%)} = \frac{\text{Anzahl Verbesserungsvorschläge}}{\text{Anzahl Mitarbeiter}} \times 100\]</p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Vergleichende Bewertung der Verkehrsträger</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Verkehrsträger / System</th>
+                            <th>Spezifische Vorteile</th>
+                            <th>Spezifische Nachteile / Einschränkungen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Luftfahrt</strong></td>
+                            <td>Schnell, sehr geringe Unfallgefahr.</td>
+                            <td>Teuer, negatives Umwelt-Image, starr an Flugpläne gebunden.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Schienenverkehr</strong></td>
+                            <td>Nachttransport möglich, günstig bei hohen Gewichten.</td>
+                            <td>Anschlussgleise erforderlich, an Fahrpläne gebunden.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Schifffahrt</strong></td>
+                            <td>Sehr günstig, enorme Transportvolumina.</td>
+                            <td>Sehr lange Transportzeiten, negatives Umwelt-Image.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Straßenverkehr (LKW)</strong></td>
+                            <td>Höchste zeitliche/räumliche Flexibilität, günstig.</td>
+                            <td>Stauaufkommen, negatives Umwelt-Image, Gewichtsbeschränkungen, Nachtfahrverbot in der Schweiz.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Die 6 Teilfunktionen der Verpackung im Überblick</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Funktion</th>
+                            <th>Hauptziel &amp; Kerninhalte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gebrauchsfunktion</strong></td>
+                            <td>Einfache Handhabung/Nutzung, TUL-Aufwand gering halten, Eignung für Automatisierung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Informationsfunktion</strong></td>
+                            <td>Erleichtert Warenidentifikation, Warnhinweise, Angaben zu Herkunft, Haltbarkeit, Gebrauch.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerfunktion</strong></td>
+                            <td>Raumsparende/dauerhafte Lagerung (Stapelbarkeit, Isolation), Verkaufseinheiten (z. B. Sixpack).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Marketingfunktion</strong></td>
+                            <td>Optimales Präsentieren, Verkaufsförderung, Imagepflege, Wecken von Kundenbedürfnissen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Schutzfunktion</strong></td>
+                            <td>Immissionsschutz (Schutz der Ware) &amp; Emissionsschutz (Schutz der Umwelt).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transportfunktion</strong></td>
+                            <td>Raumsparendes, sicheres Transportieren; Bildung normierter Ladeeinheiten.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 3: Anbring-Methoden und Sicherungsmittel der Ladungssicherung</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Anbring-Methode</th>
+                            <th>Sicherungsmittel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Aufsetzen / Aufstecken</strong></td>
+                            <td>Rahmen, Faltboxen, Stecklinge, Keile.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Einhüllen / Überwerfen</strong></td>
+                            <td>Hüllen, Netze, Stülphauben, Stretch- und Schrumpffolie.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Umschnüren / Umreifen</strong></td>
+                            <td>Draht, Manschetten, Gummi-, Klebe-, Kunststoff- &amp; Stahlbänder, Ketten, Seile, Schnur, Zurrgurte, Spanset.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ergänzend</strong></td>
+                            <td>Anfeuchten, Antirutschmatten, Kantenschutz, Sicherungshaken, Zwischenlagen/-decken, Distanzhalter.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 4: Kennzahlenraster zur Logistiksteuerung (SCM)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bereich</th>
+                            <th>Kenngröße</th>
+                            <th>Messgröße</th>
+                            <th>Bezugsgröße</th>
+                            <th>Einheit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Qualität</strong></td>
+                            <td>Ausschussquote</td>
+                            <td>Anzahl Teile</td>
+                            <td>Gesamtzahl Teile</td>
+                            <td>%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Qualität</strong></td>
+                            <td>Reklamationsquote</td>
+                            <td>Anzahl Reklamationen</td>
+                            <td>Anzahl Auslieferungen</td>
+                            <td>%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kosten</strong></td>
+                            <td>Ausschusskosten</td>
+                            <td>Kosten für Ausschuss</td>
+                            <td>Herstellkosten</td>
+                            <td>%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kosten</strong></td>
+                            <td>Prüfkostenanteil</td>
+                            <td>Prüf- und Inspektionskosten</td>
+                            <td>Anz. produzierter Teile</td>
+                            <td>CHF/Einheit</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zeit</strong></td>
+                            <td>Termintreue</td>
+                            <td>Termingerechte Lieferungen</td>
+                            <td>Total Lieferungen</td>
+                            <td>%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mitarbeiter</strong></td>
+                            <td>Vorschlagsquote</td>
+                            <td>Anz. Verbesserungsvorschläge</td>
+                            <td>Anzahl Mitarbeiter</td>
+                            <td>%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Die 7 operativen Schritte im Warenausgang</h4>
+            <ol>
+                <li><strong>Waren kontrollieren</strong> (Identität und Menge).</li>
+                <li><strong>Fehlerhafte Waren zurückweisen</strong> (Fehlanzeige / Mängelrüge).</li>
+                <li><strong>Versandpapiere erstellen</strong>.</li>
+                <li><strong>Sendungen zusammenstellen</strong> / Packzettel anfertigen.</li>
+                <li><strong>Waren zum Versand verpacken</strong>.</li>
+                <li><strong>Transport disponieren</strong>.</li>
+                <li><strong>Waren verladen</strong>.</li>
+            </ol>
+
+            <h4>Prozess 2: Stufenweise Systematik der Ladungsbildung</h4>
+            <ol>
+                <li><strong>Ausgangsgut bereitstellen</strong> (Stückgut, Flüssigkeit, Gas oder Schüttgut).</li>
+                <li><strong>Verpackung hinzufügen</strong> \(\rightarrow\) <strong>Packstück (Stückgut)</strong>.</li>
+                <li><strong>Transporthilfsmittel oder zusätzliche Verpackung hinzufügen</strong> \(\rightarrow\) <strong>Einzelstückgut</strong> oder <strong>Sammelpackung</strong>.</li>
+                <li><strong>Ladehilfsmittel und Sicherungsmittel hinzufügen</strong> \(\rightarrow\) <strong>Ladeeinheit</strong>.</li>
+                <li><strong>Ladungssicherung anbringen</strong> \(\rightarrow\) <strong>Ladung</strong>.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Sixpack (Getränkegebinde):</span> Praxisbeispiel für die <strong>Lager- und Gebrauchsfunktion</strong> der Verpackung zur Zusammenfassung verkaufsgerechter Einheiten.</li>
+                <li><span class="highlight-text">Hühnereier im Eierkarton:</span> Anschauliches Beispiel für eine Schutz- und Verkaufsverpackung, die zerbrechliche Güter schützt, stapelbar macht und Verbraucherinformationen trägt.</li>
+                <li><span class="highlight-text">Bananenkisten:</span> Anwendungsbeispiel für Schutzverpackungen im Frischwarentransport gegen Druckstellen und klimatische Einflüsse.</li>
+                <li><span class="highlight-text">Getränkekisten-Stapel auf Paletten:</span> Beispiel für die Bildung von <strong>Ladeeinheiten</strong> zur Ausnutzung des Laderaums.</li>
+                <li><span class="highlight-text">Kompakte Kunststoffbehälter auf Europalette:</span> Standardisierte Transporthilfsmittel zur Handhabung in Lagersystemen.</li>
+                <li><span class="highlight-text">Kommissionierungsförderanlage (Rollenförderer):</span> Praxisbeispiel für den Einsatz von <strong>Stetigförderanlagen</strong>, die normierte Verpackungen erfordern.</li>
+                <li><span class="highlight-text">Einkaufskorb im Supermarkt:</span> Beispiel zur Erleichterung und Rationalisierung des Verkaufsvorgangs.</li>
+                <li><span class="highlight-text">Paketversand per Eilzustellung / Express:</span> Anwendung der <strong>Einweg-Distribution</strong> mit Schnüren, Klebebändern und Express-Etiketten.</li>
+                <li><span class="highlight-text">Wetterkarte Schweiz (Temperatur / Gewitter):</span> Symbolisiert die <strong>klimatischen Beanspruchungen</strong> (Hitze, Feuchtigkeit), denen Transportgüter ausgesetzt sind.</li>
+                <li><span class="highlight-text">Beschädigter Versandkarton:</span> Anschauungsobjekt für die <strong>Knautschzonen-Funktion</strong> einer Verpackung bei mechanischem Fall oder Stoß.</li>
+                <li><span class="highlight-text">Mäuseschaden:</span> Praxisbeispiel für <strong>Schädlingsbeanspruchungen</strong> (Fraß an Verpackung und Inhalt).</li>
+                <li><span class="highlight-text">Taschendiebstahl / Sicherheitsverpackung:</span> Verdeutlicht die Schutzfunktion gegen Entwendung.</li>
+                <li><span class="highlight-text">RFID &amp; Track &amp; Trace:</span> Technologisches Anwendungsbeispiel zur lückenlosen Sendungsverfolgung und Informationsbereitstellung im Warenausgang.</li>
+                <li><span class="highlight-text">Orangefarbene Warntafel (30 / 1202):</span> Praxisbeispiel einer Kennzeichnung beim Gefahrengut-Transport (\(30 = \text{entflammbarer flüssiger Stoff}\), \(1202 = \text{UN-Nummer für Dieselkraftstoff/Heizöl}\)).</li>
+                <li><span class="highlight-text">GHS-Piktogramme:</span> Sicherheitskennzeichen für Chemikalien (z. B. Ätzend, Hochgiftig, Gewässergefährdend).</li>
+                <li><span class="highlight-text">Affen-Bananen-Experiment:</span> Erwähntes Anschauungsbeispiel im Rahmen des Selbststudiums.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Worin besteht der wesentliche Unterschied zwischen dem gebrochenen Verkehr und dem kombinierten Verkehr innerhalb einer mehrgliedrigen Transportkette?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Beim <strong>gebrochenen Verkehr</strong> wird das eigentliche Transportgut beim Wechsel des Verkehrsträgers umgeladen oder neu verpackt. Beim <strong>kombinierten Verkehr</strong> wird hingegen die vollständige, unveränderte Ladeeinheit (z. B. Container, Wechselbehälter, Auflieger) zwischen den Verkehrsträgern ausgetauscht.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Was bedeuten die Zahlen auf einer orangefarbenen Gefahrengut-Warntafel mit der Aufschrift „33 / 1202“?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die obere Zahl <strong>33</strong> ist die Kemmler-Zahl (Gefahrnummer); die Ziffer \(3\) steht für einen entzündbaren flüssigen Stoff, und die Verdoppelung (\(33\)) signalisiert eine stark erhöhte Gefahr (sehr leicht entzündbar). Die untere Zahl <strong>1202</strong> ist die 4-stellige UN-Stoffnummer (z. B. für Dieselöl/Heizöl).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Nenne die 6 Teilfunktionen der Verpackung und erkläre kurz den Unterschied zwischen Immissionsschutz und Emissionsschutz bei der Schutzfunktion.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die 6 Teilfunktionen sind <strong>Gebrauchs-</strong>, <strong>Informations-</strong>, <strong>Lager-</strong>, <strong>Marketing-</strong>, <strong>Schutz-</strong> und <strong>Transportfunktion</strong>. <em>Immissionsschutz</em> schützt die Ware vor äußeren Einflüssen (Witterung, Stöße, Schmutz), während <em>Emissionsschutz</em> die Umwelt vor schädlichen Auswirkungen der Ware (z. B. Strahlung, Geruch, Chemikalien) schützt.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: In einem Versandlager wurden bei 4'000 Auslieferungen im Monat genau 80 Reklamationen registriert. Wie hoch ist die Reklamationsquote in Prozent und welchem Kennzahlenbereich wird sie zugeordnet?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    \[\text{Reklamationsquote} = \frac{80 \text{ Reklamationen}}{4'000 \text{ Auslieferungen}} \times 100 = \mathbf{2\,\%}\]<br>
+                    Sie wird dem Bereich <strong>Qualität</strong> zugeordnet.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Welche 4 Faktoren beeinflussen die Stärke der mechanischen Beanspruchung beim Aufprall einer Verpackung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. <strong>Fallhöhe (Geschwindigkeit)</strong>, 2. <strong>Masse (Gewicht)</strong>, 3. <strong>Beschaffenheit des Untergrundes</strong>, 4. <strong>Aufprallart (Ecke, Kante, Fläche)</strong>.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TEIL 6: RISIKEN DER LAGERLOGISTIK & REPETITION -->
+        <!-- ========================================== -->
+        <section class="card content-section" id="teil-6">
+            <h2>LALO - Teil 6: Risiken der Lagerlogistik &amp; Repetition</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 6. Unterrichtstag – Inhaltsbereich: Risiken der Lagerlogistik / Musterprüfung / GS1 Kriterien. Dozent: Charly Mettler.</p>
+            <p><strong>Leistungskriterium &amp; Lernziel:</strong></p>
+            <ul>
+                <li><strong>Erkennen und Bewerten von Risiken in der Lagerlogistik</strong>.</li>
+            </ul>
+            <p><strong>Weitere Agendapunkte des 6. Unterrichtstages:</strong></p>
+            <ul>
+                <li><strong>Aufgabenstellung LaLo</strong> besprechen.</li>
+                <li><strong>Musterprüfung Lagerlogistik</strong> auf der <strong>WBA-Plattform</strong> besprechen.</li>
+                <li><strong>Gesamtrepetition</strong> nach den <strong>GS1-Anforderungen</strong> durchführen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Grundlagen des Risikomanagements in der Lagerlogistik</h4>
+            <p>In der Lagerlogistik existieren verschiedene spezifische Risiken. Durch ein effektives Risikomanagement werden diese Risiken systematisch <strong>identifiziert, bewertet und kontrolliert</strong>. Das übergeordnete Ziel besteht darin, Risiken frühzeitig zu erkennen und gezielte Maßnahmen zur Minimierung einzuleiten.</p>
+
+            <h4>2. Die 9 spezifischen Risiken der Lagerlogistik</h4>
+            <ol>
+                <li><span class="highlight-text">1. Unsachgemäße Verwendung von Flurfördermitteln:</span> Falsche Handhabung von Gabelstaplern oder Hubwagen führt zu Verletzungen und Sachschäden.</li>
+                <li><span class="highlight-text">2. Fehlende Bestandskontrolle:</span> Unregelmäßigkeiten führen zu Über- oder Unterbeständen.</li>
+                <li><span class="highlight-text">3. Technische Defekte:</span> Ausfälle bei Lagertechnik und IT-Systemen beeinträchtigen operative Abläufe.</li>
+                <li><span class="highlight-text">4. Unzureichende Schulungen:</span> Mangelnde Qualifikation der Mitarbeiter erhöht Fehlerrate und Unfälle.</li>
+                <li><span class="highlight-text">5. Brand- und Explosionsgefahren:</span> Unzureichende Sicherheitsmaßnahmen lösen Brände aus.</li>
+                <li><span class="highlight-text">6. Ergonomische Belastungen:</span> Vernachlässigung ergonomischer Grundsätze schädigt die Gesundheit der Mitarbeiter.</li>
+                <li><span class="highlight-text">7. Unsichere Lagerplatzierung:</span> Schlechte Platzierung beeinträchtigt Effizienz und Arbeitssicherheit.</li>
+                <li><span class="highlight-text">8. Fehlende Notfallvorbereitung:</span> Mangelhafte Krisenvorbereitung verlangsamt die Reaktionszeit im Ernstfall.</li>
+                <li><span class="highlight-text">9. Falscher Umgang mit Gefahrstoffen:</span> Unsachgemäße Lagerung gefährdet Mensch und Umwelt.</li>
+            </ol>
+
+            <!-- NEU: INTERAKTIVE RISIKO-MATRIX (HEATMAP) -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktive Risikomatrix der Lagerlogistik</div>
+                <div class="diagram-subtitle">Klicke auf ein Risiko (R1 bis R9), um Ursache und Präventionsmaßnahme einzublenden.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; margin-bottom: 1rem;">
+                        <button class="btn-interactive" onclick="showRisk(1)" style="background:#ef4444;">R1: Flurfördermittel</button>
+                        <button class="btn-interactive" onclick="showRisk(2)" style="background:#f59e0b;">R2: Bestandskontrolle</button>
+                        <button class="btn-interactive" onclick="showRisk(3)" style="background:#f59e0b;">R3: Technik &amp; IT</button>
+                        <button class="btn-interactive" onclick="showRisk(4)" style="background:#ef4444;">R4: Schulung</button>
+                        <button class="btn-interactive" onclick="showRisk(5)" style="background:#dc2626;">R5: Brandgefahr</button>
+                        <button class="btn-interactive" onclick="showRisk(6)" style="background:#10b981;">R6: Ergonomie</button>
+                        <button class="btn-interactive" onclick="showRisk(7)" style="background:#f59e0b;">R7: Platzierung</button>
+                        <button class="btn-interactive" onclick="showRisk(8)" style="background:#f59e0b;">R8: Notfallplanung</button>
+                        <button class="btn-interactive" onclick="showRisk(9)" style="background:#dc2626;">R9: Gefahrstoffe</button>
+                    </div>
+
+                    <div id="risk-info-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="risk-title" style="color:var(--primary-color); margin-bottom: 0.25rem;">R1: Unsachgemäße Verwendung von Flurfördermitteln</h5>
+                        <p id="risk-desc" style="font-size: 0.9rem; margin:0;"><strong>Ursache:</strong> Fahrlässigkeit, Selbstüberschätzung, fehlender Staplerschein.<br><strong>Folgen:</strong> Unfälle, Personen- und Sachschäden.<br><strong>Prävention:</strong> Regelmäßige Fahrerschulungen (SUVA-Vorgaben), Zugangskontrolle (Key-Card), Geschwindigkeitsbegrenzer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>3. Prüfungs- und Repetitionsbausteine</h4>
+            <ul>
+                <li><span class="highlight-text">Aufgabenstellung LaLo:</span> Detaillierte Besprechung der Aufgabenstellungen im Fachgebiet Lagerlogistik.</li>
+                <li><span class="highlight-text">Musterprüfung Lagerlogistik:</span> Durchsprache der Prüfungsaufgaben auf der WBA-Plattform zur gezielten Vorbereitung.</li>
+                <li><span class="highlight-text">Gesamtrepetition nach GS1-Kriterien:</span> Systematische Wiederholung des gesamten Modulstoffs orientiert an den offiziellen GS1-Anforderungen.</li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle: Übersicht der 9 spezifischen Risiken der Lagerlogistik</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nr.</th>
+                            <th>Risikobereich</th>
+                            <th>Ursache / Auslöser</th>
+                            <th>Konkrete Auswirkungen / Folgen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1</strong></td>
+                            <td><strong>Flurfördermittel</strong></td>
+                            <td>Unsachgemäße Verwendung.</td>
+                            <td>Unfälle durch Gabelstapler oder Hubwagen, Verletzungen und Sachschäden.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2</strong></td>
+                            <td><strong>Bestandskontrolle</strong></td>
+                            <td>Unregelmäßigkeiten bei der Bestandsführung.</td>
+                            <td>Entstehen von Über- oder Unterbeständen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3</strong></td>
+                            <td><strong>Technik &amp; IT</strong></td>
+                            <td>Ausfälle bei Lagertechnik oder IT-Systemen.</td>
+                            <td>Beeinträchtigung der operativen Abläufe.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4</strong></td>
+                            <td><strong>Schulung</strong></td>
+                            <td>Unzureichende Schulung der Mitarbeiter.</td>
+                            <td>Fehler durch Mitarbeiter, Unfälle oder Verluste.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5</strong></td>
+                            <td><strong>Sicherheit / Brand</strong></td>
+                            <td>Unzureichende Sicherheitsmaßnahmen.</td>
+                            <td>Entstehen von Bränden oder Explosionen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6</strong></td>
+                            <td><strong>Ergonomie</strong></td>
+                            <td>Fehlende ergonomische Maßnahmen.</td>
+                            <td>Gesundheitliche Probleme bei den Mitarbeitern.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>7</strong></td>
+                            <td><strong>Lagerplatzierung</strong></td>
+                            <td>Schlechte / unsichere Lagerplatzierung.</td>
+                            <td>Beeinträchtigung von Effizienz und Sicherheit.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>8</strong></td>
+                            <td><strong>Notfallvorbereitung</strong></td>
+                            <td>Unzureichende Vorbereitung auf Notfälle.</td>
+                            <td>Verlangsamte Reaktionszeit, geringere Effektivität der Maßnahmen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>9</strong></td>
+                            <td><strong>Gefahrstoffe</strong></td>
+                            <td>Ungeeignete Lagerung und Handhabung.</td>
+                            <td>Schwerwiegende Unfälle im Lagerbereich.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess / Programmstruktur des 6. Unterrichtstages</h4>
+            <ol>
+                <li><strong>Leistungskriterium festlegen:</strong> Erkennen und Bewerten von Risiken in der Lagerlogistik.</li>
+                <li><strong>Risikomanagement anwenden:</strong> Identifikation, Bewertung und Kontrolle spezifischer Risiken zur frühzeitigen Minimierung.</li>
+                <li><strong>Aufgabenstellung LaLo besprechen:</strong> Klärung spezifischer Aufgabenstellungen.</li>
+                <li><strong>Musterprüfung bearbeiten:</strong> Besprechung der Musterprüfung Lagerlogistik auf der WBA-Plattform.</li>
+                <li><strong>Gesamtrepetition durchführen:</strong> Durchführung der Abschlussrepetition nach den GS1-Anforderungen.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Gabelstapler und Hubwagen:</span> Praxisbeispiele für Flurfördermittel mit Unfallrisiko bei Fehlbedienung.</li>
+                <li><span class="highlight-text">Ausfall von Lagertechnik oder WMS:</span> Technisches Ausfallrisiko für operative Abläufe.</li>
+                <li><span class="highlight-text">Gefahrstofflagerung:</span> Praxisbeleg für Gefahrenpotenzial bei Fehlverhalten.</li>
+                <li><span class="highlight-text">WBA-Plattform:</span> Digitales Portal für die Musterprüfung Lagerlogistik.</li>
+                <li><span class="highlight-text">GS1-Kriterien:</span> Offizieller Anforderungsstandard für die Prüfungsrepetition.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Welche zwei konkreten Schadensarten können laut Quelle durch die unsachgemäße Verwendung von Flurfördermitteln entstehen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Es können <strong>Verletzungen</strong> (Personenschäden) sowie <strong>Sachschäden</strong> entstehen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Zu welchen betrieblichen Problemen führen Unregelmäßigkeiten bei der Bestandsführung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Sie führen zu <strong>Über- oder Unterbeständen</strong> im Lager.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Welche 3 Teilschritte umfasst der Prozess eines effektiven Risikomanagements und welches Ziel wird damit verfolgt?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die Risiken werden <strong>identifiziert, bewertet und kontrolliert</strong>. Das Ziel ist es, Risiken frühzeitig zu erkennen und Maßnahmen zu deren <strong>Minimierung</strong> zu ergreifen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Wie wirkt sich eine unzureichende Vorbereitung auf Notfälle im Ernstfall aus?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Sie verlangsamt die <strong>Reaktionszeit</strong> und verringert die <strong>Effektivität</strong> der ergriffenen Maßnahmen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Welche Bausteine werden am 6. Unterrichtstag neben den Risiken der Lagerlogistik behandelt?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    1. Besprechung der <strong>Aufgabenstellung LaLo</strong>.<br>
+                    2. Besprechung der <strong>Musterprüfung Lagerlogistik (WBA-Plattform)</strong>.<br>
+                    3. <strong>Gesamtrepetition nach GS1-Anforderungen</strong>.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- GOOGLE KALENDER INTEGRATION -->
+        <div class="content-section">
+            <section class="calendar-section">
+                <h2>📅 Lern- &amp; Prüfungskalender</h2>
+                <div class="calendar-container">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=4875202771218a7ad1f5108aa8ce1f0cb65e976732f10fc8ef094d70d9c1cf6e%40group.calendar.google.com&amp;ctz=Europe%2FZurich&amp;mode=AGENDA" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • LALO – Lagerlogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <!-- SCRIPT-SECTION FOR INTERACTION -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Navigation Toggle
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+
+            // Init Sägezahn Canvas
+            updateSaegezahn();
+        });
+
+        // 1. SÄGEZAHNMODELL SIMULATOR
+        function updateSaegezahn() {
+            const v = parseInt(document.getElementById('rng-tagesverbrauch').value);
+            const wb = parseInt(document.getElementById('rng-wbzeit').value);
+            const sb = parseInt(document.getElementById('rng-sicherheitsbestand').value);
+
+            document.getElementById('lbl-tagesverbrauch').innerText = v;
+            document.getElementById('lbl-wbzeit').innerText = wb;
+            document.getElementById('lbl-sicherheitsbestand').innerText = sb;
+
+            const mb = (v * wb) + sb;
+            document.getElementById('calc-meldebestand').innerText = mb;
+
+            const canvas = document.getElementById('saegezahnCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            // Resize Canvas resolution
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const w = canvas.width;
+            const h = canvas.height;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw Safety Line (Rot)
+            const sbY = h - (sb / 250 * (h - 40)) - 20;
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(0, sbY);
+            ctx.lineTo(w, sbY);
+            ctx.stroke();
+            ctx.fillStyle = '#ef4444';
+            ctx.fillText('Sicherheitsbestand: ' + sb, 10, sbY - 5);
+
+            // Draw Meldebestand Line (Gelb/Orangen)
+            const mbY = h - (mb / 250 * (h - 40)) - 20;
+            ctx.strokeStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(0, mbY);
+            ctx.lineTo(w, mbY);
+            ctx.stroke();
+            ctx.fillStyle = '#f59e0b';
+            ctx.fillText('Meldebestand: ' + mb, 10, mbY - 5);
+
+            // Draw Sawtooth Waves (Blau)
+            ctx.setLineDash([]);
+            ctx.strokeStyle = '#1e3a8a';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            let currentX = 0;
+            let cycleWidth = w / 3;
+            
+            for(let i=0; i<3; i++) {
+                ctx.moveTo(currentX, 20); // Top Stock
+                ctx.lineTo(currentX + cycleWidth, sbY); // Consumed down to SB
+                currentX += cycleWidth;
+            }
+            ctx.stroke();
+        }
+
+        // 2. REFA TEILZEITEN EXPLORER
+        const refaData = {
+            basis: { title: "Basiszeit (14% = 71.4 Min.)", desc: "<strong>Beschreibung:</strong> Vor- und Nachbereitung des Auftrags (z. B. Belege holen, Gerät prüfen).<br><strong>Optimierung:</strong> Papierlose Systeme (Pick-by-Voice/Vision), direkte IT-Auftragsübertragung." },
+            weg: { title: "Wegzeit (28% = 142.8 Min.)", desc: "<strong>Beschreibung:</strong> Strecke zwischen Entnahmestellen. Meist größter Zeitfresser!<br><strong>Optimierung:</strong> Wegoptimierung per WMS, Schnelldreher (A-Artikel) nah am Warenausgang platzieren." },
+            greif: { title: "Greifzeit (16% = 81.6 Min.)", desc: "<strong>Beschreibung:</strong> Physisches Aus-dem-Regal-Nehmen und Ablegen.<br><strong>Optimierung:</strong> Ergonomische Griffhöhen, kleine Gebinde, Greifhilfen / Exoskelette." },
+            tot: { title: "Totzeit (17% = 86.7 Min.)", desc: "<strong>Beschreibung:</strong> Suchen, Anbrüche verpacken, Kontrollieren, Quittieren.<br><strong>Optimierung:</strong> Eindeutige Barcodes, Lichtführung (Pick-by-Light), klare Festplätze." },
+            verteil: { title: "Verteilzeit (25% = 127.5 Min.)", desc: "<strong>Beschreibung:</strong> Unproduktive Zeiten (Warten auf Nachschub, persönliche Pausen, Störungen).<br><strong>Optimierung:</strong> Automatische Nachschubsteuerung, störungsfreie Transporttechnik." }
+        };
+
+        function selectRefaTime(key) {
+            document.getElementById('refa-title').innerHTML = refaData[key].title;
+            document.getElementById('refa-desc').innerHTML = refaData[key].desc;
+        }
+
+        // 3. FÖRDERMITTEL FILTER
+        function filterFoerdermittel(cat, btn) {
+            const btns = btn.parentNode.querySelectorAll('.btn-interactive');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const items = document.querySelectorAll('.fmt-item');
+            items.forEach(item => {
+                if(cat === 'all' || item.classList.contains(cat)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // 4. AUSLAGERUNGS STRATEGIE SIMULATOR
+        const stratData = {
+            fifo: { pal: 'pal-1', text: "<strong>FiFo (First In - First Out):</strong> Palette A wird entnommen, da sie am längsten im Lager liegt (Tag 1). Verhindert Veralterung!" },
+            lifo: { pal: 'pal-3', text: "<strong>LiFo (Last In - First Out):</strong> Palette C wird entnommen, da sie als letzte eingelagert wurde (Tag 5). Ideal bei Stapelaufladung." },
+            fefo: { pal: 'pal-2', text: "<strong>FeFo (First Expired - First Out):</strong> Palette B wird entnommen, da ihr Mindesthaltbarkeitsdatum am nächsten liegt (01.11.)." },
+            hifo: { pal: 'pal-2', text: "<strong>HiFo (Highest In - First Out):</strong> Palette B wird entnommen, da sie mit 1'200 CHF den höchsten Wert besitzt (Kapitalfreisetzung)." }
+        };
+
+        function simAuslagerung(strat, btn) {
+            const btns = btn.parentNode.querySelectorAll('.btn-interactive');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.palette-card').forEach(p => p.style.backgroundColor = '#ffffff');
+            
+            const target = stratData[strat];
+            document.getElementById(target.pal).style.backgroundColor = '#dbeafe';
+            document.getElementById('strat-result-display').innerHTML = target.text;
+        }
+
+        // 5. VERKEHRSTRÄGER MATRIX
+        const modusData = {
+            lkw: { title: "Straßenverkehr (LKW)", desc: "<strong>Vorteile:</strong> Höchste räumliche und zeitliche Flexibilität, Haus-zu-Haus-Belieferung ohne Umladen.<br><strong>Nachteile:</strong> Stauanfälligkeit, Gewichtslimits, Sonntags-/Nachtfahrverbot (CH).<br><strong>Ideal für:</strong> Feindistribution, Stückgut und Nahverkehr." },
+            bahn: { title: "Schienenverkehr (Bahn)", desc: "<strong>Vorteile:</strong> Hohe Kapazitäten, umweltfreundlich, Nachtfahrten möglich.<br><strong>Nachteile:</strong> Schienennetzgebunden, lange Vorlaufzeiten.<br><strong>Ideal für:</strong> Schwergüter, Massengüter & kombinierten Verkehr." },
+            schiff: { title: "Schifffahrt (See-/Binnenschiff)", desc: "<strong>Vorteile:</strong> Sehr geringe Transportkosten pro Tonne, riesige Frachtmengen.<br><strong>Nachteile:</strong> Sehr langsame Transportgeschwindigkeit, hafengebunden.<br><strong>Ideal für:</strong> Interkontinentalen Container- und Rohstofftransport." },
+            flug: { title: "Luftfracht (Flugzeug)", desc: "<strong>Vorteile:</strong> Extrem schnell, sehr hohe Sicherheit & Zuverlässigkeit.<br><strong>Nachteile:</strong> Sehr hohe Kosten, schlechte CO2-Bilanz, begrenzte Maße/Gewichte.<br><strong>Ideal für:</strong> Verderbliche Exoten, Eilfracht, hochwertige Elektronik/Pharma." }
+        };
+
+        function showModus(m, btn) {
+            const btns = btn.parentNode.querySelectorAll('.btn-interactive');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.getElementById('modus-title').innerHTML = modusData[m].title;
+            document.getElementById('modus-desc').innerHTML = modusData[m].desc;
+        }
+
+        // 6. RISIKOMATRIX EXPLORER
+        const riskData = {
+            1: { title: "R1: Unsachgemäße Verwendung von Flurfördermitteln", desc: "<strong>Ursache:</strong> Fahrlässigkeit, Selbstüberschätzung, fehlender Staplerschein.<br><strong>Folgen:</strong> Unfälle, Personen- und Sachschäden.<br><strong>Prävention:</strong> Regelmäßige Fahrerschulungen (SUVA), Zugangskontrolle via Key-Card." },
+            2: { title: "R2: Fehlende Bestandskontrolle", desc: "<strong>Ursache:</strong> Schlampige Buchung, Diebstahl, Messfehler.<br><strong>Folgen:</strong> Über- oder Unterbestände, Fehlmengen im Verkauf.<br><strong>Prävention:</strong> Permanente Inventur, Barcode/RFID-Pflicht bei jeder Bewegung." },
+            3: { title: "R3: Technische Defekte & IT-Ausfälle", desc: "<strong>Ursache:</strong> Mangelnde Wartung, Serverausfall, Software-Bugs.<br><strong>Folgen:</strong> Stillstand der operativen Logistik.<br><strong>Prävention:</strong> Redundante Server, USV-Anlagen, präventive Wartungsverträge." },
+            4: { title: "R4: Unzureichende Schulungen", desc: "<strong>Ursache:</strong> Sparmaßnahmen bei Aus- und Weiterbildung.<br><strong>Folgen:</strong> Hohe Kommissionierfehler, Beschädigungen.<br><strong>Prävention:</strong> Standardisierte Einarbeitungspläne (SOPs), regelmäßige Re-Zertifizierungen." },
+            5: { title: "R5: Brand- und Explosionsgefahren", desc: "<strong>Ursache:</strong> Kurzschlüsse, falsche Gefahrgutlagerung, Rauchen im Lager.<br><strong>Folgen:</strong> Totalschaden der Infrastruktur, Gefahr für Leib und Leben.<br><strong>Prävention:</strong> Sprinkleranlagen, Brandschutztüren, striktes Rauchverbot, Gefahrgut-Trennregeln." },
+            6: { title: "R6: Ergonomische Belastungen", desc: "<strong>Ursache:</strong> Schweres Heben, falsche Haltung, ungeeignetes Schuhwerk.<br><strong>Folgen:</strong> Hohe Krankheitsausfälle, chronische Rückenleiden.<br><strong>Prävention:</strong> Exoskelette, Hubtische, Schulungen zum rückenschonenden Heben." },
+            7: { title: "R7: Unsichere Lagerplatzierung", desc: "<strong>Ursache:</strong> Überladung von Regalen, instabile Stapelung.<br><strong>Folgen:</strong> Einsturz von Regalen, herabfallende Güter.<br><strong>Prävention:</strong> Regelmäßige Regalprüfungen nach Norm, Einhalten der Fach- und Feldlasten." },
+            8: { title: "R8: Fehlende Notfallvorbereitung", desc: "<strong>Ursache:</strong> Mangelnde Notfallpläne, keine Evakuierungsübungen.<br><strong>Folgen:</strong> Panik und verlangsamte Reaktion im Krisenfall.<br><strong>Prävention:</strong> Regelmäßige Notfall- und Brandschutzübungen, klare Fluchtwegbeschilderung." },
+            9: { title: "R9: Falscher Umgang mit Gefahrstoffen", desc: "<strong>Ursache:</strong> Verwechslung von Stoffklassen, fehlende Auffangwannen.<br><strong>Folgen:</strong> Vergiftungen, Gewässerschutzunfälle.<br><strong>Prävention:</strong> Lagerung nach GHS/Sicherheitsdatenblatt, Auffangwannen, PSA-Pflicht." }
+        };
+
+        function showRisk(id) {
+            document.getElementById('risk-title').innerHTML = riskData[id].title;
+            document.getElementById('risk-desc').innerHTML = riskData[id].desc;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCM – Supply Chain Management | Lern-Dashboard</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a;
+            --accent-color: #3b82f6;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --highlight-bg: #fef3c7;
+            --info-bg: #f8fafc;
+            --info-border: #cbd5e1;
+            --info-text: #1e293b;
+            --alert-bg: #fee2e2;
+            --alert-border: #f87171;
+            --alert-text: #991b1b;
+            --tag-bg: #e0f2fe;
+            --tag-text: #0369a1;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* Header & Hero Section mit Bild und Gradienten-Overlay (Heller Gradient für SCM) */
+        header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .header-banner {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background-image: url('header_index.png');
+            background-size: cover;
+            background-position: center 90%;
+        }
+
+        .header-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(241, 245, 249, 0.88) 100%);
+        }
+
+        .header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .header-title-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-title-container h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+            word-wrap: break-word;
+        }
+
+        .header-title-container p {
+            font-size: 1.05rem;
+            color: #334155;
+            font-weight: 500;
+        }
+
+        /* Navigationsleiste Desktop */
+        nav {
+            max-width: 1200px;
+            margin: -20px auto 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: var(--radius) var(--radius) 0 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        nav a {
+            padding: 1rem 1.25rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 1rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Hamburger-Button (standardmäßig versteckt) */
+        .hamburger-btn {
+            display: none;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            font-size: 1.5rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            line-height: 1;
+        }
+
+        /* Main Layout */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* Card Component */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eff6ff;
+            padding-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            word-wrap: break-word;
+        }
+
+        /* Special Boxes */
+        .alert-box, .formula-box {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .alert-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            color: #0369a1;
+        }
+
+        .alert-box h3 {
+            margin-top: 0;
+            color: #0369a1;
+        }
+
+        .formula-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            border-left: 4px solid var(--primary-color);
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .badge {
+            background-color: var(--highlight-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #92400e;
+            display: inline-block;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Audio Player Styling */
+        .audio-section {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Google Calendar Section */
+        .calendar-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .calendar-container {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .calendar-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Active Recall Toggles */
+        details {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        details[open] {
+            background-color: #ffffff;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary-color);
+            outline: none;
+            word-wrap: break-word;
+        }
+
+        .answer {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        .answer ul, .answer ol {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .content-section {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        /* Responsive Breakpoints (< 768px Mobile) */
+        @media (max-width: 767px) {
+            .hamburger-btn {
+                display: block;
+            }
+
+            .header-banner {
+                height: auto;
+                min-height: 180px;
+            }
+
+            .header-overlay {
+                position: relative;
+                padding: 1.25rem 1rem;
+            }
+
+            .header-title-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-title-container p {
+                font-size: 0.9rem;
+            }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                border-radius: 0 0 var(--radius) var(--radius);
+                gap: 0;
+                width: 100%;
+            }
+
+            nav.mobile-active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 0.85rem 1.25rem;
+                border-bottom: 1px solid var(--border-color);
+                width: 100%;
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            nav a.active, nav a:hover {
+                border-bottom-color: transparent;
+                background-color: #eff6ff;
+            }
+
+            main {
+                margin: 1rem auto;
+                padding: 0 0.75rem;
+            }
+
+            .card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            ul, ol {
+                padding-left: 18px;
+            }
+
+            .calendar-container {
+                padding-bottom: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header mit Bild und speziellem hellen Overlay für SCM -->
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>SCM – Supply Chain Management</h1>
+                    <p>SMART-Ziele, Kapitalbindung, KPIs, SWOT, Incoterms, Tracing & SCOR-Modell</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hauptnavigation -->
+    <nav id="main-nav">
+        <a href="scm.html" class="active" title="Supply Chain Management">SCM</a>
+        <a href="unlo.html" title="Unternehmenslogistik">UNLO</a>
+        <a href="belo.html" title="Beschaffungslogistik">BELO</a>
+        <a href="lalo.html" title="Lagerlogistik">LALO</a>
+        <a href="as.html" title="Arbeitssicherheit & Gesundheitsschutz">AS</a>
+    </nav>
+
+    <!-- Hauptbereich -->
+    <main>
+
+        <!-- WICHTIGE PRÜFUNGSHINWEISE -->
+        <section class="alert-box">
+            <h3>🚨 Wichtige Prüfungsgrundsätze (SCM)</h3>
+            <ul>
+                <li><span class="badge">Zielformulierungen:</span> Immer strikt nach der <strong>SMART-Formel</strong> aufbauen (Spezifisch, Messbar, Attraktiv, Realistisch, Terminiert).</li>
+                <li><span class="badge">Optimierungsaufgaben:</span> Antworten und Lösungsansätze immer konsequent am <strong>Magischen Dreieck der Logistik (Zeit – Kosten – Qualität)</strong> ausrichten!</li>
+            </ul>
+        </section>
+
+        <!-- TEIL 1: SMART-ZIELE & KAPITALBINDUNG -->
+        <div class="content-section">
+            
+            <section class="card audio-section">
+                <h2>🎧 Podcast: SMART-Ziele & Grundlagen</h2>
+                <p>Hörempfehlung zu Kapitalbindungskosten und der zielgerichteten Formulierung nach SMART:</p>
+                <audio controls>
+                    <source src="scm_blatt1_podcast.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+            </section>
+
+            <section class="card">
+                <h2>1. SMART-Ziele & Kapitalbindung</h2>
+                
+                <div class="formula-box">
+                    <strong>Kapitalbindungskosten:</strong><br>
+                    \[ \text{Kapitalbindungskosten} \propto \text{Hohe Lagermenge} \]
+                    <em>(Eine hohe Lagermenge führt direkt zu höheren Kapitalbindungskosten.)</em>
+                </div>
+
+                <h3>Die SMART-Methode</h3>
+                <p>
+                    <strong>SMART-Ziele</strong> sind eine Methode zur klaren Formulierung von Zielen, die spezifisch, messbar, attraktiv, realistisch und terminiert sind. Sie helfen dabei, Ziele im SCM effektiver zu planen und zu verfolgen.
+                </p>
+
+                <ul>
+                    <li><span class="highlight-text">Spezifisch:</span> Das Ziel sollte klar und eindeutig sein.</li>
+                    <li><span class="highlight-text">Messbar:</span> Es sollte möglich sein, den Fortschritt zu messen.</li>
+                    <li><span class="highlight-text">Attraktiv:</span> Das Ziel sollte motivierend und ansprechend sein.</li>
+                    <li><span class="highlight-text">Realistisch:</span> Es sollte erreichbar sein, unter Berücksichtigung der verfügbaren Ressourcen.</li>
+                    <li><span class="highlight-text">Terminiert:</span> Es sollte einen klaren Zeitrahmen für die Erreichung des Ziels geben.</li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="scm_blatt1_smart.png" alt="SMART Methode Übersicht">
+                </div>
+            </section>
+        </div>
+
+
+        <!-- TEIL 2: SCM-KENNZAHLEN (KPIs) -->
+        <div class="content-section">
+            
+            <section class="card audio-section">
+                <h2>🎧 Podcast-Zusammenfassung: SCM-Kennzahlen</h2>
+                <p>Vertiefende Zusammenfassung wichtiger Zeit-, Bestands-, Qualitäts- und Kosten-KPIs:</p>
+                <audio controls>
+                    <source src="scm_blatt3_podcast.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audio-Element nicht.
+                </audio>
+            </section>
+
+            <section class="card">
+                <h2>2. Key Performance Indicators (KPIs) in der Supply Chain</h2>
+                <p>
+                    Kennzahlen dienen der Messung, Steuerung und Optimierung der Leistung innerhalb der Lieferkette.
+                </p>
+
+                <h3>Zeit- & Prozesskennzahlen</h3>
+                <ul>
+                    <li><span class="highlight-text">Lieferzeit (Lead Time):</span> Gesamtdauer vom Eingang einer Bestellung bis zur vollständigen Auslieferung.</li>
+                    <li><span class="highlight-text">Auftragsdurchlaufzeit (Order Cycle Time):</span> Zeitspanne zur Bearbeitung und physischen Lieferung einer Kundenbestellung.</li>
+                    <li><span class="highlight-text">Durchschnittliche Lagerdauer (Average Inventory Holding Period):</span> Mittlere Verweildauer eines Artikels im Lager vor dem Verkauf/Verbrauch.</li>
+                </ul>
+
+                <h3>Bestands- & Effizienzkennzahlen</h3>
+                <ul>
+                    <li><span class="highlight-text">Lagerumschlagshäufigkeit (Inventory Turnover):</span> Häufigkeit, mit der der gesamte Lagerbestand in einer Periode verkauft und ersetzt wird.</li>
+                    <li><span class="highlight-text">Bestandsgenauigkeit (Inventory Accuracy):</span> Übereinstimmungsgrad zwischen physisch tatsächlichem Lagerbestand und dem Systembestand (LVS/ERP).</li>
+                    <li><span class="highlight-text">Inventar-Umsatz-Verhältnis:</span> Verhältnis zwischen Wert des Lagerbestands und dem erzielten Umsatz.</li>
+                </ul>
+
+                <h3>Qualitäts- & Servicekennzahlen</h3>
+                <ul>
+                    <li><span class="highlight-text">Liefertermintreue (On-Time Delivery) & Lieferbereitschaft:</span> Prozentsatz der pünktlich und vollständig ausgeführten Bestellungen.</li>
+                    <li><span class="highlight-text">Fehlerrate (Error Rate):</span> Prozentualer Anteil fehlerhafter Bestellungen, die Reklamationen oder Retouren auslösen.</li>
+                    <li><span class="highlight-text">Kundenzufriedenheit (Customer Satisfaction):</span> Indikator für die Erfüllung der Kundenerwartungen an das Gesamtsystem.</li>
+                </ul>
+
+                <h3>Kostenkennzahlen</h3>
+                <ul>
+                    <li><span class="highlight-text">Transportkosten (Transportation Costs):</span> Summe aller Fracht- und Transportaufwände innerhalb der Supply Chain.</li>
+                </ul>
+            </section>
+        </div>
+
+
+        <!-- TEIL 3: ALLGEMEIN & PRÜFUNGSRELEVANTE KONZEPTE -->
+        <div class="content-section">
+            
+            <section class="card">
+                <h2>3. SCM – Allgemein & Prüfungsrelevante Kernkonzepte</h2>
+
+                <h3>Balanced Scorecard (BSC)</h3>
+                <p>Strategisches Managementsystem zur Ganzheitsbetrachtung von Unternehmen über vier Perspektiven:</p>
+                <ul>
+                    <li><strong>Finanzen</strong></li>
+                    <li><strong>Kunden</strong></li>
+                    <li><strong>Interne Geschäftsprozesse</strong></li>
+                    <li><strong>Lernen / Entwicklung (Potenziale)</strong></li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="scm_allgemein_bsc.png" alt="Balanced Scorecard Übersicht">
+                </div>
+
+                <h3>SWOT-Analyse</h3>
+                <ul>
+                    <li><span class="highlight-text">Strengths (Stärken) & Weaknesses (Schwächen):</span> Interne Analyse.</li>
+                    <li><span class="highlight-text">Opportunities (Chancen) & Threats (Risiken):</span> Externe Umweltanalyse.</li>
+                </ul>
+
+                <h3>Incoterms (Klauselgruppen)</h3>
+                <ul>
+                    <li><span class="tag">E-Klausel (Ex Works)</span> Abholklausel; minimale Pflichten für den Verkäufer, maximale Verantwortung/Kosten beim Käufer.</li>
+                    <li><span class="tag">F-Klauseln (FCA, FAS, FOB)</span> Haupttransport vom Käufer bezahlt; Verkäufer übergibt Ware an Frachtführer.</li>
+                    <li><span class="tag">C-Klauseln (CFR, CIF, CPT, CIP)</span> Haupttransport vom Verkäufer bezahlt; Gefahrenübergang erfolgt jedoch meist schon bei Verladung.</li>
+                    <li><span class="tag">D-Klauseln (DAP, DPU, DDP)</span> Ankunftsklauseln; maximale Pflichten und Kosten beim Verkäufer bis zum Bestimmungsort.</li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="scm_allgemein_incoterms.png" alt="Incoterms Gruppen Übersicht">
+                </div>
+
+                <h3>Nachhaltigkeit im SCM (Green Supply Chain)</h3>
+                <ul>
+                    <li><span class="highlight-text">Nachhaltige Beschaffung:</span> Einkaufsentscheidungen unter Berücksichtigung von ökologischen (umweltschonend) und sozialen Kriterien.</li>
+                    <li><span class="highlight-text">Umweltfreundliche Verpackung:</span> Verwendung von Wertstoffeinsparungen, biologisch abbaubaren Materialien und Mehrwegverpackungen.</li>
+                    <li><span class="highlight-text">Nachhaltiger Transport:</span> Verlagerung von Gütertransporten von der Straße auf die Schiene sowie CO₂-effektive Routenplanung.</li>
+                    <li><span class="highlight-text">Rückwärtslogistik (Reverse Logistics):</span> Prozesse zur Rückführung, Wiederverwendung, Reparatur und zum Recycling von Produkten und Mehrweggebinden.</li>
+                </ul>
+            </section>
+        </div>
+
+
+        <!-- TEIL 4: ENTSORGUNG, TRACING & SCOR-MODELL -->
+        <div class="content-section">
+            
+            <section class="card">
+                <h2>4. Entsorgungsgrundsatz, Tracing & SCOR-Modell</h2>
+                
+                <h3>Der 4-stufige Entsorgungsgrundsatz (Prioritätenfolge)</h3>
+                <ol>
+                    <li><strong>Vermeidung:</strong> Entstehung von Abfall von vornherein verhindern.</li>
+                    <li><strong>Verminderung (Vermeidung):</strong> Abfallmengen auf ein Minimum reduzieren.</li>
+                    <li><strong>Verwertung:</strong> Wiederverwendung, Recycling oder energetische Verwertung.</li>
+                    <li><strong>Entsorgung:</strong> Umweltgerechte Endlagerung/Beseitigung unnutzbarer Reststoffe.</li>
+                </ol>
+
+                <h3>Rückverfolgung im Logistiknetzwerk (Tracing)</h3>
+                <ul>
+                    <li><span class="highlight-text">Upstream Tracing (vom Verbraucher zum Hersteller):</span> Rückwärtsgerichtete Verfolgung der Herkunft von Produkten/Rohstoffen (z. B. bei Reklamationen oder Qualitätsmängeln).</li>
+                    <li><span class="highlight-text">Downstream Tracing (vom Hersteller zum Verbraucher):</span> Vorwärtsgerichtete Verfolgung der Warenwege zur Lokalisierung von Chargen beim Kunden (z. B. bei Produktrückrufen).</li>
+                </ul>
+
+                <h3>Das SCOR-Modell (Supply Chain Operations Reference)</h3>
+                <p>
+                    Standardisiertes Rahmenmodell zur Beschreibung, Analyse und Optimierung von Supply-Chain-Prozessen über 5 Kernbereiche:
+                </p>
+                <ul>
+                    <li><span class="tag">Plan (Planung)</span> Abstimmung von Nachfrage und Angebot zur Steuerung der gesamten Lieferkette.</li>
+                    <li><span class="tag">Source (Beschaffung)</span> Einkauf, Wareneingang und Verwaltung von Rohstoffen und Vorprodukten.</li>
+                    <li><span class="tag">Make (Herstellung)</span> Sämtliche Produktions- und Fertigungsprozesse.</li>
+                    <li><span class="tag">Deliver (Lieferung)</span> Auftragsabwicklung, Lagerung, Transport und Übergabe an den Kunden.</li>
+                    <li><span class="tag">Return (Rückgabe)</span> Abwicklung von Rücksendungen (fehlerhafte, überzählige oder beschädigte Waren sowie Verpackungs- und Recyclinggut).</li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="scm_blatt4_scor.png" alt="SCOR-Modell und Tracing Übersicht">
+                </div>
+            </section>
+        </div>
+
+        <!-- TEIL 5: GOOGLE KALENDER INTEGRATION -->
+        <div class="content-section">
+            <section class="calendar-section">
+                <h2>📅 Lern- & Prüfungskalender</h2>
+                <div class="calendar-container">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=4875202771218a7ad1f5108aa8ce1f0cb65e976732f10fc8ef094d70d9c1cf6e%40group.calendar.google.com&ctz=Europe%2FZurich&mode=AGENDA" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </section>
+        </div>
+
+        <!-- TEIL 6: ACTIVE RECALL - PRÜFUNGSFRAGEN -->
+        <div class="content-section">
+            
+            <section class="card">
+                <h2>🧠 Active Recall – Gesamte Prüfungsfragen</h2>
+
+                <details>
+                    <summary>Frage 1: Was unterscheidet die Lieferzeit (Lead Time) von der Bestandsgenauigkeit (Inventory Accuracy)?</summary>
+                    <div class="answer">
+                        <p>Die <strong>Lieferzeit</strong> misst den zeitlichen Prozessablauf von der Bestellung bis zur Auslieferung. Die <strong>Bestandsgenauigkeit</strong> ist eine Qualitäts- und Bestandsmetrik, die den Abgleich zwischen physischem Ist-Lagerbestand und IT-Systembestand darstellt.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 2: Warum ist eine hohe Lagerumschlagshäufigkeit aus SCM-Sicht positiv zu bewerten?</summary>
+                    <div class="answer">
+                        <p>Eine hohe Umschlagshäufigkeit bedeutet, dass Waren schnell verkauft und ersetzt werden. Das verringert die durchschnittliche Lagerdauer, senkt die Kapitalbindung und minimiert Lagerkosten.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 3: Welche Auswirkungen hat eine hohe Fehlerrate auf die primären SCM-Ziele?</summary>
+                    <div class="answer">
+                        <p>Eine hohe Fehlerrate verursacht zusätzliche Transport- und Bearbeitungskosten (Retouren), verlängert die effektive Durchlaufzeit und senkt die Kundenzufriedenheit massiv.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 4: Welcher Grundsatz gilt bei allen Prüfungsfragen zu Optimierungsmaßnahmen in SCM?</summary>
+                    <div class="answer">
+                        <p>Jede Optimierung muss immer im Kontext des magischen Dreiecks der Logistik – <strong>Zeit, Kosten und Qualität</strong> – betrachtet und begründet werden.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 5: Worin unterscheiden sich die Incoterms der E-Gruppe grundlegend von den D-Klauseln?</summary>
+                    <div class="answer">
+                        <ul>
+                            <li><strong>E-Klausel (EXW):</strong> Käufer trägt nahezu alle Risiken, Kosten und Transportpflichten ab Werk.</li>
+                            <li><strong>D-Klauseln (z. B. DDP):</strong> Verkäufer trägt nahezu alle Risiko-, Transport- und Verzollungskosten bis zum Zielort.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 6: Aus welchen vier Analysefeldern setzt sich die SWOT-Analyse zusammen?</summary>
+                    <div class="answer">
+                        <p><strong>Stärken (Strengths)</strong> und <strong>Schwächen (Weaknesses)</strong> als interne Faktoren sowie <strong>Chancen (Opportunities)</strong> und <strong>Risiken (Threats)</strong> als externe Umweltfaktoren.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 7: Was versteht man unter Rückwärtslogistik (Reverse Logistics)?</summary>
+                    <div class="answer">
+                        <p>Alle logistischen Prozesse zur Rückführung von Gütern, Retouren, Mehrwegverpackungen sowie Recycling- und Wiederverwertungsmaterialien vom Kunden zurück zum Hersteller.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 8: Welches ist der wichtigste und erste Schritt im Entsorgungsgrundsatz?</summary>
+                    <div class="answer">
+                        <p>Die <strong>Vermeidung von Abfällen</strong> hat immer oberste Priorität, bevor Verminderung, Verwertung oder Entsorgung greifen.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 9: Was unterscheidet Upstream Tracing von Downstream Tracing?</summary>
+                    <div class="answer">
+                        <ul>
+                            <li><strong>Upstream Tracing:</strong> Verfolgt das Produkt rückwärts (vom Verbraucher/Händler zurück zum Hersteller/Rohstofflieferanten).</li>
+                            <li><strong>Downstream Tracing:</strong> Verfolgt das Produkt vorwärts (vom Hersteller vor zum Kunden/Verbraucher, z. B. für gezielte Rückrufaktionen).</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Frage 10: Welche 5 Hauptprozesse definiert das SCOR-Modell?</summary>
+                    <div class="answer">
+                        <p><strong>Plan</strong> (Planung), <strong>Source</strong> (Beschaffung), <strong>Make</strong> (Herstellung), <strong>Deliver</strong> (Lieferung) und <strong>Return</strong> (Rückgabe/Entsorgung).</p>
+                    </div>
+                </details>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Fußzeile -->
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • SCM – Supply Chain Management</p>
+    </footer>
+
+    <!-- JavaScript für die mobile Hamburger-Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    if (mainNav.classList.contains('mobile-active')) {
+                        toggleBtn.innerHTML = '✕';
+                    } else {
+                        toggleBtn.innerHTML = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
