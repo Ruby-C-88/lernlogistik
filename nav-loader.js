@@ -37,13 +37,23 @@ document.addEventListener("DOMContentLoaded", function() {
         container.innerHTML = mainNavHTML + subNavHTML;
     }
 
-    // 4. Mobile Hamburger-Menü Steuerung
+        // 4. Mobile Hamburger-Menü Steuerung (verbessert für Touch)
     const toggleBtn = document.getElementById('hamburger-toggle');
     const mainNav = document.getElementById('main-nav');
     if (toggleBtn && mainNav) {
-        toggleBtn.addEventListener('click', function() {
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             mainNav.classList.toggle('mobile-active');
             toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
         });
+
+        // Menü automatisch schliessen, sobald ein Navigationslink geklickt wird
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                mainNav.classList.remove('mobile-active');
+                toggleBtn.innerHTML = '☰';
+            });
+        });
     }
+
 });
