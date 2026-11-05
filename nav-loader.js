@@ -1,5 +1,5 @@
 (function() {
-    // 1. ZENTRALES CSS FÜR MOBILE ANPASSUNG (Verhindert CSS-Konflikte auf Unterseiten)
+    // 1. ZENTRALES CSS FÜR MOBILE ANPASSUNG INJIZIEREN
     if (!document.getElementById("nav-dynamic-styles")) {
         const style = document.createElement("style");
         style.id = "nav-dynamic-styles";
@@ -27,22 +27,33 @@
                     display: block !important;
                     padding: 12px 20px !important;
                     border-bottom: 1px solid #e2e8f0 !important;
+                    color: #333333 !important;
                 }
             }
         `;
         document.head.appendChild(style);
     }
 
-    // 2. NAVIGATION DYNAMISCH GENERIEREN
-    function buildNavigation() {
+    // 2. HAUPTFUNKTION ZUM BAUEN DER NAVIGATION
+    function initNav() {
         let rawPage = window.location.pathname.split("/").pop().split("?")[0].split("#")[0];
-        let currentPage = (!rawPage || rawPage === "index.html") ? "scm.html" : rawPage;
+        let currentPage = (!rawPage || rawPage === "" || rawPage === "index.html") ? "scm.html" : rawPage;
 
-        const container = document.getElementById("dynamic-nav");
-        if (!container) return;
+        // Container suchen oder automatisch direkt nach dem <header> erstellen, falls er fehlt!
+        let container = document.getElementById("dynamic-nav");
+        if (!container) {
+            const headerEl = document.querySelector("header");
+            if (headerEl) {
+                container = document.createElement("div");
+                container.id = "dynamic-nav";
+                headerEl.insertAdjacentElement("afterend", container);
+            } else {
+                return;
+            }
+        }
 
         if (typeof dashboardConfig === "undefined" || !dashboardConfig.modules) {
-            console.error("Fehler: nav-config.js wurde nicht geladen!");
+            console.error("Warte auf nav-config.js...");
             return;
         }
 
@@ -75,7 +86,7 @@
         container.innerHTML = mainNavHTML + subNavHTML;
     }
 
-    // 3. ZENTRALES KLICK-HANDLING (Hamburger-Button & Menü-Links)
+    // 3. ZENTRALES KLICK-HANDLING FÜR MOBILE HAMBURGER & MENÜ
     document.addEventListener("click", function(e) {
         const toggleBtn = e.target.closest("#hamburger-toggle");
         if (toggleBtn) {
@@ -89,7 +100,7 @@
             return;
         }
 
-        const navLink = e.target.closest("#main-nav a");
+        const navLink = e.target.closest("#main-nav a, .sub-nav a");
         if (navLink) {
             const mainNav = document.getElementById("main-nav");
             const toggleBtn = document.getElementById("hamburger-toggle");
@@ -98,9 +109,18 @@
         }
     });
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", buildNavigation);
+    // 4. LADESTEUERUNG (Prüft auch, ob nav-config.js nachgeladen werden muss)
+    if (typeof dashboardConfig !== "undefined") {
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initNav);
+        } else {
+            initNav();
+        }
     } else {
-        buildNavigation();
+        // Falls nav-config.js im Kopf vergessen wurde, lädt der Loader sie dynamisch nach!
+        const script = document.createElement("script");
+        script.src = "nav-config.js";
+        script.onload = initNav;
+        document.head.appendChild(script);
     }
 })();
