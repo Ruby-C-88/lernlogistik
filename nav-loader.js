@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. Aktuelle Seite aus der URL auslesen
+    // 1. Aktuelle Seite aus der URL bestimmen
     const currentPage = window.location.pathname.split("/").pop() || "scm.html";
 
     if (typeof dashboardConfig === "undefined" || !dashboardConfig.modules) {
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
 
-    // 2. Haupt-Navigation aufbauen
+    // 2. Haupt-Navigation generieren
     let mainNavHTML = '<nav id="main-nav">';
     let activeModule = null;
 
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     mainNavHTML += '</nav>';
 
-    // 3. Unter-Navigation (Sub-Nav) aufbauen
+    // 3. Unter-Navigation generieren
     let subNavHTML = '';
     if (activeModule && activeModule.subPages) {
         subNavHTML = '<div class="sub-nav">';
@@ -41,24 +41,28 @@ document.addEventListener("DOMContentLoaded", function() {
     if (container) {
         container.innerHTML = mainNavHTML + subNavHTML;
     }
+});
 
-    // 5. Mobile Hamburger-Steuerung (funktioniert sofort nach dem Einfügen)
-    const toggleBtn = document.getElementById('hamburger-toggle');
-    const mainNav = document.getElementById('main-nav');
+// 5. ZENTRALES KLICK-HANDLING (Funktioniert auf allen Seiten ohne HTML-Anpassung)
+document.addEventListener("click", function(e) {
+    // Hamburger-Button Klick abfangen
+    const toggleBtn = e.target.closest("#hamburger-toggle");
+    if (toggleBtn) {
+        e.preventDefault();
+        const mainNav = document.getElementById("main-nav");
+        if (mainNav) {
+            mainNav.classList.toggle("mobile-active");
+            toggleBtn.innerHTML = mainNav.classList.contains("mobile-active") ? "✕" : "☰";
+        }
+        return;
+    }
 
-    if (toggleBtn && mainNav) {
-        toggleBtn.onclick = function(e) {
-            e.stopPropagation();
-            mainNav.classList.toggle('mobile-active');
-            toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
-        };
-
-        // Menü schliessen, wenn ausserhalb oder auf einen Link geklickt wird
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && e.target !== toggleBtn) {
-                mainNav.classList.remove('mobile-active');
-                toggleBtn.innerHTML = '☰';
-            }
-        });
+    // Klick auf einen Navigationslink (Menü mobil wieder zuklappen)
+    const navLink = e.target.closest("#main-nav a, .sub-nav a");
+    if (navLink) {
+        const mainNav = document.getElementById("main-nav");
+        const toggleBtn = document.getElementById("hamburger-toggle");
+        if (mainNav) mainNav.classList.remove("mobile-active");
+        if (toggleBtn) toggleBtn.innerHTML = "☰";
     }
 });
