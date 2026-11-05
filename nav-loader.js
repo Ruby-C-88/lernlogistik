@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // 1. Aktuelle Seite aus der URL auslesen
     const currentPage = window.location.pathname.split("/").pop() || "scm.html";
 
-    // 1. Haupt-Navigation generieren
+    if (typeof dashboardConfig === "undefined" || !dashboardConfig.modules) {
+        console.error("Fehler: dashboardConfig ist nicht geladen!");
+        return;
+    }
+
+    // 2. Haupt-Navigation aufbauen
     let mainNavHTML = '<nav id="main-nav">';
     let activeModule = null;
 
     dashboardConfig.modules.forEach(mod => {
-        // Prüfen, ob die aktuelle Seite zu diesem Modul gehört
         let isActive = false;
         if (mod.file === currentPage) {
             isActive = true;
@@ -20,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     mainNavHTML += '</nav>';
 
-    // 2. Unter-Navigation generieren (falls das Modul Unterseiten hat)
+    // 3. Unter-Navigation (Sub-Nav) aufbauen
     let subNavHTML = '';
     if (activeModule && activeModule.subPages) {
         subNavHTML = '<div class="sub-nav">';
@@ -31,29 +36,29 @@ document.addEventListener("DOMContentLoaded", function() {
         subNavHTML += '</div>';
     }
 
-    // 3. In den Container auf der Seite einfügen
+    // 4. In den Platzhalter der Seite einfügen
     const container = document.getElementById("dynamic-nav");
     if (container) {
         container.innerHTML = mainNavHTML + subNavHTML;
     }
 
-        // 4. Mobile Hamburger-Menü Steuerung (verbessert für Touch)
+    // 5. Mobile Hamburger-Steuerung (funktioniert sofort nach dem Einfügen)
     const toggleBtn = document.getElementById('hamburger-toggle');
     const mainNav = document.getElementById('main-nav');
+
     if (toggleBtn && mainNav) {
-        toggleBtn.addEventListener('click', function(e) {
+        toggleBtn.onclick = function(e) {
             e.stopPropagation();
             mainNav.classList.toggle('mobile-active');
             toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
-        });
+        };
 
-        // Menü automatisch schliessen, sobald ein Navigationslink geklickt wird
-        mainNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function() {
+        // Menü schliessen, wenn ausserhalb oder auf einen Link geklickt wird
+        document.addEventListener('click', function(e) {
+            if (!mainNav.contains(e.target) && e.target !== toggleBtn) {
                 mainNav.classList.remove('mobile-active');
                 toggleBtn.innerHTML = '☰';
-            });
+            }
         });
     }
-
 });
