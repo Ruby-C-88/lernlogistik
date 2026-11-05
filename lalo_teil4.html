@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LALO – Teil 4: Lagerstrategien & Controlling | E-Learning</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a; /* Deep Slate Blue für LALO */
+            --secondary-color: #3b82f6;
+            --accent-color: #dbeafe;
+            --tag-bg: #eff6ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(30, 58, 138, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel LALO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .btn-interactive {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin: 0.25rem;
+        }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        .btn-interactive.active { background-color: #059669; }
+
+        .interactive-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .grid-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem; }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>LALO – Lagerlogistik</h1>
+                    <p>Teil 4: Lagerstrategien, Lean Production & Lagercontrolling</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>LALO - Teil 4: Lagerstrategien &amp; Lagercontrolling</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 4. Unterrichtstag – Inhaltsbereich: Lagerstrategien &amp; Lagercontrolling (Kapitel 11 / S. 261). Dozent: Charly Mettler[span_1](start_span)[span_1](end_span).</p>
+            <p><strong>Qualifikations- und Lernziele (Leistungskriterien):</strong></p>
+            <ul>
+                <li><strong>Strategische Aspekte der Lagerlogistik:</strong> Entscheidungen bezüglich Automatisierungsgrad, Einbindungsgrad und Zentralisierungsgrad klären und festlegen[span_2](start_span)[span_2](end_span).</li>
+                <li><strong>Prinzipien der Lagerplatzzuordnung:</strong> Die verschiedenen Lagerplatzzuordnungen (Festplatz, chaotisch, Zonung, Querverteilung etc.) mitsamt ihren Vor- und Nachteilen analysieren[span_3](start_span)[span_3](end_span).</li>
+                <li><strong>Prinzipien der Warenentnahme &amp; Auslagerung:</strong> Auslagerungsstrategien (FeFo, FiFo, HiFo, LiFo, LoFo) sowie Mengen- und Wegoptimierungen unterscheiden[span_4](start_span)[span_4](end_span).</li>
+                <li><strong>Materialflussanalyse &amp; Wertstrom:</strong> Zweck, formale und sachliche Ziele der Materialflussanalyse sowie die Werkzeuge zur Darstellung beherrschen[span_5](start_span)[span_5](end_span).</li>
+                <li><strong>Lean Production / Lean Management:</strong> Die Werkzeuge zur Verschwendungsreduktion (Wertstromanalyse, 5S-Methode, Kanban, Push- vs. Pull-Produktion) verstehen und anwenden[span_6](start_span)[span_6](end_span).</li>
+                <li><strong>Lagerkostenoptimierung:</strong> Kostenarten (Personal-, Sach- und kalkulatorische Kosten) abgrenzen sowie Ansatzpunkte zur Senkung von Fixkosten und variablen Kosten nutzen[span_7](start_span)[span_7](end_span).</li>
+                <li><strong>Kennzahlen der Lagerverwaltung und -steuerung:</strong> Logistische Kennzahlen (Lagerdauer, Reichweite, Umschlag, Flächennutzungsgrad, Prozesswirkungsgrad etc.) berechnen und im Rahmen des Lagercontrollings („Führen durch Kennzahlen“) einsetzen[span_8](start_span)[span_8](end_span).</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Strategische Aspekte der Lagerlogistik</h4>
+            <p>Bei der Ausgestaltung der Lagerstrategie müssen drei grundlegende Dimensionen definiert werden[span_9](start_span)[span_9](end_span):</p>
+            <ul>
+                <li><span class="highlight-text">Automatisierungsgrad:</span> Manuell (Mensch mit Stapler/RBG), Mechanisiert (mechanische Geräte/schienengeführte RBG) oder Automatisiert (vollautomatisch ohne Mensch via ICT)[span_10](start_span)[span_10](end_span).</li>
+                <li><span class="highlight-text">Einbindungsgrad (In-/Outsourcing):</span> Eigenlager, Fremdlager oder Speditionslager (Abruflager)[span_11](start_span)[span_11](end_span).</li>
+                <li><span class="highlight-text">Zentralisierungsgrad:</span> Hoch (Zentrallager) vs. Tief (mehrere dezentrale Standorte)[span_12](start_span)[span_12](end_span).</li>
+            </ul>
+
+            <h4>2. Prinzipien der Wareneinlagerung &amp; Lagerplatzzuordnung</h4>
+            <ul>
+                <li><span class="highlight-text">ABC-Verteilung:</span> Zuweisung nach Umschlagshäufigkeit[span_13](start_span)[span_13](end_span).</li>
+                <li><span class="highlight-text">Chaotische Lagerung (Lokalisierprinzip):</span> Jeder Artikel kann auf jeden freien Platz (zwingend IT-gesteuert via WMS)[span_14](start_span)[span_14](end_span).</li>
+                <li><span class="highlight-text">Festplatzlagerung (Magazinierprinzip):</span> Fester Stammplatz für jeden Artikel[span_15](start_span)[span_15](end_span).</li>
+                <li><span class="highlight-text">Querverteilung:</span> Verteilung der Bestände eines Artikels über mehrere Gänge (Zugriffssicherheit bei Ausfall)[span_16](start_span)[span_16](end_span).</li>
+                <li><span class="highlight-text">Zonung:</span> Feste Lagerzonen, innerhalb derer chaotisch gelagert wird[span_17](start_span)[span_17](end_span).</li>
+                <li><span class="highlight-text">Dynamische Zonen:</span> Periodische Anpassung der Zonen an aktuelle Bedürfnisse[span_18](start_span)[span_18](end_span).</li>
+            </ul>
+
+            <h4>3. Prinzipien der Warenentnahme &amp; Warenauslagerung</h4>
+            <ul>
+                <li><span class="highlight-text">FeFo (First expired – First out):</span> Kürzestes Verfallsdatum (MHD) wird zuerst ausgelagert[span_19](start_span)[span_19](end_span).</li>
+                <li><span class="highlight-text">FiFo (First in – First out):</span> Älteste Ware wird zuerst ausgelagert[span_20](start_span)[span_20](end_span).</li>
+                <li><span class="highlight-text">HiFo (Highest in – First out):</span> Höchster Wert zuerst[span_21](start_span)[span_21](end_span).</li>
+                <li><span class="highlight-text">LiFo (Last in – First out):</span> Neueste Ware zuerst[span_22](start_span)[span_22](end_span).</li>
+                <li><span class="highlight-text">LoFo (Lowest in – First out):</span> Niedrigster Wert zuerst[span_23](start_span)[span_23](end_span).</li>
+                <li><span class="highlight-text">Mengenanpassung &amp; Restmengenbevorzugung:</span> Exakte Kundenbestellmengen oder Anbrüche zuerst entnehmen[span_24](start_span)[span_24](end_span).</li>
+                <li><span class="highlight-text">Wegoptimierung:</span> Entnahme der Ware mit dem kürzesten Transportweg[span_25](start_span)[span_25](end_span).</li>
+            </ul>
+
+            <!-- INTERAKTIVER AUSLAGERUNGS-STRATEGIE SIMULATOR -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Auslagerungs-Strategie-Simulator</div>
+                <div class="diagram-subtitle">Wähle eine Strategie, um zu sehen, welche Palette aus dem Regalfach entnommen wird.</div>
+                
+                <div class="interactive-widget">
+                    <div class="interactive-controls">
+                        <button class="btn-interactive active" onclick="simAuslagerung('fifo', this)">FiFo (First In)</button>
+                        <button class="btn-interactive" onclick="simAuslagerung('lifo', this)">LiFo (Last In)</button>
+                        <button class="btn-interactive" onclick="simAuslagerung('fefo', this)">FeFo (First Expired)</button>
+                        <button class="btn-interactive" onclick="simAuslagerung('hifo', this)">HiFo (Highest In)</button>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 15px 0;" id="paletten-regal">
+                        <div class="grid-card palette-card" id="pal-1" style="border-left: 5px solid #0284c7;">
+                            <h5>Palette A</h5>
+                            <p style="font-size:0.8rem;">Einlagerung: Tag 1<br>MHD: 10.12.<br>Wert: 500 CHF</p>
+                        </div>
+                        <div class="grid-card palette-card" id="pal-2" style="border-left: 5px solid #0284c7;">
+                            <h5>Palette B</h5>
+                            <p style="font-size:0.8rem;">Einlagerung: Tag 3<br>MHD: 01.11.<br>Wert: 1'200 CHF</p>
+                        </div>
+                        <div class="grid-card palette-card" id="pal-3" style="border-left: 5px solid #0284c7;">
+                            <h5>Palette C</h5>
+                            <p style="font-size:0.8rem;">Einlagerung: Tag 5<br>MHD: 15.01.<br>Wert: 300 CHF</p>
+                        </div>
+                    </div>
+
+                    <div id="strat-result-display" style="background: var(--tag-bg); padding: 0.75rem; border-radius: 6px; font-size: 0.9rem;">
+                        <strong>FiFo-Prinzip:</strong> Palette A wird entnommen, da sie am längsten im Lager liegt (Tag 1).
+                    </div>
+                </div>
+            </div>
+
+            <h4>4. Materialflussanalyse &amp; Lean Production (Wertstrom)</h4>
+            <ul>
+                <li><span class="highlight-text">Zweck &amp; Ziele der Materialflussanalyse:</span> Schwachstellen erkennen, Durchlaufzeiten verkürzen, Transportvorgänge optimieren, Kapitalbindung um 20 % verringern, Auslastung um 30 % erhöhen[span_26](start_span)[span_26](end_span).</li>
+                <li><span class="highlight-text">Werkzeuge:</span> Materialflussmatrix (mit/ohne Mengen), Sankey-Diagramm, Mengen-Wege-Bild[span_27](start_span)[span_27](end_span).</li>
+                <li><span class="highlight-text">Lean Management:</span>
+                    <ul>
+                        <li><em>Prozesswirkungsgrad:</span> \(\text{Wirkungsgrad in \%} = \frac{\text{Wertschöpfende Zeit}}{\text{Durchlaufzeit}} \times 100\)[span_28](start_span)[span_28](end_span)</li>
+                        <li><em>Push-Produktion:</em> Zentrale Auftragsauslösung (Input \(\rightarrow\) Bestand \(\rightarrow\) Output)[span_29](start_span)[span_29](end_span).</li>
+                        <li><em>Pull-Produktion:</em> Bedarfsorientierte Auslösung durch den Verbraucher (Kanban)[span_30](start_span)[span_30](end_span).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>5. Lagerverwaltung, Kostenkontrolle &amp; Kennzahlenberechnungen</h4>
+            <ul>
+                <li><span class="highlight-text">Kostenarten:</span> Personalkosten (Löhne), Sachkosten (Gebäude, Systeme), Kalkulatorische Kosten (Zinsen, Abschreibungen)[span_31](start_span)[span_31](end_span).</li>
+                <li><span class="highlight-text">Fixe vs. Variable Kosten:</span> Fixkosten durch Outsourcing/Systeme senken; variable Kosten durch Bestandsreduktion/ABC-Analysen minimieren[span_32](start_span)[span_32](end_span).</li>
+                <li><span class="highlight-text">Formelsammlung des 4. Unterrichtstages:</span>
+                    <ul>
+                        <li>Zinskosten (CHF) = \(\frac{\text{durchschnittlich gebundenes Kapital} \times \text{Zinssatz}}{100}\)[span_33](start_span)[span_33](end_span)</li>
+                        <li>Lagerkostensatz (%) = \(\frac{\text{Lagerkosten} \times 100}{\text{durchschnittlich gebundenes Kapital}}\)[span_34](start_span)[span_34](end_span)</li>
+                        <li>Lagerkosten (CHF) = \(\frac{\text{durchschnittlich gebundenes Kapital} \times \text{Lagerkostensatz}}{100}\)[span_35](start_span)[span_35](end_span)</li>
+                        <li>Lagerhaltungskostensatz (%) = \(\text{Lagerkostensatz} + \text{Zinssatz}\)[span_36](start_span)[span_36](end_span)</li>
+                        <li>Lagerzinssatz (%) = \(\frac{\text{Zinssatz (p.a.)} \times \text{durchschnittliche Lagerdauer}}{360}\)[span_37](start_span)[span_37](end_span)</li>
+                        <li>Kosten pro Lagerplatz = \(\frac{\text{Gesamtkosten Lagereinrichtungen}}{\text{Anzahl Lagerplätze}}\)[span_38](start_span)[span_38](end_span)</li>
+                        <li>Kosten pro Lagerbewegung = \(\frac{\text{Personal- und Sachkosten}}{\text{Anzahl Zu-/Abgänge}}\)[span_39](start_span)[span_39](end_span)</li>
+                        <li>Lagerbewegungen pro Mitarbeiter = \(\frac{\text{Anzahl Zu-/Abgänge}}{\text{Anzahl Mitarbeiter}}\)[span_40](start_span)[span_40](end_span)</li>
+                        <li>Lagerreichweite (Tage) = \(\frac{\text{Lagerbestand} + \text{offene Bestellungen}}{\text{Materialeinsatz}} \times \text{Produktionstage}\)[span_41](start_span)[span_41](end_span)</li>
+                        <li>Flächennutzungsgrad (%) = \(\frac{\text{belegte Lagerfläche} \times 100}{\text{gesamte Lagerfläche}}\)[span_42](start_span)[span_42](end_span)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Vor- und Nachteile der Lagerplatzzuordnungen im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prinzip</th>
+                            <th>Beschreibung</th>
+                            <th>Vorteile (+)</th>
+                            <th>Nachteile (-)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ABC-Verteilung</strong></td>
+                            <td>Zuordnung zu Lagerbereichen aufgrund der Umschlagshäufigkeit[span_43](start_span)[span_43](end_span).</td>
+                            <td><strong>+</strong> Hohe Umschlagsleistung<br><strong>+</strong> Geringes Risiko von Überalterung<br><strong>+</strong> Schneller Zugriff[span_44](start_span)[span_44](end_span).</td>
+                            <td><strong>-</strong> Aufwendige Analyse und regelmäßige Überprüfung nötig[span_45](start_span)[span_45](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chaotische Lagerung</strong></td>
+                            <td>Freie Lagerplatzzuordnung im ganzen Lager auf beliebigen freien Plätzen (IT-gesteuert)[span_46](start_span)[span_46](end_span).</td>
+                            <td><strong>+</strong> Optimale Flächen- und Raumnutzung<br><strong>+</strong> Schnelle Ein-/Auslagerung durch Wegoptimierung<br><strong>+</strong> Kein unnötiges Reservieren von Kapazitäten[span_47](start_span)[span_47](end_span).</td>
+                            <td><strong>-</strong> Gefahr, dass Artikel mit langer Verweilzeit Plätze nahe beim Ein-/Ausgang blockieren[span_48](start_span)[span_48](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Festplatzlagerung</strong></td>
+                            <td>Jeder Artikel erhält einen genau definierten eigenen Lagerplatz[span_49](start_span)[span_49](end_span).</td>
+                            <td><strong>+</strong> Hohe Zugriffssicherheit<br><strong>+</strong> Erleichterte Inventur<br><strong>+</strong> Rasches manuelles Auffinden[span_50](start_span)[span_50](end_span).</td>
+                            <td><strong>-</strong> Unnötige Lagerkapazitäten werden für Maximalbestände reserviert[span_51](start_span)[span_51](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Querverteilung</strong></td>
+                            <td>Artikel werden über mehrere Gänge eines Lagers verteilt[span_52](start_span)[span_52](end_span).</td>
+                            <td><strong>+</strong> Hohe Zugriffssicherheit bei Ausfall eines Fördermittels<br><strong>+</strong> Hohe Kommissionierleistung[span_53](start_span)[span_53](end_span).</td>
+                            <td><strong>-</strong> Aufwendigere Steuerung bei Einlagerung[span_54](start_span)[span_54](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zonung</strong></td>
+                            <td>Zuweisung einer Lagerzone; innerhalb dieser Zone wird chaotisch gelagert[span_55](start_span)[span_55](end_span).</td>
+                            <td><strong>+</strong> Kurze Transportzeiten &amp; schnelle Entnahme<br><strong>+</strong> Einfache Einarbeitung des Personals[span_56](start_span)[span_56](end_span).</td>
+                            <td><strong>-</strong> Reservekapazitäten steigen gegenüber rein chaotischer Ordnung an[span_57](start_span)[span_57](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamische Zonen</strong></td>
+                            <td>Anpassung der Lagerzonen in vordefinierten Zeitabständen an aktuelle Bedürfnisse[span_58](start_span)[span_58](end_span).</td>
+                            <td><strong>+</strong> Reservekapazitäten werden nur für die aktuelle Planungsperiode benötigt[span_59](start_span)[span_59](end_span).</td>
+                            <td><strong>-</strong> Nähe der Artikel zum Ein-/Ausgang muss aktiv gesteuert werden[span_60](start_span)[span_60](end_span).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Prinzipien der Warenauslagerung im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prinzip</th>
+                            <th>Steuerungslogik</th>
+                            <th>Hauptvorteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>FeFo</strong></td>
+                            <td>Ablaufdatum (MHD) maßgebend[span_61](start_span)[span_61](end_span).</td>
+                            <td>Keine Qualitätseinbußen, Einhaltung von Verbrauchsvorschriften[span_62](start_span)[span_62](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FiFo</strong></td>
+                            <td>Zuerst eingelagert \(\rightarrow\) zuerst wieder raus[span_63](start_span)[span_63](end_span).</td>
+                            <td>Vermeidung von Ladenhütern/Veralterung, geringe Kapitalbindung[span_64](start_span)[span_64](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HiFo</strong></td>
+                            <td>Höchster Wert zuerst ausgelagert[span_65](start_span)[span_65](end_span).</td>
+                            <td>Rascher Kapitalrückfluss, geringe Kapitalbindung[span_66](start_span)[span_66](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LiFo</strong></td>
+                            <td>Zuletzt eingelagert \(\rightarrow\) zuerst wieder raus[span_67](start_span)[span_67](end_span).</td>
+                            <td>Vorteilhaft bei LKW-Beladungen, Umlagerungen, Vorausbestellungen[span_68](start_span)[span_68](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LoFo</strong></td>
+                            <td>Niedriger Wert zuerst ausgelagert[span_69](start_span)[span_69](end_span).</td>
+                            <td>Höhere Bewertung des Restlagers, weniger Ladenhüter[span_70](start_span)[span_70](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mengenanpassung</strong></td>
+                            <td>Exakte Auslagerung der Kundenauftragsmenge[span_71](start_span)[span_71](end_span).</td>
+                            <td>Weniger Rück-/Umlagerungen, bessere Ladekapazitätsnutzung beim Transport[span_72](start_span)[span_72](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Restmengenbevorzugung</strong></td>
+                            <td>Angebrochene Ladeeinheiten zuerst auslagern[span_73](start_span)[span_73](end_span).</td>
+                            <td>Bessere Raumausnutzung, Zusammenfassen angebrochener Einheiten[span_74](start_span)[span_74](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wegoptimierung</strong></td>
+                            <td>Ware mit kürzestem Transportweg zuerst auslagern[span_75](start_span)[span_75](end_span).</td>
+                            <td>Minimierung der Transportwege, schnellere Auftragsabarbeitung[span_76](start_span)[span_76](end_span).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 3: Steuerungskonzepte im Lean Production</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kriterium</th>
+                            <th>Push-Produktion</th>
+                            <th>Pull-Produktion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Auslöser</strong></td>
+                            <td>Zentrale Stelle löst Aufträge aus[span_77](start_span)[span_77](end_span).</td>
+                            <td>Bedarfsträger (Kunde, Montage) löst Herstellung aus[span_78](start_span)[span_78](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Synchronität</strong></td>
+                            <td>Meist nicht synchron mit Produktionsmöglichkeiten[span_79](start_span)[span_79](end_span).</td>
+                            <td>Synchron mit tatsächlichem Verbrauch/Bedarf[span_80](start_span)[span_80](end_span).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bestand im Lager</strong></td>
+                            <td>Crossover-Aufbau von Zwischenbeständen in der Produktion[span_81](start_span)[span_81](end_span).</td>
+                            <td>Bestandskontrolliert, Nachlieferung in vereinbarter Zeit[span_82](start_span)[span_82](end_span).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Liste 1: Die 5 Schritte der Verschwendungsreduktion im Lean Production</h4>
+            <ol>
+                <li><strong>Aufnahme und Gestaltung des Wertstroms</strong>[span_83](start_span)[span_83](end_span).</li>
+                <li><strong>Reduktion der Rüstzeiten</strong> und damit Verringerung der Losgrößen[span_84](start_span)[span_84](end_span).</li>
+                <li><strong>Einführung von Kanban</strong> für die vereinfachte Steuerung der Produktion[span_85](start_span)[span_85](end_span).</li>
+                <li><strong>Gestaltung der Arbeitsplätze mit der 5S-Methode</strong>[span_86](start_span)[span_86](end_span).</li>
+                <li><strong>Einführung der kontinuierlichen Verbesserung (KVP)</strong> in den einzelnen Teams[span_87](start_span)[span_87](end_span).</li>
+            </ol>
+
+            <h4>Liste 2: Die 5S-Methode zur Arbeitsplatzgestaltung</h4>
+            <ol>
+                <li><strong>Seiri (Sortieren / Sort):</strong> Aussortieren nicht benötigter Gegenstände[span_88](start_span)[span_88](end_span).</li>
+                <li><strong>Seiton (Systematisieren / Set in order):</strong> Ordnen und Ergonomie sicherstellen[span_89](start_span)[span_89](end_span).</li>
+                <li><strong>Seiso (Saubermachen / Shine):</strong> Reinigung und Überprüfung des Arbeitsplatzes[span_90](start_span)[span_90](end_span).</li>
+                <li><strong>Seiketsu (Standardisieren / Standardize):</strong> Standards für Ordnung und Sauberkeit definieren[span_91](start_span)[span_91](end_span).</li>
+                <li><strong>Shitsuke (Selbstdisziplin / Sustain):</strong> Einhalten und ständiges Verbessern der Standards[span_92](start_span)[span_92](end_span).</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">LiFo-Anwendung:</span> Entladen von Lkw oder kurzfristige Umlagerungen[span_93](start_span)[span_93](end_span).</li>
+                <li><span class="highlight-text">FeFo bei verderblichen Gütern:</span> Auslagerung nach MHD im Lebensmittel- und Pharmabereich[span_94](start_span)[span_94](end_span).</li>
+                <li><span class="highlight-text">Restmengenbevorzugung:</span> Auslagerung einer halb vollen Palette bei kleiner Kundenbestellung[span_95](start_span)[span_95](end_span).</li>
+                <li><span class="highlight-text">Wertstromanalyse Apparatebau:</span> Wertschöpfende Zeit 47,25 h (5,9 Tage) bei 42 Tagen Liegezeit \(\rightarrow\) Gesamtdurchlaufzeit 47,9 Tage = <strong>Prozesswirkungsgrad von 12,3 %</strong>[span_96](start_span)[span_96](end_span).</li>
+                <li><span class="highlight-text">Mehrwegsystem statt Stretchfolie:</span> Praxis-Gruppenarbeit zur Vermeidung von Einwegfolien[span_97](start_span)[span_97](end_span).</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Ein Lagerbereich wird nach der chaotischen Lagerung verwaltet. Nenne zwei wesentliche Vorteile sowie einen entscheidenden Nachteil dieses Systems.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • <em>Vorteile:</em> Optimale Flächen-/Raumnutzung; schnelle Ein-/Auslagerung durch Wegoptimierung; keine Kapazitätsreservierung[span_98](start_span)[span_98](end_span).<br>
+                    • <em>Nachteil:</em> Langsamdreher können Plätze nahe beim Ein-/Ausgang blockieren[span_99](start_span)[span_99](end_span).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: In einer Wertstromanalyse wurde eine wertschöpfende Bearbeitungszeit von insgesamt 6 Tagen und eine Übergangszeit (Liege- und Transportzeiten) von 34 Tagen ermittelt. Wie hoch ist die Gesamtdurchlaufzeit (DLZ) und wie hoch ist der Prozesswirkungsgrad?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • \(\text{Durchlaufzeit (DLZ)} = 6 + 34 = \mathbf{40\text{ Tage}}\)[span_100](start_span)[span_100](end_span)<br>
+                    • \(\text{Prozesswirkungsgrad} = \frac{6}{40} \times 100 = \mathbf{15\,\%}\)[span_101](start_span)[span_101](end_span)</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Worin unterscheiden sich die Entnahmeprinzipien FiFo, FeFo und LiFo hinsichtlich ihrer Auslöserkriterien?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei <strong>FiFo</strong> entscheidet das älteste Einlagerungsdatum, bei <strong>FeFo</strong> das am nächsten liegende Verfallsdatum (MHD) und bei <strong>LiFo</strong> das neueste Einlagerungsdatum[span_102](start_span)[span_102](end_span).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Ein Betrieb weist ein durchschnittlich gebundenes Kapital von 2'000'000 CHF auf. Die jährlichen Lagerkosten betragen 160'000 CHF und der kalkulatorische Zinssatz liegt bei 5 %. Berechne den Lagerkostensatz sowie den Lagerhaltungskostensatz.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • \(\text{Lagerkostensatz} = \frac{160'000 \times 100}{2'000'000} = \mathbf{8\,\%}\)[span_103](start_span)[span_103](end_span)<br>
+                    • \(\text{Lagerhaltungskostensatz} = 8\,\% + 5\,\% = \mathbf{13\,\%}\)[span_104](start_span)[span_104](end_span)</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Welche 5 Schritte umfasst die 5S-Methode im Lean Management (japanischer Begriff und deutsche Bedeutung)?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Seiri (Sortieren), 2. Seiton (Systematisieren), 3. Seiso (Saubermachen), 4. Seiketsu (Standardisieren), 5. Shitsuke (Selbstdisziplin/Einhalten)[span_105](start_span)[span_105](end_span).</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • LALO – Lagerlogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        // AUSLAGERUNGS STRATEGIE SIMULATOR
+        const stratData = {
+            fifo: { pal: 'pal-1', text: "<strong>FiFo (First In - First Out):</strong> Palette A wird entnommen, da sie am längsten im Lager liegt (Tag 1). Verhindert Veralterung!" },
+            lifo: { pal: 'pal-3', text: "<strong>LiFo (Last In - First Out):</strong> Palette C wird entnommen, da sie als letzte eingelagert wurde (Tag 5). Ideal bei Stapelaufladung." },
+            fefo: { pal: 'pal-2', text: "<strong>FeFo (First Expired - First Out):</strong> Palette B wird entnommen, da ihr Mindesthaltbarkeitsdatum am nächsten liegt (01.11.)." },
+            hifo: { pal: 'pal-2', text: "<strong>HiFo (Highest In - First Out):</strong> Palette B wird entnommen, da sie mit 1'200 CHF den höchsten Wert besitzt (Kapitalfreisetzung)." }
+        };
+
+        function simAuslagerung(strat, btn) {
+            const btns = btn.parentNode.querySelectorAll('.btn-interactive');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.palette-card').forEach(p => p.style.backgroundColor = '#ffffff');
+            
+            const target = stratData[strat];
+            document.getElementById(target.pal).style.backgroundColor = '#dbeafe';
+            document.getElementById('strat-result-display').innerHTML = target.text;
+        }
+    </script>
+</body>
+</html>

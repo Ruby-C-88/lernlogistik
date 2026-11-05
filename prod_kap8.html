@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROLO – Kapitel 8: Strategien & Konzepte | E-Learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7;
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, var(--primary-color) 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+        
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        
+        /* UNTER-NAVIGATION (Kapitel Produktionslogistik) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; margin: 1.5rem 0; }
+        .diagram-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .btn-interactive { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.2s; margin-top: 0.5rem; margin-right: 0.5rem; }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>PROLO – Produktionslogistik</h1>
+                    <p>Kapitel 8: Produktionsstrategien und -konzepte</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+  <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <div class="card">
+            <h2>1. Thema & Lernziele dieser Einheit</h2>
+            <p><strong>Thema:</strong> Produktionslogistik – Kapitel 8: Produktionsstrategien und -konzepte (Fertigungsarten, Fertigungsstrukturen, organisatorische Konzepte sowie Wert- und Stoffstrommanagement).</p>
+            <p><strong>Lernziele:</strong> Nach der Erarbeitung dieser Lerneinheit sind die Lernenden in der Lage:</p>
+            <ul>
+                <li>Die Produktionslogistik als Querschnittsfunktion präzise in die Gesamtwirtschaftlichkeit und Unternehmenslogistik einzuordnen.</li>
+                <li>Die Kerninhalte und Erfolgsfaktoren einer langfristigen Produktionsstrategie (Zeithorizont 5–10 Jahre) systematisch zu erläutern.</li>
+                <li>Verschiedene Fertigungsarten und Fertigungsstrukturen nach dem Organisationsprinzip (Verrichtungs-, Objekt-/Fluss- und Gruppenprinzip) sowie nach der Losgröße (Einzel-, Serien-, Sorten-, Chargen- und Massenfertigung) zu unterscheiden.</li>
+                <li>Die Merkmale, Vor- und Nachteile spezialisierter Fertigungskonzepte wie der Werkstatt-, Baustellen-, Fließ-, Wander- und Gruppenfertigung sowie flexibler Fertigungssysteme (FFS) und der Fertigungssegmentierung darzulegen.</li>
+                <li>Die Grundprinzipien der fraktalen Organisation (Dynamik, Selbstähnlichkeit, Selbstorganisation, Ziel- und Kundenorientierung) zu erklären.</li>
+                <li>Die vier modernen Produktionskonzepte – Belastungsorientierte Auftragsfreigabe (BoA), Just-in-Time (JIT), Kanban und Lean Management – zu analysieren, zu vergleichen und Wirkungsweisen wie das Trichtermodell oder den Kanban-Regelkreis zu beschreiben.</li>
+                <li>Die 7 Arten der Verschwendung (Muda) im Lean Management zu identifizieren und Maßnahmen zur Optimierung des Wert- und Stoffstroms abzuleiten.</li>
+            </ul>
+
+            <h2>2. Detaillierter Hauptteil</h2>
+            <h3>A. Einordnung und Ziele der Produktionslogistik</h3>
+            <p>Die Produktionslogistik ist der zentrale Bestandteil der Unternehmenslogistik und nimmt eine verbindende Querschnittsfunktion ein: Sie schließt direkt an die Beschaffungslogistik an und geht der Distributionslogistik voraus.</p>
+            <ul>
+                <li><strong>Grundaufgabe:</strong> Transformation von Rohstoffen und Halbfabrikaten in fertige Erzeugnisse. Sie stellt sicher, dass alle Materialien, Werkzeuge und Informationen für den Transformationsprozess in der geforderten Art, Menge und Qualität zur richtigen Zeit am richtigen Ort bereitstehen.</li>
+                <li><strong>Ziele der Produktionslogistik:</strong>
+                    <ul>
+                        <li>Ausrichtung und kontinuierliche Optimierung aller Prozesse am Kundenbedarf.</li>
+                        <li>Optimales Ausbalancieren von Eigenfertigung und Fremdbezug (Make-or-Buy).</li>
+                        <li>Senkung der Herstellkosten und der Logistikkosten.</li>
+                        <li>Verringerung von Durchlaufzeiten und Beseitigung von Engpässen.</li>
+                        <li>Reduktion von Lagerbeständen (Rohmaterial-, Zwischen- und Pufferlager).</li>
+                        <li>Optimierung des Informationsflusses zu Beschaffung, Verkauf und Entsorgung.</li>
+                        <li>Erhöhung der Energieeffizienz und Senkung des Ressourcenverbrauchs.</li>
+                        <li>Bessere Abstimmung der Personal- und Maschinenkapazitäten.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>B. Strategische Entscheidungsfelder der Produktion (Produktionsstrategie)</h3>
+            <p>Die Produktionsstrategie definiert den Handlungsrahmen der Fertigung für einen Zeitraum von 5 bis 10 Jahren. Sie muss eng mit der Umweltanalyse (Märkte, Konkurrenz) sowie den Strategien anderer Unternehmensbereiche (Finanzen, Personal, Marketing, F&E, Rechnungswesen) abgestimmt werden.</p>
+            <p><strong>Die 6 zentralen strategischen Entscheidungsfelder:</strong></p>
+            <ol>
+                <li><strong>Produktionsprogramm & Sortiment:</strong> Festlegung von Produktpalette, Produktbreite und -tiefe sowie Straffung oder Erweiterung des Sortiments.</li>
+                <li><strong>Wertschöpfungstiefe (Make-or-Buy):</strong> Entscheidung über den Eigenfertigungsanteil vs. Fremdbezug zur Sicherung von Know-how und Auslastung.</li>
+                <li><strong>Organisation der Produktion & Warenflüsse:</strong>
+                    <ul>
+                        <li><strong>Vertikale Aufgabenverteilung:</strong> Aufteilung verschiedener Produktionsstufen auf mehrere Werke (z. B. Teilefertigung in Werk A, Endmontage in Werk B).</li>
+                        <li><strong>Horizontale Aufgabenverteilung:</strong> Mehrere Werke stellen jeweils eigenständig unterschiedliche Endprodukte her.</li>
+                    </ul>
+                </li>
+                <li><strong>Infrastruktur- und Layoutplanung:</strong> Wahl und räumliche Anordnung von Gebäuden, Anlagen, Lagern und Transportwegen.</li>
+                <li><strong>Mechanisierungs- und Automatisierungsgrad:</strong> Festlegung des Detaillierungsgrads von Automation, Robotik, CIM und PPS-Systemen unter Berücksichtigung der Balance zwischen Mensch und Technik.</li>
+                <li><strong>Kapazitätsdimensionierung:</strong> Vermeidung von Unterkapazitäten (Lieferengpässe, Marktanteilsverluste) und Überkapazitäten (hohe Fixkostenbelastung durch ungenutzte Anlagen).</li>
+            </ol>
+
+            <h3>C. Fertigungsarten und Fertigungsstrukturen</h3>
+            <p>Die Einteilung der Fertigung erfolgt primär nach dem Organisationsprinzip (räumliche Anordnung der Betriebsmittel) und nach der Losgröße.</p>
+            <p><strong>1. Einteilung nach dem Organisationsprinzip:</strong></p>
+            <ul>
+                <li><strong>Verrichtungsprinzip:</strong>
+                    <ul>
+                        <li><strong>Werkstattfertigung:</strong> Gleichartige Maschinen und Arbeitsplätze werden räumlich in einer Werkstatt zusammengefasst (z. B. Dreherei, Fräserei). Die Werkstücke wandern entsprechend ihrem individuellen Arbeitsplan von Werkstatt zu Werkstatt. Unterschieden wird in manuell bediente Maschinen und automatische Bearbeitungszentren.</li>
+                        <li><strong>Baustellenfertigung:</strong> Das Arbeitsobjekt (z. B. Bauwerk, Schiff) ist ortsfest. Alle Betriebsmittel, Arbeitskräfte und Werkstoffe werden zur Baustelle transportiert.</li>
+                    </ul>
+                </li>
+                <li><strong>Objekt- / Flussprinzip:</strong>
+                    <ul>
+                        <li><strong>Fließfertigung:</strong> Maschinen und Arbeitsplätze werden exakt in der Reihenfolge der technologischen Arbeitsschritte angeordnet.
+                            <ul>
+                                <li><strong>Reihenfertigung:</strong> Ohne zeitliche Bindung zwischen den Arbeitsgängen (mit Pufferlagern).</li>
+                                <li><strong>Fließbandfertigung:</strong> Taktgebundene Weiterbewegung des Werkstücks.</li>
+                                <li><strong>Transferstraße:</strong> Vollautomatisierte Verkettung von Bearbeitungsstationen (starr oder flexibel).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Wanderfertigung:</strong> Sonderform der Fließfertigung für ortsfeste Objekte. Die Betriebsmittel und Arbeitskräfte bewegen sich schrittweise entsprechend dem Arbeitsfortschritt am Produkt entlang (z. B. Gleisbau).</li>
+                    </ul>
+                </li>
+                <li><strong>Gruppenprinzip:</strong>
+                    <ul>
+                        <li><strong>Fertigungssegmentierung / Gruppenfertigung:</strong> Zusammenfassung aller Maschinen und Arbeitsplätze, die für die vollständige Bearbeitung einer Teilfamilie benötigt werden, in einer weitgehend autonomen Einheit. Verbindet die hohe Flexibilität der Werkstattfertigung mit der Produktivität der Fließfertigung.</li>
+                        <li><strong>Flexible Fertigungszelle (FFZ):</strong> Kleinwerkstatt mit automatisierter Bearbeitung, automatischer Werkstück-/Werkzeughandhabung und integrierter Qualitätskontrolle.</li>
+                        <li><strong>Flexibles Fertigungssystem (FFS):</strong> Zusammenschluss mehrerer FFZs über ein gemeinsames EDV-Steuerungs- und automatisches Transportsystem.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>2. Einteilung nach der Losgröße (Fertigungstypen):</strong></p>
+            <ul>
+                <li><strong>Einzelfertigung:</strong> Einmalige Herstellung eines einzelnen Produkts/Unikats auf spezifische Kundenanforderung (hohe Kosten, maximale Flexibilität).</li>
+                <li><strong>Serienfertigung:</strong> Begrenzte Herstellung mehrerer gleichartiger Produkte in Serien. Nach Durchlauf einer Serie wird die Anlage umgerüstet.</li>
+                <li><strong>Sortenfertigung:</strong> Spezialfall der Serienfertigung. Herstellung verwandter Produkte aus denselben Grundstoffen auf denselben Anlagen, die sich nur in Merkmalen (Farbe, Größe, Geschmack) unterscheiden.</li>
+                <li><strong>Chargenfertigung:</strong> Sonderform der Serien-/Massenfertigung, bei der ein fester Chargentakt und identische Rohstoffmischungen verwendet werden. Gesetzlich vorgeschrieben für lückenlose Rückverfolgbarkeit.</li>
+                <li><strong>Massenfertigung:</strong> Kontinuierliche Herstellung unbegrenzter Mengen eines völlig identischen Produkts über einen langen Zeitraum (maximale Automatisierung, geringe Stückkosten).</li>
+            </ul>
+
+            <h3>D. Fraktale Organisation (Fraktale Fertigungsstruktur)</h3>
+            <p>Der Begriff "fraktal" beschreibt selbstähnliche, stark gegliederte Strukturen. Eine fraktale Organisation besteht aus autonomen, sich selbst regulierenden Einheiten (Fraktalen), die wie kleine Unternehmen im Unternehmen agieren.</p>
+            <p><strong>Die 4 Kernmerkmale der fraktalen Organisation:</strong></p>
+            <ol>
+                <li><strong>Dynamik:</strong> Schnelle Anpassung der Organisation an veränderte Markt- und Umweltbedingungen.</li>
+                <li><strong>Selbstähnlichkeit:</strong> Alle Einheiten nutzen vergleichbare Organisationsgrundsätze, Methoden und Zielverfolgungsmechanismen.</li>
+                <li><strong>Selbstorganisation:</strong> Die Mitglieder organisieren ihre Prozesse, Kapazitäten und Methoden auf operativer und taktischer Ebene eigenständig.</li>
+                <li><strong>Ziel- und Kundenorientierung:</strong> Die Fraktale formulieren ihre Ziele selbstständig im Rahmen der übergeordneten Unternehmensziele und richten sich direkt an internen oder externen Kunden aus.</li>
+            </ol>
+
+            <h3>E. Moderne Produktionskonzepte</h3>
+            <p><strong>1. Belastungsorientierte Auftragsfreigabe (BoA)</strong></p>
+            <ul>
+                <li><strong>Prinzip:</strong> Ein dezentrales Steuerungskonzept nach dem Pull-Prinzip. Aufträge werden nur dann für die Fertigung freigegeben, wenn die Kapazität der betroffenen Arbeitsplätze nicht überlastet wird.</li>
+                <li><strong>Trichtermodell:</strong> Jeder Arbeitsplatz wird als Trichter verstanden. Der Zufluss (Auftragseingang) wird über eine Schleuse geregelt. Ein neuer Auftrag wird erst freigegeben, wenn der verbleibende Pufferbestand an der Maschine ein festgelegtes Bestandsniveau (die "Plankapazität") unterschreitet.</li>
+            </ul>
+
+            <p><strong>2. Just-in-Time (JIT)</strong></p>
+            <ul>
+                <li><strong>Prinzip:</strong> Synchronisation der Logistikkette. Materialien und Baugruppen werden vom Lieferanten exakt zu dem Zeitpunkt angeliefert, an dem sie in der Fertigung benötigt werden.</li>
+                <li><strong>Ziel:</strong> Vollständige Minimierung von Lagerbeständen und Lagerkosten. Die Lagerung wird größtenteils auf die Transportwege ("rollendes Lager") verlagert.</li>
+            </ul>
+
+            <p><strong>3. Kanban</strong></p>
+            <ul>
+                <li><strong>Prinzip:</strong> Verbrauchsorientierte, dezentrale Produktionssteuerung nach dem Pull-Prinzip. Ein nachgelagerter Bereich (Senke) holt sich benötigtes Material vom vorgelagerten Bereich (Quelle) ab.</li>
+                <li><strong>Elemente des Kanban-Regelkreises:</strong>
+                    <ul>
+                        <li><strong>Senke:</strong> Verbrauchende / weiterverarbeitende Stelle.</li>
+                        <li><strong>Quelle:</strong> Produzierende / bereitstellende Stelle.</li>
+                        <li><strong>Pufferlager:</strong> Kleines Zwischenlager mit definierten Behältern.</li>
+                        <li><strong>Kanban-Karte:</strong> Informationsträger (enthält Artikel-Nr., Bezeichnung, Menge, Lieferant/Quelle, Verbraucher/Senke, Lagerort).</li>
+                    </ul>
+                </li>
+                <li><strong>Kartenarten:</strong>
+                    <ul>
+                        <li><strong>Produktions-Kanban:</strong> Löst die Fertigung eines neuen Behälters bei der Quelle aus.</li>
+                        <li><strong>Transport-Kanban:</strong> Löst den Transport eines vollen Behälters von der Quelle zur Senke aus.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>4. Lean Management & Vermeidung von Verschwendung (Muda)</strong></p>
+            <ul>
+                <li><strong>Prinzip:</strong> Schlanke Prozesse, flache Hierarchien und konsequente Beseitigung aller nicht-wertschöpfenden Tätigkeiten.</li>
+                <li><strong>Muda (7 Arten der Verschwendung):</strong>
+                    <ol>
+                        <li><strong>Überproduktion:</strong> Herstellung von mehr Teilen als aktuell angefordert.</li>
+                        <li><strong>Bestände:</strong> Übermäßige Puffer- und Lagerbestände.</li>
+                        <li><strong>Fehler, Ausschuss & Nacharbeit:</strong> Mangelhafte Qualität erzeugt Zusatzaufwand.</li>
+                        <li><strong>Ungeeignete Arbeitsprozesse:</strong> Übererfüllung oder unergonomische Abläufe.</li>
+                        <li><strong>Wartezeiten:</strong> Brachliegende Zeiten von Mitarbeitenden oder Maschinen.</li>
+                        <li><strong>Mehrfachtransporte:</strong> Unnötige Materialbewegungen.</li>
+                        <li><strong>Unnötige Bewegungen:</strong> Schlechte Arbeitsplatzergonomie.</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <h2>3. Strukturierte Elemente</h2>
+            <h3>Tabelle 1: Vergleichende Gegenüberstellung der primären Fertigungsarten</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Fertigungsart</th><th>Anordnung der Betriebsmittel</th><th>Hauptvorteile</th><th>Hauptnachteile</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Werkstattfertigung</td><td>Nach Verrichtungen (gleichartige Maschinen zusammen).</td><td>Hohe Produktflexibilität; geringe Störanfälligkeit; geringer Kapitalbedarf.</td><td>Hohe Zwischenlager; lange Durchlaufzeiten; hoher Transportaufwand.</td></tr>
+                        <tr><td>Baustellenfertigung</td><td>Ortsfestes Arbeitsobjekt; Betriebsmittel mobil.</td><td>Keine Belastung eigener Hallenflächen; gut für Einzelanfertigungen.</td><td>Hohe Logistik- und Transportkosten; wetterabhängig; aufwendige Planung.</td></tr>
+                        <tr><td>Fließfertigung</td><td>Nach dem Objekt-/Fertigungsablauf hintereinander.</td><td>Kurze Durchlaufzeiten; tiefe Transportkosten; einfache Steuerung.</td><td>Störanfällig bei Anlagenausfall; hohe Umrüstkosten; monotone Arbeit.</td></tr>
+                        <tr><td>Wanderfertigung</td><td>Betriebsmittel bewegen sich am Objekt entlang.</td><td>Kurze Transportwege durch mitwandernde Lager; fixe Termine.</td><td>Hohe Belastung der Mitarbeiter; hohe Logistikanforderungen vor Ort.</td></tr>
+                        <tr><td>Fertigungssegmentierung</td><td>Produktorientierte Gruppen nach dem Baukastenprinzip.</td><td>Hohe Produktivität & Flexibilität; hohe Mitarbeitermotivation.</td><td>Hoher Ausbildungsbedarf; hohe Umstellungskosten bei Produktwechseln.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 2: Systematik der Fertigungstypen nach der Losgröße</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Fertigungstyp</th><th>Stückzahl / Wiederholung</th><th>Produktausprägung</th><th>Typische Branchen / Beispiele</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Einzelfertigung</td><td>1 Stück (Unikat)</td><td>Individuell nach Kundenwunsch</td><td>Sondermaschinenbau, Maßkleidung, Brückenbau.</td></tr>
+                        <tr><td>Serienfertigung</td><td>Begrenzte Stückzahl</td><td>Gleichartige Produkte in Losen</td><td>Automobilkomponenten, Elektronikgeräte, Möbel.</td></tr>
+                        <tr><td>Sortenfertigung</td><td>Begrenzte Stückzahl</td><td>Verwandte Varianten aus gleichen Rohstoffen</td><td>Biersorten, T-Shirts in verschiedenen Farben, Joghurt.</td></tr>
+                        <tr><td>Chargenfertigung</td><td>Taktspezifische Chargen</td><td>Identische Prozessbedingungen pro Charge</td><td>Kosmetika, Arzneimittel, Chemieprodukte.</td></tr>
+                        <tr><td>Massenfertigung</td><td>Kontinuierlich unbegrenzt</td><td>Völlig identisches Standardprodukt</td><td>Ziegelsteine, Mineralwasser, Schokolade.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 3: Vergleich der vier modernen Produktionskonzepte</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Konzept</th><th>Steuerungsprinzip</th><th>Primäres Ziel</th><th>Einsatzvoraussetzung / Merkmal</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>BoA</td><td>Pull (kapazitätsbasiert)</td><td>Vermeidung von Überlastung an Maschinen</td><td>Geeignet für Werkstattfertigung und wechselnde Aufträge (Trichtermodell).</td></tr>
+                        <tr><td>JIT</td><td>Pull (zeitsynchron)</td><td>Eliminierung von Lagerbeständen</td><td>Hohe Liefertreue der Lieferanten; enge Informationsvernetzung.</td></tr>
+                        <tr><td>Kanban</td><td>Dezentraler Pull-Regelkreis</td><td>Verbrauchsnahe Fertigungssteuerung</td><td>Standardisierte Teile; gleichmäßiger Verbrauch; Pufferlager/Behälter.</td></tr>
+                        <tr><td>Lean Management</td><td>Ganzheitliche Schlankheit</td><td>Elimination von Verschwendung (Muda)</td><td>Kulturwandel; flache Hierarchien; kontinuierliche Prozessverbesserung.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Nummerierte Liste 1: Ablauf des verbrauchsorientierten Kanban-Regelkreises</h3>
+            <ol>
+                <li><strong>Materialentnahme:</strong> Die weiterverarbeitende Stelle (Senke) entnimmt dem Pufferlager Material aus einem Behälter für die Montage.</li>
+                <li><strong>Signalübertragung:</strong> Sobald ein Behälter leer ist, wird die daran angebrachte Kanban-Karte abgenommen und in eine Sammelbox gelegt oder elektronisch erfasst.</li>
+                <li><strong>Transportauslösung:</strong> Die Karte dient als Transport-Kanban und signalisiert dem Lager/Transportdienst, einen vollen Behälter von der Quelle zur Senke zu bringen.</li>
+                <li><strong>Produktionsauslösung:</strong> Der leere Behälter inklusive Produktions-Kanban geht zurück zur produzierenden Stelle (Quelle).</li>
+                <li><strong>Fertigung & Befüllung:</strong> Die Quelle produziert exakt die auf der Karte definierte Menge nach und füllt den Behälter wieder auf.</li>
+                <li><strong>Rückstellung ins Pufferlager:</strong> Der wieder befüllte Behälter wird zusammen mit der Karte im Pufferlager bereitgestellt – der Kreislauf ist geschlossen.</li>
+            </ol>
+
+            <h3>Nummerierte Liste 2: Die 7 Arten der Verschwendung (Muda) nach Lean Management</h3>
+            <ol>
+                <li><strong>Überproduktion:</strong> Produktion von Gütern ohne konkrete Kundennachfrage (schlimmste Form der Verschwendung).</li>
+                <li><strong>Unnötige Bestände:</strong> Bindung von Kapital und Fläche durch zu hohe Roh-, Zwischen- oder Fertigwarenlager.</li>
+                <li><strong>Fehler, Ausschuss & Nacharbeit:</strong> Qualitätsprobleme, die zusätzliche Arbeitszeit und Ressourcen verschlingen.</li>
+                <li><strong>Ungeeignete Arbeitsprozesse:</strong> Überdimensionierte Bearbeitungsschritte oder mangelhafte Arbeitsplatzgestaltung.</li>
+                <li><strong>Wartezeiten:</strong> Unproduktives Warten von Mitarbeitenden auf Material, Maschinen oder Freigaben.</li>
+                <li><strong>Unnötige Transporte:</strong> Mehrfaches Verlegen oder Hin- und Herschieben von Material zwischen Hallen.</li>
+                <li><strong>Unnötige Bewegungen:</strong> Ergonomisch schlechte Bewegungsabläufe der Mitarbeiter am Arbeitsplatz.</li>
+            </ol>
+
+            <h2>4. Praxis- und Anwendungsbeispiele</h2>
+            <p><strong>Praxisbeispiel 1: Standortaufteilung – Vertikale vs. Horizontale Aufgabenverteilung</strong></p>
+            <ul>
+                <li><strong>Vertikale Aufgabenverteilung:</strong> Ein Uhrenhersteller fertigt im Werk A (Grenchen) die präzisen mechanischen Uhrwerke und Rohkomponenten an. Diese werden anschließend ins Werk B (Biel) transportiert, wo in der Endmontage das Gehäuse, Zifferblatt und Armband montiert werden.</li>
+                <li><strong>Horizontale Aufgabenverteilung:</strong> Ein Haushaltsgerätekonzern besitzt zwei Werke. Werk 1 produziert ausschließlich Kaffeemaschinen, während Werk 2 ausschließlich Toaster herstellt. Beide Werke arbeiten als unabhängige Einheiten mit eigener Beschaffung.</li>
+            </ul>
+
+            <p><strong>Praxisbeispiel 2: Baustellenfertigung vs. Wanderfertigung</strong></p>
+            <ul>
+                <li><strong>Baustellenfertigung (Brückenbau):</strong> Beim Bau einer Rheinbrücke steht das Bauwerk fest an einem Ort. Kräne, Betonmischfahrzeuge, Schweißgeräte und Bauarbeiter müssen täglich zur Baustelle anreisen.</li>
+                <li><strong>Wanderfertigung (Gleisbau):</strong> Beim Erneuern einer Bahnstrecke bewegt sich ein spezialisierter Gleisbauzug (Betriebsmittel und Personal) kontinuierlich entlang des Schienenstrangs vorwärts. Das Arbeitsergebnis entsteht Schritt für Schritt hinter dem weiterziehenden Zug.</li>
+            </ul>
+
+            <p><strong>Praxisbeispiel 3: Konkretes Beispiel einer Produktions-Kanban-Karte</strong></p>
+            <p>Eine Kanban-Karte in der mechanischen Fertigung enthält folgende Angaben:</p>
+            <ul>
+                <li><strong>Kanban-ID:</strong> 47 (Barcodedokumentation).</li>
+                <li><strong>Artikel-Bezeichnung & Nr.:</strong> Kolbenstange 16 x 85mm (Art.-Nr. 134 667).</li>
+                <li><strong>Behälterkapazität:</strong> 12 Stück (Behälter 1 von 4).</li>
+                <li><strong>Quelle (Lieferant):</strong> Fertigungszelle A.</li>
+                <li><strong>Lagerort:</strong> Regal 4, Fach 22.</li>
+                <li><strong>Senke (Verbraucher):</strong> Montagezelle Antriebe DN 300.</li>
+            </ul>
+            <p>Erklärung: Fehlt dieser Behälter am Regal 4, weiß die Fertigungszelle A exakt, dass genau 12 Stück Kolbenstangen nachproduziert werden müssen.</p>
+
+            <!-- INTERAKTIVES WIDGET KAPITEL 8: KANBAN-SIMULATOR -->
+            <div class="interactive-widget">
+                <div class="diagram-title">Interaktiver Simulator: Kanban-Regelkreis-Simulation</div>
+                <div class="diagram-subtitle">Klicken Sie die Schritte durch, um den Daten- und Materialfluss zu erleben:</div>
+                <div id="kanban_step_display" style="padding: 12px; background: #e0f2fe; border-left: 4px solid var(--primary-color); border-radius: 4px; margin-bottom: 12px; font-weight: 600;">
+                    Status: Schritt 1 - Senke entnimmt Behälter aus dem Pufferlager.
+                </div>
+                <button class="btn-interactive" onclick="nextKanbanStep()">Nächsten Kanban-Schritt ausführen</button>
+                <button class="btn-interactive" style="background-color: #64748b;" onclick="resetKanban()">Reset</button>
+            </div>
+
+            <h2>5. Mini-Quiz zur Wissensüberprüfung</h2>
+            <details>
+                <summary>Frage 1: Worin unterscheidet sich die vertikale von der horizontalen Aufgabenverteilung bei Unternehmen mit mehreren Produktionsstandorten?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Bei der vertikalen Aufgabenverteilung sind die Standorte nach Produktionsstufen aufgeteilt (z. B. Teilefertigung in Werk A, Montage in Werk B). Bei der horizontalen Aufgabenverteilung stellt jeder Standort eigenständig ein anderes Endprodukt von A bis Z her.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 2: Was versteht man unter dem Trichtermodell im Rahmen der Belastungsorientierten Auftragsfreigabe (BoA)?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Das Trichtermodell stellt jeden Arbeitsplatz als Trichter dar. Aufträge fließen oben hinein. Eine "Schleuse" (die Auftragsfreigabe) lässt neue Aufträge erst dann an die Maschine durch, wenn der aktuell abgearbeitete Bestand an der Maschine ein vordefiniertes Kapazitätsniveau (Plankapazität) unterschreitet. Dies verhindert Verstopfungen und lange Wartezeiten an den Maschinen.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 3: Aus welchen vier Hauptelementen setzt sich ein klassischer Kanban-Regelkreis zusammen?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Der Regelkreis besteht aus:
+                    <ol>
+                        <li>Senke (verbrauchende Stelle),</li>
+                        <li>Quelle (produzierende Stelle),</li>
+                        <li>Pufferlager (mit standardisierten Behältern),</li>
+                        <li>Kanban-Karte (Informationsträger zur Steuerung von Transport und Produktion).</li>
+                    </ol>
+                </div>
+            </details>
+            <details>
+                <summary>Frage 4: Welches sind die vier Kernmerkmale einer fraktalen Organisation?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Die vier Merkmale lauten:
+                    <ol>
+                        <li>Dynamik (rasche Anpassungsfähigkeit),</li>
+                        <li>Selbstähnlichkeit (einheitliche Organisations- und Zielprinzipien),</li>
+                        <li>Selbstorganisation (autonome Steuerung der Prozesse),</li>
+                        <li>Ziel- und Kundenorientierung (Ausrichtung an übergeordneten Unternehmens- und Kundenzielen).</li>
+                    </ol>
+                </div>
+            </details>
+            <details>
+                <summary>Frage 5: Nenne mindestens fünf der sieben Arten der Verschwendung (Muda) nach dem Lean-Management-Konzept.</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Mögliche Antworten (5 aus 7): Überproduktion, unnötige Bestände, Fehler/Ausschuss/Nacharbeit, ungeeignete Arbeitsprozesse, Wartezeiten, unnötige Transporte, unnötige Bewegungen.
+                </div>
+            </details>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        let kanbanStep = 1;
+        const kanbanTexts = [
+            "Schritt 1: Senke entnimmt vollen Behälter aus dem Pufferlager zur Montage.",
+            "Schritt 2: Behälter ist leer -> Kanban-Karte wird abgenommen und in Sammelbox gelegt.",
+            "Schritt 3: Transport-Kanban signalisiert Logistik, Nachschub von der Quelle anzufordern.",
+            "Schritt 4: Produktions-Kanban löst bei der Quelle (Fertigungszelle A) die Nachproduktion von 12 Stk aus.",
+            "Schritt 5: Quelle füllt Behälter wieder auf und sendet ihn zurück ins Pufferlager -> Kreislauf geschlossen!"
+        ];
+
+        function nextKanbanStep() {
+            kanbanStep++;
+            if (kanbanStep > 5) kanbanStep = 1;
+            document.getElementById('kanban_step_display').innerText = `Status: ${kanbanTexts[kanbanStep - 1]}`;
+        }
+
+        function resetKanban() {
+            kanbanStep = 1;
+            document.getElementById('kanban_step_display').innerText = `Status: ${kanbanTexts[0]}`;
+        }
+    </script>
+</body>
+</html>

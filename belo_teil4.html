@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELO – Teil 4: Bedarfsermittlung & Materialdisposition | E-Learning</title>
+
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7; /* Sky Blue für BELO */
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel BELO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .input-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+        .input-group label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+        .input-group input { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+
+        .btn-calc { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; margin-top: 0.5rem; }
+        .btn-calc:hover { background-color: var(--secondary-color); }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>BELO – Beschaffungslogistik</h1>
+                    <p>Teil 4: Bedarfsermittlung, ABC/XYZ-Analyse &amp; Materialdisposition</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+  <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>BELO - Teil 4: Bedarfsermittlung &amp; Materialdisposition</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Methoden der Bedarfsermittlung (programmgebunden, verbrauchsgebunden, schätzungsgebunden), Bedarfsarten (Primär-, Sekundär-, Tertiärbedarf, Brutto-/Nettobedarf), die ABC/XYZ-Analyse zur Klassifizierung sowie gängige Dispositionsverfahren.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li>Die verschiedenen Bedarfsarten und Stufen der Bedarfsermittlung unterscheiden.</li>
+                <li>Den Nettobedarf aus Bruttobedarf, Lagerbeständen und offenen Bestellungen präzise errechnen.</li>
+                <li>Die ABC- und XYZ-Analyse kombinieren und daraus zielgerichtete Dispositionsstrategien ableiten.</li>
+                <li>Das Bestellpunkt- und das Bestellrhythmusverfahren gegenüberstellen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+
+            <h4>1. Differenzierung der Bedarfsarten</h4>
+            <p>In der Beschaffungslogistik wird der Materialbedarf nach Erzeugnisstufe und Berücksichtigung von Lagerbeständen unterteilt:</p>
+            <ul>
+                <li><span class="highlight-text">Primärbedarf:</span> Bedarf an verkaufsfähigen Fertigerzeugnissen, Waren oder Ersatzteilen am Markt.</li>
+                <li><span class="highlight-text">Sekundärbedarf:</span> Bedarf an Rohstoffen, Baugruppen und Einzelteilen, die zur Herstellung des Primärbedarfs benötigt werden (abgeleitet aus Stücklisten).</li>
+                <li><span class="highlight-text">Tertiärbedarf:</span> Bedarf an Hilfs- und Betriebsstoffen (z. B. Schmierstoffe, Verpackungsmaterial, Werkzeuge).</li>
+            </ul>
+            <p>Bezüglich der Bestandssituation gilt:</p>
+            <ul>
+                <li><span class="highlight-text">Bruttobedarf:</span> Gesamter periodenbezogener Bedarf ohne Berücksichtigung vorhandener Bestände.</li>
+                <li><span class="highlight-text">Nettobedarf:</span> Tatsächlich zu beschaffende Menge unter Berücksichtigung von verfügbarem Lagerbestand, Reservierungen und bereits laufenden Bestellungen.</li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET: NETTOBEDARFS-RECHNER -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Nettobedarfsrechner</div>
+                <div class="diagram-subtitle">Berechne den tatsächlichen Bestellbedarf für eine Periode.</div>
+                
+                <div class="interactive-widget" style="max-width: 520px; margin: 0 auto;">
+                    <div class="input-group">
+                        <label for="input-brutto">Bruttobedarf (Stück):</label>
+                        <input type="number" id="input-brutto" value="1000">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-zusatz">Zusatzbedarf (Ausschuss/Sicherheitszuschlag in Stk.):</label>
+                        <input type="number" id="input-zusatz" value="50">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-lager">Effektiver Lagerbestand (Stück):</label>
+                        <input type="number" id="input-lager" value="300">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-reserviert">Davon bereits reservierter Bestand (Stück):</label>
+                        <input type="number" id="input-reserviert" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-bestellt">Laufende Bestellungen (bereits bestellt, noch unterwegs):</label>
+                        <input type="number" id="input-bestellt" value="200">
+                    </div>
+                    
+                    <button class="btn-calc" onclick="calculateNetDemand()">Nettobedarf Berechnen</button>
+
+                    <div id="calc-net-result" style="margin-top: 15px; padding: 12px; background: var(--tag-bg); border-left: 4px solid var(--primary-color); border-radius: 4px;">
+                        <strong>Verfügbarer Lagerbestand:</strong> <span id="res-verfuegbar">200 Stück</span><br>
+                        <strong>Berechneter Nettobedarf:</strong> <span id="res-netto" class="highlight-text" style="font-size: 1.1rem;">650 Stück</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4>2. Methoden der Bedarfsermittlung</h4>
+            <ul>
+                <li><span class="highlight-text">Deterministische Bedarfsermittlung (programmgebunden):</span> Exakte Berechnung des Sekundärbedarfs auf Basis von Produktionsprogrammen, Kundenaufträgen und Stücklisten. Anwendung vor allem bei A-Gütern mit hohem Wert.</li>
+                <li><span class="highlight-text">Stochastische Bedarfsermittlung (verbrauchsgebunden):</span> Prognose des künftigen Bedarfs mittels statistischer Verfahren (z. B. gleitender Mittelwert, exponentielle Glättung) anhand historischer Verbrauchsdaten. Anwendung bei C-Gütern oder regelmäßige Verbräuchen.</li>
+                <li><span class="highlight-text">Heuristische Bedarfsermittlung (schätzungsgebunden):</span> Subjektive Schätzung durch erfahrene Disponenten, wenn weder Stücklisten noch Historien vorliegen (z. B. bei neuen Produkten).</li>
+            </ul>
+
+            <h4>3. Kombinierte ABC/XYZ-Analyse</h4>
+            <p>Die Kombination aus ABC-Analyse (Wertanteil am Gesamteinkaufsvolumen) und XYZ-Analyse (Verlauf/Vorhersagbarkeit des Verbrauchs) bestimmt die optimale Dispositionsart:</p>
+            <ul>
+                <li><span class="highlight-text">AX-Güter:</span> Hoher Wert, stetiger Verbrauch &rarr; Just-in-Time (JIT) / deterministische Bedarfsermittlung ohne große Lagerhaltung.</li>
+                <li><span class="highlight-text">CZ-Güter:</span> Geringer Wert, unregelmäßiger Verbrauch &rarr; Vorratsbeschaffung / einfache stochastische Verbrauchssteuerung, da geringe Kapitalbindung.</li>
+            </ul>
+
+            <h4>4. Grundtypen der Dispositionsverfahren</h4>
+            <ul>
+                <li><span class="highlight-text">Bestellpunktverfahren (s, Q):</span> Bei Unterschreiten des Meldebestands (Bestellpunkt \(s\)) wird eine festgelegte Bestellmenge \(Q\) ausgelöst. Die Überprüfung erfolgt kontinuierlich.</li>
+                <li><span class="highlight-text">Bestellrhythmusverfahren (t, S):</span> In festen Zeitabständen (\(t\)) wird der Bestand überprüft und auf einen Zielbestand (\(S\)) aufgefüllt.</li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+
+            <h4>Tabelle 1: Gegenüberstellung der Bedarfsermittlungsarten</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Verfahren</th>
+                            <th>Informationsbasis</th>
+                            <th>Vor- &amp; Nachteile</th>
+                            <th>Typisches Einsatzgebiet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Deterministisch</strong></td>
+                            <td>Produktionsprogramm, Stücklisten, Arbeitspläne</td>
+                            <td>+ Sehr hohe Genauigkeit<br>- Hoher Datenpflegeaufwand</td>
+                            <td>A-Güter, Einzel- &amp; Serienfertigung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stochastisch</strong></td>
+                            <td>Historische Verbrauchsdaten, Statistik</td>
+                            <td>+ Automatisierbar, geringer Aufwand<br>- Anfällig bei Trendbrüchen</td>
+                            <td>C-Güter, B-Güter mit konstantem Bedarf</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Heuristisch</strong></td>
+                            <td>Erfahrungswerte, Expertenschätzung</td>
+                            <td>+ Schnelligkeit, ohne Daten verfügbar<br>- Subjektiv, ungenau</td>
+                            <td>C-Teile, Neuprodukte, Prototypen</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Die ABC/XYZ-Kombinationsmatrix</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Wert \ Verlauf</th>
+                            <th>X (Konstanter Verbrauch, hoch prognostizierbar)</th>
+                            <th>Y (Schwankender / Saisonaler Verbrauch)</th>
+                            <th>Z (Unregelmäßiger / Sporadischer Verbrauch)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A-Güter (Hoher Wert)</strong></td>
+                            <td>JIT / synchroner Fertigungsbezug (Deterministisch)</td>
+                            <td>Programmgebunden mit Sicherheitsabstand</td>
+                            <td>Einzelfallbeschaffung bei konkretem Auftrag</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B-Güter (Mittlerer Wert)</strong></td>
+                            <td>Programm- / Verbrauchssteuerung</td>
+                            <td>Stochastische Vorhersage mit Sicherheitsbestand</td>
+                            <td>Bedarfsgesteuerte Lagerhaltung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C-Güter (Geringer Wert)</strong></td>
+                            <td>Sammelbestellungen / Kanban / KANBAN</td>
+                            <td>Verbrauchsgesteuert / Reorder-Point</td>
+                            <td>Großzügige Vorratsbeschaffung (C-Teile-Management)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Nettobedarfsberechnung in der Praxis:</span> Ein Fahrradhersteller benötigt für den Folgemonat 500 Rahmen (Bruttobedarf). Im Lager liegen 120 Rahmen, wovon 20 für Reparaturaufträge reserviert sind. 100 Rahmen sind bereits bestellt. 
+                <br><em>Verfügbarer Bestand:</em> \(120 - 20 = 100\) Stk.
+                <br><em>Nettobedarf:</em> \(500 - 100 (\text{verfügbar}) - 100 (\text{bestellt}) = 300\) Stk. Bestellauslösung: 300 Rahmen.</li>
+                <li><span class="highlight-text">AX-Güter im Automobilbau:</span> Motoren werden ohne Zwischenlagerung stundengenau direkt an das Montageband geliefert (Just-In-Sequence).</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Wie unterscheidet sich der Bruttobedarf vom Nettobedarf?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Der **Bruttobedarf** ist der reine periodenbezogene Gesamtbedarf an Materialien ohne Berücksichtigung von Beständen. Der **Nettobedarf** zieht vom Bruttobedarf den verfügbaren Lagerbestand (Lagerbestand minus Reservierungen) sowie bereits bestellte Mengen ab.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Welches Beschaffungsprinzip eignet sich optimal für AX-Güter?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Für AX-Güter (hoher Wert, hoher/stetiger Verbrauch) eignet sich die **fertigungssynchrone Beschaffung (Just-In-Time)**, da sie die Kapitalbindung minimiert und wegen der hohen Vorhersagbarkeit kaum Ausfallrisiko birgt.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Wann greift man auf die stochastische Bedarfsermittlung zurück?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Wenn keine Stücklisten vorliegen, der Rechenaufwand für eine deterministische Ermittlung zu hoch wäre (z. B. bei C-Teilen) oder der Verbrauch statistisch stabil aus Vergangenheitswerten abgeleitet werden kann.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • BELO – Beschaffungslogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function calculateNetDemand() {
+            const brutto = parseFloat(document.getElementById('input-brutto').value) || 0;
+            const zusatz = parseFloat(document.getElementById('input-zusatz').value) || 0;
+            const lager = parseFloat(document.getElementById('input-lager').value) || 0;
+            const reserviert = parseFloat(document.getElementById('input-reserviert').value) || 0;
+            const bestellt = parseFloat(document.getElementById('input-bestellt').value) || 0;
+
+            const verfuegbar = Math.max(0, lager - reserviert);
+            const gesamtBrutto = brutto + zusatz;
+            const netto = Math.max(0, gesamtBrutto - verfuegbar - bestellt);
+
+            document.getElementById('res-verfuegbar').innerText = verfuegbar.toLocaleString('de-CH') + " Stück";
+            document.getElementById('res-netto').innerText = netto.toLocaleString('de-CH') + " Stück";
+        }
+    </script>
+</body>
+</html>

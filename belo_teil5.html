@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELO – Teil 5: Beschaffungswege, Incoterms &amp; Optimale Bestellmenge | E-Learning</title>
+
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7; /* Sky Blue für BELO */
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel BELO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .input-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+        .input-group label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+        .input-group input { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+
+        .btn-calc { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; margin-top: 0.5rem; }
+        .btn-calc:hover { background-color: var(--secondary-color); }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>BELO – Beschaffungslogistik</h1>
+                    <p>Teil 5: Beschaffungswege, Incoterms 2020 &amp; Optimale Bestellmenge (Andler)</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>BELO - Teil 5: Beschaffungswege, Incoterms &amp; Optimale Bestellmenge</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Physische und rechtliche Beschaffungswege, internationale Lieferbedingungen (Incoterms 2020) zur Regelung von Kosten- und Gefahrenübergang sowie die Ermittlung der optimalen Bestellmenge nach der Andler-Formel.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li>Direkte und indirekte Beschaffungswege bezüglich Kosten, Einfluss und Risiken vergleichen.</li>
+                <li>Die Grundgruppen der Incoterms 2020 (E-, F-, C-, D-Klauseln) sowie den Unterschied zwischen Kostenübergang und Gefahrenübergang erklären.</li>
+                <li>Die optimale Bestellmenge (\(x_{\text{opt}}\)) mithilfe der klassischen Andler-Formel eigenständig berechnen und praxisgerecht interpretieren.</li>
+                <li>Prüfen, wann die Andler-Formel an ihre Grenzen stößt (z. B. bei Mengenrabatten oder Kapazitätsgrenzen).</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+
+            <h4>1. Beschaffungswege (Direkt vs. Indirekt)</h4>
+            <p>Der Beschaffungsweg beschreibt, auf welchem Pfad Waren vom Lieferanten zum Einkäufer gelangen:</p>
+            <ul>
+                <li><span class="highlight-text">Direkter Beschaffungsweg:</span> Der Einkäufer bezieht die Ware ohne Zwischenhändler unmittelbar vom Produzenten. 
+                    <br><em>Vorteile:</em> Niedrigere Einstandspreise (keine Händlermarge), direkter Know-how-Austausch, individuelle Produktanpassungen möglich.
+                    <br><em>Nachteile:</em> Hoher eigener Abwicklungs- und Transportaufwand, Mindestabnahmemengen oft sehr hoch.
+                </li>
+                <li><span class="highlight-text">Indirekter Beschaffungsweg:</span> Der Einkauf erfolgt über Zwischenhändler (Großhändler, Importeure, Handelsvertreter). 
+                    <br><em>Vorteile:</em> Kleine Bestellmengen möglich, schnelle regionale Verfügbarkeit, Übernahme von Import- und Verzollungsrisiken durch den Händler.
+                    <br><em>Nachteile:</em> Höhere Stückpreise durch Handelsspannen, geringerer direkter Einfluss auf den Hersteller.
+                </li>
+            </ul>
+
+            <h4>2. Incoterms 2020 (International Commercial Terms)</h4>
+            <p>Die Incoterms regeln weltweit standardisiert die Pflichten, Kosten und Risiken zwischen Verkäufer und Käufer bei internationalen Warengeschäften. Zwei Punkte sind entscheidend:</p>
+            <ul>
+                <li><span class="highlight-text">Kostenübergang:</span> Bis zu welchem Ort trägt der Verkäufer die Fracht- und Transportkosten?</li>
+                <li><span class="highlight-text">Gefahrenübergang:</span> An welchem Punkt geht das Risiko für Verlust oder Beschädigung der Ware auf den Käufer über?</li>
+            </ul>
+
+            <h5>Die 4 Incoterms-Klauselgruppen (2020)</h5>
+            <ul>
+                <li><strong>E-Klausel (Abholklausel):</strong> EXW (Ex Works / Ab Werk). Minimale Pflichten für den Verkäufer. Der Käufer trägt ab Verkäuferwerk sämtliche Kosten und Gefahren.</li>
+                <li><strong>F-Klauseln (Haupttransport vom Käufer bezahlt):</strong> FCA, FAS, FOB. Der Verkäufer übergibt die Ware an einen vom Käufer benannten Frachtführer oder Hafen.</li>
+                <li><strong>C-Klauseln (Haupttransport vom Verkäufer bezahlt):</strong> CPT, CIP, CFR, CIF. Der Verkäufer bezahlt den Haupttransport. <br><em>Achtung (Zwei-Punkt-Klauseln):</em> Kosten- und Gefahrenübergang fallen an unterschiedlichen Orten auseinander! Die Gefahr geht bereits bei Übergabe an den ersten Frachtführer über.</li>
+                <li><strong>D-Klauseln (Ankunftsklauseln):</strong> DAP, DPU, DDP. Maximale Pflichten für den Verkäufer. Bei DDP (Delivered Duty Paid) übernimmt der Verkäufer alle Kosten inklusive Fracht, Versicherung und Zollabwicklung bis zum Bestimmungsort.</li>
+            </ul>
+
+            <h4>3. Die Optimale Bestellmenge (Andler'sche Losgrößenformel)</h4>
+            <p>Die <strong>Andler-Formel</strong> ermittelt das Optimum aus zwei gegensätzlichen Kostenarten:</p>
+            <ul>
+                <li><span class="highlight-text">Bestellfixe Kosten:</span> Je häufiger bestellt wird, desto höher sind die administrativen Bestellkosten.</li>
+                <li><span class="highlight-text">Lagerhaltungskosten:</span> Je größer die einzelne Bestellmenge ist, desto höher ist der durchschnittliche Lagerbestand und damit die Kapitalbindung und Lagerkosten.</li>
+            </ul>
+            <p>Im Minimum der Gesamtkostenkurve entsprechen sich die bestellfixen Kosten und die Lagerhaltungskosten. Die Formel lautet:</p>
+            $$x_{\text{opt}} = \sqrt{\frac{2 \cdot M \cdot K_B}{k_L}} \quad \text{bzw.} \quad x_{\text{opt}} = \sqrt{\frac{200 \cdot M \cdot K_B}{P \cdot i}}$$
+            <p><em>Legende:</em> \(M\) = Jahresbedarf in Stück | \(K_B\) = Bestellfixe Kosten pro Bestellung in CHF | \(k_L\) = Lagerhaltungskostensatz pro Stück/Jahr | \(P\) = Einstandspreis pro Stück | \(i\) = Lagerhaltungskostensatz in %.</p>
+
+            <!-- INTERAKTIVES WIDGET: ANDLER RECHNER -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Andler-Rechner (Optimale Bestellmenge)</div>
+                <div class="diagram-subtitle">Gib die Bedarfsparameter ein, um die optimale Bestellmenge und Bestellhäufigkeit zu berechnen.</div>
+                
+                <div class="interactive-widget" style="max-width: 520px; margin: 0 auto;">
+                    <div class="input-group">
+                        <label for="input-jahresbedarf">Jahresbedarf (\(M\)) in Stück:</label>
+                        <input type="number" id="input-jahresbedarf" value="10000">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-bestellkosten">Bestellfixe Kosten (\(K_B\)) pro Bestellung in CHF:</label>
+                        <input type="number" id="input-bestellkosten" value="80">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-preis">Einstandspreis (\(P\)) pro Stück in CHF:</label>
+                        <input type="number" id="input-preis" value="25">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-zinssatz">Lagerhaltungskostensatz (\(i\)) in % pro Jahr:</label>
+                        <input type="number" id="input-zinssatz" value="16">
+                    </div>
+                    
+                    <button class="btn-calc" onclick="calculateAndler()">Optimale Menge Berechnen</button>
+
+                    <div id="calc-andler-result" style="margin-top: 15px; padding: 12px; background: var(--tag-bg); border-left: 4px solid var(--primary-color); border-radius: 4px;">
+                        <strong>Optimale Bestellmenge (\(x_{\text{opt}}\)):</strong> <span id="res-xopt" class="highlight-text" style="font-size: 1.1rem;">632 Stück</span><br>
+                        <strong>Anzahl Bestellungen pro Jahr:</strong> <span id="res-anzahl">15.8 Bestellungen</span><br>
+                        <strong>Bestellrhythmus:</strong> <span id="res-rhythmus">alle 23 Tage</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Strukturierte Elemente</h3>
+
+            <h4>Tabelle 1: Übersicht der Wichtigsten Incoterms 2020</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Klausel</th>
+                            <th>Bezeichnung</th>
+                            <th>Kostenübergang</th>
+                            <th>Gefahrenübergang</th>
+                            <th>Transportmittel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>EXW</strong></td>
+                            <td>Ex Works (Ab Werk)</td>
+                            <td>Ab Werk des Verkäufers</td>
+                            <td>Ab Werk des Verkäufers</td>
+                            <td>Alle Transportarten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FCA</strong></td>
+                            <td>Free Carrier (Frei Frachtführer)</td>
+                            <td>Bei Übergabe an Frachtführer</td>
+                            <td>Bei Übergabe an Frachtführer</td>
+                            <td>Alle Transportarten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FOB</strong></td>
+                            <td>Free on Board (Frei an Bord)</td>
+                            <td>An Bord des Schiffes im Verladehafen</td>
+                            <td>An Bord des Schiffes im Verladehafen</td>
+                            <td>See- &amp; Binnenschifffahrt</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DAP</strong></td>
+                            <td>Delivered at Place (Geliefert Benannter Ort)</td>
+                            <td>Am Bestimmungsort (unentladen)</td>
+                            <td>Am Bestimmungsort (unentladen)</td>
+                            <td>Alle Transportarten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DDP</strong></td>
+                            <td>Delivered Duty Paid (Geliefert Verzollt)</td>
+                            <td>Am Bestimmungsort inkl. Zoll &amp; Steuern</td>
+                            <td>Am Bestimmungsort</td>
+                            <td>Alle Transportarten</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Vor- und Nachteile der Andler-Formel in der Praxis</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vorteile</th>
+                            <th>Grenzen &amp; Kritikpunkte in der Praxis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>• Einfache mathematische Handhabung<br>• Gute Annäherung bei stabilem Verbrauch<br>• Transparenter Kompromiss zwischen Bestell- und Lagerkosten</td>
+                            <td>• Unterstellt einen konstanten Verbrauch über das Jahr<br>• Berücksichtigt keine Mengenrabatte oder Staffelpreise<br>• Vernachlässigt begrenzte Lagerkapazitäten und Haltbarkeiten<br>• Keine Zins- / Preisänderungen berücksichtigt</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">DDP bei der Ersatzteilbeschaffung:</span> Ein Schweizer Unternehmen bestellt eine Sondermaschine aus den USA unter der Bedingung DDP Zürich. Der amerikanische Lieferant trägt alle Transportkosten, Einfuhrabgaben und die Verzollung an der Schweizer Grenze.</li>
+                <li><span class="highlight-text">Anpassung der Andler-Bestellmenge bei Mengenrabatt:</span> Ergibt die Andler-Formel eine Menge von 450 Stück, gewährt der Lieferant ab 500 Stück aber 5 % Rabatt, muss eine Gesamtkostenrechnung (Einstandspreis + Lagerkosten + Bestellkosten) entscheiden, ob sich die Aufstockung auf 500 Stück lohnt.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Was unterscheidet die C-Klauseln (z. B. CPT, CIP) von den D-Klauseln bezüglich des Gefahrenübergangs?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei den **C-Klauseln** zahlt der Verkäufer zwar die Fracht bis zum Zielort, der Gefahrenübergang findet jedoch bereits bei Übergabe an den ersten Frachtführer im Abgangsland statt (Zwei-Punkt-Klausel). Bei den **D-Klauseln** geht die Gefahr erst am Zielort auf den Käufer über.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Ein Unternehmen benötigt 3'600 Stück pro Jahr. Die bestellfixen Kosten betragen 50 CHF, die Lagerhaltungskosten 4 CHF pro Stück/Jahr. Wie hoch ist die optimale Bestellmenge?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 
+                    $$x_{\text{opt}} = \sqrt{\frac{2 \cdot 3'600 \cdot 50}{4}} = \sqrt{\frac{360'000}{4}} = \sqrt{90'000} = 300\,\text{Stück}$$
+                    Es sollte in Losgrößen von jeweils 300 Stück (12 Bestellungen pro Jahr) bestellt werden.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Welche Incoterm-Klausel fordert das Minimum an Verpflichtungen für den Verkäufer?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> **EXW (Ex Works / Ab Werk)**. Der Verkäufer stellt die Ware lediglich an seinem Betriebsgelände bereit. Der Käufer trägt sämtliche Lade-, Transport-, Versicherungs- und Zollkosten.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • BELO – Beschaffungslogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function calculateAndler() {
+            const M = parseFloat(document.getElementById('input-jahresbedarf').value) || 0;
+            const KB = parseFloat(document.getElementById('input-bestellkosten').value) || 0;
+            const P = parseFloat(document.getElementById('input-preis').value) || 0;
+            const i = parseFloat(document.getElementById('input-zinssatz').value) || 0;
+
+            if (M <= 0 || KB <= 0 || P <= 0 || i <= 0) {
+                alert("Bitte gültige Werte größer als 0 eingeben.");
+                return;
+            }
+
+            const kL = (P * i) / 100; // Lagerhaltungskostensatz pro Stück
+            const xOpt = Math.sqrt((2 * M * KB) / kL);
+            const anzahlBestellungen = M / xOpt;
+            const tageZwischenBestellungen = 360 / anzahlBestellungen;
+
+            document.getElementById('res-xopt').innerText = Math.round(xOpt).toLocaleString('de-CH') + " Stück";
+            document.getElementById('res-anzahl').innerText = anzahlBestellungen.toFixed(1) + " Bestellungen / Jahr";
+            document.getElementById('res-rhythmus').innerText = "alle " + Math.round(tageZwischenBestellungen) + " Tage";
+        }
+    </script>
+</body>
+</html>

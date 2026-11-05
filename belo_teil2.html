@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELO – Teil 2: Sourcing-Strategien, Make-or-Buy & E-Procurement | E-Learning</title>
+
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7; /* Sky Blue für BELO */
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel BELO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .input-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+        .input-group label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+        .input-group input { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+
+        .btn-calc { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; margin-top: 0.5rem; }
+        .btn-calc:hover { background-color: var(--secondary-color); }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>BELO – Beschaffungslogistik</h1>
+                    <p>Teil 2: Sourcing-Strategien, Make-or-Buy &amp; E-Procurement</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+    <main>
+        <section class="card">
+            <h2>BELO - Teil 2: Sourcing-Strategien, Make-or-Buy &amp; E-Procurement</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Sourcing-Strategien (Lieferantenanzahl, Geographie, Wertschöpfungstiefe), Make-or-Buy-Entscheidungen inkl. Break-Even-Ermittlung sowie E-Procurement und digitale Datenaustausch-Standards.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li>Sourcing-Strategien nach Anzahl der Lieferanten, geographischem Bezugsraum und Wertschöpfungstiefe differenzieren und gezielt auswählen.</li>
+                <li>Qualitative und quantitative Kriterien bei Make-or-Buy-Entscheidungen anwenden und die kritische Menge berechnen.</li>
+                <li>E-Procurement-Instrumente sowie Standards zur digitalen Katalog- und Datenverarbeitung (EDI, BMEcat, eCl@ss) praxogerecht einordnen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+
+            <h4>1. Sourcing-Strategien</h4>
+            <p>Sourcing-Strategien legen fest, aus wie vielen Quellen, in welchen geographischen Radien und in welcher Wertschöpfungstiefe Güter beschafft werden.</p>
+
+            <h5>A. Nach Anzahl der Lieferanten</h5>
+            <ul>
+                <li><span class="highlight-text">Single Sourcing (Einlieferantenstrategie):</span> Nur ein ausgewählter Lieferant für ein bestimmtes Material. 
+                    <br><em>Vorteile:</em> Hohe Abnahmemengen (Mengenrabatte), enge Partnerschaft, vereinfachte Logistik. 
+                    <br><em>Nachteile:</em> Hohes Abhängigkeits- und Klumpenrisiko bei Lieferausfällen.
+                </li>
+                <li><span class="highlight-text">Multiple Sourcing (Mehrlieferantenstrategie):</span> Aufteilung des Bedarfs auf mehrere Lieferanten. 
+                    <br><em>Vorteile:</em> Risikominimierung, Wettbewerbsdruck auf Lieferanten, hohe Flexibilität. 
+                    <br><em>Nachteile:</em> Geringere Abnahmemengen pro Lieferant, höherer administrativer Aufwand.
+                </li>
+                <li><span class="highlight-text">Dual Sourcing (Zweilieferantenstrategie):</span> Strategischer Kompromiss (z. B. 70 % Hauptlieferant / 30 % Nebenlieferant zur Absicherung).</li>
+            </ul>
+
+            <h5>B. Nach geographischem Bezugsraum</h5>
+            <ul>
+                <li><span class="highlight-text">Local / Regional Sourcing:</span> Beschaffung in unmittelbarer Nähe (z. B. Schweiz / DACH-Region). Kurze Durchlaufzeiten, geringe Transportkosten/CO2, hohe Flexibilität.</li>
+                <li><span class="highlight-text">Global Sourcing:</span> Weltweiter Einkauf auf internationalen Märkten. Zugriff auf günstigere Einstandspreise, aber höheres Währungs-, Zoll- und Transportrisiko.</li>
+                <li><span class="highlight-text">Nearshoring:</span> Verlagerung der Beschaffung ins nahe Ausland (z. B. EU-Oststaaten).</li>
+            </ul>
+
+            <h5>C. Nach Wertschöpfungsumfang &amp; Objektbezug</h5>
+            <ul>
+                <li><span class="highlight-text">Modular / System Sourcing:</span> Einkauf kompletter Subsysteme/Module von einem Systemlieferanten (Tier 1), der Unterlieferanten (Tier 2) steuert (z. B. kompletter Kabelbaum im Automobilbau).</li>
+                <li><span class="highlight-text">Individual / Single Item Sourcing:</span> Einkauf unmontierter Einzelteile mit hoher eigener Montage- und Fertigungstiefe.</li>
+            </ul>
+
+            <h4>2. Make-or-Buy (Eigenfertigung vs. Fremdbezug)</h4>
+            <p>Die Entscheidung zwischen Eigenfertigung (Make) und Fremdbezug (Buy) stützt sich auf zwei Säulen:</p>
+            <ul>
+                <li><span class="highlight-text">Qualitative Kriterien:</span> Kernkompetenz des Unternehmens, Know-how-Schutz vor Abfluss, Qualitätskontrolle, vorhandene Kapazitäten.</li>
+                <li><span class="highlight-text">Quantitative Kriterien:</span> Gesamtkostenvergleich, Total Cost of Ownership (TCO) und die Berechnung der kritischen Menge (Break-Even-Analyse).</li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET: BREAK-EVEN CALCULATOR -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Break-Even Rechner (Make-or-Buy)</div>
+                <div class="diagram-subtitle">Gib die Kostendaten ein, um die kritische Menge \(x_{\text{krit}}\) und die Empfehlung zu berechnen.</div>
+                
+                <div class="interactive-widget" style="max-width: 500px; margin: 0 auto;">
+                    <div class="input-group">
+                        <label for="input-kf">Fixkosten der Eigenfertigung (\(K_f\)) in CHF:</label>
+                        <input type="number" id="input-kf" value="50000">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-kv">Variable Stückkosten Eigenfertigung (\(k_v\)) in CHF:</label>
+                        <input type="number" id="input-kv" value="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-p">Fremdbezugspreis pro Stück (\(p\)) in CHF:</label>
+                        <input type="number" id="input-p" value="45">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-x">Geplante Bedarfsmenge (\(x\)) in Stück:</label>
+                        <input type="number" id="input-x" value="2500">
+                    </div>
+                    
+                    <button class="btn-calc" onclick="calculateBreakEven()">Kritische Menge berechnen</button>
+
+                    <div id="calc-result" style="margin-top: 15px; padding: 12px; background: var(--tag-bg); border-left: 4px solid var(--primary-color); border-radius: 4px;">
+                        <strong>Kritische Menge (\(x_{\text{krit}}\)):</strong> <span id="res-xkrit">2'000 Stück</span><br>
+                        <strong>Empfehlung:</strong> <span id="res-rec" class="highlight-text">Make (Eigenfertigung ist günstiger)</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4>3. E-Procurement &amp; Digitalisierung</h4>
+            <p>E-Procurement bezeichnet die elektronische Unterstützung des Einkaufsprozesses. Hauptziele sind die Senkung von Prozesskosten (besonders bei C-Teilen), die Reduzierung von Durchlaufzeiten sowie die Vermeidung von <strong>Maverick Buying</strong> (eigenmächtiger Einkauf am Zentraleinkauf vorbei).</p>
+            <ul>
+                <li><span class="highlight-text">E-Catalog / Desktop Purchasing:</span> Mitarbeiter bestellen direkt aus genehmigten elektronischen Web-Katalogen.</li>
+                <li><span class="highlight-text">E-Sourcing / E-Tendering:</span> Elektronische Ausschreibungen und Anfragen über B2B-Plattformen.</li>
+                <li><span class="highlight-text">Reverse Auctions:</span> Lieferanten unterbieten sich live in Online-Auktionen.</li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+
+            <h4>Tabelle 1: Gegenüberstellung der Sourcing-Strategien</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Strategie</th>
+                            <th>Fokus / Konzept</th>
+                            <th>Hauptvorteile</th>
+                            <th>Risiken &amp; Nachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Single Sourcing</strong></td>
+                            <td>1 Lieferant für 1 Material</td>
+                            <td>Mengenrabatte, enge Kooperation</td>
+                            <td>Hohes Klumpen- &amp; Ausfallrisiko</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multiple Sourcing</strong></td>
+                            <td>Mehrere Lieferanten je Material</td>
+                            <td>Hohe Sicherheit, Wettbewerbsdruck</td>
+                            <td>Geringere Rabatte, hoher Aufwand</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dual Sourcing</strong></td>
+                            <td>Haupt- &amp; Nebenlieferant (z. B. 70/30)</td>
+                            <td>Optimaler Kompromiss aus Preis &amp; Schutz</td>
+                            <td>Schnittstellenpflege für 2 Partner</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Global Sourcing</strong></td>
+                            <td>Weltweiter Einkauf</td>
+                            <td>Günstigere Einstandspreise</td>
+                            <td>Währungs-, Zoll- &amp; Transportrisiko</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: E-Procurement &amp; Datenaustausch-Standards</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Standard</th>
+                            <th>Typologie</th>
+                            <th>Funktion / Beschreibung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>EDI / EDIFACT</strong></td>
+                            <td>Datenaustausch</td>
+                            <td>Standardisierter elektronischer Austausch von Bestellungen, Lieferscheinen und Rechnungen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BMEcat / cXML</strong></td>
+                            <td>Katalogformat</td>
+                            <td>Standardisiertes Format zum Austausch von elektronischen Produktkatalogen zwischen Partnern.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>eCl@ss / UNSPSC</strong></td>
+                            <td>Klassifikation</td>
+                            <td>Standardisierte Warengruppen-Klassifikation zur eindeutigen Zuweisung von Produkten.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Modular Sourcing in der Automobilindustrie:</span> Ein Automobilhersteller bezieht das komplette Armaturenbrett samt Elektronik fertig montiert von einem Tier-1-Systemlieferanten Just-In-Time ans Band.</li>
+                <li><span class="highlight-text">C-Teile-Management mit E-Procurement:</span> Ein Maschinenbauunternehmen nutzt elektronische Web-Kataloge (BMEcat) für Verbrauchsmaterialien (Schrauben, Bürobedarf). Dadurch sinken die Prozesskosten pro Bestellung von 80 CHF auf unter 10 CHF.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Wann wählt man trotz höherer Einzelpreise eine Multiple-Sourcing-Strategie?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Wenn die Versorgungs- und Ausfallsicherheit höchste Priorität hat. Multiple Sourcing verhindert Produktionsstillstände bei Lieferausfällen eines einzelnen Partners und hält den Wettbewerbsdruck bezüglich Preis, Qualität und Service aufrecht.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Wie berechnet sich die kritische Menge (\(x_{\text{krit}}\)) bei einer Make-or-Buy-Entscheidung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Durch Gleichsetzen der Gesamtkosten von Eigenfertigung und Fremdbezug: 
+                    $$K_f + (k_v \cdot x) = p \cdot x \implies x_{\text{krit}} = \frac{K_f}{p - k_v}$$
+                    Liegt die Bedarfsmenge über \(x_{\text{krit}}\), ist die Eigenfertigung (Make) wirtschaftlicher.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Was unterscheidet BMEcat von EDIFACT?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> BMEcat ist ein Format zur Übertragung von **elektronischen Produktkatalogen** (Produktbeschreibungen, Preise, Bilder), während EDIFACT ein Übertragungsstandard für **Geschäftstransaktionen** (Bestellungen, Lieferscheine, Rechnungen) ist.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • BELO – Beschaffungslogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function calculateBreakEven() {
+            const Kf = parseFloat(document.getElementById('input-kf').value) || 0;
+            const kv = parseFloat(document.getElementById('input-kv').value) || 0;
+            const p = parseFloat(document.getElementById('input-p').value) || 0;
+            const x = parseFloat(document.getElementById('input-x').value) || 0;
+
+            if (p <= kv) {
+                document.getElementById('res-xkrit').innerText = "Nicht berechenbar (p ≤ kv)";
+                document.getElementById('res-rec').innerText = "Eigenfertigung ist bei diesen variablen Kosten immer günstiger.";
+                return;
+            }
+
+            const xKrit = Kf / (p - kv);
+            document.getElementById('res-xkrit').innerText = Math.ceil(xKrit).toLocaleString('de-CH') + " Stück";
+
+            if (x > xKrit) {
+                document.getElementById('res-rec').innerText = "Make (Eigenfertigung ist bei deiner Menge von " + x.toLocaleString('de-CH') + " Stk. günstiger)";
+            } else if (x < xKrit) {
+                document.getElementById('res-rec').innerText = "Buy (Fremdbezug ist bei deiner Menge von " + x.toLocaleString('de-CH') + " Stk. günstiger)";
+            } else {
+                document.getElementById('res-rec').innerText = "Indifferent (Kosten für Make und Buy sind exakt gleich)";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LALO – Teil 1: Lager- & Materialwirtschaft | E-Learning</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a; /* Deep Slate Blue für LALO */
+            --secondary-color: #3b82f6;
+            --accent-color: #dbeafe;
+            --tag-bg: #eff6ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(30, 58, 138, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel LALO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+        
+        .slider-group { margin-bottom: 1rem; }
+        .slider-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .slider-group input[type=range] { width: 100%; }
+        .saegezahn-canvas { width: 100%; height: 220px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>LALO – Lagerlogistik</h1>
+                    <p>Teil 1: Lager- & Materialwirtschaft, Bestandskonzepte & Sägezahnmodell</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>LALO - Teil 1: Lager- & Materialwirtschaft</h2>
+
+            <h3>Thema & Lernziele dieser Einheit</h3>
+            <p>Der <strong>1. Unterrichtstag</strong> umfasst den <strong>Inhaltsbereich Kapitel 9 / Teil 1 (Lehrmittel S. 224)</strong> mit dem Schwerpunkt <strong>Lager und Materialwirtschaft</strong>.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li><strong>Ziele und Kernbegriffe der Lagerlogistik</strong> präzise definieren und erläutern.</li>
+                <li><strong>Operative Aufgaben und Funktionen</strong> der innerbetrieblichen Logistik systematisch überblicken.</li>
+                <li><strong>Prozesse im Wareneingang</strong> und bei der Wareneinlagerung strukturiert beschreiben.</li>
+                <li><strong>Bestandsarten, Bestandsüberwachung</strong> und die <strong>Berechnung logistischer Kennzahlen</strong> beherrschen.</li>
+                <li><strong>Auslagerungs- und Kommissionierkonzepte</strong> sowie Steuerungsmodelle (z. B. Sägezahnmodell, Bullwhip-Effekt) analysieren.</li>
+                <li>Als <strong>Logistikfachleute FA</strong> die operative und dispositive Leistungserbringung im Unternehmen sicherstellen sowie Optimierungspotenziale in den Wertschöpfungsprozessen erkennen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Grundlagen, Abgrenzungen & Kernprinzip der Lagerlogistik</h4>
+            <ul>
+                <li><span class="highlight-text">Materialwirtschaft vs. Lagerwirtschaft:</span> Die Materialwirtschaft gliedert sich in Materialdisposition und Materialbeschaffung. Die Lagerwirtschaft bildet einen zentralen Bestandteil der innerbetrieblichen Wertschöpfungskette.</li>
+                <li><span class="highlight-text">Innerbetriebliche Logistik:</span> Erstreckt sich vom Beschaffungs- bis zum Absatzmarkt und beinhaltet die interne Lagerung, Kommissionierung/Konfektionierung sowie die Warenbeförderung.</li>
+                <li><span class="highlight-text">Kerndiktum:</span> <em>„Das beste Lager ist kein Lager!“</em>.</li>
+                <li><span class="highlight-text">Übergeordnetes Ziel:</span> Materialien und Waren müssen unter Berücksichtigung von Qualität und Wirtschaftlichkeit rechtzeitig in den richtigen Mengen am gewünschten Ort für den Leistungsprozess bereitstehen.</li>
+                <li><span class="highlight-text">Zentraler Zielkonflikt:</span> Spannungsfeld zwischen der Aufrechterhaltung einer <strong>hohen Lieferbereitschaft</strong> und der Erzielung <strong>tiefer Lagerkosten</strong> bzw. geringer Kapitalbindung.</li>
+            </ul>
+
+            <h4>2. Strategische Lagerausgestaltung & Distributionsstrukturen</h4>
+            <p>Bei der Festlegung der Lagerstrategie stehen drei Dimensionen im Fokus:</p>
+            <ul>
+                <li><span class="highlight-text">Automatisierungsgrad:</span> Manuell (Mensch / Stapler, RBG), Mechanisiert (mechanische Geräte / schienengeführte RBG) oder Automatisiert (ohne Mensch / ICT-gesteuert).</li>
+                <li><span class="highlight-text">Einbindungsgrad (Outsourcing):</span> Eigenlager (selbstgeführt), Fremdlager (externer Dienstleister) oder Speditionslager (Abruflager).</li>
+                <li><span class="highlight-text">Zentralisierungsgrad:</span> Hoch (ein Zentrallager) vs. Tief (mehrere Dezentrallager/Standorte).</li>
+            </ul>
+
+            <p><strong>Lagerstufen im Fertigungsunternehmen:</strong></p>
+            <ol>
+                <li><span class="highlight-text">Lagerstufe 1:</span> Einlagerung (Eingangslager für Roh-, Hilfs- und Betriebsstoffe).</li>
+                <li><span class="highlight-text">Lagerstufe 2:</span> Lager im Fertigungs- und Montagebereich (Zwischen-/Pufferlager).</li>
+                <li><span class="highlight-text">Lagerstufe 3:</span> Ausgangslager (Fertigerzeugnisse).</li>
+                <li><span class="highlight-text">Lagerstufe 4:</span> Handelsware (ohne eigene Bearbeitung).</li>
+                <li><span class="highlight-text">Lagerstufe 5:</span> Verwaltungsmaterial (Büromaterial, Archiv).</li>
+            </ol>
+            <p><span class="highlight-text">Distributionsstruktur:</span> Die <strong>vertikale Struktur</strong> entspricht der Anzahl der Lagerstufen nach der Produktion; die <strong>horizontale Struktur</strong> beschreibt die Anzahl der Lager pro Stufe. Es gilt der Grundsatz: <em>So viele Lagerstufen wie nötig und so wenige Lagerstufen wie möglich</em>, um Investitions- und Betriebskosten zu minimieren.</p>
+
+            <h4>3. Die 7 Lagerfunktionen</h4>
+            <ol>
+                <li><span class="highlight-text">Sicherungsfunktion:</span> Schützt die Produktion und Distribution vor Lieferverzögerungen, Transportschwierigkeiten oder plötzlichen Nachfragespitzen. Das wesentliche Steuerungsinstrument hierfür ist der <strong>Mindestbestand</strong>.</li>
+                <li><span class="highlight-text">Ausgleichsfunktion / Überbrückungsfunktion (Pufferfunktion):</span> Gleicht zeitliche Differenzen zwischen der optimalen Herstellungs-/Bestellmenge und dem tatsächlichen Verbrauchszeitpunkt aus (z. B. zur Minimierung von Maschinen-Rüstzeiten). Durch Just-in-Time-Konzepte (JIT) kann diese Funktion eliminiert werden.</li>
+                <li><span class="highlight-text">Spekulationsfunktion:</span> Dient dem Einkauf und der Einlagerung von Waren vor erwarteten Preissteigerungen oder zur Erzielung von Mengenrabatten und Sonderpreisen.</li>
+                <li><span class="highlight-text">Umformungsfunktion (Sortimentsfunktion):</span> Übernimmt produktionswirtschaftliche Aufgaben wie das Umfüllen, Mischen, Sortieren oder Umverpacken von Großgebinden in kleinere Verbrauchseinheiten (Konfektionierung).</li>
+                <li><span class="highlight-text">Veredelungsfunktion (Produktionsfunktion):</span> Verleiht Waren erst durch die Einlagerung ihre endgültige Qualität (Produktivlager).</li>
+                <li><span class="highlight-text">Darbietungsfunktion / Marketingfunktion:</span> Präsentiert die Ware im Verkaufslager direkt dem Kunden (z. B. im Einzelhandel).</li>
+                <li><span class="highlight-text">Entsorgungsfunktion:</span> Erfasst und sammelt betriebliche Abfall- und Reststoffe bis zur weiteren Verwendung, Wiederverwertung oder endgültigen Entsorgung.</li>
+            </ol>
+
+            <!-- INTERAKTIVES SÄGEZAHNMODELL -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Sägezahnmodell-Simulator</div>
+                <div class="diagram-subtitle">Bewege die Regler, um zu sehen, wie sich Meldebestand, Sicherheitsbestand und Wiederbeschaffungszeit verhalten.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="slider-group" style="flex: 1; min-width: 180px;">
+                            <label>Tagesverbrauch: <span id="lbl-tagesverbrauch">10</span> Stk/Tag</label>
+                            <input type="range" id="rng-tagesverbrauch" min="5" max="30" value="10" oninput="updateSaegezahn()">
+                        </div>
+                        <div class="slider-group" style="flex: 1; min-width: 180px;">
+                            <label>Wiederbeschaffung (Tage): <span id="lbl-wbzeit">6</span> Tage</label>
+                            <input type="range" id="rng-wbzeit" min="2" max="12" value="6" oninput="updateSaegezahn()">
+                        </div>
+                        <div class="slider-group" style="flex: 1; min-width: 180px;">
+                            <label>Sicherheitsbestand: <span id="lbl-sicherheitsbestand">50</span> Stk</label>
+                            <input type="range" id="rng-sicherheitsbestand" min="10" max="150" value="50" oninput="updateSaegezahn()">
+                        </div>
+                    </div>
+                    
+                    <canvas id="saegezahnCanvas" class="saegezahn-canvas"></canvas>
+                    
+                    <div style="margin-top: 0.75rem; font-size: 0.9rem; background: var(--tag-bg); padding: 0.75rem; border-radius: 6px;">
+                        <strong>Berechneter Meldebestand:</strong> <span id="calc-meldebestand" style="color:var(--primary-color); font-weight:bold;">110</span> Stück 
+                        <em>(Formel: [Verbrauch/Tag × Beschaffungszeit] + Sicherheitsbestand)</em>
+                    </div>
+                </div>
+            </div>
+
+            <h4>4. Wareneingang & Bestandsüberwachung</h4>
+            <ul>
+                <li><span class="highlight-text">Kernaufgaben im Wareneingang:</span> Wareneingangskontrolle, Mengenkontrolle und Qualitätskontrolle.</li>
+                <li><span class="highlight-text">Bestandsüberwachung und -pflege:</span>
+                    <ul>
+                        <li><em>Materialeingänge:</em> Qualitätsprüfungen (Menge, Schäden), Rechnungsprüfungen und buchungstechnische Erfassung (Menge, Artikel, Lieferscheinnummer).</li>
+                        <li><em>Materialausgänge:</em> Überwachung geplanter/ungeplanter Entnahmen (Schwund, Diebstahl), Bestandskorrekturbuchungen und Meldung an die Betriebsbuchhaltung.</li>
+                        <li><em>Verfügbarkeit:</em> Terminkontrolle ausstehender Lieferungen externer Lieferanten sowie der internen Materialversorgung der Fertigung.</li>
+                        <li><em>Kennzahlen:</em> Regelmäßige Erfassung, Bewertung und Analyse der Lagerkennzahlen.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>5. Auslagerung, Sägezahnmodell & Bullwhip-Effekt</h4>
+            <ul>
+                <li><span class="highlight-text">Dimensionen der Auslagerung:</span>
+                    <ul>
+                        <li><em>Orientierung:</em> Artikelorientiert (mehrere Aufträge zusammengefasst zur Wegoptimierung) vs. Auftragsorientiert (Zusammenstellung für einen konkreten Kunden-/Produktionsauftrag).</li>
+                        <li><em>Bereitstellung:</em> Dynamisch (Ware-zu-Person via Vertikal-/Horizontalförderer, Karussell, Paternoster) vs. Statisch (Person-zu-Ware).</li>
+                        <li><em>Entnahme:</em> Manuell, mechanisch oder automatisch sowie horizontal (Greifhöhe) oder vertikal (Leitern, Regalbediengeräte).</li>
+                        <li><em>Ausführungsart:</em> Realtime (jeder Auftrag einzeln sofort) vs. Batch-Aufbereitung (Auftragssammlung).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Sägezahnmodell:</span> Visualisiert den Bestandsverlauf bei verbrauchsgesteuerter Bedarfsermittlung im <strong>Bestellpunktverfahren</strong> unter Berücksichtigung von Höchstbestand, Meldebestand, Sicherheitsbestand und Beschaffungszeit.</li>
+                <li><span class="highlight-text">Bullwhip-Effekt (Peitscheneffekt):</span> Beschreibt die sich aufschaukelnde Verzerrung der Nachfrageinformationen entlang der Lieferkette vom Endverbraucher zurück zum Hersteller.</li>
+            </ul>
+
+            <h4>6. Formelsammlung & Berechnungen der Lagerlogistik</h4>
+            <p><strong>Verfügbarer Lagerbestand:</strong></p>
+            <p>\[\text{Verfügbarer Lagerbestand} = \text{Lagerbestand} + \text{disponierter Bestand} - \text{reservierter Bestand} - \text{Rückstände}\]</p>
+
+            <p><strong>Sicherheitsbestand (bei Durchschnittsverbrauch):</strong></p>
+            <p>\[\text{Sicherheitsbestand} = \text{durchschnittlicher Verbrauch pro Periode} \times \text{Beschaffungszeit}\]</p>
+
+            <p><strong>Sicherheitsbestand (bei Verbrauchsschwankungen):</strong></p>
+            <p>\[\text{Sicherheitsbestand} = \text{Verbrauch während Beschaffungszeit} + \text{Zuschlag für Verbrauchsschwankungen}\]</p>
+
+            <p><strong>Meldebestand:</strong></p>
+            <p>\[\text{Meldebestand} = (\text{Verbrauch pro Periode} \times \text{Beschaffungszeit}) + \text{Sicherheitsbestand}\]</p>
+
+            <p><strong>Reichweite des Lagerbestands:</strong></p>
+            <p>\[\text{Reichweite} = \frac{\text{durchschnittlicher Lagerbestand}}{\text{durchschnittlicher Bedarf}}\]</p>
+
+            <p><strong>Lagerbestand in % des Umsatzes:</strong></p>
+            <p>\[\text{Lagerbestand in \% des Umsatzes} = \frac{\text{Lagerbestand}}{\text{Umsatz}} \times 100\]</p>
+
+            <p><strong>Sicherheitskoeffizient:</strong></p>
+            <p>\[\text{Sicherheitskoeffizient} = \frac{\text{Mindestbestand}}{\text{durchschnittlicher Lagerbestand}} \times 100\]</p>
+
+            <p><strong>Lagerbestandsstrukturen:</strong></p>
+            <ul>
+                <li>Nach Versorgungssicherheit: \[\frac{\text{Sicherheitsbestand}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+                <li>Nach Reichweite (1 Monat): \[\frac{\text{Lagerbestand mit Reichweite 1 Monat}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+                <li>Nach Qualität/Lagerfähigkeit: \[\frac{\text{Lagerbestand verderblicher Waren}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+                <li>Nach Verkäuflichkeit: \[\frac{\text{Lagerbestand leicht verkäuflicher Waren}}{\text{Gesamtlagerbestand}} \times 100\]</li>
+            </ul>
+
+            <p><strong>Lagerumschlag (Umschlagshäufigkeit):</strong></p>
+            <p>\[\text{Umschlag 1} = \frac{\text{Lagerabgang}}{\text{durchschnittlicher Lagerbestand}}\]</p>
+            <p>\[\text{Umschlag 2} = \frac{\text{Umsatz}}{\text{durchschnittlicher Lagerbestand}}\]</p>
+            <p>\[\text{Umschlag 3} = \frac{\text{mengenmässiger Umsatz}}{\text{durchschnittlicher mengenmässiger Lagerbestand}}\]</p>
+
+            <p><strong>Materialumschlag:</strong></p>
+            <p>\[\text{Materialumschlag} = \frac{\text{Materialverbrauch}}{\text{durchschnittlicher Materialbestand}}\]</p>
+
+            <p><strong>Lagerdauer (in Tagen):</strong></p>
+            <p>\[\text{Lagerdauer 1} = \frac{\text{Anzahl Tage des Rechnungszeitraums}}{\text{Umschlagshäufigkeit}}\]</p>
+            <p>\[\text{Lagerdauer 2} = \frac{\text{durchschnittlicher Lagerbestand}}{\text{Jahresumsatz}} \times 360\]</p>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Gegenüberstellung Zentraler vs. Dezentraler Wareneingang</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aufgabe / Kriterium</th>
+                            <th>Zentraler Wareneingang</th>
+                            <th>Dezentraler Wareneingang</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Warenanfuhr</strong></td>
+                            <td>Bietet sich bei Anlieferung per Lkw oder Bahn an; erfordert Anlieferungs-/Umschlagsstellen sowie interne Transportmittel.</td>
+                            <td>Bietet sich bei Anlieferung über Kleinfahrzeuge an; Infrastruktur muss mehrfach vorhanden sein (Mehrkosten).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wareneingangskontrolle</strong></td>
+                            <td>Nimmt wichtige Stellung ein; Funktion muss organisatorisch stark verankert und ausgebaut werden.</td>
+                            <td>Auf verschiedene Prüfstellen verteilt; setzt mengen-, termin- und qualitätsgerechte Lieferungen der Lieferanten voraus.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mengenkontrolle</strong></td>
+                            <td>Systematische Überprüfung sämtlicher Warenmengen erforderlich.</td>
+                            <td>Stichprobenartige Kontrolle der Warenmengen ausreichend.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Qualitätskontrolle</strong></td>
+                            <td>Erfordert Spezialkenntnisse und aufwendige Messeinrichtungen (z. B. Laborprüfungen).</td>
+                            <td>Kann auf Lieferanten übertragen werden (Prüfabkommen, Prüfzertifikate, festgelegte Toleranzbereiche).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Lagerplatzzuordnungssysteme im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>Funktionsweise</th>
+                            <th>Vorteile (+) / Nachteile (-)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Festplatzordnung</strong></td>
+                            <td>Jeder Artikel erhält einen fest zugewiesenen Lagerplatz.</td>
+                            <td><strong>+</strong> Einfaches manuelles Auffinden der Artikel.<br><strong>-</strong> Unnötige Kapazitätsreservierung für Maximalbestände.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chaotische Lagerordnung</strong></td>
+                            <td>Jeder Artikel kann auf jedem freien Lagerplatz eingelagert werden.</td>
+                            <td><strong>+</strong> Keine unnötigen Reservekapazitäten, kleineres Gesamtlager.<br><strong>-</strong> Gefahr der Blockade nah gelegener Plätze durch Langsamdreher.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerzonen</strong></td>
+                            <td>Artikelarten werden in vordefinierten Zonen frei eingelagert.</td>
+                            <td><strong>+</strong> Schnelldreher nahe beim Ein-/Ausgang verkürzen Wege.<br><strong>-</strong> Höhere Reservekapazitäten als bei rein chaotischer Ordnung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamische Zonen</strong></td>
+                            <td>Lagerzonen werden zeitlich an aktuelle Bedürfnisse angepasst.</td>
+                            <td><strong>+</strong> Reservekapazitäten nur für aktuelle Planungsperiode nötig.<br><strong>-</strong> Steuerung der Ein-/Ausgangsnähe erfordert aktives Nachfragemanagement.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Die 7 Schritte der ABC-Analyse nach Zugriffshäufigkeit</h4>
+            <ol>
+                <li><strong>Artikelzugriffe pro Jahr</strong> für alle Sortimentspositionen ermitteln.</li>
+                <li>Artikelliste <strong>nach Anzahl der Zugriffe absteigend sortieren</strong>.</li>
+                <li><strong>Prozentualen Anteil</strong> jedes Artikels an der Totalsumme aller Artikel berechnen.</li>
+                <li><strong>Prozentuale Artikelanteile kumulieren</strong>.</li>
+                <li><strong>Zugriffsanteil</strong> jedes Artikels an der Gesamtsumme aller Zugriffe berechnen.</li>
+                <li><strong>Prozentuale Zugriffsanteile kumulieren</strong>.</li>
+                <li><strong>ABC-Bereiche festlegen und zuordnen</strong> (A-Artikel: 5–20 % Artikel für 60–90 % Zugriffe; B-Artikel: 15–20 % Artikel für 15–25 % Zugriffe; C-Artikel: 60–80 % Artikel für 5–10 % Zugriffe).</li>
+            </ol>
+
+            <h4>Prozess 2: Maßnahmen zur Vermeidung des Bullwhip-Effekts</h4>
+            <ol>
+                <li>Herstellen vollständiger <strong>Informationstransparenz</strong> über alle Stufen der Supply Chain.</li>
+                <li>Gewährleistung von <strong>Preisgestaltungstransparenz</strong>.</li>
+                <li><strong>Bestellmengen verringern</strong> (kleinere Bestelleinheiten).</li>
+                <li><strong>Hamsterkäufe</strong> und künstliche Bestellspitzen <strong>vermeiden</strong>.</li>
+                <li>Aufsetzen einer einfachen Kommunikation mittels <strong>E-Procurement-System</strong>.</li>
+            </ol>
+
+            <h3>Praxis- und Anwendungsbeispiele aus den Quellen</h3>
+            <ul>
+                <li><span class="highlight-text">Rohwaren-Spekulation:</span> Der gezielte vorausschauende Einkauf und die Lagerung von <strong>Kaffee, Mineralöl oder Edelmetallen</strong> vor erwarteten Marktpreissteigerungen oder zur Ausnutzung von Mengenrabatten.</li>
+                <li><span class="highlight-text">Produktivlagerung (Veredelung):</span> Die Reifung von <strong>Käse oder Wein</strong> im Lager; die Ware erreicht erst durch den zeitlichen Lagerprozess ihren verkaufs- und verzehrfähigen Zustand.</li>
+                <li><span class="highlight-text">Verkaufslager (Einzelhandel):</span> Direkte Präsentation der Ware im Verkaufsraum; die Warenentnahme durch den Kunden führt an der Kasse zu einer automatischen Entnahmebuchung.</li>
+                <li><span class="highlight-text">Betriebliche Entsorgungsstelle:</span> Sammeln von Ausschuss, Verpackungsresten oder Altmaterialien in Abfallsammelstellen des Betriebs bis zur Entscheidung über Recycling oder Endentsorgung.</li>
+                <li><span class="highlight-text">Verwaltungsmaterial (Lagerstufe 5):</span> Bereithaltung von <strong>Büromaterial und Archivgut</strong> für administrative Zwecke im Unternehmen.</li>
+                <li><span class="highlight-text">Praxisanwendungen in der Kommissionierung &amp; Fördertechnik:</span> Automatisiertes Logistikzentrum bei <strong>Brack</strong>, Nutzung von <strong>Pick by Vision</strong> über Datenbrillen, Einsatz von <strong>Exoskeletten</strong> zur körperlichen Entlastung der Lagermitarbeiter, Betrieb von <strong>Hochregallagern</strong> mit schienengeführten Regalbediengeräten sowie visuelle Entnahmehilfe via <strong>Pick by Light</strong> und sprachgesteuerte Führung mittels <strong>Pick by Voice</strong>.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Warum gilt das Diktum „Das beste Lager ist kein Lager!“ und welcher zentrale Zielkonflikt entsteht daraus für die Betriebsführung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Lager verursachen Kapitalbindung, Speicherplatzkosten und Lagerausschuss. Der zentrale Zielkonflikt besteht zwischen dem Wunsch nach maximaler <strong>Lieferbereitschaft/Versorgungssicherheit</strong> und dem Ziel möglichst <strong>tiefer Lagerkosten</strong> bzw. geringer Kapitalbindung.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Ein Lagerverwalter ermittelt einen Lagerbestand von 500 Stück. 100 Stück sind für Kundenaufträge reserviert, 50 Stück sind bereits bestellt (disponiert), und es bestehen 20 Stück Rückstände. Wie hoch ist der verfügbarer Lagerbestand?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> \[\text{Verfügbarer Bestand} = 500 + 50 - 100 - 20 = \mathbf{430\text{ Stück}}\]</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Worin unterscheiden sich die Veredelungsfunktion und die Umformungsfunktion eines Lagers? Nenne jeweils ein Praxisbeispiel.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei der <strong>Veredelungsfunktion</strong> verändert die Ware während der Lagerung ihre biochemische/physikalische Qualität als Teil des Fertigungsprozesses (Beispiel: Reifung von Käse oder Wein). Bei der <strong>Umformungsfunktion</strong> wird die Ware ohne qualitative Eigenveränderung konfektioniert, gemischt oder umverpackt (Beispiel: Umpacken von Großgebinden in Kleinverbraucheinheiten).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Nenne die 7 Schritte zur Durchführung einer ABC-Analyse nach Zugriffshäufigkeit in der richtigen Reihenfolge.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    1. Artikelzugriffe pro Jahr ermitteln.<br>
+                    2. Nach Anzahl Zugriffe absteigend sortieren.<br>
+                    3. Anteil an Totalsumme der Artikel ermitteln.<br>
+                    4. Prozentuale Anteile der Artikel kumulieren.<br>
+                    5. Anteile an Zugriffen jedes Artikels auf Summe aller Zugriffe ermitteln.<br>
+                    6. Prozentuale Anteile der Artikelzugriffe kumulieren.<br>
+                    7. ABC-Bereiche festlegen und zuordnen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Welche 5 konkreten Maßnahmen verhindern das Auftreten des Bullwhip-Effekts in der Supply Chain?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Informationstransparenz schaffen, 2. Preisgestaltungstransparenz bieten, 3. Bestellmengen verringern, 4. Hamsterkäufe vermeiden, 5. Kommunikation über ein E-Procurement-System abwickeln.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • LALO – Lagerlogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+
+            updateSaegezahn();
+        });
+
+        function updateSaegezahn() {
+            const v = parseInt(document.getElementById('rng-tagesverbrauch').value);
+            const wb = parseInt(document.getElementById('rng-wbzeit').value);
+            const sb = parseInt(document.getElementById('rng-sicherheitsbestand').value);
+
+            document.getElementById('lbl-tagesverbrauch').innerText = v;
+            document.getElementById('lbl-wbzeit').innerText = wb;
+            document.getElementById('lbl-sicherheitsbestand').innerText = sb;
+
+            const mb = (v * wb) + sb;
+            document.getElementById('calc-meldebestand').innerText = mb;
+
+            const canvas = document.getElementById('saegezahnCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const w = canvas.width;
+            const h = canvas.height;
+
+            ctx.clearRect(0, 0, w, h);
+
+            const sbY = h - (sb / 250 * (h - 40)) - 20;
+            ctx.strokeStyle = '#ef4444';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(0, sbY);
+            ctx.lineTo(w, sbY);
+            ctx.stroke();
+            ctx.fillStyle = '#ef4444';
+            ctx.fillText('Sicherheitsbestand: ' + sb, 10, sbY - 5);
+
+            const mbY = h - (mb / 250 * (h - 40)) - 20;
+            ctx.strokeStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(0, mbY);
+            ctx.lineTo(w, mbY);
+            ctx.stroke();
+            ctx.fillStyle = '#f59e0b';
+            ctx.fillText('Meldebestand: ' + mb, 10, mbY - 5);
+
+            ctx.setLineDash([]);
+            ctx.strokeStyle = '#1e3a8a';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            let currentX = 0;
+            let cycleWidth = w / 3;
+            
+            for(let i=0; i<3; i++) {
+                ctx.moveTo(currentX, 20);
+                ctx.lineTo(currentX + cycleWidth, sbY);
+                currentX += cycleWidth;
+            }
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>

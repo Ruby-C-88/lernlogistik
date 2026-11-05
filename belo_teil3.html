@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELO – Teil 3: Kennzahlen der Beschaffungslogistik | E-Learning</title>
+
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7; /* Sky Blue für BELO */
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel BELO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .input-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+        .input-group label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+        .input-group input { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+
+        .btn-calc { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; margin-top: 0.5rem; }
+        .btn-calc:hover { background-color: var(--secondary-color); }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>BELO – Beschaffungslogistik</h1>
+                    <p>Teil 3: Kennzahlen der Beschaffungslogistik &amp; Lieferantenbewertung</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+    <main>
+        <section class="card">
+            <h2>BELO - Teil 3: Kennzahlen der Beschaffungslogistik &amp; Controlling</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Messung und Steuerung der Beschaffungsleistung anhand von Key Performance Indicators (KPIs), Lieferantenbewertungskennzahlen und Wirtschaftlichkeitsberechnungen im Einkaufs-Controlling.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li>Zentrale Beschaffungskennzahlen (Termintreue, Mengentreue, Qualitätsquote, Lieferbereitschaftsgrad) präzise definieren und berechnen.</li>
+                <li>Lieferantenbewertungen quantitativ durchführen und Schwachstellen analysieren.</li>
+                <li>Gezielte Steuerungsmaßnahmen auf Basis von Kennzahlenabweichungen im Lieferantenmanagement ableiten.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+
+            <h4>1. Bedeutung von Kennzahlen im Beschaffungs-Controlling</h4>
+            <p>Ein effektives Beschaffungs-Controlling stellt sicher, dass die logistischen Ziele – hohe Versorgungssicherheit bei gleichzeitig niedrigen Kosten und hoher Qualität – überwacht und gesteuert werden. Kennzahlen schaffen Transparenz und dienen als Grundlage für Verhandlungen sowie Lieferantenbeurteilungen.</p>
+
+            <h4>2. Die wichtigsten Kennzahlen zur Lieferantenleistung</h4>
+            <ul>
+                <li><span class="highlight-text">Termintreue (Lieferpünktlichkeit):</span> Misst den Anteil der termingerecht eingegangenen Lieferungen im Verhältnis zu den Gesamtlieferungen.
+                    $$\text{Termintreue (\%)} = \left( \frac{\text{Anzahl termingerechter Lieferungen}}{\text{Anzahl Lieferungen gesamt}} \right) \cdot 100$$
+                </li>
+                <li><span class="highlight-text">Mengentreue (Mengenverlässlichkeit):</span> Misst, ob die bestellte Menge ohne Fehl- oder Übermengen geliefert wurde.
+                    $$\text{Mengentreue (\%)} = \left( \frac{\text{Anzahl Lieferungen mit korrekter Menge}}{\text{Anzahl Lieferungen gesamt}} \right) \cdot 100$$
+                </li>
+                <li><span class="highlight-text">Qualitätsquote (Beanstandungsfreie Lieferungen):</span> Spiegelt die Mangelfreiheit der gelieferten Ware wider.
+                    $$\text{Qualitätsquote (\%)} = \left( \frac{\text{Anzahl beanstandungsfreier Lieferungen}}{\text{Anzahl Lieferungen gesamt}} \right) \cdot 100$$
+                </li>
+                <li><span class="highlight-text">Beanstandungs- / Reklamationsquote:</span> Der Kehrwert der Qualitätsquote.
+                    $$\text{Reklamationsquote (\%)} = \left( \frac{\text{Anzahl fehlerhafter Lieferungen}}{\text{Anzahl Lieferungen gesamt}} \right) \cdot 100$$
+                </li>
+            </ul>
+
+            <h4>3. Kennzahlen zur Versorgungssicherheit &amp; Wirtschaftlichkeit</h4>
+            <ul>
+                <li><span class="highlight-text">Lieferbereitschaftsgrad (Servicegrad):</span> Prozentsatz der sofort aus dem Lager oder durch den Lieferanten erfüllbaren Bestellanforderungen.
+                    $$\text{Servicegrad (\%)} = \left( \frac{\text{Sofort erfüllte Bestellungen}}{\text{Bestellungen gesamt}} \right) \cdot 100$$
+                </li>
+                <li><span class="highlight-text">Beschaffungskostenintensität:</span> Verhältnis der Beschaffungs- und Einkaufskosten zum Gesamtumsatz oder Materialaufwand.
+                    $$\text{Beschaffungskostenintensität (\%)} = \left( \frac{\text{Beschaffungskosten}}{\text{Gesamteinkaufsvolumen}} \right) \cdot 100$$
+                </li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET: LIEFERANTEN-SCORE-RECHNER -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Lieferanten-KPI-Rechner</div>
+                <div class="diagram-subtitle">Gib die Lieferdaten ein, um Termintreue, Qualitätsquote und Gesamt-Performance zu berechnen.</div>
+                
+                <div class="interactive-widget" style="max-width: 520px; margin: 0 auto;">
+                    <div class="input-group">
+                        <label for="input-gesamt">Anzahl Lieferungen gesamt im Jahr:</label>
+                        <input type="number" id="input-gesamt" value="120">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-punktlich">Davon pünktlich geliefert:</label>
+                        <input type="number" id="input-punktlich" value="114">
+                    </div>
+                    <div class="input-group">
+                        <label for="input-fehlerfrei">Davon fehlerfrei / ohne Reklamation:</label>
+                        <input type="number" id="input-fehlerfrei" value="108">
+                    </div>
+                    
+                    <button class="btn-calc" onclick="calculateSupplierKPIs()">KPIs Berechnen</button>
+
+                    <div id="calc-kpi-result" style="margin-top: 15px; padding: 12px; background: var(--tag-bg); border-left: 4px solid var(--primary-color); border-radius: 4px;">
+                        <strong>Termintreue:</strong> <span id="res-termintreue">95.0 %</span><br>
+                        <strong>Qualitätsquote:</strong> <span id="res-qualitaet">90.0 %</span><br>
+                        <strong>Reklamationsquote:</strong> <span id="res-reklamation">10.0 %</span><br>
+                        <strong>Lieferanten-Einstufung:</strong> <span id="res-rating" class="highlight-text">A-Lieferant (Sehr gut)</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Strukturierte Elemente</h3>
+
+            <h4>Tabelle 1: Übersicht zentraler Beschaffungs-KPIs</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kennzahl</th>
+                            <th>Formel / Berechnung</th>
+                            <th>Zielwert</th>
+                            <th>Bedeutung für die Logistik</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Termintreue</strong></td>
+                            <td>(Pünktliche Lieferungen / Gesamtlieferungen) × 100</td>
+                            <td>&gt; 95 %</td>
+                            <td>Sichert den eingeplanten Fertigungsablauf ohne Wartezeiten.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mengentreue</strong></td>
+                            <td>(Lieferungen mit richtiger Menge / Gesamtlieferungen) × 100</td>
+                            <td>&gt; 98 %</td>
+                            <td>Vermeidet Nachlieferaufwand sowie Lagerengpässe oder -überlüftungen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Qualitätsquote</strong></td>
+                            <td>(Einwandfreie Lieferungen / Gesamtlieferungen) × 100</td>
+                            <td>&gt; 98 %</td>
+                            <td>Reduziert Prüf- und Rücksendeaufwand im Wareneingang.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Servicegrad</strong></td>
+                            <td>(Sofort bediente Aufträge / Gesamte Aufträge) × 100</td>
+                            <td>95 % – 99 %</td>
+                            <td>Hohe Kundenzufriedenheit, steht im Konflikt mit Lagerkosten.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Klassifizierung von Lieferanten nach Score-Ergebnissen</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kategorie</th>
+                            <th>Erreichter Erfüllungsgrad</th>
+                            <th>Konsequenz / Maßnahme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A-Lieferant</strong></td>
+                            <td>90 % – 100 %</td>
+                            <td>Bevorzugter Partner, Ausbau langfristiger Rahmenverträge.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B-Lieferant</strong></td>
+                            <td>75 % – 89 %</td>
+                            <td>Akzeptabel, jedoch Nachbesserung bei Fristen oder Qualität gefordert.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C-Lieferant</strong></td>
+                            <td>&lt; 75 %</td>
+                            <td>Ungenügend. Entwicklungsprogramm oder Lieferantenwechsel einleiten.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Lieferantenbewertung im Wareneingang:</span> Ein Logistikbetrieb erfasst jeden Wareneingang mit Barcode-Scannern. Systematisch erfasste Verzögerungen fließen automatisch in das monatliche Lieferanten-Scorecard-Rating ein.</li>
+                <li><span class="highlight-text">Reduktion der Wareneingangsprüfung:</span> Lieferanten mit einer dauerhaften Qualitätsquote von über 99,5 % werden auf Skip-Lot-Prüfung umgestellt (nur noch Stichprobenkontrolle), was Massen an Prozesskosten spart.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Ein Lieferant erbringt von 200 Lieferungen 180 pünktlich. Wie hoch ist seine Termintreue?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 
+                    $$\text{Termintreue} = \left( \frac{180}{200} \right) \cdot 100 = 90\,\%$$
+                    Der Lieferant liegt mit 90 % unter dem angestrebten A-Zielwert von mindestens 95 %.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Welcher Zielkonflikt besteht bei der Optimierung des Lieferbereitschaftsgrades?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Ein hoher Lieferbereitschaftsgrad (z. B. 99 %) erfordert überproportional hohe Sicherheitsbestände. Dies führt zu hoher Kapitalbindung und hohen Lagerhaltungskosten.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Welche Maßnahmen werden ergriffen, wenn ein Lieferant zum C-Lieferanten abrutscht?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Durchführung eines Lieferantenaudits, Vereinbarung verbindlicher Korrekturmaßnahmen mit Fristsetzung oder Einleitung des Lieferantenwechsels (Sourcing-Anpassung).</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • BELO – Beschaffungslogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function calculateSupplierKPIs() {
+            const gesamt = parseFloat(document.getElementById('input-gesamt').value) || 0;
+            const punktlich = parseFloat(document.getElementById('input-punktlich').value) || 0;
+            const fehlerfrei = parseFloat(document.getElementById('input-fehlerfrei').value) || 0;
+
+            if (gesamt <= 0) {
+                alert("Bitte eine Gesamtanzahl größer als 0 eingeben.");
+                return;
+            }
+
+            const termintreue = (punktlich / gesamt) * 100;
+            const qualitaet = (fehlerfrei / gesamt) * 100;
+            const reklamation = 100 - qualitaet;
+
+            document.getElementById('res-termintreue').innerText = termintreue.toFixed(1) + " %";
+            document.getElementById('res-qualitaet').innerText = qualitaet.toFixed(1) + " %";
+            document.getElementById('res-reklamation').innerText = reklamation.toFixed(1) + " %";
+
+            const gesamtScore = (termintreue + qualitaet) / 2;
+            let ratingEl = document.getElementById('res-rating');
+
+            if (gesamtScore >= 90) {
+                ratingEl.innerText = "A-Lieferant (Bevorzugter Partner)";
+                ratingEl.style.color = "#059669";
+            } else if (gesamtScore >= 75) {
+                ratingEl.innerText = "B-Lieferant (Akzeptabel mit Nachbesserung)";
+                ratingEl.style.color = "#d97706";
+            } else {
+                ratingEl.innerText = "C-Lieferant (Kritisch / Maßnahmen erforderlich)";
+                ratingEl.style.color = "#dc2626";
+            }
+        }
+    </script>
+</body>
+</html>

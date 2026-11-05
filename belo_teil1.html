@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELO – Teil 1: Grundlagen der Beschaffungslogistik | E-Learning</title>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7; /* Sky Blue für BELO */
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel BELO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .btn-interactive {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin: 0.25rem;
+        }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        .btn-interactive.active { background-color: #059669; }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>BELO – Beschaffungslogistik</h1>
+                    <p>Teil 1: Grundlagen, Beschaffungsformen, Lieferantenmanagement &amp; Marktforschung</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+ <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>BELO - Teil 1: Grundlagen der Beschaffungslogistik</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Grundlagen der Beschaffungslogistik (BELO 1) – Einordnung in die Unternehmenslogistik, Aufgaben und Ziele, Beschaffungsformen, Lieferantenmanagement sowie Beschaffungsmarktforschung.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li>Die Bedeutung der Beschaffungslogistik und deren Einflüsse auf die Geschäftstätigkeit eines Unternehmens präzise erläutern.</li>
+                <li>Die Lieferantenidentifikation und -auswahl aus operativer Sicht gezielt unterstützen.</li>
+                <li>Lieferantenbewertungen auf Basis vorgegebener Kriterien eigenständig durchführen.</li>
+                <li>Lieferantenbewertungen auswerten, interpretieren und konkrete Massnahmen für das Lieferantenmanagement vorschlagen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Einordnung der Beschaffungslogistik in die Unternehmenslogistik</h4>
+            <p>Die <strong>Beschaffungslogistik</strong> umfasst alle Prozesse vom Einkauf, der Beschaffung und des Warentransportes zur weiteren Produktion oder zum Wareneingang. Sie stellt das Bindeglied zwischen der Distributionslogistik des Lieferanten und der eigenen Produktionslogistik dar.</p>
+            <p>Innerhalb der Unternehmenslogistik steht die Beschaffungslogistik neben weiteren spezialisierten Teilbereichen:</p>
+            <ul>
+                <li><span class="highlight-text">Distributionslogistik (Absatz-/Vertriebslogistik):</span> Befasst sich mit Lagerumschlags- und Transportvorgängen innerhalb eines Unternehmens zur Belieferung des Marktes.</li>
+                <li><span class="highlight-text">Entsorgungslogistik:</span> Umschliesst alle logistischen Tätigkeiten zur Durchführung der Abfall- und Wertstoffentsorgung.</li>
+                <li><span class="highlight-text">Ersatzteillogistik:</span> Konzentriert sich auf die Bereitstellung und Lagerung von Ersatzteilen.</li>
+                <li><span class="highlight-text">Informationslogistik:</span> Steuert alle im Unternehmen ablaufenden Informationsflüsse.</li>
+                <li><span class="highlight-text">Lagerlogistik:</span> Beinhaltet die Lagerung, Planung und Steuerung eigener und fremder Güter im Lager.</li>
+                <li><span class="highlight-text">Instandhaltungslogistik:</span> Plant, steuert und stellt Materialien, Informationen und Ressourcen für die Instandhaltung bereit.</li>
+                <li><span class="highlight-text">Produktionslogistik:</span> Umfasst alle innerbetrieblichen Prozesse vom Transport über den Umschlag bis zur Einlagerung für die Fertigung.</li>
+                <li><span class="highlight-text">Transportlogistik:</span> Befasst sich mit sämtlichen logistischen Transporten jeglicher Art.</li>
+            </ul>
+            <p>Bei der Betrachtung der Beschaffungslogistik wird begrifflich differenziert:</p>
+            <ul>
+                <li><span class="highlight-text">Im weiteren Sinn:</span> Beschaffungsmanagement (inklusive des gesamten Einkaufs).</li>
+                <li><span class="highlight-text">Im engeren Sinn:</span> Die operative Bereitstellung von Materialien, die Wareneingangsprüfung, die Lagerhaltung/-disposition sowie der innerbetriebliche Transport.</li>
+            </ul>
+
+            <h4>2. Kernaufgaben und Ziele der Beschaffungslogistik</h4>
+            <p>Die Beschaffungslogistik stellt sicher, dass das Unternehmen stets handlungsfähig bleibt, indem benötigte Materialien rechtzeitig bereitgestellt werden. Die zentralen Aufgaben betreffen Einkauf, Materialdisposition, Transportwesen und Lagerwesen. Das Hauptziel liegt darin, Güter so wirtschaftlich wie möglich bereitzustellen.</p>
+            <p><strong>Zielsetzungen:</strong></p>
+            <ul>
+                <li><span class="highlight-text">Kosten- und Qualitätsziel:</span> Senkung der Beschaffungskosten pro Einheit bei gleichzeitiger Gewährleistung von Qualität und Quantität.</li>
+                <li><span class="highlight-text">Versorgungssicherheit:</span> Vermeidung von Produktionsstillständen durch kontinuierliche Materialverfügbarkeit.</li>
+                <li><span class="highlight-text">Risikominimierung:</span> Verringerung von Abhängigkeiten und Einhaltung von Umwelt- und Sozialstandards.</li>
+                <li><span class="highlight-text">Technologiezugang:</span> Sicherstellung eines frühzeitigen Zugangs zu neuen Technologien.</li>
+            </ul>
+
+            <h4>3. Das Dilemma der Materialwirtschaft und das Zielsystem</h4>
+            <p>Das <strong>Dilemma der Materialwirtschaft</strong> beschreibt den permanenten Zielkonflikt zwischen einer hohen Versorgungssicherheit (hohe Lieferbereitschaft) und geringen Bestandskosten. Eine Erhöhung der Lieferbereitschaft führt in der Regel zu höheren Lagerbeständen und damit zu steigender Kapitalbindung. Werden hingegen größere Mengen beschafft, lassen sich oft Rabatte erzielen, was jedoch die Bestandskosten belastet.</p>
+            <p>Das Zielsystem fordert den Ausgleich zwischen Logistikleistung (hohe Liefertreue, kurze Wiederbeschaffungszeiten) und Logistikkosten (geringe Prozess- und Bestandskosten).</p>
+
+            <h4>4. Beschaffungsformen und Einkaufsmanagement</h4>
+            <ul>
+                <li><span class="highlight-text">Zentral vs. Dezentral:</span> Beim Zentraleinkauf werden Einkaufsvolumen und Verantwortung an einer Stelle gebündelt. Bei der dezentralen Beschaffung kaufen einzelne Abteilungen eigenständig ein.</li>
+                <li><span class="highlight-text">Direkt vs. Indirekt:</span> Die direkte Beschaffung erfolgt ohne Zwischenhändler unmittelbar beim Hersteller. Die indirekte Beschaffung läuft über Großhändler.</li>
+                <li><span class="highlight-text">Category Management:</span> Warengruppen werden als strategische Geschäftseinheiten geführt, um Kundennutzen und Ergebnisse zu steigern.</li>
+                <li><span class="highlight-text">Maverick-Buying:</span> Beschaffung am standardisierten Einkaufsweg vorbei, bei der Fachabteilungen eigenmächtig ohne Einbindung des Einkaufs bestellen.</li>
+            </ul>
+
+            <h4>5. Lieferantenmanagement &amp; Schnittstelle zur operativen Ebene</h4>
+            <p>Das <strong>Lieferantenmanagement</strong> gestaltet und lenkt Abnehmer-Lieferanten-Beziehungen mit dem Ziel, Qualität zu steigern sowie Kosten und Zeit einzusparen. Die operative Ebene unterstützt den strategischen Einkauf durch Rückmeldung wertvoller Realdaten bezüglich Lieferantenleistung, Zuverlässigkeit und Qualität im Tagesgeschäft.</p>
+
+            <h4>6. Beschaffungsmarktforschung</h4>
+            <p>Die <strong>Beschaffungsmarktforschung</strong> ist die systematische Sammlung und Aufbereitung von Informationen aktueller und potenzieller Beschaffungsmärkte zur Erhöhung der Markttransparenz.</p>
+            <p>Für Handelsunternehmen unterscheidet man vier Märkte: Beschaffungsmarkt, Absatzmarkt, Konkurrenzmarkt und internen Markt.</p>
+
+            <!-- INTERAKTIVES WIDGET: 8-STUFIGER BESCHAFFUNGSPROZESS -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver 8-Stufen-Beschaffungsprozess</div>
+                <div class="diagram-subtitle">Klicke auf einen Prozessschritt, um die Zuordnung und Details einzublenden.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 6px; margin-bottom: 1rem;">
+                        <button class="btn-interactive active" onclick="showProcStep(1, this)">1. Bedarf</button>
+                        <button class="btn-interactive" onclick="showProcStep(2, this)">2. Bezugsquelle</button>
+                        <button class="btn-interactive" onclick="showProcStep(3, this)">3. Auswahl</button>
+                        <button class="btn-interactive" onclick="showProcStep(4, this)">4. Bestellung</button>
+                        <button class="btn-interactive" onclick="showProcStep(5, this)">5. Überwachung</button>
+                        <button class="btn-interactive" onclick="showProcStep(6, this)">6. Wareneingang</button>
+                        <button class="btn-interactive" onclick="showProcStep(7, this)">7. Rechnung</button>
+                        <button class="btn-interactive" onclick="showProcStep(8, this)">8. Zahlung</button>
+                    </div>
+
+                    <div id="proc-step-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="proc-step-title" style="color:var(--primary-color); margin-bottom: 0.25rem;">1. Bedarfsermittlung (Strategisch / Anbahnung)</h5>
+                        <p id="proc-step-desc" style="font-size: 0.9rem; margin:0;">Feststellung, welche Materialien in welcher Menge und Qualität benötigt werden.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>1. Der 8-stufige Beschaffungsprozess</h4>
+            <ol>
+                <li><strong>Bedarfsermittlung:</strong> Feststellung, welche Materialien in welcher Menge benötigt werden.</li>
+                <li><strong>Ermittlung der Bezugsquelle:</strong> Suche nach geeigneten Beschaffungsmärkten und Lieferanten.</li>
+                <li><strong>Lieferantenauswahl:</strong> Bewertung und Entscheidung für einen oder mehrere Lieferanten.</li>
+                <li><strong>Bestellabwicklung:</strong> Rechtssichere Erteilung des Kaufauftrags.</li>
+                <li><strong>Bestellüberwachung:</strong> Kontrolle der Fristen, Liefertermine und Auftragsbestätigungen.</li>
+                <li><strong>Wareneingang:</strong> Physikalische Annahme, Entladung und Prüfung der Lieferung.</li>
+                <li><strong>Rechnungsprüfung:</strong> Abgleich der Rechnung mit Bestellung und Lieferschein.</li>
+                <li><strong>Zahlungsabwicklung:</strong> Freigabe und Begleichung der Rechnungsbeträge.</li>
+            </ol>
+
+            <h4>2. Phasen der Beschaffung: Strategischer vs. Operativer Prozess</h4>
+            <ul>
+                <li><span class="highlight-text">Strategischer Beschaffungsprozess (Sourcing):</span>
+                    <ol>
+                        <li><em>Anbahnung:</em> Bedarfsermittlung und Lieferantensuche.</li>
+                        <li><em>Vereinbarung:</em> Lieferantenauswahl, Verhandlung und Vertragsabschluss.</li>
+                    </ol>
+                </li>
+                <li><span class="highlight-text">Operativer Beschaffungsprozess (Ordering):</span>
+                    <ol>
+                        <li><em>Abwicklung:</em> Bestellüberwachung und Wareneingang.</li>
+                        <li><em>Kontrolle:</em> Rechnungsprüfung und Zahlungsabwicklung.</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <h4>3. Die 8 R der Logistik</h4>
+            <p>Richtiges Produkt, Richtige Menge, Richtige Qualität, Richtige Zeit, Richtiger Ort, Richtiger Preis/Kosten, Richtiger Kunde, Richtige Information.</p>
+
+            <h4>Tabelle 1: Systematischer Vergleich der Beschaffungsformen</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Beschaffungsform</th>
+                            <th>Definition</th>
+                            <th>Vorteile</th>
+                            <th>Nachteile / Folgen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Zentraleinkauf</strong></td>
+                            <td>Bündelung aller Beschaffungsvolumen an einer Stelle.</td>
+                            <td>• Stärkung der Verhandlungsposition<br>• Günstige Rahmenverträge &amp; Mengenrabatte<br>• Bessere Übersicht &amp; Kostenkontrolle</td>
+                            <td>• Langsamere Materialverfügbarkeit vor Ort<br>• Höherer Bedarf an Lagerkapazität<br>• Erhöhter Bürokratieaufwand</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dezentrale Beschaffung</strong></td>
+                            <td>Eigenständige Beschaffung durch einzelne Standorte.</td>
+                            <td>• Kürzere Beschaffungswege<br>• Schnellere Entscheidungen vor Ort<br>• Hohe Flexibilität</td>
+                            <td>• Höhere Preise durch kleine Stückzahlen<br>• Keine Bündelungsvorteile<br>• Erhöhte Schnittstellen-Mehrarbeit</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Direkte Beschaffung</strong></td>
+                            <td>Unmittelbarer Einkauf beim Produzenten.</td>
+                            <td>• Bessere Konditionen (ohne Zwischenhändler)<br>• Höheres Produkt-Know-how &amp; Beratung</td>
+                            <td>• Beschaffung von Kleinmengen oft schwierig<br>• Mindermengenzuschläge bei Kleinmengen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maverick-Buying</strong></td>
+                            <td>Eigenmächtiger Kauf am Einkauf vorbei.</td>
+                            <td>• Höhere Prozessgeschwindigkeit in Notfällen<br>• Ausnutzen spontaner Sonderangebote</td>
+                            <td>• Unabgestimmte Prozesse &amp; fehlende Preisvergleiche<br>• Nicht genutzte Rahmenverträge &amp; höhere Preise<br>• Mehrarbeit in FiBu/Wareneingang</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Informationsquellen der Beschaffungsmarktforschung</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kategorie</th>
+                            <th>Konkrete Informationsquellen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Presse &amp; Medien</strong></td>
+                            <td>Online-Presse, Fachzeitschriften, Einkäuferkataloge, Firmenporträts, Geschäftsberichte.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verbände &amp; Institute</strong></td>
+                            <td>Logistikverbände, Industrie- und Handelskammern (IHK), Wirtschaftsverbände, Forschungsinstitute.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zusatz- &amp; Feldquellen</strong></td>
+                            <td>Internes Wissen bei Großfirmen, Messen, direkte Lieferantenbesuche, Bonitätsprüfungen.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Praxis- und Anwendungsbeispiele aus den Quellen</h3>
+            <ul>
+                <li><span class="highlight-text">Maverick-Buying im Unternehmensalltag:</span> Eine IT-Abteilung bestellt eigenmächtig Monitore direkt online. Vorteile: Schnelle Verfügbarkeit. Nachteile: Nicht-Nutzung bestehender Rahmenverträge (20 % Rabatt entfällt), Schnittstellen-Mehrarbeit in der Buchhaltung und fehlende Rechtssicherheit bei Garantieansprüchen.</li>
+                <li><span class="highlight-text">TÜV Rheinland in der Marktforschung:</span> Prüforganisationen dienen Unternehmen als externe Dienstleister zur Überprüfung von Qualitätsstandards und Zertifikaten potenzieller Lieferanten.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Was versteht man unter dem "Dilemma der Materialwirtschaft"?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Es beschreibt den Zielkonflikt zwischen hoher Versorgungssicherheit (hohe Lieferbereitschaft) und geringen Bestandskosten. Höhere Lagerbestände sichern die Lieferfähigkeit, erhöhen aber Kapitalbindung und Lagerkosten.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Welches sind die 8 Schritte des Beschaffungsprozesses in der richtigen Reihenfolge?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. Bedarfsermittlung, 2. Bezugsquelle ermitteln, 3. Lieferantenauswahl, 4. Bestellabwicklung, 5. Bestellüberwachung, 6. Wareneingang, 7. Rechnungsprüfung, 8. Zahlungsabwicklung.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Welche negativen Folgen bringt sogenanntes "Maverick-Buying" für ein Unternehmen mit sich?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Unabgestimmte Prozesse, fehlende Preisvergleiche, höhere Preise, Nichtnutzung von Rahmenverträgen, Mehrarbeit in der Buchhaltung/Wareneingang und fehlende Rechtssicherheit bei Mängeln.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • BELO – Beschaffungslogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        const procSteps = {
+            1: { title: "1. Bedarfsermittlung (Strategisch / Anbahnung)", desc: "Feststellung, welche Materialien in welcher Menge und Qualität benötigt werden." },
+            2: { title: "2. Bezugsquelle ermitteln (Strategisch / Anbahnung)", desc: "Suche nach geeigneten Beschaffungsmärkten und potenziellen Lieferanten." },
+            3: { title: "3. Lieferantenauswahl (Strategisch / Vereinbarung)", desc: "Bewertung von Angeboten und Entscheidung für geeignete Partner." },
+            4: { title: "4. Bestellabwicklung (Operativ / Ordering)", desc: "Rechtssichere Erteilung des Kaufauftrags an den Lieferanten." },
+            5: { title: "5. Bestellüberwachung (Operativ / Abwicklung)", desc: "Kontrolle der Lieferfristen, Termine und Auftragsbestätigungen." },
+            6: { title: "6. Wareneingang (Operativ / Abwicklung)", desc: "Physikalische Annahme, Entladung, Mengen- und Qualitätsprüfung." },
+            7: { title: "7. Rechnungsprüfung (Operativ / Kontrolle)", desc: "Abgleich der Rechnungsbeträge mit Bestellung und Lieferschein." },
+            8: { title: "8. Zahlungsabwicklung (Operativ / Kontrolle)", desc: "Freigabe und Begleichung der Rechnungsbeträge im Accounting." }
+        };
+
+        function showProcStep(step, btn) {
+            const btns = document.querySelectorAll('.interactive-widget .btn-interactive');
+            btns.forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+
+            document.getElementById('proc-step-title').innerText = procSteps[step].title;
+            document.getElementById('proc-step-desc').innerText = procSteps[step].desc;
+        }
+    </script>
+</body>
+</html>

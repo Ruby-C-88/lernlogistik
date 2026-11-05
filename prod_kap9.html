@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROLO – Kapitel 9: Layoutplanung | E-Learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7;
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, var(--primary-color) 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+        
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        
+        /* UNTER-NAVIGATION (Kapitel Produktionslogistik) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; margin: 1.5rem 0; }
+        .diagram-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .btn-interactive { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.2s; margin-top: 0.5rem; }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        .form-group { margin-bottom: 0.75rem; }
+        .form-group label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 0.25rem; }
+        .form-group input { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+        .widget-result { background: #f0f9ff; border-left: 4px solid var(--primary-color); padding: 0.75rem 1rem; margin-top: 1rem; border-radius: 0 6px 6px 0; font-weight: 600; }
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>PROLO – Produktionslogistik</h1>
+                    <p>Kapitel 9: Fabrik- und Layoutplanung sowie Informationsquellen</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <div class="card">
+            <h2>1. Thema & Lernziele dieser Einheit</h2>
+            <p><strong>Thema:</strong> Produktionslogistik – Kapitel 9: Fabrik- und Layoutplanung sowie Informationsquellen (Detaillierungsebenen, Grundsätze, Materialflusserfassung, ICT-Systeme und Kennzahlen).</p>
+            <p><strong>Lernziele:</strong> Nach der Erarbeitung dieser Lerneinheit sind die Lernenden in der Lage:</p>
+            <ul>
+                <li>Die zentralen Ziele der Layoutplanung zu benennen und den Begriff präzise zu definieren.</li>
+                <li>Die vier Detaillierungsebenen der Fabrik- und Layoutplanung (Werkslayout, Groblayout, Feinlayout, Arbeitsstationslayout) abzugrenzen.</li>
+                <li>Die fünf Grundprinzipien der Layoutplanung systematisch zu erläutern und in der Praxis anzuwenden.</li>
+                <li>Die Methoden zur Materialflusserfassung (Strichlisten, Kreuzlisten/Materialflussmatrix) und Materialflussdarstellung (Sankey-Diagramm, Linienformen) zu erklären.</li>
+                <li>Verschiedene Layoutvarianten mithilfe einer Nutzwertanalyse quantitativ und qualitativ zu bewerten.</li>
+                <li>Die relevanten ICT-Systeme (ERP, PPS, LVS, CAD, VR, Office) als Informationsquellen für die Layoutplanung zuzuordnen.</li>
+                <li>Relevante Planungs- und Beurteilungskennzahlen (Flächen, Höhen, Logistikkennzahlen) eines Produktionslayouts zu identifizieren.</li>
+            </ul>
+
+            <h2>2. Detaillierter Hauptteil</h2>
+            <h3>A. Begriff, Ziele und Auslöser der Layoutplanung</h3>
+            <p><strong>1. Definition:</strong> Unter dem Produktionslayout versteht man die räumliche Anordnung von Maschinen, Anlagen, Transportwegen, Lagerflächen und Arbeitsplätzen auf einer vorgegebenen Betriebsfläche innerhalb eines Gebäudes. Es dient der zielgerichteten Gestaltung von Produktions- und Materialflusssystemen. Die Gestaltungsparameter sind funktionaler und geometrischer Natur (Art, Dimension und Position der Anordnungsobjekte).</p>
+
+            <p><strong>2. Ziele der Layoutplanung:</strong> Hauptziel ist das Erreichen einer höchstmöglichen Flexibilität und Leistung in den betrieblichen Prozessen:</p>
+            <ul>
+                <li>Minimierung von Transportwegen, Transportzeiten und Handhabungsaufwänden.</li>
+                <li>Vermeidung von Materialstaus, Kreuzungen und Rückflüssen im Materialfluss.</li>
+                <li>Maximale Ausnutzung der vorhandenen Raum- und Flächenressourcen (Grundfläche und Hallenhöhe).</li>
+                <li>Erhöhung der Arbeitssicherheit und Ergonomie (Vermeidung von Unfällen durch zu enge Maschinenabstände).</li>
+                <li>Gewährleistung hoher Transparenz und Übersichtlichkeit im Fertigungsbereich.</li>
+            </ul>
+
+            <p><strong>3. Die drei Ausgangslagen / Auslöser für ein neues Layout:</strong></p>
+            <ol>
+                <li><strong>Neugestaltung (Greenfield / Redesign):</strong> Kompletter Neuaufbau einer Gesamtfabrik oder eines Fertigungsbereichs.</li>
+                <li><strong>Erweiterung oder Reduzierung (Kapazitätsanpassung):</strong> Hinzufügen oder Herausnehmen von Maschinen und Arbeitsplätzen aufgrund von Wachstum oder Schrumpfung. (Wichtig: Überdimensionierte Fabrikstrukturen verursachen bei geringer Auslastung hohe Fixkosten).</li>
+                <li><strong>Umstellung (Restrukturierung):</strong> Anpassung von Produktionsbereichen oder Materialflussflächen an geänderte Bedingungen (z. B. Anlauf neuer Produkte, Einführung neuer Technologien oder Unwirtschaftlichkeit bisheriger Verfahren).</li>
+            </ol>
+
+            <h3>B. Die 4 Detaillierungsebenen der Fabrik- und Layoutplanung</h3>
+            <p>Die Planung verläuft hierarchisch vom Groben zum Feinen:</p>
+            <ol>
+                <li><strong>Werkslayout (Makrodarstellung):</strong> Anordnung von Gebäuden, Hallen, Verkehrswegen und zentralen Funktionsbereichen auf dem gesamten Fabrikgelände.</li>
+                <li><strong>Groblayout / Blocklayout:</strong> Grobdarstellung der Funktionsbereiche (Produktion, Lager, Logistik) innerhalb eines Fabrikgebäudes. Methode: Maschinen und Arbeitsplätze werden ohne detaillierte Maschinengeometrie als rechteckige Blöcke maßstäblich im Raum eingeplant. Darstellung der Haupttransport- und Hauptmaterialflusswege.</li>
+                <li><strong>Feinlayout:</strong> Hoher Detaillierungsgrad. Exakte zeichnerische Platzierung aller Maschinen, Anbaugeräte, Pufferlager, Transportmittel und Arbeitsplätze. Ergänzung: Einplanung von Gebäudetechnik, Medienversorgung (Strom, Druckluft, Wasser), Ergonomie, Lärmschutz und Beleuchtung.</li>
+                <li><strong>Arbeitsstationslayout (Mikrodarstellung):</strong> Detaillierte Feinanordnung einzelner Betriebsmittel, Werkzeuge, Materialbereitstellbehälter und Greifräume direkt an einer spezifischen Arbeitsstation.</li>
+            </ol>
+
+            <h3>C. Die 5 Grundprinzipien der Layoutplanung</h3>
+            <ol>
+                <li><strong>Den Wertstrom und seine Anforderungen verstehen:</strong> Analyse der logistischen Prozesse und Unternehmensziele als Fundament (Entscheidung für U-Form, Kanban oder Fertigungsinseln).</li>
+                <li><strong>Raum und Ressourcen maximal ausnutzen:</strong> Gründliche Analyse vorhandener Flächen- und Höhenreserven zur Steigerung der Wirtschaftlichkeit, Reduzierung von Verschwendung und Erhöhung der Arbeitssicherheit.</li>
+                <li><strong>Hohe Produktivität durch optimale Anordnung erzielen:</strong> Ergonomische und unterbrechungsfreie Arbeitsplatzgestaltung zur Vermeidung von Ermüdung und Suchzeiten.</li>
+                <li><strong>Den Materialfluss durch die Fabrik optimieren:</strong> Realisierung direkter Verbindungen, kurzer Wege und prozessorientierter Abteilungsanordnungen.</li>
+                <li><strong>Flexibles Design:</strong> Erstellung zukunftssicherer Layouts, die alternative Wege bei Anlagenausfällen erlauben und mit dem Unternehmenswachstum skalieren.</li>
+            </ol>
+
+            <h3>D. Materialflusserfassung und -darstellung</h3>
+            <p><strong>1. Datenerfassung:</strong> Zur Materialflussanalyse werden Daten über Strichlisten, Kreuzlisten oder automatisiert aus ERP-/LVS-Systemen gewonnen.</p>
+            <p><strong>2. Materialflussmatrix („From-To-Matrix“) & Sankey-Diagramm:</strong></p>
+            <ul>
+                <li><strong>Materialflussmatrix:</strong> Tabellarische Erfassung aller Transporthäufigkeiten oder transportierten Mengen (z. B. in Tonnen oder Paletten) von einem Startbereich („Von“) zu einem Zielbereich („Nach“).</li>
+                <li><strong>Sankey-Diagramm:</strong> Grafische Flussdarstellung in 2D oder 3D. Die Breite der Pfeile ist direkt proportional zur transportierten Materialmenge bzw. Transportintensität.</li>
+            </ul>
+            <p><strong>3. Materialfluss-Geometrien (Linienformen):</strong></p>
+            <ul>
+                <li><strong>I-Layout (I-Linie):</strong> Geradliniger Durchfluss vom Wareneingang (WE) zum Warenausgang (WA). Ideal für kurze, hochautomatisierte Linien. Eingangs- und Ausgangslager sind räumlich getrennt.</li>
+                <li><strong>U-Layout (U-Linie):</strong> Der Fertigungsablauf verläuft U-förmig. Wareneingang und Warenausgang liegen nebeneinander. Vorteile: Konsolidierung der Logistikflächen/Lager, kürzere Distanz zwischen Anfang und Ende, Mehrfachbedienung von Anlagen durch Mitarbeiter, schnellere Reaktionszeit bei Störungen.</li>
+                <li><strong>L-Layout (L-Linie):</strong> Abgewinkelter Verlauf im 90°-Winkel. Wird meist durch vorgegebene Hallengeometrien erzwungen oder wenn Wareneingang und -ausgang im rechten Winkel zueinander stehen.</li>
+            </ul>
+
+            <h3>E. Bewertung von Layoutvarianten (Nutzwertanalyse)</h3>
+            <p>Da Layoutentscheidungen nicht nur über Kosten, sondern auch über qualitative Faktoren getroffen werden, kommt die Nutzwertanalyse (NWA) zum Einsatz.</p>
+            <p><strong>Bewertungskriterien:</strong></p>
+            <ul>
+                <li><strong>Kostenkriterien:</strong> Transportkosten, Lagerkosten, Umbau-/Standortwechselkosten.</li>
+                <li><strong>Produktivitätskriterien:</strong> Durchlaufzeit, Fertigungsrate, Flexibilität bei Produktänderungen.</li>
+                <li><strong>Kapazitätskriterien:</strong> Flächenbedarf, Bedarf an Transportmitteln und Anordnungsobjekten.</li>
+                <li><strong>Qualitäts- & Sicherheitskriterien:</strong> Übersichtlichkeit, Arbeitssicherheit, Ergonomie, Erscheinungsbild/Besucherwege.</li>
+            </ul>
+
+            <h3>F. ICT-Systeme als Informationsquellen</h3>
+            <ul>
+                <li><strong>ERP-System:</strong> Bereitstellung von Stammdaten, Artikeldaten, Haltbarkeiten (MHD) und Chargeninformationen.</li>
+                <li><strong>PPS-System:</strong> Daten zu Losgrößen, Arbeitsplänen, Produktionsaufträgen, Betriebsdaten und Durchlaufzeiten.</li>
+                <li><strong>LVS (Lagerverwaltungssystem):</strong> Daten zu Transporten, Materialflussmengen, Lagerbeständen und Staplerleitsystemen.</li>
+                <li><strong>Layout-Spezialsoftware:</strong> CAD-Systeme (2D/3D-Layouts), 3D-Simulationen und Virtual Reality (VR).</li>
+                <li><strong>Office-Tools:</strong> Excel (Erfassung von Materialflussmatrizen und Nutzwertanalysen), PowerPoint (Layout-Skizzen/Schablonen), Word (Prozesskonzepte).</li>
+            </ul>
+
+            <h2>3. Strukturierte Elemente</h2>
+            <h3>Tabelle 1: Die 4 Detaillierungsebenen der Layoutplanung im Vergleich</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Detaillierungsebene</th><th>Maßstab / Sicht</th><th>Wesentlicher Inhalt</th><th>Hauptfokus</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Werkslayout</td><td>Makroebene</td><td>Gesamtes Fabrikgelände, Gebäudekomplexe, Erschließungsstraßen.</td><td>Standortweiter Waren- und Personenfluss.</td></tr>
+                        <tr><td>Groblayout (Blocklayout)</td><td>Gebäudeebene</td><td>Funktionsbereiche als rechteckige Blöcke (Produktion, Lager, QS).</td><td>Hauptmaterialflusswege & Flächenbedarf.</td></tr>
+                        <tr><td>Feinlayout</td><td>Hallen- / Bereichsebene</td><td>Exakte Aufstellung aller Maschinen, Transportmittel und Wege.</td><td>Technische Medien, Ergonomie, Schnittstellen.</td></tr>
+                        <tr><td>Arbeitsstationslayout</td><td>Mikroebene</td><td>Feinanordnung von Werkzeugen, Behältern und Schaltern am Platz.</td><td>Ergonomie, Greifräume, Mikrobewegungen.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 2: Vergleich der primären Materialfluss-Geometrien</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Layoutform</th><th>Verlauf</th><th>Hauptvorteile</th><th>Hauptnachteile / Einsatzbereich</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>I-Layout</td><td>Gerade Linie (WE \(\rightarrow\) WA)</td><td>Einfache Steuerung, klarer unidirektionaler Fluss.</td><td>Getrennte Lager für WE und WA erforderlich; lange Rückwege für Personal.</td></tr>
+                        <tr><td>U-Layout</td><td>U-förmige Schleife</td><td>Zusammenlegung von WE/WA; ermöglicht Mehrfachbedienung; kurze Wege.</td><td>Weniger geeignet für vollautomatisierte, starr verkettete Großanlagen.</td></tr>
+                        <tr><td>L-Layout</td><td>90°-Winkel</td><td>Gute Anpassung an verwinkelte Hallenstrukturen.</td><td>Mögliche Engpässe im Eckbereich des Materialflusses.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 3: ICT-Systeme und ihre Datenfunktion für die Layoutplanung</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>ICT-System</th><th>Vollständige Bezeichnung</th><th>Für die Layoutplanung gelieferte Daten</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ERP</td><td>Enterprise Resource Planning</td><td>Stammdaten, Artikelkataloge, Chargenstrukturen, Lieferantendaten.</td></tr>
+                        <tr><td>PPS</td><td>Produktionsplanungs- & -steuerungssystem</td><td>Losgrößen, Auftragsreihenfolgen, Arbeitspläne, Durchlaufzeiten.</td></tr>
+                        <tr><td>LVS</td><td>Lagerverwaltungssystem</td><td>Lagerbestände, Transportfrequenzen, Stellplatzdaten, Routen.</td></tr>
+                        <tr><td>CAD / VR</td><td>Computer Aided Design / Virtual Reality</td><td>2D/3D-Gebäudegeometrie, digitale Fabrikmodelle, Kollisionsprüfung.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Nummerierte Liste 1: Die 5 Grundprinzipien der Layoutplanung</h3>
+            <ol>
+                <li><strong>Wertstrom verstehen:</strong> Erfassung aller Logistikprozesse und Festlegung der Grundstruktur (z. B. U-Form, Kanban).</li>
+                <li><strong>Raumnutzung maximieren:</strong> Effiziente Ausnutzung von Fläche und Höhe bei gleichzeitiger Erhöhung der Sicherheit.</li>
+                <li><strong>Produktivität durch Anordnung steigern:</strong> Arbeitsplätze ergonomisch anordnen, um unproduktive Zeiten zu minimieren.</li>
+                <li><strong>Materialfluss optimieren:</strong> Transportwege verkürzen, Geradlinigkeit anstreben und Kreuzungen vermeiden.</li>
+                <li><strong>Flexibles Design umsetzen:</strong> Reserveflächen und alternative Wege für zukünftiges Wachstum und Störungen einplanen.</li>
+            </ol>
+
+            <h3>Nummerierte Liste 2: Ablaufschema der Nutzwertanalyse zur Layoutauswahl</h3>
+            <ol>
+                <li><strong>Kriterienkatalog festlegen:</strong> Definition aller relevanten Kosten-, Produktivitäts-, Kapazitäts- und Qualitätskriterien.</li>
+                <li><strong>Kriteriengewichtung:</strong> Vergabe von Gewichtungspunkten (z. B. Summe = 100) je nach Unternehmenspriorität.</li>
+                <li><strong>Bewertung der Layoutvarianten:</strong> Vergabe von Bewertungspunkten (z. B. Skala 1 bis 3) für jede Layoutvariante pro Kriterium.</li>
+                <li><strong>Gewichtete Berechnung:</strong> Multiplikation der Bewertungspunkte mit der Kriteriengewichtung zur Ermittlung des anforderungsspezifischen Werts (ASW).</li>
+                <li><strong>Rangfolge & Entscheidung:</strong> Summation aller ASW-Werte pro Variante; die Variante mit der höchsten Punktzahl gewinnt.</li>
+            </ol>
+
+            <h2>4. Praxis- und Anwendungsbeispiele</h2>
+            <p><strong>Praxisbeispiel 1: Berechnung einer Nutzwertanalyse für 3 Layoutvarianten</strong></p>
+            <p>Szenario: Ein Industriebetrieb bewertet drei Entwürfe für den Umbau einer Montagehalle (Variante 1, 2 und 3). Anforderungsspezifische Punkteberechnung (ASW = Gewichtung \(\times\) Bewertung):</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Kriterium</th><th>Gewichtung</th><th>Variante 1 (Bew / ASW)</th><th>Variante 2 (Bew / ASW)</th><th>Variante 3 (Bew / ASW)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Kurze Verbindungswege</td><td>9</td><td>1 / 9</td><td>2 / 18</td><td>3 / 27</td></tr>
+                        <tr><td>2. Geringer Umbauaufwand</td><td>3</td><td>3 / 9</td><td>2 / 6</td><td>1 / 3</td></tr>
+                        <tr><td>3. Geringer Koordinationsaufwand</td><td>12</td><td>1,5 / 18</td><td>3 / 36</td><td>1,5 / 18</td></tr>
+                        <tr><td>4. Gerichteter Materialfluss (keine Kreuzungen)</td><td>9</td><td>1 / 9</td><td>2 / 18</td><td>3 / 27</td></tr>
+                        <tr><td>5. Wohlbefinden der Mitarbeiter</td><td>10</td><td>2 / 20</td><td>3 / 30</td><td>1 / 10</td></tr>
+                        <tr><td>6. Erweiterbarkeit / Flexibilität</td><td>2</td><td>1 / 2</td><td>2 / 4</td><td>3 / 6</td></tr>
+                        <tr><td>7. Erscheinungsbild / Besucherwege</td><td>4</td><td>1 / 4</td><td>2 / 8</td><td>3 / 12</td></tr>
+                        <tr><td><strong>Gesamtsumme Nutzwert</strong></td><td></td><td><strong>71</strong></td><td><strong>120</strong></td><td><strong>103</strong></td></tr>
+                        <tr><td><strong>Rangfolge</strong></td><td></td><td><strong>Rang 3</strong></td><td><strong>Rang 1</strong></td><td><strong>Rang 2</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Erklärung: Variante 2 gewinnt die Nutzwertanalyse mit 120 Punkten klar vor Variante 3 (103 Punkte) und Variante 1 (71 Punkte), da sie trotz etwas höherem Umbauaufwand die besten Werte beim Koordinationsaufwand und Mitarbeiterwohlbefinden erzielt.</p>
+
+            <p><strong>Praxisbeispiel 2: Materialflussmatrix und Sankey-Diagramm</strong></p>
+            <p>Szenario: Erfassung des jährlichen Materialflusses (in Tonnen) in einer Metallverarbeitung:</p>
+            <ul>
+                <li>Wareneingang \(\rightarrow\) Rohstofflager: \(100\text{ t}\).</li>
+                <li>Rohstofflager \(\rightarrow\) Fertigung: \(72\text{ t}\); Rohstofflager \(\rightarrow\) Montage: \(20\text{ t}\); Rohstofflager \(\rightarrow\) Fertigwarenlager: \(10\text{ t}\).</li>
+                <li>Fertigung \(\rightarrow\) Montage: \(52\text{ t}\); Fertigung \(\rightarrow\) Fertigwarenlager: \(16\text{ t}\); Fertigung \(\rightarrow\) Abfälle/Ausschuss: \(8\text{ t}\).</li>
+                <li>Montage \(\rightarrow\) Fertigwarenlager: \(65\text{ t}\); Montage \(\rightarrow\) Abfälle: \(3\text{ t}\).</li>
+                <li>Fertigwarenlager \(\rightarrow\) Versand: \(91\text{ t}\).</li>
+            </ul>
+            <p>Erklärung: Im Sankey-Diagramm wird der Hauptstrom vom Rohstofflager über Fertigung und Montage zum Fertigwarenlager als breiter Hauptpfeil dargestellt, während Abfälle und Direktlieferungen als schmale Nebenpfeile abzweigen. Dies zeigt sofort, dass Fertigung und Montage räumlich direkt nebeneinander platziert werden müssen.</p>
+
+            <p><strong>Praxisbeispiel 3: Layoutumstellung vor und nach Hallenerweiterung</strong></p>
+            <ul>
+                <li><strong>Ausgangslage (Vor Restrukturierung):</strong> Der Materialfluss zwischen Lager, Drehen/Fräsen und Erodieren verlief ungeordnet über enge, gekreuzte Wege im selben Raum.</li>
+                <li><strong>Soll-Zustand (Nach Hallenerweiterung):</strong> Durch den Anbau eines neuen Hallenteils wurde eine klare Zonenaufteilung geschaffen: Wareneingang \(\rightarrow\) zentrales Lager \(\rightarrow\) getrennte Bereiche für Drehen und Fräsen \(\rightarrow\) Erodieren \(\rightarrow\) Versand. Der Materialfluss verläuft nun kreuzungsfrei von links nach rechts.</li>
+            </ul>
+
+            <p><strong>Praxisbeispiel 4: Schablonenplanung in der Praxis (JOWA Birsfelden & Bucher Leichtbau)</strong></p>
+            <ul>
+                <li><strong>Analoge Papierschablonen:</strong> Bei der Feineinteilung der Speditionsfläche bei JOWA Birsfelden wurden maßstabsgetreue Papierschablonen für Palettenplätze auf den ausgedruckten CAD-Plan geklebt und flexibel verschoben, bevor die Einteilung final in Excel und CAD übernommen wurde.</li>
+                <li><strong>Exakte Bodenmarkierungen:</strong> Für die physische Umsetzung im Lager wurden exakte Markierungsvorschriften definiert (z. B. Palettenstellplätze mit Randstreifen der Breite \(7,5\text{ cm}\) in der Farbe RAL 1003 Signalgelb).</li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET KAPITEL 9: NUTZWERTANALYSE-SIMULATOR -->
+            <div class="interactive-widget">
+                <div class="diagram-title">Interaktiver Simulator: Nutzwertanalyse-Evaluator</div>
+                <div class="diagram-subtitle">Passen Sie die Gewichtung für "Geringer Koordinationsaufwand" an, um zu sehen, wie sich die Rangfolge der Varianten verändert:</div>
+                <div class="form-group">
+                    <label>Gewichtung Koordinationsaufwand (Aktuell: <span id="weight_val">12</span>):</label>
+                    <input type="range" id="weight_coord" min="1" max="25" value="12" oninput="updateNWA()">
+                </div>
+                <div class="widget-result" id="nwa_result">
+                    Variante 1: 71 Pkt | Variante 2: 120 Pkt (Sieger) | Variante 3: 103 Pkt
+                </div>
+            </div>
+
+            <h2>5. Mini-Quiz zur Wissensüberprüfung</h2>
+            <details>
+                <summary>Frage 1: Was unterscheidet das Groblayout (Blocklayout) vom Feinlayout in der Fabrikplanung?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Das Groblayout (Blocklayout) ordnet Funktionsbereiche und Abteilungen als einfache, maßstäbliche Blöcke ohne exakte Maschinengeometrie im Raum an, um Hauptmaterialflusswege festzulegen. Das Feinlayout hingegen stellt die exakte zeichnerische Aufstellung jeder einzelnen Maschine, aller Arbeitsplätze, Wege sowie der erforderlichen Medienanschlüsse (Strom, Druckluft), Lärmschutz- und Ergonomieeinrichtungen dar.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 2: Welche wesentlichen logistischen Vorteile bietet ein U-Layout im Vergleich zu einem geradlinigen I-Layout?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Beim U-Layout liegen Wareneingang und Warenausgang nebeneinander, wodurch Logistikflächen und Ladezonen konsolidiert werden können. Zudem verringert sich die Distanz zwischen Anfang und Ende der Linie, was die Mehrfachbedienung von Maschinen durch Mitarbeiter ermöglicht, Wege verkürzt und schnellere Reaktionszeiten bei Störungen erlaubt.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 3: Warum reicht eine reine Kostenrechnung für die Auswahl eines optimalen Fabriklayouts meist nicht aus, und welches Verfahren schafft Abhilfe?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Reine Kostenrechnungen berücksichtigen qualitative und ergonomische Faktoren wie Übersichtlichkeit, Arbeitssicherheit, Mitarbeiterwohlbefinden, Flexibilität oder das Erscheinungsbild für Kunden nicht ausreichend. Als Bewertungsmethode wird daher die Nutzwertanalyse (NWA) eingesetzt, die qualitative und quantitative Kriterien über ein gewichtetes Punktesystem vergleichbar macht.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 4: Wie wird die Transportintensität im Sankey-Diagramm visuell dargestellt?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Die Transportintensität bzw. die transportierte Materialmenge wird durch die Breite der Pfeile dargestellt: Je mehr Material oder je mehr Transporte zwischen zwei Bereichen stattfinden, desto breiter ist der Verbindungspfeil im Diagramm.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 5: Nenne drei ICT-Systeme und beschreibe kurz, welche spezifischen Daten sie für die Layoutplanung bereitstellen.</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Mögliche Antworten (3 aus folgenden):
+                    <ol>
+                        <li>ERP-System: Stammdaten, Artikelkataloge, Chargenstrukturen.</li>
+                        <li>PPS-System: Losgrößen, Arbeitspläne, Auftragsdaten, Durchlaufzeiten.</li>
+                        <li>LVS (Lagerverwaltungssystem): Transporthäufigkeiten, Lagerbestände, Ladeeinheiten.</li>
+                        <li>CAD / VR: 2D/3D-Gebäudegeometrien, digitale Fabrikmodelle.</li>
+                    </ol>
+                </div>
+            </details>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function updateNWA() {
+            const wCoord = parseInt(document.getElementById('weight_coord').value);
+            document.getElementById('weight_val').innerText = wCoord;
+            
+            // Baseline sums without coord (12 * score)
+            // Var 1 base: 71 - (12 * 1.5) = 53
+            // Var 2 base: 120 - (12 * 3) = 84
+            // Var 3 base: 103 - (12 * 1.5) = 85
+            
+            const v1 = 53 + (wCoord * 1.5);
+            const v2 = 84 + (wCoord * 3);
+            const v3 = 85 + (wCoord * 1.5);
+            
+            let winner = "Variante 2";
+            if (v3 > v2 && v3 > v1) winner = "Variante 3";
+            if (v1 > v2 && v1 > v3) winner = "Variante 1";
+            
+            document.getElementById('nwa_result').innerHTML = `Variante 1: <strong>${v1} Pkt</strong> | Variante 2: <strong>${v2} Pkt</strong> | Variante 3: <strong>${v3} Pkt</strong> <br>Gewinner: <strong>${winner}</strong>`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROLO – Kapitel 6: PPS | E-Learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7;
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, var(--primary-color) 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+        
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        
+        /* UNTER-NAVIGATION (Kapitel Produktionslogistik) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; margin: 1.5rem 0; }
+        .diagram-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .btn-interactive { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.2s; margin-top: 0.5rem; }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        .form-group { margin-bottom: 0.75rem; }
+        .form-group label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 0.25rem; }
+        .form-group input { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+        .widget-result { background: #f0f9ff; border-left: 4px solid var(--primary-color); padding: 0.75rem 1rem; margin-top: 1rem; border-radius: 0 6px 6px 0; font-weight: 600; }
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>PROLO – Produktionslogistik</h1>
+                    <p>Kapitel 6: Produktions- und Ressourcenplanung</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+ <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <div class="card">
+            <h2>1. Thema & Lernziele dieser Einheit</h2>
+            <p><strong>Thema:</strong> Produktionslogistik – Kapitel 6: Produktions- und Ressourcenplanung.</p>
+            <p><strong>Lernziele:</strong> Nach der Erarbeitung dieser Lerneinheit sind die Lernenden in der Lage:</p>
+            <ul>
+                <li>Die typischen Aufgaben und Ergebnisse des Auftragsabwicklungsprozesses präzise zu beschreiben.</li>
+                <li>Die Aufgaben, Kosten und Anforderungen an ein effizientes, integriertes Auftragsabwicklungssystem zu erläutern.</li>
+                <li>Die Grundfunktionen und den Ablauf der Produktionsplanung und -steuerung (PPS) darzulegen.</li>
+                <li>Die drei Stufen der Produktionsplanung (Produktionsprogrammplanung, Mengenplanung, Termin- und Kapazitätsplanung) systematisch zu unterscheiden.</li>
+                <li>Die optimale Fertigungslosgröße mithilfe der klassischen Andler-Formel zu berechnen.</li>
+                <li>Den Prozess der Durchlaufterminierung, die Elemente der Durchlaufzeit sowie Methoden zu deren Verkürzung aufzuzeigen.</li>
+                <li>Verschiedene Kapazitätsarten zu unterscheiden und Verfahren der Kapazitätsbedarfsrechnung und -abstimmung anzuwenden.</li>
+            </ul>
+
+            <h2>2. Detaillierter Hauptteil</h2>
+            <h3>A. Regelung der Auftragsabwicklung</h3>
+            <p>Der Auftragsabwicklungsprozess stellt sicher, dass die Fertigung exakt auf die Kundenbedürfnisse ausgerichtet ist und eng mit Beschaffung, Lagerhaltung und Distribution abgestimmt wird.</p>
+            <ul>
+                <li><strong>Auslöser:</strong> Der Produktionsauftrag bildet den Ausgangspunkt der Produktionslogistik. Er definiert:
+                    <ol>
+                        <li>Art und Menge des gewünschten Erzeugnisses.</li>
+                        <li>Den gewünschten Liefertermin.</li>
+                        <li>Die vorgegebene Anlieferstelle.</li>
+                    </ol>
+                </li>
+                <li><strong>Auftragsbestand:</strong> Eingehende Produktionsaufträge werden in den Auftragsbestand übernommen. Ist ein Artikel nicht direkt im Fertigwarenlager verfügbar, wird er in das Produktionsprogramm aufgenommen, wobei vorhandene Ressourcen und Kapazitäten abgeglichen werden.</li>
+            </ul>
+
+            <h3>B. Produktionsplanung und -steuerung (PPS)</h3>
+            <p>Das PPS-System stellt die wirtschaftliche Nutzung des gesamten Produktionssystems sicher.</p>
+            <ul>
+                <li><strong>Zielkategorien der PPS:</strong>
+                    <ul>
+                        <li><strong>Auftragsbezogene Ziele:</strong> Hohe Planungssicherheit, hohe Termintreue, hohe Informationsbereitschaft.</li>
+                        <li><strong>Kapazitätsbezogene Ziele:</strong> Gleichmäßig hohe Kapazitätsauslastung, flexible Kapazitäten.</li>
+                        <li><strong>Wirtschaftliche Ziele:</strong> Maximale Auslastung des Produktionspotenzials, minimale variable Kosten.</li>
+                        <li><strong>Logistische Ziele:</strong> Kurze Durchlaufzeiten, geringe Bestände, hohe Verfügbarkeit.</li>
+                        <li><strong>Technologische Ziele:</strong> Flexible, beherrschbare und effiziente Technologien.</li>
+                        <li><strong>Ökologische Ziele:</strong> Geringer Ressourcenverbrauch, geringe Emissionen, Recycling von Rückständen.</li>
+                        <li><strong>Humanorientierte Ziele:</strong> Motivation, optimale Nutzung des Leistungsvermögens, Qualifikation.</li>
+                    </ul>
+                </li>
+                <li><strong>Funktionale Trennung:</strong>
+                    <ul>
+                        <li><strong>Produktionsplanung:</strong> Vorausschauende Festlegung des Produktionsprogramms, der Materialmengen sowie der Termine und Kapazitäten.</li>
+                        <li><strong>Produktionssteuerung:</strong> Kurzfristige Veranlassung (Freigabe/Arbeitsverteilung) und Überwachung der laufenden Aufträge.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>C. Die 3 Stufen der Produktionsplanung</h3>
+            <p><strong>Stufe 1: Produktionsprogrammplanung (Primärbedarfsplanung)</strong></p>
+            <ul>
+                <li><strong>Fokus:</strong> Bestimmung des voraussichtlichen Absatzbedarfs aller Endprodukte und Ersatzteile nach Art, Menge und Termin.</li>
+                <li><strong>Zusammensetzung des Primärbedarfs:</strong> Verwendungsbereite Endprodukte, die sich aus bereits erteilten Kundenaufträgen und aus Vertriebsprognosen zusammensetzen.</li>
+                <li><strong>Kernfragen:</strong> Welche Produkte werden hergestellt? Kunden- oder Lagerfertigung? Welche Mengen zu welchen Lieferterminen?</li>
+            </ul>
+
+            <p><strong>Stufe 2: Mengenplanung / Materialwirtschaft (Sekundärbedarfsplanung)</strong></p>
+            <ul>
+                <li><strong>Fokus:</strong> Ermittlung des exakten Materialbedarfs (Baugruppen, Einzelteile, Roh-, Hilfs- und Betriebsstoffe) basierend auf Stücklisten.</li>
+                <li><strong>Bedarfsstufen:</strong>
+                    <ol>
+                        <li><strong>Sekundärbedarf:</strong> Aus dem Primärbedarf abgeleiteter Teilebedarf.</li>
+                        <li><strong>Bruttosekundärbedarf:</strong> Sekundärbedarf zuzüglich Sicherheitszuschlägen und Ersatzteilbedarfen.</li>
+                        <li><strong>Nettosekundärbedarf:</strong> Bruttosekundärbedarf abzüglich des verfügbaren Lagerbestands.</li>
+                    </ol>
+                </li>
+                <li><strong>Mengenoptimierung (Andler-Formel zur Losgrößenbestimmung):</strong> Die klassische Andler-Formel löst den Zielkonflikt zwischen losgrößenfixen Kosten (z. B. Rüstkosten, die bei größeren Losen pro Stück sinken) und Lagerhaltungskosten (die bei größeren Losen durch höhere Bestände steigen):
+                \[\displaystyle X_{\text{opt}} = \sqrt{\frac{200 \cdot M \cdot (H_{\text{fix}} + L_{\text{fix}})}{h_{\text{var}} \cdot q}}\]
+                </li>
+                <li><strong>Variablen:</strong>
+                    <ul>
+                        <li>\(X_{\text{opt}}\) = Optimale Fertigungslosgröße (in Stück)</li>
+                        <li>\(M\) = Jahresbedarf (in Stück)</li>
+                        <li>\(H_{\text{fix}}\) = Herstellungsfixkosten (Rüstkosten) pro Los (in CHF)</li>
+                        <li>\(L_{\text{fix}}\) = Lagerfixkosten pro Los (in CHF)</li>
+                        <li>\(h_{\text{var}}\) = Variable Herstellkosten pro Stück (in CHF)</li>
+                        <li>\(q\) = Zins- und Lagerhaltungssatz pro Jahr (in %)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>Stufe 3: Termin- und Kapazitätsplanung</strong></p>
+            <ul>
+                <li><strong>Fokus:</strong> Festlegung des zeitlichen Ablaufs und Abgleich mit den verfügbaren Kapazitäten.</li>
+                <li><strong>Durchlaufterminierung:</strong> Errechnung der benötigten Zeit für das Durchlaufen aller Fertigungsschritte.
+                    <ul>
+                        <li>Arbeitsplatzdurchlaufzeit (\(T_{\text{AP}}\)) gliedert sich in:
+                            <ol>
+                                <li>Durchführungszeit (\(t_d\)): Rüstzeit (\(t_r\)) + Bearbeitungszeit (\(t_a\)).</li>
+                                <li>Übergangszeit (\(t_ü\)): Vorliegezeit (\(t_{\text{Lv}}\)) + Nachliegezeit (\(t_{\text{Ln}}\)) + Transportzeit (\(t_{\text{Tp}}\)). (Vor- und Nachliegezeit bilden zusammen die Liegezeit).</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Terminierungsmethoden:</strong>
+                    <ul>
+                        <li><strong>Vorwärtsterminierung:</strong> Startet am Anfangstermin und rechnet chronologisch nach vorne.</li>
+                        <li><strong>Rückwärtsterminierung:</strong> Startet am geforderten Endtermin und rechnet rückwärts zum Starttermin.</li>
+                        <li><strong>Mittelpunktterminierung:</strong> Geht von einem kritischen Engpass-Arbeitsgang aus und terminiert von dort aus nach vorne und hinten.</li>
+                    </ul>
+                </li>
+                <li><strong>Maßnahmen zur Durchlaufzeitverkürzung:</strong> Losteilung, Arbeitssplitting, Arbeitsüberlappung, Arbeitsausweichung, Übergangszeitverkürzung, Rüstzeitverkürzung, Familienfertigung.</li>
+                <li><strong>Kapazitätsplanung & Kapazitätsabstimmung:</strong>
+                    <ul>
+                        <li><strong>Kapazitätsbedarf:</strong> Erfassung aller benötigten Zeiten an Arbeitsplätzen pro Periode.</li>
+                        <li><strong>Kapazitätsangebot:</strong> Rechnerisch vs. tatsächlich belastbare Kapazität von Personal und Betriebsmitteln.</li>
+                        <li><strong>Anpassungsmaßnahmen bei Kapazitätsabweichungen:</strong> Kapazitätsanpassung, Terminanpassung, Auftragsanpassung (Fremdvergabe), Verfahrensanpassung.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>3. Strukturierte Elemente</h2>
+            <h3>Tabelle 1: Aufgaben und Meilensteine im Auftragsabwicklungsprozess</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Aufgabe</th><th>Beschreibung</th><th>Meilenstein</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Kundenauftrag überprüfen & erfassen</td><td>Vergleich der Bestellung mit der Offerte; Abklärung von Unstimmigkeiten mit dem Kunden.</td><td>Kundenauftrag erfasst</td></tr>
+                        <tr><td>Produktionsauftrag auslösen</td><td>Abgleich mit Lagerbeständen; Auslösung nur für die Differenzmenge.</td><td>Produktionsauftrag ausgelöst</td></tr>
+                        <tr><td>Produktion planen</td><td>Prüfung von Stücklisten/Zeichnungen; Planen von Material, Personal und Maschinen.</td><td>Produktionsprogramm erstellt</td></tr>
+                        <tr><td>Beschaffung durchführen</td><td>Materialeinkauf, Lieferantenbewertung, Qualitätssicherung und Wareneingangsprüfung.</td><td>Wareneingang geprüft</td></tr>
+                        <tr><td>Vorfertigung, Endmontage & Konfektionierung</td><td>Kennzeichnung zur Rückverfolgung, Qualitätsprüfung, Aussonderung fehlerhafter Teile.</td><td>Produkt hergestellt, geprüft & gekennzeichnet</td></tr>
+                        <tr><td>Baustellenmontage</td><td>Erstellung von Montage- und Abnahmeunterlagen für die Vor-Ort-Montage.</td><td>Montageablauf vorbereitet & terminiert</td></tr>
+                        <tr><td>Produktion steuern</td><td>Nachbestellung fehlender Teile, Fertigungsfreigabe, Überwachung des Arbeitsfortschritts.</td><td>Alle Teile beschafft & Fertigung freigegeben</td></tr>
+                        <tr><td>Qualität überwachen</td><td>Überprüfung anhand von Standards, Bearbeitung von Reklamationen/Reparaturen.</td><td>Qualität geprüft & Reklamationen bearbeitet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 2: Die 3 Stufen der Produktionsplanung im Vergleich</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Planungsstufe</th><th>Zuordnung</th><th>Hauptaufgabe</th><th>Kernergebnis</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Produktionsprogrammplanung</td><td>Primärbedarfsplanung</td><td>Festlegung der herzustellenden Endprodukte nach Art, Menge und Termin.</td><td>Produktionsprogramm / Primärbedarf</td></tr>
+                        <tr><td>2. Mengenplanung</td><td>Sekundärbedarfsplanung</td><td>Ermittlung des Teile- und Materialbedarfs sowie der optimalen Losgröße.</td><td>Nettosekundärbedarf & Fertigungslosgrößen</td></tr>
+                        <tr><td>3. Termin- & Kapazitätsplanung</td><td>Ablauf- & Ressourcenplanung</td><td>Ermittlung der Durchlaufzeiten und Abgleich des Kapazitätsbedarfs mit dem Angebot.</td><td>Terminierter Kapazitätsplan & eröffnete Aufträge</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 3: Gliederung der Arbeitsplatzdurchlaufzeit</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Hauptkomponente</th><th>Unterkomponente</th><th>Definition / Inhalt</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td rowspan="2">Durchführungszeit (\(t_d\))</td><td>Rüstzeit (\(t_r\))</td><td>Zeit zum Vorbereiten des Arbeitsplatzes/Werkzeugs.</td></tr>
+                        <tr><td>Bearbeitungszeit (\(t_a\))</td><td>Reine Zeit zur Bearbeitung des Werkstücks.</td></tr>
+                        <tr><td rowspan="3">Übergangszeit (\(t_ü\))</td><td>Vorliegezeit (\(t_{\text{Lv}}\))</td><td>Liegezeit vor der Bearbeitung am Arbeitsplatz.</td></tr>
+                        <tr><td>Nachliegezeit (\(t_{\text{Ln}}\))</td><td>Liegezeit nach der Bearbeitung vor dem Abtransport.</td></tr>
+                        <tr><td>Transportzeit (\(t_{\text{Tp}}\))</td><td>Beförderungszeit zwischen zwei Arbeitsplätzen.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Prozessablauf der Produktionsplanung und -steuerung (PPS)</h3>
+            <ol>
+                <li><strong>Erfassung & Prognose:</strong> Kundenaufträge und Vertriebsprognosen bilden die Basis zur Ermittlung des Primärbedarfs.</li>
+                <li><strong>Programmformulierung:</strong> Die Produktionsprogrammplanung legt fest, welche Fertigerzeugnisse bis wann zu produzieren sind.</li>
+                <li><strong>Stücklistenauflösung:</strong> Über Stücklisten wird der Sekundärbedarf für Baugruppen und Rohstoffe ermittelt.</li>
+                <li><strong>Bestandsrechnung:</strong> Der Lagerbestand wird abgezogen, um den Nettosekundärbedarf zu bestimmen.</li>
+                <li><strong>Losgrößenoptimierung:</strong> Miterfassung der Kosten zur Errechnung der optimalen Losgröße (Andler).</li>
+                <li><strong>Durchlaufterminierung:</strong> Festlegung der konkreten Start- und Endtermine (Vorwärts-/Rückwärtsterminierung).</li>
+                <li><strong>Kapazitätsabgleich:</strong> Gegenüberstellung von Kapazitätsbedarf und -angebot inklusive Anpassungsmaßnahmen bei Über-/Unterlastung.</li>
+                <li><strong>Auftragsveranlassung & -überwachung:</strong> Freigabe der Aufträge, Bereitstellung von Material/Werkzeugen und Fortschrittskontrolle.</li>
+            </ol>
+
+            <h2>4. Praxis- und Anwendungsbeispiele</h2>
+            <p><strong>Praxisbeispiel 1: Berechnung der optimalen Losgröße nach Andler</strong></p>
+            <p>Szenario: Ein Maschinenbauunternehmen benötigt für die Jahresproduktion \(M = 12'000\) Spezialventile. Die Herstellungsfixkosten (Rüstkosten) betragen \(H_{\text{fix}} = 150\text{ CHF}\) pro Los, die Lagerfixkosten liegen bei \(L_{\text{fix}} = 50\text{ CHF}\) pro Los. Die variablen Herstellkosten belaufen sich auf \(h_{\text{var}} = 40\text{ CHF}\) pro Stück. Der jährliche Zins- und Lagerhaltungskostensatz beträgt \(q = 10\%\).</p>
+            <p>Berechnung:</p>
+            \[\displaystyle X_{\text{opt}} = \sqrt{\frac{200 \cdot 12'000 \cdot (150 + 50)}{40 \cdot 10}}\]
+            \[\displaystyle X_{\text{opt}} = \sqrt{\frac{2'400'000 \cdot 200}{400}} = \sqrt{\frac{480'000'000}{400}} = \sqrt{1'200'000} \approx 1'095,45\text{ Stück}\]
+            <p>Erklärung: Das betriebswirtschaftlich optimale Fertigungslos umfasst ca. 1'095 Stück. Bei dieser Losgröße ist die Summe aus Rüstkosten und Lagerhaltungskosten minimiert.</p>
+
+            <p><strong>Praxisbeispiel 2: Aufschlüsselung der Arbeitsplatzdurchlaufzeit</strong></p>
+            <p>Szenario: An einer CNC-Fräse wird die Durchlaufzeit für ein Los Wellen gemessen.</p>
+            <ul>
+                <li>Rüstzeit (\(t_r\)): \(30\text{ Min.}\)</li>
+                <li>Bearbeitungszeit (\(t_a\)): \(120\text{ Min.}\)</li>
+                <li>Vorliegezeit (\(t_{\text{Lv}}\)): \(45\text{ Min.}\)</li>
+                <li>Nachliegezeit (\(t_{\text{Ln}}\)): \(15\text{ Min.}\)</li>
+                <li>Transportzeit (\(t_{\text{Tp}}\)): \(10\text{ Min.}\)</li>
+            </ul>
+            <p>Ergebnis:</p>
+            <ul>
+                <li>Durchführungszeit (\(t_d\)): \(30\text{ Min.} + 120\text{ Min.} = 150\text{ Min.}\)</li>
+                <li>Übergangszeit (\(t_ü\)): \(45\text{ Min.} + 15\text{ Min.} + 10\text{ Min.} = 70\text{ Min.}\)</li>
+                <li>Gesamte Arbeitsplatzdurchlaufzeit (\(T_{\text{AP}}\)): \(150\text{ Min.} + 70\text{ Min.} = 220\text{ Min.}\)</li>
+            </ul>
+            <p>Erklärung: Über \(31\%\) der Zeit am Arbeitsplatz entfallen auf zuschlagspflichtige Übergangszeiten (Liege- und Transportzeiten), was das Potenzial für Durchlaufzeitverkürzungen verdeutlicht.</p>
+
+            <!-- INTERAKTIVES WIDGET KAPITEL 6: ANDLER-RECHNER -->
+            <div class="interactive-widget">
+                <div class="diagram-title">Interaktiver Simulator: Andler-Losgrößen-Rechner</div>
+                <div class="diagram-subtitle">Geben Sie eigene Werte ein, um die optimale Fertigungslosgröße dynamisch zu berechnen:</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+                    <div class="form-group">
+                        <label>Jahresbedarf M (Stk):</label>
+                        <input type="number" id="andler_m" value="12000">
+                    </div>
+                    <div class="form-group">
+                        <label>Rüstfixkosten H_fix (CHF):</label>
+                        <input type="number" id="andler_h" value="150">
+                    </div>
+                    <div class="form-group">
+                        <label>Lagerfixkosten L_fix (CHF):</label>
+                        <input type="number" id="andler_l" value="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Var. Stückkosten h_var (CHF):</label>
+                        <input type="number" id="andler_hvar" value="40">
+                    </div>
+                    <div class="form-group">
+                        <label>Zins/Lager-Satz q (%):</label>
+                        <input type="number" id="andler_q" value="10">
+                    </div>
+                </div>
+                <button class="btn-interactive" onclick="calcAndler()">Optimale Losgröße berechnen</button>
+                <div class="widget-result" id="andler_result">
+                    Ergebnis: Optimale Losgröße X_opt = 1'095 Stück
+                </div>
+            </div>
+
+            <h2>5. Mini-Quiz zur Wissensüberprüfung</h2>
+            <details>
+                <summary>Frage 1: Was unterscheidet den Primärbedarf vom Sekundärbedarf in der Produktionsplanung?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Der Primärbedarf umfasst die verkaufsfertigen Endprodukte und Ersatzteile, die sich aus Kundenaufträgen und Marktprognosen ergeben (1. Planungsstufe). Der Sekundärbedarf beschreibt die zur Herstellung dieser Endprodukte benötigten Rohstoffe, Einzelteile und Baugruppen, die über Stücklisten errechnet werden (2. Planungsstufe).
+                </div>
+            </details>
+            <details>
+                <summary>Frage 2: Aus welchen beiden Hauptkomponenten setzt sich die Durchführungszeit an einem Arbeitsplatz zusammen?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Die Durchführungszeit (\(t_d\)) besteht aus der Rüstzeit (\(t_r\)) (Vorbereitung von Maschine/Werkzeug) und der Bearbeitungszeit (\(t_a\)) (tatsächliche Fertigung der Teile).
+                </div>
+            </details>
+            <details>
+                <summary>Frage 3: Welchen Zielkonflikt löst die Andler-Formel bei der Bestimmung der Fertigungslosgröße?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Sie löst den Zielkonflikt zwischen den losgrößenfixen Kosten (Rüstkosten sinken pro Stück bei großen Losen) und den Lagerhaltungs- und Zinskosten (steigen bei großen Losen durch höhere Lagerbestände).
+                </div>
+            </details>
+            <details>
+                <summary>Frage 4: Welche Maßnahmen können ergriffen werden, wenn die Kapazitätsbedarfsrechnung eine Engpass-Überlastung an einem Arbeitsplatz aufzeigt?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Es können Kapazitätsanpassungen (z. B. Überstunden, Zusatzschichten), Terminanpassungen (Verschiebung des Fertigungstermins nach hinten), Auftragsanpassungen (Fremdvergabe/Subunternehmer) oder Verfahrensanpassungen (Ausweichen auf alternative Arbeitsplätze) vorgenommen werden.
+                </div>
+            </details>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function calcAndler() {
+            const M = parseFloat(document.getElementById('andler_m').value);
+            const H = parseFloat(document.getElementById('andler_h').value);
+            const L = parseFloat(document.getElementById('andler_l').value);
+            const hvar = parseFloat(document.getElementById('andler_hvar').value);
+            const q = parseFloat(document.getElementById('andler_q').value);
+            
+            if (hvar > 0 && q > 0) {
+                const xopt = Math.sqrt((200 * M * (H + L)) / (hvar * q));
+                document.getElementById('andler_result').innerHTML = `Ergebnis: Optimale Losgröße X_opt = <strong>${Math.round(xopt * 100) / 100} Stück</strong> (gerundet: ${Math.round(xopt)} Stück)`;
+            } else {
+                document.getElementById('andler_result').innerHTML = 'Bitte gültige Werte eingeben.';
+            }
+        }
+    </script>
+</body>
+</html>
+

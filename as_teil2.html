@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS – Teil 2: Akteure, STOP-Prinzip &amp; Verwaltungsverfahren | E-Learning</title>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0f766e;
+            --secondary-color: #115e59;
+            --accent-color: #ccfbf1;
+            --tag-bg: #f0fdf4;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #0f766e 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(15, 118, 110, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Einheitlich auf allen Seiten) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (AS Kapitel) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+
+        /* STOP PYRAMIDE */
+        .stop-pyramid { display: flex; flex-direction: column; gap: 8px; max-width: 800px; margin: 0 auto; }
+        .stop-level { color: #ffffff; padding: 12px 16px; border-radius: 6px; text-align: center; margin: 0 auto; width: 100%; }
+        .stop-level.s { background-color: #dc2626; }
+        .stop-level.t { background-color: #ea580c; }
+        .stop-level.o { background-color: #0284c7; }
+        .stop-level.p { background-color: #16a34a; }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>AS – Arbeitssicherheit &amp; Gesundheitsschutz</h1>
+                    <p>Teil 2: Akteure, Verwaltungsverfahren, STOP-Prinzip &amp; Absenzenmanagement</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>AS - Teil 2: Akteure, Durchsetzung, STOP-Prinzip &amp; Steuerung</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> Aufgaben der ausserbetrieblichen Organe (KIGA, Suva, SECO, EKAS), betriebliche Verantwortlichkeiten, Verwaltungsverfahren bei Beanstandungen, das STOP-Prinzip sowie betriebliches Absenzenmanagement.</p>
+            <p><strong>Qualifikations- und Lernziele:</strong></p>
+            <ul>
+                <li>Die Zuständigkeiten von Suva, KIGA und SECO klar voneinander abgrenzen.</li>
+                <li>Die Delegation von Arbeitgeberpflichten und die Voraussetzungen zur rechtlichen Entlastung erklären.</li>
+                <li>Das STOP-Prinzip konsequent in der Schutzmassnahmenplanung anwenden.</li>
+                <li>Den Ablauf des Verwaltungsverfahrens bei Sicherheitsmängeln beschreiben.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+
+            <h4>1. Ausserbetriebliche Akteure</h4>
+            <ul>
+                <li><span class="highlight-text">EKAS (Eidgenössische Koordinationskommission für Arbeitssicherheit):</span> Zentrale Steuerungsorganisation im UVG. Erlässt Richtlinien (z. B. EKAS 6508) und koordiniert die Durchführungsorgane.</li>
+                <li><span class="highlight-text">Suva:</span> Betreut Betriebe mit speziellen Betriebsgefahren oder komplizierten technischen Einrichtungen (ca. 1,3 Mio. Versicherte).</li>
+                <li><span class="highlight-text">Kantonale Arbeitsinspektorate (KIGA):</span> Zuständig für Betriebe ohne spezielle Betriebsgefahren (Gewerbe, Dienstleistung, Verwaltung — ca. 2,3 Mio. Beschäftigte).</li>
+                <li><span class="highlight-text">SECO:</span> Bundeszuständigkeit für Arbeitnehmerschutz, Bundesbetriebe sowie die Aufsicht über den einheitlichen Vollzug in den Kantonen.</li>
+            </ul>
+
+            <h4>2. Betriebliche Akteure &amp; Pflichtenübertragung</h4>
+            <p>Der **Arbeitgeber** trägt die unübertragbare Gesamtverantwortung. Er kann operative Aufgaben an Sicherheitsbeauftragte (SiBe) übertragen.</p>
+            <p><em>Rechtliche Entlastung (Art. 7 VUV):</em> Überträgt der Arbeitgeber Aufgaben, befreit ihn das nicht von der Verantwortung. Er kann sich bei Unfällen nur entlasten, wenn er nachweist, dass er die beauftragten Personen **sorgfältig ausgewählt**, **zweckmässig ausgebildet/instruiert** und **regelmässig überwacht** hat (Cura in eligendo, instruendo, custodiendo).</p>
+
+            <!-- DIAGRAMMBOX: DAS STOP-PRINZIP -->
+            <div class="diagram-box">
+                <div class="diagram-title">Das STOP-Prinzip (Rangfolge der Schutzmassnahmen)</div>
+                <div class="diagram-subtitle">Massnahmen müssen zwingend in dieser mathematisch-logischen Reihenfolge geprüft werden</div>
+                
+                <div class="stop-pyramid">
+                    <div class="stop-level s">
+                        <strong>S — Substitution</strong>
+                        <span>Gefahr an der Quelle beseitigen / Ersetzen gefährlicher Stoffe oder Verfahren</span>
+                    </div>
+                    <div class="stop-level t">
+                        <strong>T — Technische Schutzmassnahmen</strong>
+                        <span>Kapselung, Absauganlagen, Lichtschranken, Schutzabdeckungen</span>
+                    </div>
+                    <div class="stop-level o">
+                        <strong>O — Organisatorische Massnahmen</strong>
+                        <span>Arbeitsorganisation, Zutrittsbeschränkungen, Schulungen, Pausenregeln</span>
+                    </div>
+                    <div class="stop-level p">
+                        <strong>P — Personenbezogene Massnahmen</strong>
+                        <span>Tragen der Persönlichen Schutzausrüstung (PSA) &amp; Verhalten</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4>3. Verwaltungsverfahren bei Sicherheitsmängeln</h4>
+            <p>Stellen Inspektoren (Suva/KIGA) Mängel fest, läuft folgendes Verwaltungsverfahren ab:</p>
+            <ol>
+                <li><strong>Ermahnung:</strong> Schriftliche Aufforderung zur Behebung mit angemessener Frist.</li>
+                <li><strong>Verfügung:</strong> Förmliche, vollstreckbare Anordnung bei Verzug oder schweren Risiken (inkl. Benutzungsverbot von Maschinen oder Betriebsschliessung).</li>
+                <li><strong>Rechtsmittelverfahren (Frist: 30 Tage):</strong>
+                    <ul>
+                        <li><em>VUV-Verfügung:</em> Einsprache beim jeweiligen Durchführungsorgan (z. B. Suva).</li>
+                        <li><em>ArG-Verfügung:</em> Beschwerde bei der kantonalen Rekursbehörde (keine Einsprache möglich).</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Strukturierte Elemente</h3>
+
+            <h4>Tabelle 1: Zuständigkeit der Durchführungsorgane im Vergleich</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Organ</th>
+                            <th>Betriebsprofil / Risikostufe</th>
+                            <th>Betreute Beschäftigte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Suva</strong></td>
+                            <td>Betriebe mit speziellen Betriebsgefahren (Industrie, Bau, Baugewerbe).</td>
+                            <td>ca. 1,3 Mio.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>KIGA (Kantone)</strong></td>
+                            <td>Betriebe ohne spezielle Betriebsgefahren (Handel, Verwaltung, Dienstleistungen).</td>
+                            <td>ca. 2,3 Mio.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SECO</strong></td>
+                            <td>Bundesbetriebe &amp; Oberaufsicht über den kantonalen Vollzug.</td>
+                            <td>Bundespersonal / Aufsicht</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Anwendung des STOP-Prinzips bei Lösemitteln:</span>
+                    <ol>
+                        <li><strong>S:</strong> Ersatz des chemischen Reinigers durch einen ungiftigen Seifenreiniger.</li>
+                        <li><strong>T:</strong> Installation einer geschlossenen Absauganlage an der Waschstation.</li>
+                        <li><strong>O:</strong> Begrenzung der Arbeitszeit an der Station auf max. 2 Stunden pro Tag.</li>
+                        <li><strong>P:</strong> Verpflichtendes Tragen von Nitrilhandschuhen und Schutzbrille.</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Kann sich ein Arbeitgeber von seiner Haftung befreien, indem er einen SiBe ernennt?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Nein, die Gesamtverantwortung verbleibt beim Arbeitgeber. Er kann sich nur entlasten, wenn er nachweist, dass er die Person sorgfältig ausgewählt, instruiert und überwacht hat.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Welches Rechtsmittel steht gegen eine Verfügung nach ArG zur Verfügung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Beschwerde bei der kantonalen Rekursbehörde innert 30 Tagen (bei ArG-Verfügungen gibt es im Gegensatz zu VUV-Verfügungen kein Einspracheverfahren).</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • AS – Arbeitssicherheit &amp; Gesundheitsschutz | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

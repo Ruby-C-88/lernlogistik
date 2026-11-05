@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LALO – Teil 6: Risikomanagement, Arbeitssicherheit & Repetition | E-Learning</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a; /* Deep Slate Blue für LALO */
+            --secondary-color: #3b82f6;
+            --accent-color: #dbeafe;
+            --tag-bg: #eff6ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(30, 58, 138, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel LALO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .slider-group { margin-bottom: 1rem; }
+        .slider-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .slider-group input[type=range] { width: 100%; }
+
+        .risk-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: bold; color: white; font-size: 0.85rem; }
+        .risk-low { background-color: #10b981; }
+        .risk-medium { background-color: #f59e0b; }
+        .risk-high { background-color: #ef4444; }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>LALO – Lagerlogistik</h1>
+                    <p>Teil 6: Risikomanagement, Arbeitssicherheit & Gesamtrepetition LALO</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+    <main>
+        <section class="card">
+            <h2>LALO - Teil 6: Risikomanagement, Arbeitssicherheit &amp; Gesamtrepetition</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 6. Unterrichtstag – Inhaltsbereich: Risikomanagement, Arbeitssicherheit im Lager, Notfallorganisation und Prüfungsvorbereitung (Gesamtrepetition Modul LALO).</p>
+            <p><strong>Qualifikations- und Lernziele (Leistungskriterien):</strong></p>
+            <ul>
+                <li><strong>Risikomanagement im Lager:</strong> Risiken systematisch identifizieren, bewerten (\(R = E \times A\)) und geeignete Steuerungsmaßnahmen ableiten.</li>
+                <li><strong>Arbeitssicherheit &amp; Gesundheitsschutz:</strong> Gesetzliche Grundlagen der Schweiz (ArG, UVG, EKAS-Richtlinie 6508, SUVA) im Lagerbetrieb sicher umsetzen.</li>
+                <li><strong>Notfall- &amp; Kontinuitätsplanung:</strong> Evakuierung, Brandschutz, Betriebsausfallskonzepte und Business Continuity Management (BCM) strukturieren.</li>
+                <li><strong>Gesamtrepetition LALO:</strong> Beherrschung aller relevanten Formeln, Bestandsberechnungen, Kennzahlen und strategischen Konzepte aus allen 6 Teilen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Risikomanagement im Lagerbereich</h4>
+            <p>Das <strong>Risikomanagement</strong> dient der systematischen Erfassung und Kontrolle von Gefahrenquellen, die den Betriebsablauf, die Warensicherheit oder die finanzielle Stabilität des Lagers gefährden.</p>
+            <ul>
+                <li><span class="highlight-text">Risikobewertung:</span>
+                    <p>\[\text{Risikowert } (R) = \text{Eintrittswahrscheinlichkeit } (E) \times \text{Schadensauswirkung } (A)\]</p>
+                </li>
+                <li><span class="highlight-text">Typische Lagerrisiken:</span> Fehleinlagerung, Sachschäden durch Regaleinsturz/Kollisionen, Schwund und Diebstahl, IT- und Systemausfälle (WMS/ERP-Downtime), Brand- und Wasserschäden, Fehllieferungen.</li>
+                <li><span class="highlight-text">Risikobewältigungsstrategien (4 Ts):</span>
+                    <ul>
+                        <li><em>Vermeidung (Terminate):</em> Beseitigung der Gefahrenquelle (z. B. Verzicht auf gefährliche Chemikalien).</li>
+                        <li><em>Verminderung (Tolerate / Treat):</em> Technische/organisatorische Schutzmaßnahmen (z. B. Sprinkler, Anfahrschutz).</li>
+                        <li><em>Überwälzung (Transfer):</em> Versichern des Risikos oder vertragliche Weitergabe an Logistikdienstleister.</li>
+                        <li><em>Akzeptanz (Tolerate):</em> Bewusstes Tragen des Restrisikos bei geringer Auswirkung.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- INTERAKTIVER RISIKOMATRIX-RECHNER -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Risikomatrix-Rechner für Lagerlogistiker</div>
+                <div class="diagram-subtitle">Bewege die Regler zur Ermittlung des Risikowerts und der empfohlenen Handlungsstrategie.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="slider-group" style="flex: 1; min-width: 200px;">
+                            <label>Eintrittswahrscheinlichkeit (1-5): <span id="lbl-prob">3</span></label>
+                            <input type="range" id="rng-prob" min="1" max="5" value="3" oninput="calcRisk()">
+                            <small style="color:var(--text-muted);">1 = Sehr selten, 5 = Fast sicher</small>
+                        </div>
+                        <div class="slider-group" style="flex: 1; min-width: 200px;">
+                            <label>Schadensauswirkung (1-5): <span id="lbl-impact">4</span></label>
+                            <input type="range" id="rng-impact" min="1" max="5" value="4" oninput="calcRisk()">
+                            <small style="color:var(--text-muted);">1 = Gering (Kleinschaden), 5 = Existenzbedrohend</small>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--tag-bg); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <strong>Berechneter Risikowert: <span id="calc-risk-score" style="font-size: 1.3rem;">12</span> / 25</strong>
+                            <span id="risk-badge-element" class="risk-badge risk-medium">Mittleres Risiko</span>
+                        </div>
+                        <p id="risk-strategy-text" style="font-size: 0.9rem; margin: 0;"><strong>Empfohlene Strategie:</strong> Gezielte Präventivmaßnahmen ergreifen (Verminderung durch Kontrollen, Anfahrschutz und Schulung).</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>2. Arbeitssicherheit, Gesundheitsschutz &amp; SUVA im Lager</h4>
+            <ul>
+                <li><span class="highlight-text">EKAS-Richtlinie 6508:</span> Pflicht zur Beizug von Arbeitsärzten und anderen Spezialisten der Arbeitssicherheit (ASA) zur systematischen Unfallverhütung im Betrieb.</li>
+                <li><span class="highlight-text">Sicherheitsanforderungen im Regallager:</span>
+                    <ul>
+                        <li>Gegen Abstürzen gesicherte Ladeeinheiten.</li>
+                        <li>Anfahrschutz an allen Eckbereichen von Regalzeilen (Mindesthöhe 400 mm, gelb-schwarz markiert).</li>
+                        <li>Jährliche Regalinspektion durch sachkundiges Personal (SN EN 15635).</li>
+                        <li>Breite von Verkehrswegen: Fußgängerwege mind. 1,0 m; Staplerwege = Fahrzeugbreite + 1,4 m (Sicherheitsabstand).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Ergonomie &amp; Heben:</span> Richtwerte der SUVA beachten (max. 25 kg für Männer, 15 kg für Frauen bei regelmäßiger manueller Handhabung). Einsatz von Hebehilfen, Exoskeletten und höhenverstellbaren Tischen.</li>
+            </ul>
+
+            <h4>3. Notfallorganisation, Brandschutz &amp; BCM</h4>
+            <ul>
+                <li><span class="highlight-text">Brandschutz im Lager:</span> Einteilung der Brandklassen (A, B, C, D, F). Installation automatischer Sprinkleranlagen, Rauch- und Wärmeabzugsanlagen (RWA) sowie Brandschutztore.</li>
+                <li><span class="highlight-text">Notfallprozess (Alarmierungskette):</span> 1. Rätten/Alarmieren \(\rightarrow\) 2. Retten \(\rightarrow\) 3. Löschen/Eindämmen.</li>
+                <li><span class="highlight-text">Business Continuity Management (BCM):</span> Notfallkonzepte für den Ausfall kritischer Infrastrukturen (Stromausfall/Blackout, IT-Systemausfall, Wassereinbruch). Vorhaltung von Ausweichlagern, Notstromaggregaten und manuellen Fallback-Prozessen.</li>
+            </ul>
+
+            <h4>4. Formelsammlung – Gesamtrepetition LALO</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kennzahl / Begriff</th>
+                            <th>Mathematische Formel / Berechnung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Verfügbarer Bestand</strong></td>
+                            <td>\(\text{Lagerbestand} + \text{disponierter Bestand} - \text{reservierter Bestand} - \text{Rückstände}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Durchschnittlicher Lagerbestand</strong></td>
+                            <td>\(\frac{\text{Anfangsbestand} + \text{Endbestand}}{2}\) oder \(\frac{\text{Anfangsbestand} + 12 \text{ Monatsbestände}}{13}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Meldebestand</strong></td>
+                            <td>\((\text{Tagesverbrauch} \times \text{Wiederbeschaffungszeit in Tagen}) + \text{Sicherheitsbestand}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerumschlagshäufigkeit</strong></td>
+                            <td>\(\frac{\text{Lagerabgang (oder Materialverbrauch)}}{\text{durchschnittlicher Lagerbestand}}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Durchschnittliche Lagerdauer</strong></td>
+                            <td>\(\frac{360 \text{ Tage}}{\text{Lagerumschlagshäufigkeit}}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerreichweite</strong></td>
+                            <td>\(\frac{\text{Lagerbestand} + \text{offene Bestellungen}}{\text{Tagesbedarf}}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerkostensatz (%)</strong></td>
+                            <td>\(\frac{\text{Gesamte Lagerkosten} \times 100}{\text{durchschnittlich gebundenes Kapital}}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lagerhaltungskostensatz (%)</strong></td>
+                            <td>\(\text{Lagerkostensatz (\%)} + \text{Kalkulatorischer Zinssatz (\%)}\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prozesswirkungsgrad (Lean)</strong></td>
+                            <td>\(\frac{\text{Wertschöpfende Zeit}}{\text{Gesamtdurchlaufzeit (DLZ)}} \times 100\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Risikowert (R)</strong></td>
+                            <td>\(\text{Eintrittswahrscheinlichkeit } (E) \times \text{Schadensauswirkung } (A)\)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Gegenüberstellung der 4 Risikosteuerrungsstrategien (4 Ts)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Strategie</th>
+                            <th>Prinzip &amp; Erklärung</th>
+                            <th>Konkretes Lagerbeispiel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vermeidung (Terminate)</strong></td>
+                            <td>Beseitigung der Risikoseite durch Verzicht auf gefährliche Aktivitäten.</td>
+                            <td>Einstellung der Einlagerung von hochexplosiven Stoffen im eigenen Stadtlager.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verminderung (Treat)</strong></td>
+                            <td>Reduktion der Eintrittswahrscheinlichkeit oder der Schadenshöhe durch Schutzmaßnahmen.</td>
+                            <td>Installation von Sprinkleranlagen, Rammschutz an Regalecken und Pflicht-Sicherheitsschuhen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Überwälzung (Transfer)</strong></td>
+                            <td>Übertragung der finanziellen Konsequenzen auf Dritte.</td>
+                            <td>Abschluss einer Lagergutversicherung oder Auslagerung des Gefahrguttransports an Spezialspedition.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Akzeptanz (Tolerate)</strong></td>
+                            <td>Bewusstes Tragen des Restrisikos, wenn Kosten der Vermeidung den Nutzen übersteigen.</td>
+                            <td>Einkalkulieren von geringfügigem Schwund/Bruch bei Bagatellartikeln (Schrauben/Kleinteile).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Der 5-stufige Risikomanagement-Prozess im Lager</h4>
+            <ol>
+                <li><strong>Risikoidentifikation:</strong> Systematische Erfassung aller Gefahrenquellen im Lager (Checklisten, Begehungen).</li>
+                <li><strong>Risikoanalyse:</strong> Ermittlung von Ursachen, Auslösern und Wirkungszusammenhängen.</li>
+                <li><strong>Risikobewertung:</strong> Berechnung des Risikowerts (\(R = E \times A\)) und Einordnung in die Risikomatrix.</li>
+                <li><strong>Risikosteuerung:</strong> Festlegung und Umsetzung passender Maßnahmen (Vermeidung, Verminderung, Überwälzung).</li>
+                <li><strong>Risikoüberwachung &amp; Auditierung:</strong> Regelmäßige Überprüfung der Wirksamkeit und Aktualisierung der Gefahrenanalysen.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">SUVA-Audit im Hochregallager:</span> Pflichtmäßige jährliche Regalprüfung nach SN EN 15635 auf Verformungen und Risse an Stützen.</li>
+                <li><span class="highlight-text">Anfahrschutz an Regalzeilen:</span> Gelb-schwarz markierter Anfahrschutz an allen Außenecken zur Verhinderung von Masteinstürzen durch Gabelstapler.</li>
+                <li><span class="highlight-text">BCM bei Cyberangriff:</span> Umschalten von automatisierter WMS-Steuerung auf papiergestützte Notfall-Kommissionierung im Fall eines Server-Downtimes.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Ein Lagerleiter ermittelt für den Ausfall der IT-Kühlungsanlage eine Eintrittswahrscheinlichkeit von 2 (selten) und einen möglichen Schadensaufwand von 5 (existenzbedrohend). Wie hoch ist der Risikowert und welche Strategie sollte angewendet werden?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> \(\text{Risikowert } R = 2 \times 5 = \mathbf{10}\). Bei hohem Schadenspotenzial sollte eine <strong>Risikoverminderung</strong> (Installation redundanter Kühlungen / Notstrom) oder eine <strong>Überwälzung</strong> (Versicherung) angewendet werden.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Wie breit muss ein Verkehrsweg im Lager mindestens gestaltet sein, wenn Gabelstapler mit einer Fahrzeugbreite von 1,20 m im Einrichtungsverkehr fahren und Fußgänger den Weg mitnutzen?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Fahrzeugbreite (1,20 m) + Sicherheitsabstand (1,40 m) = <strong>2,60 m Mindestbreite</strong> (bzw. baulich getrennter Fußgängerweg von mind. 1,00 m Breite).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Welche 4 Optionen stehen im Risikomanagement zur Behandlung identifizierter Risiken zur Auswahl (die 4 Ts)?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> 1. <strong>Terminate</strong> (Vermeidung), 2. <strong>Treat</strong> (Verminderung), 3. <strong>Transfer</strong> (Überwälzung), 4. <strong>Tolerate</strong> (Akzeptanz).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Berechne den Lagerumschlag und die durchschnittliche Lagerdauer bei einem Jahresverbrauch von 1'200'000 CHF und einem durchschnittlichen Lagerbestand von 200'000 CHF.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • \(\text{Umschlag} = \frac{1'200'000}{200'000} = \mathbf{6\text{-mal pro Jahr}}\)<br>
+                    • \(\text{Lagerdauer} = \frac{360}{6} = \mathbf{60\text{ Tage}}\)</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • LALO – Lagerlogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+
+            calcRisk();
+        });
+
+        function calcRisk() {
+            const prob = parseInt(document.getElementById('rng-prob').value);
+            const impact = parseInt(document.getElementById('rng-impact').value);
+
+            document.getElementById('lbl-prob').innerText = prob;
+            document.getElementById('lbl-impact').innerText = impact;
+
+            const score = prob * impact;
+            document.getElementById('calc-risk-score').innerText = score;
+
+            const badge = document.getElementById('risk-badge-element');
+            const stratText = document.getElementById('risk-strategy-text');
+
+            if (score <= 6) {
+                badge.className = 'risk-badge risk-low';
+                badge.innerText = 'Geringes Risiko';
+                stratText.innerHTML = '<strong>Empfohlene Strategie:</strong> Akzeptanz (Tolerate). Regelmäßige Beobachtung ausreichend.';
+            } else if (score <= 14) {
+                badge.className = 'risk-badge risk-medium';
+                badge.innerText = 'Mittleres Risiko';
+                stratText.innerHTML = '<strong>Empfohlene Strategie:</strong> Verminderung (Treat). Gezielte technische oder organisatorische Präventivmaßnahmen ergreifen.';
+            } else {
+                badge.className = 'risk-badge risk-high';
+                badge.innerText = 'Hohes Risiko';
+                stratText.innerHTML = '<strong>Empfohlene Strategie:</strong> Vermeidung (Terminate) oder Überwälzung (Transfer). Sofortiger Handlungsbedarf!';
+            }
+        }
+    </script>
+</body>
+</html>

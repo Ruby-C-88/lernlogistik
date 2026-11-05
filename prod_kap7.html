@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROLO – Kapitel 7: Steuerung & Controlling | E-Learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7;
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, var(--primary-color) 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+        
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        
+        /* UNTER-NAVIGATION (Kapitel Produktionslogistik) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; margin: 1.5rem 0; }
+        .diagram-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .btn-interactive { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.2s; margin-top: 0.5rem; }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        .form-group { margin-bottom: 0.75rem; }
+        .form-group label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 0.25rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+        .widget-result { background: #f0f9ff; border-left: 4px solid var(--primary-color); padding: 0.75rem 1rem; margin-top: 1rem; border-radius: 0 6px 6px 0; font-weight: 600; }
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>PROLO – Produktionslogistik</h1>
+                    <p>Kapitel 7: Produktionssteuerung und -controlling</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <div class="card">
+            <h2>1. Thema & Lernziele dieser Einheit</h2>
+            <p><strong>Thema:</strong> Produktionslogistik – Kapitel 7: Produktionssteuerung und -controlling (inklusive Stücklisten und Verwendungsnachweis).</p>
+            <p><strong>Lernziele:</strong> Nach der Erarbeitung dieser Lerneinheit sind die Lernenden in der Lage:</p>
+            <ul>
+                <li>Die typischen Aufgaben der Auftragsveranlassung und den Zusammenhang zur Produktionssteuerung zu erläutern.</li>
+                <li>Wichtige Aufgaben der Kapazitäts- und Auftragsüberwachung präzise zu beschreiben.</li>
+                <li>Erforderliche Betriebsdaten (BDE) und Kennzahlen für die Kapazitäts- und Auftragsüberwachung zu nennen.</li>
+                <li>Zentrale Phasen des Produktionscontrollings darzulegen und Wirkungszusammenhänge aufzuzeigen.</li>
+                <li>Gesetzliche Vorgaben zur Produktsicherheit und Produktehaftpflicht (PrSG, PrHG, Produktesicherheitsverordnung) zu erklären und die Konsequenzen abzuleiten.</li>
+                <li>Wichtige Kennzahlen des Produktionscontrollings (u. a. Fertigungstiefe, Ausnutzungsgrad, Beschäftigungsgrad, Arbeitsintensität) zu definieren, zu berechnen und zu interpretieren.</li>
+                <li>Unterstützende IT-Tools und ICT-Systeme (CAD, CAE, CAM, CAP, CAQ, CIM, CNC) in der Fertigung zu kategorisieren.</li>
+                <li>Den Zweck von Verwendungsnachweisen zu erläutern und verschiedene Stücklistenarten (Mengen-, Struktur-, Baukasten- und Variantenstückliste) zu unterscheiden und zu erstellen.</li>
+            </ul>
+
+            <h2>2. Detaillierter Hauptteil</h2>
+            <h3>A. Auftragsveranlassung & Auftragsfreigabe</h3>
+            <p>Die Produktionssteuerung gliedert sich in zwei Hauptaufgaben: die Auftragsveranlassung und die Kapazitäts- und Auftragsüberwachung.</p>
+            <p><strong>1. Aufgaben der Auftragsveranlassung</strong><br>
+            Mit der Auftragsveranlassung beginnt die operative Produktionssteuerung. Sie umfasst alle kurzfristigen Vorbereitungs- und Durchführungsschritte:</p>
+            <ul>
+                <li>Erstellung des Einsatz- und Maschinenbelegungsplans.</li>
+                <li>Bereitstellung sämtlicher Fertigungsunterlagen und Begleitdokumente.</li>
+                <li>Durchführung einer eingehenden Verfügbarkeitsprüfung für Material, Werkzeuge und Kapazitäten.</li>
+                <li>Bereitstellung der benötigten Materialien, Werkzeuge und innerbetrieblichen Transporte.</li>
+                <li>Fertigungsfreigabe auf Basis der zeitlichen und kapazitiven Feinplanung.</li>
+                <li>Erteilung und Überwachung der konkreten Arbeitsaufträge.</li>
+            </ul>
+
+            <p><strong>2. Auftragsfreigabe & Verfügbarkeitsprüfung</strong><br>
+            Die Auftragsfreigabe löst den physischen Fertigungsprozess aus. Voraussetzung ist eine erfolgreich bestandene Verfügbarkeitsprüfung. Dabei wird kontrolliert, ob an den betroffenen Arbeitsplätzen alle benötigten Materialien, Werkzeuge, Unterlagen und Kapazitäten vorhanden sind. Ziel ist die Vermeidung anlagen-, arbeits-, dispositions- oder materialbedingter Fertigungsstörungen, die zu einer Blockierung der Produktion führen könnten.</p>
+
+            <p><strong>3. Reihenfolgeplanung & Prioritätsregeln</strong><br>
+            Im Rahmen der kurzfristigen Ablaufplanung wird der freigegebene Teilauftragsbestand durch Durchlaufterminierung einlastet und eine optimale Abarbeitungsreihenfolge festgelegt. Hierbei kommen feste Prioritätsregeln zum Einsatz:</p>
+            <ul>
+                <li><strong>KOZ (Kürzeste Operationszeitregel):</strong> Höchste Priorität für den Auftrag mit der kürzesten Operationszeit.</li>
+                <li><strong>LOZ (Längste Operationszeitregel):</strong> Höchste Priorität für den Auftrag mit der längsten Operationszeit.</li>
+                <li><strong>GGB (Grösste Gesamtbearbeitungsregel):</strong> Höchste Priorität für den Auftrag mit der längsten Bearbeitungszeit auf allen Maschinen.</li>
+                <li><strong>GRB (Grösste Restbearbeitungsregel):</strong> Höchste Priorität für den Auftrag mit der längsten verbleibenden Bearbeitungszeit.</li>
+                <li><strong>GR (Geringste Rüstzeit):</strong> Höchste Priorität für den Auftrag mit der geringsten Maschinenrüstung.</li>
+                <li><strong>KRB (Kürzeste Restbearbeitungszeitregel):</strong> Höchste Priorität für die kürzeste verbleibende Bearbeitungszeit.</li>
+                <li><strong>LTR (Lieferterminregel):</strong> Höchste Priorität für den Auftrag, der planmässig am schnellsten fertiggestellt werden muss (führt zu geringerer Streuung der Durchlaufzeiten).</li>
+                <li><strong>MAA (Meiste auszuführende Arbeiten) / WAA (Wenigste auszuführende Arbeiten).</strong></li>
+                <li><strong>PW (Produktwert):</strong> Höchste Priorität für den wertvollsten Auftrag.</li>
+            </ul>
+
+            <p><strong>4. Arbeitsverteilung (Zentrale vs. Dezentrale Organisation)</strong></p>
+            <ul>
+                <li><strong>Zentrale Organisation:</strong> Eine zentrale Stelle plant und steuert alle Abläufe verbindlich; Fertigungsstellen sind reine Ausführungsorgane. Abweichungen erfordern eine Genehmigung der Zentrale.</li>
+                <li><strong>Dezentrale Organisation:</strong> Die zentrale Stelle gibt nur Rahmenbedingungen vor; die Fertigungsstellen führen Ablaufplanung und Arbeitsverteilung selbstständig durch und reagieren autonom auf Störungen.</li>
+            </ul>
+
+            <h3>B. Kapazitäts- und Auftragsüberwachung</h3>
+            <p>Die Kapazitäts- und Auftragsüberwachung kontrolliert das laufende Produktionsgeschehen und stellt die Einhaltung von Plandaten und Kennzahlen sicher.</p>
+            <p><strong>1. Anforderungen an die Überwachung:</strong></p>
+            <ul>
+                <li>Kontrolle muss zeitgleich (in Echtzeit) mit der Produktion erfolgen.</li>
+                <li>Soll-Ist-Vergleiche müssen signifikante Abweichungen sofort aufdecken.</li>
+                <li>Störungen müssen unmittelbar berücksichtigt und Ergebnisse rasch zurückgemeldet werden, um zeitnah Korrekturmassnahmen einzuleiten.</li>
+            </ul>
+            <p><strong>2. Betriebsdatenerfassung (BDE):</strong> Ein BDE-System erfasst vier Kategorien von Betriebsdaten:</p>
+            <ol>
+                <li><strong>Auftragsbezogene Daten:</strong> Produzierte Mengen, Qualitätsdaten, Anfangs-/Endtermine, Terminüberschreitungen.</li>
+                <li><strong>Maschinenbezogene Daten:</strong> Ausbringung, Auslastungsgrad, Rüst- und Unterbrechungszeiten, Zeitgrad, Maschinenstörungen.</li>
+                <li><strong>Materialbezogene Daten:</strong> Lagerbestände, Zu-/Abgänge, Qualitätsfehler, Verbrauchsabweichungen.</li>
+                <li><strong>Mitarbeiterbezogene Daten:</strong> Personalbestand, Arbeitszeiten, Anwesenheit, Fehlzeiten, Auslastungsgrad.</li>
+            </ol>
+            <p><strong>3. Kontrollarten der Auftragsüberwachung:</strong></p>
+            <ul>
+                <li><strong>Einzelauftragskontrolle:</strong> Jeder Auftrag wird individuell bezüglich Terminen und Mengen überwacht und mit Soll-Daten verglichen.</li>
+                <li><strong>Fertigungsfortschrittskontrolle:</strong> Überwachung aller Fertigungsaufträge über einen längeren Zeitraum hinweg zur Feststellung des Gesamtablaufs.</li>
+            </ul>
+
+            <h3>C. Produktionscontrolling & Kennzahlen</h3>
+            <p><strong>1. Der Controlling-Kreislauf:</strong> Informationsbedarf klären & Informationen beschaffen \(\rightarrow\) Informationsaufbereitung \(\rightarrow\) Informationsanalyse & -bewertung \(\rightarrow\) Verbesserungsmassnahmen vorschlagen & einleiten.</p>
+            <p><strong>2. Formeln der relativen Kennzahlen:</strong></p>
+            <ul>
+                <li>Fertigungstiefe (Eigenfertigungsfaktor): \[\text{Fertigungstiefe als Faktor} = \frac{\text{Anteil Eigenfertigung}}{\text{Anteil Eigenfertigung} + \text{Anteil Fremdbezug}}\]</li>
+                <li>Umsatzbezogene Fertigungstiefe: \[\frac{\text{Umsatz} - \text{Materialaufwand (Fremdbezug)}}{\text{Umsatz}} \times 100\%\]</li>
+                <li>Herstellungskostenbezogene Fertigungstiefe: \[\frac{\text{Herstellungskosten} - \text{Materialaufwand (Fremdbezug)}}{\text{Umsatz}} \times 100\%\]</li>
+                <li>Fertigungstiefe Wertschöpfung: \[\text{Fertigungstiefe in } \% = \frac{\text{Wertschöpfung}}{\text{Gesamtleistung}} \times 100\]</li>
+                <li>Beschäftigungsgrad: \[\text{Beschäftigungsgrad} = \frac{\text{ausgenutzte Kapazität}}{\text{verfügbare Kapazität}}\]</li>
+                <li>Ausnutzungsgrad der Arbeitsplätze: \[\text{Ausnutzungsgrad der Arbeitsplätze in } \% = \frac{\text{Belegschaft}}{\text{Arbeitsplätze}} \times 100\]</li>
+                <li>Ausnutzungsgrad der produktiven Arbeitsplätze: \[\text{Ausnutzungsgrad der prod. Arbeitsplätze in } \% = \frac{\text{Summe produktiver Mitarbeiter}}{\text{Summe produktiver Arbeitsplätze}} \times 100\]</li>
+                <li>Arbeitsintensität 1 (Geschwindigkeit): \[\text{Intensität 1} = \frac{\text{Ausbringungsmenge } m \text{ (Stk.)}}{\text{benötigte Arbeitszeit } t \text{ (Min.)}}\]</li>
+                <li>Arbeitsintensität 2 (Erlös / Stundenintensität): \[\text{Intensität 2 (\%)} = \frac{\text{geleistete Arbeitszeit } t \text{ (Std.)}}{\text{Verkaufspreis VP (CHF)}} \times 100\]</li>
+                <li>Zeitgrad Normalzeit: Misst das Verhältnis der effektiv benötigten Arbeitszeit pro Auftrag zur vertraglich geregelten Arbeitszeit pro Tag (Normalzeit) zur Beurteilung der Einsatzeffektivität.</li>
+            </ul>
+            <p><strong>3. Absolute Kennzahlen:</strong> Im Gegensatz zu relativen Kennzahlen bestehen absolute Kennzahlen aus Einzelwerten inklusive Einheit: Beschaffungskosten (CHF), Kapazitätsangebot (Std.), Kapazitätsbedarf (Std.), Logistikkosten (CHF), Produktionskosten (CHF).</p>
+
+            <h3>D. Gesetzliche Vorschriften: Produktsicherheit & Haftung</h3>
+            <ol>
+                <li><strong>Produktesicherheitsgesetz (PrSG):</strong> Produkte, Arbeitsmittel und Investitionsgüter dürfen in der Schweiz nur in Verkehr gebracht werden, wenn sie die Sicherheit und Gesundheit der Konsumenten sowie Dritter bei normaler oder vorhersehbarer Verwendung nicht oder nur geringfügig gefährden.</li>
+                <li><strong>Produktesicherheitsverordnung:</strong> Regelung grundlegender Sicherheitsanforderungen für Maschinen, Aufzüge, Gasgeräte, Druckbehälter und persönliche Schutzausrüstungen (PSA) nach dem Stand der Technik.</li>
+                <li><strong>Produktehaftpflichtgesetz (PrHG):</strong> Strikte Kausalhaftung des Herstellers für Schäden an Leib und Leben sowie für Schäden an privat genutzten Sachen, die durch ein fehlerhaftes Produkt entstehen. Ein Produkt gilt als fehlerhaft, wenn es nicht die Sicherheit bietet, die man unter Berücksichtigung aller Umstände berechtigterweise erwarten darf.</li>
+            </ol>
+
+            <h3>E. Verwendungsnachweis und Stücklistenarten</h3>
+            <ul>
+                <li><strong>Verwendungsnachweis:</strong> Zeigt auf, wofür bestimmte Teile oder Rohstoffe verwendet werden.</li>
+                <li><strong>Stückliste:</strong> Zeigt auf, woraus ein Erzeugnis besteht.</li>
+            </ul>
+            <p><strong>Die 4 primären Stücklistenarten:</strong></p>
+            <ol>
+                <li><strong>Mengenstückliste:</strong> Unstrukturierte Auflistung aller Bestandteile eines Produkts mit Mengenangaben; unterscheidet zwischen Eigen- und Fremdteilen. Einsatz bei einfachen Produkten und einstufiger Fertigung.</li>
+                <li><strong>Strukturstückliste:</strong> Strukturierte Zusammenstellung, die über Dispositionsstufen/Einrückungen genau aufzeigt, in welcher Fertigungsstufe welche Teile/Baugruppen verbaut werden. Einsatz bei mehrstufiger Fertigung.</li>
+                <li><strong>Baukastenstückliste:</strong> Entsteht durch Zerlegung der Strukturstückliste; jede Baugruppe erhält eine eigene Stückliste für genau eine Fertigungsstufe. Vorteil: Minimiert Redundanzen, erleichtert Anpassungen.</li>
+                <li><strong>Variantenstückliste:</strong> Bildet Produktfamilien mit geringfügigen Abweichungen ab (Grundausführung zuzüglich/abzüglich variierender Komponenten oder Mengen).</li>
+            </ol>
+
+            <h3>F. Unterstützende IT-Tools in der Produktion</h3>
+            <p>Moderne Produktionssteuerung nutzt spezialisierte ICT-Systeme: CAD (Computer Aided Design), CAE (Computer Aided Engineering), CAM (Computer Aided Manufacturing), CAP (Computer Aided Planning), CAQ (Computer Aided Quality Assurance), CIM (Computer Integrated Manufacturing), CNC (Computerized Numerical Control).</p>
+
+            <h2>3. Strukturierte Elemente</h2>
+            <h3>Tabelle 1: Prioritätsregeln der Reihenfolgeplanung im Überblick</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Kürzel</th><th>Bezeichnung</th><th>Regelmechanismus / Prioritätskriterium</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>KOZ</td><td>Kürzeste Operationszeitregel</td><td>Auftrag mit der kürzesten Bearbeitungszeit am Arbeitsplatz erhält höchste Priorität.</td></tr>
+                        <tr><td>LOZ</td><td>Längste Operationszeitregel</td><td>Auftrag mit der längsten Bearbeitungszeit am Arbeitsplatz erhält höchste Priorität.</td></tr>
+                        <tr><td>GGB</td><td>Grösste Gesamtbearbeitungsregel</td><td>Höchste Priorität für den Auftrag mit der grössten Summe aller Bearbeitungszeiten.</td></tr>
+                        <tr><td>GRB</td><td>Grösste Restbearbeitungsregel</td><td>Höchste Priorität für den Auftrag mit der längsten verbleibenden Restbearbeitungszeit.</td></tr>
+                        <tr><td>GR</td><td>Geringste Rüstzeit</td><td>Höchste Priorität für den Auftrag, der den geringsten Maschinenrüstaufwand erfordert.</td></tr>
+                        <tr><td>KRB</td><td>Kürzeste Restbearbeitungszeit</td><td>Höchste Priorität für die kürzeste verbleibende Restzeit über alle Folgestufen.</td></tr>
+                        <tr><td>LTR</td><td>Lieferterminregel</td><td>Höchste Priorität für den Auftrag mit dem dringlichsten geplante Fertigstellungstermin.</td></tr>
+                        <tr><td>PW</td><td>Produktwert</td><td>Höchste Priorität für den Auftrag mit dem höchsten finanziellen Wert des Endprodukts.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 2: Vergleich der vier Stücklistenarten</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Stücklistenart</th><th>Aufbau & Merkmal</th><th>Vorteile</th><th>Nachteile / Grenzen</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Mengenstückliste</td><td>Unstrukturierte Gesamtmengenliste aller Teile.</td><td>Sehr einfach, schnell zu erstellen.</td><td>Keine Fertigungsstruktur erkennbar, ungeeignet für Mehrstufigkeit.</td></tr>
+                        <tr><td>Strukturstückliste</td><td>Mehrstufige Darstellung mit Fertigungsstufen.</td><td>Vollständiger Überblick über die Erzeugnisstruktur.</td><td>Bei komplexen Teilen und Mehrfachverwendung schnell unübersichtlich.</td></tr>
+                        <tr><td>Baukastenstückliste</td><td>Einstufige Stückliste pro Baugruppe.</td><td>Keine Redundanzen, einfache Stammdatenpflege bei Mehrfachverwendung.</td><td>Gesamtzusammenhang des Endprodukts schwer auf einen Blick erkennbar.</td></tr>
+                        <tr><td>Variantenstückliste</td><td>Zusammenfassung ähnlicher Ausführungen.</td><td>Reduziert Speicherbedarf und Pflegeaufwand bei Varianten.</td><td>Erfordert genaue Dokumentation der Ausführungsschlüssel.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 3: Unterstützende IT-Tools in der Produktion</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>System</th><th>Vollständige Bezeichnung</th><th>Hauptsächliches Einsatzgebiet</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>CAD</td><td>Computer Aided Design</td><td>Erstellung von 2D/3D-Zeichnungen und Bauplänen.</td></tr>
+                        <tr><td>CAE</td><td>Computer Aided Engineering</td><td>Technische Simulationen und statische Berechnungen.</td></tr>
+                        <tr><td>CAM</td><td>Computer Aided Manufacturing</td><td>Automatische Steuerung von Fertigungsanlagen.</td></tr>
+                        <tr><td>CAP</td><td>Computer Aided Planning</td><td>Erstellung von Arbeitsplänen, Stücklisten und Kapazitätsplänen.</td></tr>
+                        <tr><td>CAQ</td><td>Computer Aided Quality Assurance</td><td>Automatische Qualitätsmessung und -auswertung.</td></tr>
+                        <tr><td>CIM</td><td>Computer Integrated Manufacturing</td><td>Ganzheitliche EDV-Integration von Konstruktion, Planung und Fertigung.</td></tr>
+                        <tr><td>CNC</td><td>Computerized Numerical Control</td><td>Direkte Programmsteuerung von Werkzeugmaschinen.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Nummerierte Liste 1: Ablaufschema der Auftragsveranlassung & -steuerung</h3>
+            <ol>
+                <li><strong>Feinplanung & Belegungsplanung:</strong> Einlastung der Aufträge auf die Arbeitsplätze unter Berücksichtigung der effektiv belastbaren Kapazität.</li>
+                <li><strong>Reihenfolgeplanung:</strong> Festlegung der Abarbeitung an den Maschinen unter Anwendung definierter Prioritätsregeln (z. B. KOZ, LTR).</li>
+                <li><strong>Verfügbarkeitsprüfung:</strong> Systematische Kontrolle, ob Material, Werkzeuge, NC-Programme, Zeichnungen und Freikapazitäten vorhanden sind.</li>
+                <li><strong>Auftragsfreigabe:</strong> Offizielle Freigabe des Fertigungsauftrags bei positiver Verfügbarkeitsprüfung.</li>
+                <li><strong>Arbeitsdokumentation & Transport:</strong> Druck der Arbeitspapiere und Veranlassung der Materialtransporte an die Arbeitsplätze.</li>
+                <li><strong>Arbeitsverteilung:</strong> Zuweisung der Arbeitsgänge an die konkreten Mitarbeiter bzw. Maschinen (zentral oder dezentral).</li>
+                <li><strong>BDE-Rückmeldung:</strong> Erfassung von Start, Ende, Menge und Ausschuss via BDE im laufenden Betrieb.</li>
+            </ol>
+
+            <h3>Nummerierte Liste 2: Der Steuerungskreislauf des Produktionscontrollings</h3>
+            <ol>
+                <li><strong>Definition des Informationsbedarfs:</strong> Festlegung, welche Daten für welche Entscheidungen benötigt werden.</li>
+                <li><strong>Datenerhebung (Informationsbeschaffung):</strong> Erfassung operativer Ist-Daten (Mengen, Zeiten, Störungen) aus der Fertigung via BDE.</li>
+                <li><strong>Datenverdichtung (Informationsaufbereitung):</strong> Berechnung relativer und absoluter Ist-Kennzahlen.</li>
+                <li><strong>Soll-Ist-Analyse (Informationsanalyse):</strong> Gegenüberstellung von Planzahlen und Ist-Ergebnissen zur Ermittlung signifikanter Abweichungen.</li>
+                <li><strong>Informationsbewertung:</strong> Analyse der Ursachen mithilfe von Wirkungsmodellen und Ursache-Wirkungs-Diagrammen.</li>
+                <li><strong>Massnahmeneinleitung:</strong> Einleitung von Korrekturmassnahmen zur Beseitigung von Störungen und Optimierung des Prozesses.</li>
+            </ol>
+
+            <h2>4. Praxis- und Anwendungsbeispiele</h2>
+            <p><strong>Praxisbeispiel 1: Berechnung der Stundenintensität (Arbeitsintensität 2)</strong></p>
+            <p>Szenario (Minicase Nachkalkulation): Aus der Nachkalkulation liegen folgende Fertigungsdaten für verschiedene Aufträge vor:</p>
+            <ul>
+                <li>Auftrag A: Verkaufspreis = \(36'000\text{ CHF}\), Geleistete Arbeitszeit = \(690\text{ Std.}\).
+                \[\text{Intensität}_A = \frac{690}{36'000} \times 100 = 1,92\%\]</li>
+                <li>Auftrag D: Verkaufspreis = \(195'000\text{ CHF}\), Geleistete Arbeitszeit = \(2'250\text{ Std.}\).
+                \[\text{Intensität}_D = \frac{2'250}{195'000} \times 100 = 1,15\%\]</li>
+            </ul>
+            <p>Erklärung: Auftrag D weist eine deutlich geringere Stundenintensität pro Erlöseinheit auf als Auftrag A, was bedeutet, dass bei Auftrag D pro geleisteter Arbeitsstunde ein höherer Erlös erzielt wurde.</p>
+
+            <p><strong>Praxisbeispiel 2: Fertigungstiefe und Erlöse (Schindler AG)</strong></p>
+            <p>Szenario (Minicase Schindler AG): Ein Betrieb stellt 6 Komponenten her. Aufgrund der Deckungsbeitragsrechnung entscheidet der Finanzleiter:</p>
+            <ul>
+                <li>Eigenfertigung: Teil 2 (\(3'000 \text{ Stk. à } 300\text{ CHF} = 900'000\text{ CHF}\)), Teil 5 (\(4'000 \text{ Stk. à } 150\text{ CHF} = 600'000\text{ CHF}\)), Teil 6 (\(5'000 \text{ Stk. à } 600\text{ CHF} = 3'000'000\text{ CHF}\)). \(\rightarrow\) Summe Eigenfertigung = \(1'800'000\text{ CHF}\) (gemäss Vorlage).</li>
+                <li>Fremdbezug: Teil 1 (\(2'000 \text{ Stk. à } 350\text{ CHF} = 700'000\text{ CHF}\)), Teil 3 (\(2'000 \text{ Stk. à } 250\text{ CHF} = 500'000\text{ CHF}\)), Teil 4 (\(1'000 \text{ Stk. à } 200\text{ CHF} = 200'000\text{ CHF}\)). \(\rightarrow\) Summe Fremdbezug = \(1'400'000\text{ CHF}\).</li>
+                <li>Gesamterlös (Gesamtwertschöpfung): \[\text{Gesamtsumme} = 1'800'000 + 1'400'000 = 3'200'000\text{ CHF}\]</li>
+                <li>Berechnung der Fertigungstiefe: \[\text{Fertigungstiefe} = \frac{1'800'000}{3'200'000} \times 100\% = 56,25\%\]</li>
+            </ul>
+            <p>Erklärung: Das Unternehmen stellt 56,25% seines Wertschöpfungsvolumens im eigenen Haus her.</p>
+
+            <p><strong>Praxisbeispiel 3: Erzeugnisbaum und Mengenstückliste (Behr Maschinenbau AG)</strong></p>
+            <p>Szenario (Minicase Behr AG): Die Maschine M1 besteht aus 2 Baugruppen BG 32, 2 Baugruppen BG 88 und 1 Baugruppe BG 40. BG 32 besteht aus 1 BG 40, 4 ET 45, 2 ET 48. BG 88 besteht aus 1 ET 49, 4 ET 46. BG 40 besteht aus 1 ET 70, 1 ET 72, 5 ET 77.</p>
+            <p>Ermittlung der Gesamtmengen für M1: BG 40 wird insgesamt 3-mal benötigt (1 + 2×1 = 3).</p>
+            <ul>
+                <li>Einzelteil 45: \(2 \times 4 = 8\text{ Stück}\).</li>
+                <li>Einzelteil 46: \(2 \times 4 = 8\text{ Stück}\).</li>
+                <li>Einzelteil 48: \(2 \times 2 = 4\text{ Stück}\).</li>
+                <li>Einzelteil 49: \(2 \times 1 = 2\text{ Stück}\).</li>
+                <li>Einzelteil 70: \(3 \times 1 = 3\text{ Stück}\).</li>
+                <li>Einzelteil 72: \(3 \times 1 = 3\text{ Stück}\).</li>
+                <li>Einzelteil 77: \(3 \times 5 = 15\text{ Stück}\).</li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET KAPITEL 7: KENNZAHLEN-RECHNER -->
+            <div class="interactive-widget">
+                <div class="diagram-title">Interaktiver Simulator: Fertigungstiefen- & Kennzahlen-Rechner</div>
+                <div class="diagram-subtitle">Berechnen Sie die Fertigungstiefe in % nach dem Schindler AG Modell:</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    <div class="form-group">
+                        <label>Erlös Eigenfertigung (CHF):</label>
+                        <input type="number" id="ft_eigen" value="1800000">
+                    </div>
+                    <div class="form-group">
+                        <label>Erlös Fremdbezug (CHF):</label>
+                        <input type="number" id="ft_fremd" value="1400000">
+                    </div>
+                </div>
+                <button class="btn-interactive" onclick="calcFT()">Fertigungstiefe berechnen</button>
+                <div class="widget-result" id="ft_result">
+                    Fertigungstiefe: 56.25% (Eigenfertigung von 1'800'000 CHF bei 3'200'000 CHF Gesamtleistung)
+                </div>
+            </div>
+
+            <h2>5. Mini-Quiz zur Wissensüberprüfung</h2>
+            <details>
+                <summary>Frage 1: Was ist der Kernzweck einer Verfügbarkeitsprüfung im Rahmen der Auftragsveranlassung und welche Elemente werden dabei kontrolliert?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Der Kernzweck der Verfügbarkeitsprüfung besteht darin, sicherzustellen, dass die Fertigung nach der Auftragsfreigabe ohne Unterbrechungen und Störungen durchgeführt werden kann. Kontrolliert werden vier Elemente an den beteiligten Arbeitsplätzen: das benötigte Material, die erforderlichen Werkzeuge, die notwendigen Fertigungsdokumente/Informationen sowie die freien Kapazitäten.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 2: Worin besteht der wesentliche Unterschied zwischen einer Baukastenstückliste und einer Strukturstückliste, und wann wird welche bevorzugt?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Die Strukturstückliste zeigt alle Bestandteile eines Produkts über alle Fertigungsstufen hinweg in einer einzigen, eingerückten Gesamtübersicht. Sie wird bei mehrstufiger Fertigung mittlerer Komplexität eingesetzt. Die Baukastenstückliste hingegen zerlegt das Produkt in einzelne Teilstücklisten für jeweils genau eine Baugruppe. Sie wird bei sehr komplexen Produkten (z. B. Autos, Computer) bevorzugt, da sie Mehrfachverwendungen von Baugruppen ohne Redundanz abbildet und wesentlich übersichtlicher bleibt.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 3: Welche Pflichten erlegt das Schweizer Produktesicherheitsgesetz (PrSG) Herstellern und Inverkehrbringern auf?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Das PrSG schreibt vor, dass Produkte, Arbeitsmittel und Investitionsgüter in der Schweiz nur dann in Verkehr gebracht werden dürfen, wenn sie bei normaler oder vernünftigerweise vorhersehbarer Verwendung die Gesundheit und Sicherheit von Konsumenten oder Dritten nicht oder nur geringfügig gefährden. Sie müssen den grundlegenden Sicherheitsanforderungen oder dem aktuellen Stand des Wissens und der Technik entsprechen.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 4: Wie berechnet sich der Ausnutzungsgrad der produktiven Arbeitsplätze und welche Mitarbeitergruppe gilt dabei als "nicht produktiv"?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Die Formel lautet: \[\text{Ausnutzungsgrad der prod. Arbeitsplätze (\%)} = \frac{\text{Summe produktiver Mitarbeiter}}{\text{Summe produktiver Arbeitsplätze}} \times 100\] Als "nicht produktiv" gelten Mitarbeiter, deren Leistung dem Kunden nicht direkt als Wertschöpfung in Rechnung gestellt werden kann, wie z. B. Personal im Backoffice, in der Verwaltung oder in der Arbeitsvorbereitung (AVOR).
+                </div>
+            </details>
+            <details>
+                <summary>Frage 5: Welche Prioritätsregel liegt vor, wenn der Auftrag mit der geringsten Maschinenrüstzeit die höchste Dringlichkeit erhält, und welches Ziel wird damit verfolgt?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Es handelt sich um die GR-Regel (Geringste Rüstzeit). Damit wird das Ziel verfolgt, die Rüstzeiten an den Maschinen zu minimieren, um die produktive Bearbeitungszeit zu maximieren und Kapazitätsverluste durch Umrüstungen zu vermeiden.
+                </div>
+            </details>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function calcFT() {
+            const eigen = parseFloat(document.getElementById('ft_eigen').value);
+            const fremd = parseFloat(document.getElementById('ft_fremd').value);
+            const gesamt = eigen + fremd;
+            if (gesamt > 0) {
+                const ft = (eigen / gesamt) * 100;
+                document.getElementById('ft_result').innerHTML = `Fertigungstiefe: <strong>${Math.round(ft * 100) / 100}%</strong> (Eigenfertigung von ${eigen.toLocaleString()} CHF bei ${gesamt.toLocaleString()} CHF Gesamtsumme)`;
+            } else {
+                document.getElementById('ft_result').innerHTML = 'Bitte gültige Werte eingeben.';
+            }
+        }
+    </script>
+</body>
+</html>

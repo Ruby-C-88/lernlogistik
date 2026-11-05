@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LALO – Teil 2: Kommissionierung & Inventur | E-Learning</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a; /* Deep Slate Blue für LALO */
+            --secondary-color: #3b82f6;
+            --accent-color: #dbeafe;
+            --tag-bg: #eff6ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(30, 58, 138, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel LALO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>LALO – Lagerlogistik</h1>
+                    <p>Teil 2: Kommissionierung, Bestandsüberwachung & Inventur</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>LALO - Teil 2: Kommissionierung, Bestandsüberwachung & Inventur</h2>
+
+            <h3>Thema & Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 2. Unterrichtstag – Inhaltsbereich: Kommissionierung, Bestandsüberwachung & Inventur (Kapitel 9 / Teil 2: Lager und Materialwirtschaft). Dozent: Charly Mettler.</p>
+            <p><strong>Leistungskriterien & Lernziele:</strong></p>
+            <ul>
+                <li><strong>Zusammenhänge der Kommissionierung</strong> (Warenfluss, Fortbewegung, Bereitstellung, Entnahme, Abgabe und Organisation) umfassend verstehen und differenzieren.</li>
+                <li><strong>Kommissioniermethoden</strong> (seriell vs. parallel, auftrags- vs. serienbezogen) sowie den <strong>Datenfluss</strong> (Batch vs. Real Time, Online vs. Offline) systematisch unterscheiden und anwenden.</li>
+                <li>Die <strong>Teilzeiten der Kommissionierzeit</strong> (Basis-, Weg-, Greif-, Tot- und Verteilzeit) identifizieren, berechnen und Optimierungsmaßnahmen derive.</li>
+                <li><strong>Kommissionierfehler</strong>, deren Ursachen und betriebswirtschaftliche Konsequenzen kennen.</li>
+                <li><strong>Lagerplatzzuordnung und ABC-Analyse</strong> nach Zugriffshäufigkeit in 7 Schritten durchführen.</li>
+                <li><strong>Bestandsüberwachung und Bestandspflege</strong> (Materialeingänge, Materialausgänge, Verfügbarkeit und Kennzahlen) strukturieren.</li>
+                <li><strong>Bestandsarten</strong> präzise definieren und berechnen (z. B. durchschnittlicher Lagerbestand, verfügbarer Bestand, Meldebestand).</li>
+                <li><strong>Inventurarten</strong> und <strong>Methoden der Verbrauchsrechnung</strong> (Inventurmethode, Rückrechnungsmethode, Fortschreibungsmethode) beherrschen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Grundsatz & Definition der Kommissionierung</h4>
+            <p>Die <strong>Kommissionierung</strong> ist das Zusammenstellen von Aufträgen aus einem vorhandenen Artikelsortiment. Die Aufträge können für <strong>interne Kunden</strong> (z. B. Montage oder Produktion) oder für <strong>externe Kunden</strong> (z. B. Handelsunternehmen) bestimmt sein.</p>
+
+            <h4>2. Dimensionen der Kommissionierung (Warenfluss, Fortbewegung, Bereitstellung)</h4>
+            <ul>
+                <li><span class="highlight-text">Bereitstellung der Waren:</span>
+                    <ul>
+                        <li><em>Statische Bereitstellung („Mensch zu Ware“):</em> Die Ware lagert unbeweglich an einem festen Ort. Der Kommissionierer bewegt sich zur Ware hin, um die Artikel zu entnehmen.</li>
+                        <li><em>Dynamische Bereitstellung („Ware zu Mensch“):</em> Die Ware lagert in einem Lagergestell oder System, welches die benötigte Ware selbstständig holt. Der Kommissionierer entnimmt den Artikel, und das System lagert nicht benötigte Artikel automatisch wieder ein.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Fortbewegung:</span>
+                    <ul>
+                        <li><em>Eindimensionale Fortbewegung:</em> Die Kommissionierung erfolgt rein horizontal auf Bodenplätzen. Hierbei kommen in der Regel Horizontal-Kommissionierer zum Einsatz; kleine Artikel werden mit Rollwagen oder Rolltischen kommissioniert.</li>
+                        <li><em>Mehrdimensionale Fortbewegung:</em> Die Bewegung erfolgt sowohl horizontal als auch vertikal. Der Kommissionierer erhält dadurch Zugriff auf verschiedene Bereitstellungsebenen (z. B. mit Regalbediengeräten).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Entnahme:</span>
+                    <ul>
+                        <li><em>Manuelle Entnahme:</em> Der Artikel wird von Hand aus dem Lagerplatz entnommen und in einen Kommissionierbehälter oder Ladungsträger gelegt.</li>
+                        <li><em>Automatische Entnahme:</em> Die Artikel gelangen vollautomatisch in den Kommissionierbehälter (z. B. über Sorter/Sortieranlagen).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Abgabe der Ware:</span>
+                    <ul>
+                        <li><em>Zentrale Abgabe:</em> Die kommissionierten Güter werden an einem einzigen zentralen Ort zur Verpackung und Bereitstellung übergeben.</li>
+                        <li><em>Dezentrale Abgabe:</em> Die kommissionierte Ware wird am Ende des Ganges an eine Fördereinrichtung weitergegeben und gelangt von dort zum zentralen Ort (kurze Wege).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Organisation (Kommissionierzonen):</span>
+                    <ul>
+                        <li><em>Einzonige Kommissionierung:</em> Das Kommissioniergut wird ausschließlich aus einer einzigen festgelegten Zone gesammelt.</li>
+                        <li><em>Mehrzonige Kommissionierung:</em> Das Kommissioniergut wird aus zwei oder mehreren separaten Zonen gesammelt.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- INTERAKTIVES REFA-ZEITEN EXPLORER WIDGET -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver REFA-Teilzeiten-Explorer</div>
+                <div class="diagram-subtitle">Klicke auf ein Zeitsegment, um Details und Optimierungshebel im Lager einzublenden.</div>
+                
+                <div class="interactive-widget">
+                    <div style="display: flex; height: 40px; border-radius: 6px; overflow: hidden; margin-bottom: 1rem; cursor: pointer; text-align: center; color: white; font-weight: bold; font-size: 0.85rem;">
+                        <div onclick="selectRefaTime('basis')" style="width: 14%; background-color: #0284c7; line-height: 40px;" title="Basiszeit (14%)">Basis (14%)</div>
+                        <div onclick="selectRefaTime('weg')" style="width: 28%; background-color: #1e3a8a; line-height: 40px;" title="Wegzeit (28%)">Wegzeit (28%)</div>
+                        <div onclick="selectRefaTime('greif')" style="width: 16%; background-color: #059669; line-height: 40px;" title="Greifzeit (16%)">Greif (16%)</div>
+                        <div onclick="selectRefaTime('tot')" style="width: 17%; background-color: #d97706; line-height: 40px;" title="Totzeit (17%)">Tot (17%)</div>
+                        <div onclick="selectRefaTime('verteil')" style="width: 25%; background-color: #dc2626; line-height: 40px;" title="Verteilzeit (25%)">Verteil (25%)</div>
+                    </div>
+                    
+                    <div id="refa-info-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="refa-title" style="margin-bottom: 0.25rem; color: var(--primary-color);">Wegzeit (28% der Gesamtarbeitszeit = 142.8 Min.)</h5>
+                        <p id="refa-desc" style="font-size: 0.9rem; margin: 0;"><strong>Beschreibung:</strong> Zeit für das Zurücklegen der Strecke zwischen zwei Entnahmestellen.<br><strong>Optimierungsansatz:</strong> Schnelldreher nahe am Ausgang platzieren (ABC-Zonung), Wegoptimierung via WMS, Pick-by-Voice/Light nutzen, zweidimensionales Kommissionieren.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>3. Kommissioniermethoden</h4>
+            <ul>
+                <li><span class="highlight-text">Auftragsbezogene, serielle Kommissionierung:</span> Der Auftrag wird positionsweise nacheinander von demselben Mitarbeiter oder durch Übergabepunkte zwischen Bereichen von mehreren Mitarbeitern nacheinander bis zum Ende abgearbeitet. Der Kommissionierschein ist vollständig einem einzelnen Auftrag zugeordnet.</li>
+                <li><span class="highlight-text">Auftragsbezogene, parallele Kommissionierung:</span> Der Auftrag wird in der Arbeitsvorbereitung in verschiedene Zonen/Bereiche aufgeteilt. Mehrere Kommissionierer arbeiten die Teilaufträge parallel positionsweise ab. Anschließend werden die Teilaufträge zu einem Gesamtauftrag zusammengefasst. Vorteil: Hohe Kommissionierleistung; Gefahr: Engpassbildung durch einseitige Belastung eines einzelnen Bereichs.</li>
+                <li><span class="highlight-text">Serienbezogene, parallele Kommissionierung:</span> Mehrere Kommissionierscheine werden zu einer Serie zusammengefasst. Die Positionen werden artikelweise über die Lagerzonen aufgeteilt, sodass ein Artikel, der in mehreren Aufträgen vorkommt, in einer einzigen Tour gesammelt (gerüstet) werden kann. Danach werden die gesammelten Artikel auf die einzelnen Kundenaufträge verteilt.</li>
+            </ul>
+
+            <h4>4. Datenfluss & Moderne Kommissionierverfahren</h4>
+            <ul>
+                <li><span class="highlight-text">Datenaufbereitung:</span>
+                    <ul>
+                        <li><em>Batch-Aufbereitung:</em> Auftragsinformationen werden gesammelt und stapelweise verarbeitet (Änderungen wirken erst im folgenden Lauf).</li>
+                        <li><em>Real Time (Echtzeit):</em> Eingehende Daten werden direkt vom Rechner an den Kommissionierer übermittelt (ständige Anpassung und direkte Bestandsaktualisierung).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Datenweitergabe:</span>
+                    <ul>
+                        <li><em>Offline:</em> Daten werden mittels Listen und Belegen an eine zentrale Datenverarbeitungsstelle weitergeleitet und dort manuell erfasst.</li>
+                        <li><em>Online:</em> Direkter, beidseitiger Zugriff auf den zentralen Rechner ist gegeben. Änderungen können unmittelbar im laufenden Vorgang berücksichtigt werden.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Moderne, beleglose Kommissionierverfahren:</span> Pick by Voice (Sprachsteuerung), Pick by Light (Optische Signale am Fach), Pick by Vision (Datenbrillen).</li>
+                <li><span class="highlight-text">Kommissionieren mit Sortern:</span> Sortieranlagen verteilen Stückgüter automatisch an festgelegte Zielorte via Barcode-Scan (Kippschalen-, Gleitschuh-, Schwenkrollen-, Quergurt- und Fallklappen-Sorter).</li>
+            </ul>
+
+            <h4>5. Kommissionierzeit & Kennzahlen</h4>
+            <p>Die gesamte Kommissionierzeit setzt sich aus fünf Teilzeiten zusammen:</p>
+            <ol>
+                <li><span class="highlight-text">Basiszeit:</span> Organisatorische Arbeiten vor und nach dem Kommissionieren.</li>
+                <li><span class="highlight-text">Wegzeit:</span> Zurücklegen der Strecke zwischen zwei Entnahmestellen (oft der größte Zeitanteil).</li>
+                <li><span class="highlight-text">Greifzeit (Pickzeit):</span> Unterteilt in Greifvorgang (aus Regal nehmen) und Ablagevorgang (in Behälter legen).</li>
+                <li><span class="highlight-text">Totzeit (Nebenzeit / Organisationszeit):</span> Belege lesen, Anbrüche erstellen, Zählen, Kontrollieren, Fehler melden.</li>
+                <li><span class="highlight-text">Verteilzeit:</span> Unproduktive Zeit (persönlich und sachlich).</li>
+            </ol>
+            <p><em>Prozentuales Rechenbeispiel (8,5-Stunden-Arbeitstag = 510 Minuten):</em> Basiszeit: 14 % (71,4 Min.), Greifzeit: 16 % (81,6 Min.), Totzeit: 17 % (86,7 Min.), Wegzeit: 28 % (142,8 Min.), Verteilzeit: 25 % (127,5 Min.).</p>
+
+            <h4>6. Kommissionierfehler</h4>
+            <ul>
+                <li><span class="highlight-text">Ursachen:</span> Stress, Gleichgültigkeit, fehlende Nachkontrolle, mangelnde Konzentration.</li>
+                <li><span class="highlight-text">Folgen / Auswirkungen:</span> Konventionalstrafen, Aufwand für Austausch/Nachlieferung, falsche Lagerbestandsdaten im System, Imageverlust, verärgerte Kunden.</li>
+            </ul>
+
+            <h4>7. Bestandsüberwachung, Bestandspflege & SCM</h4>
+            <ul>
+                <li><span class="highlight-text">Führen durch Kennzahlen:</span> SOLL-/IST-Vergleich zur Festlegung zielgerichteter Maßnahmen.</li>
+                <li><span class="highlight-text">Aufgaben der Bestandsüberwachung:</span> Kontrolle der Materialeingänge (Qualität, Menge, Preis), Überwachung der Materialausgänge (Schwund, Diebstahl, Buchungen), Verfügbarkeitskontrolle extern/intern, Analyse von Lagerkennzahlen.</li>
+            </ul>
+
+            <h4>8. Arten des Lager- und Materialbestands</h4>
+            <p>Systematische Definition der Bestandsarten:</p>
+            <ul>
+                <li><span class="highlight-text">Disponierter Bestand:</span> Reservierte Menge oder bestellte Ware, die sich noch nicht im Lager befindet.</li>
+                <li><span class="highlight-text">Durchschnittlicher Lagerbestand:</span>
+                    <ul>
+                        <li>Effektiver mittlerer Bestand = \(\frac{\text{Anfangsbestand} + \text{Endbestand}}{2}\)</li>
+                        <li>Mittlerer Bestand pro Jahr = \(\frac{\text{Anfangsbestand} + 12 \text{ Monatsbestände}}{13}\)</li>
+                        <li>Theoretischer mittlerer Bestand = \(\frac{\text{Losgröße}}{2} + \text{Sicherheitsbestand}\)</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Höchstbestand:</span> Obergrenze zur Vermeidung von Kapitalbindung und hohen Lagerkosten.</li>
+                <li><span class="highlight-text">Inventurbestand:</span> Effektiv durch Zählung ermittelter Ist-Bestand.</li>
+                <li><span class="highlight-text">Lagerbestand:</span> Rechnerisch im WMS geführter Bestand.</li>
+                <li><span class="highlight-text">Meldebestand:</span> Schwellenwert zur Auslösung einer Nachbestellung.</li>
+                <li><span class="highlight-text">Reservierter Bestand:</span> Für konkrete Aufträge gebundener Teilbestand.</li>
+                <li><span class="highlight-text">Sicherheitsbestand:</span> Reservemenge zur Abfederung von Schwankungen.</li>
+                <li><span class="highlight-text">Sperrbestand:</span> Wegen Qualitätsprüfung oder Mängeln gesperrtes Material.</li>
+                <li><span class="highlight-text">Verfügbarer Bestand:</span> Rechnerisch frei nutzbare Restmenge.</li>
+            </ul>
+
+            <h4>9. Inventur & Methoden der Verbrauchsrechnung</h4>
+            <ul>
+                <li><span class="highlight-text">Inventurarten:</span> Permanente/rollende Inventur, Stichprobeninventur, Stichtagsinventur, Verlegte Inventur, Buch-Inventur.</li>
+                <li><span class="highlight-text">Methoden der Verbrauchsrechnung:</span>
+                    <ul>
+                        <li><em>Inventurmethode:</em> \(\text{Materialverbrauch} = \text{Anfangsbestand} + \text{Zugänge} - \text{Endbestand}\)</li>
+                        <li><em>Rückrechnungsmethode (retrograd):</em> \(\text{Materialverbrauch} = \text{Materialverbrauch pro Periode} \times \text{Produktionsmenge}\)</li>
+                        <li><em>Fortschreibungsmethode (Skontrahierung):</em> \(\text{Endbestand/Verbrauch} = \text{Anfangsbestand} + \text{Zugänge} - \text{Abgänge}\)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Systematischer Vergleich der Kommissioniermethoden</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kommissioniermethode</th>
+                            <th>Ablauf & Merkmale</th>
+                            <th>Vorteil</th>
+                            <th>Nachteil / Risiko</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Auftragsbezogen, seriell</strong></td>
+                            <td>Ein Auftrag wird positionsweise nacheinander von einer Person oder nacheinander über mehrere Zonen hinweg abgearbeitet.</td>
+                            <td>Einfache Zuordnung; der Kommissionierschein gehört vollständig zu einem Auftrag.</td>
+                            <td>Lange Wegzeiten, da ein Mitarbeiter die gesamten Auftragspositionen nacheinander abläuft.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Auftragsbezogen, parallel</strong></td>
+                            <td>Der Auftrag wird in der Arbeitsvorbereitung aufgeteilt und in verschiedenen Zonen gleichzeitig bearbeitet.</td>
+                            <td><strong>Hohe Kommissionierleistung</strong> durch zeitgleiche Bearbeitung.</td>
+                            <td><strong>Engpassgefahr</strong> durch einseitige Belastung einzelner Zonen; Zusammenführung der Teilaufträge nötig.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Serienbezogene, parallele Kommissionierung</strong></td>
+                            <td>Mehrere Aufträge werden zu Serien zusammengefasst. Artikel werden zonenseitig gesammelt und danach auf Einzelaufträge verteilt.</td>
+                            <td>Sehr effiziente Wegnutzung, da gleiche Artikel für mehrere Kunden in einer Tour gerüstet werden.</td>
+                            <td>Aufwendige Arbeitsvorbereitung und zweistufiger Verteilprozess auf Kundenaufträge nötig.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Vergleichende Übersicht der Bestandsarten</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bestandsart</th>
+                            <th>Definition & Zweck</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Disponierter Bestand</strong></td>
+                            <td>Reservierte Menge oder bereits bestellte Ware, die noch nicht im Lager eingetroffen ist.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Höchstbestand</strong></td>
+                            <td>Maximal zulässige Lagermenge zur Vermeidung hoher Kapitalbindung und Lagerkosten.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Meldebestand</strong></td>
+                            <td>Schwellenwert, bei dessen Erreichen die Materialbeschaffung ausgelöst wird.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sicherheitsbestand</strong></td>
+                            <td>Unantastbare Reservemenge zum Ausgleich unvorhergesehener Schwankungen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sperrbestand</strong></td>
+                            <td>Bestand, der wegen Prüfung oder Qualitätsproblemen für die Entnahme gesperrt ist.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verfügbarer Bestand</strong></td>
+                            <td>Rechnerisch frei nutzbarer Teil des Lagerbestands.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Die 7 Schritte der ABC-Analyse nach Zugriffshäufigkeit</h4>
+            <ol>
+                <li><strong>Artikelzugriffe pro Jahr</strong> für alle Artikelpositionen ermitteln.</li>
+                <li>Artikelliste <strong>nach Anzahl der Zugriffe absteigend sortieren</strong>.</li>
+                <li><strong>Prozentualen Anteil</strong> jedes Artikels an der Totalsumme aller Artikel ermitteln.</li>
+                <li><strong>Prozentuale Anteile</strong> der Artikel <strong>kumulieren</strong>.</li>
+                <li><strong>Anteile an den Zugriffen</strong> jedes Artikels auf die Summe aller Zugriffe ermitteln.</li>
+                <li><strong>Prozentuale Anteile der Artikelzugriffe kumulieren</strong>.</li>
+                <li><strong>ABC-Bereiche festlegen und zuordnen</strong> (Klassifizierung der Artikel zur optimalen Lagerplatzzuordnung).</li>
+            </ol>
+
+            <h4>Prozess 2: Ablauf der Serienbezogenen Kommissionierung</h4>
+            <ol>
+                <li><strong>Zusammenfassung</strong> mehrerer Kommissionierscheine/Kundenaufträge zu einer Serie in der Arbeitsvorbereitung.</li>
+                <li><strong>Aufteilung</strong> der Positionen nach Lagerzonen und Artikeln.</li>
+                <li><strong>Sammeln (Rüsten)</strong> der Gesamtmenge eines Artikels für alle Aufträge der Serie in einem Durchgang.</li>
+                <li><strong>Transport</strong> der gesammelten Artikelmengen zur Verteilstelle.</li>
+                <li><strong>Verteilen</strong> der gesammelten Artikel anhand der Kommissionierscheine auf die einzelnen Kundenaufträge.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">Brack & Lyreco:</span> Logistikzentren mit moderner Fördertechnik und automatisierten Kommissionieranlagen.</li>
+                <li><span class="highlight-text">Serienbezogene Getränke-Kommissionierung (Coca-Cola):</span> Ein Gesamtauftrag von <strong>55 Paletten Coca-Cola</strong> wird gesammelt entnommen und auf Einzelkunden aufgeteilt (Kunde A: 15 Pal., Kunde B: 20 Pal., Kunde C: 20 Pal.). Sortimentsverteilung von 90 Fl. Fanta, 150 Fl. Sprite, 120 Fl. Cola, 30 Fl. Henniez, 180 Fl. Passaia auf Kunden A–F.</li>
+                <li><span class="highlight-text">Pick by Vision:</span> Datenbrillen blenden Entnahmeort und Menge direkt im Sichtfeld ein.</li>
+                <li><span class="highlight-text">Exoskelett:</span> Robotische Trageunterstützung für Lagermitarbeiter bei Hebevorgängen.</li>
+                <li><span class="highlight-text">Hochregallager:</span> Schienengeführte Regalförderzeuge für mehrdimensionale Bewegung.</li>
+                <li><span class="highlight-text">Pick by Light & Pick by Voice:</span> Signalgeber am Regal bzw. sprachgesteuerte Headsets.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Worin besteht der genaue Unterschied zwischen der statischen und der dynamischen Bereitstellung bei der Kommissionierung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei der <strong>statischen Bereitstellung</strong> („Mensch zu Ware“) lagert die Ware unbeweglich an einem festen Platz, und der Kommissionierer läuft zur Ware. Bei der <strong>dynamischen Bereitstellung</strong> („Ware zu Mensch“) lagert die Ware in Regalsystemen, die das Gut selbstständig zum Kommissionierer bringen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Welche 5 Teilzeiten bilden zusammen die gesamte Kommissionierzeit? Welcher Teilzeit wird im gezeigten Rechenbeispiel der höchste prozentuale Anteil an einem 8,5-Stunden-Arbeitstag zugeschrieben?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Die 5 Teilzeiten sind <strong>Basiszeit</strong>, <strong>Wegzeit</strong>, <strong>Greifzeit</strong>, <strong>Totzeit</strong> und <strong>Verteilzeit</strong>. Der höchste Anteil entfällt auf die <strong>Wegzeit mit 28 %</strong> (142,8 Minuten bei 510 Minuten Gesamtarbeitszeit).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Welche Gefahr besteht bei der auftragsbezogenen, parallelen Kommissionierung trotz ihrer hohen Kommissionierleistung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Es besteht die <strong>Engpassgefahr durch einseitige Belastung</strong> eines einzelnen Lagerbereiches bzw. einer einzelnen Kommissionierzone.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Wie berechnet sich der Materialverbrauch nach den drei Methoden der Verbrauchsrechnung (Inventur-, Rückrechnungs- und Fortschreibungsmethode)?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • <strong>Inventurmethode:</strong> \(\text{Anfangsbestand} + \text{Zugänge} - \text{Endbestand}\)<br>
+                    • <strong>Rückrechnungsmethode:</strong> \(\text{Materialverbrauch pro Periode} \times \text{Produktionsmenge}\)<br>
+                    • <strong>Fortschreibungsmethode:</strong> \(\text{Anfangsbestand} + \text{Zugänge} - \text{Abgänge}\)</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 5: Nenne 4 Ursachen für Kommissionierfehler sowie 4 mögliche betriebswirtschaftliche Konsequenzen.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    • <em>Ursachen:</em> Stress, Gleichgültigkeit, fehlende Nachkontrolle, mangelnde Konzentration.<br>
+                    • <em>Konsequenzen:</em> Konventionalstrafen, Austausch/Nachlieferung, falsche Lagerbestände im System, Imageverlust/verärgerte Kunden.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • LALO – Lagerlogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        // REFA TEILZEITEN EXPLORER
+        const refaData = {
+            basis: { title: "Basiszeit (14% = 71.4 Min.)", desc: "<strong>Beschreibung:</strong> Vor- und Nachbereitung des Auftrags (z. B. Belege holen, Gerät prüfen).<br><strong>Optimierung:</strong> Papierlose Systeme (Pick-by-Voice/Vision), direkte IT-Auftragsübertragung." },
+            weg: { title: "Wegzeit (28% = 142.8 Min.)", desc: "<strong>Beschreibung:</strong> Strecke zwischen Entnahmestellen. Meist größter Zeitfresser!<br><strong>Optimierung:</strong> Wegoptimierung per WMS, Schnelldreher (A-Artikel) nah am Warenausgang platzieren." },
+            greif: { title: "Greifzeit (16% = 81.6 Min.)", desc: "<strong>Beschreibung:</strong> Physisches Aus-dem-Regal-Nehmen und Ablegen.<br><strong>Optimierung:</strong> Ergonomische Griffhöhen, kleine Gebinde, Greifhilfen / Exoskelette." },
+            tot: { title: "Totzeit (17% = 86.7 Min.)", desc: "<strong>Beschreibung:</strong> Suchen, Anbrüche verpacken, Kontrollieren, Quittieren.<br><strong>Optimierung:</strong> Eindeutige Barcodes, Lichtführung (Pick-by-Light), klare Festplätze." },
+            verteil: { title: "Verteilzeit (25% = 127.5 Min.)", desc: "<strong>Beschreibung:</strong> Unproduktive Zeiten (Warten auf Nachschub, persönliche Pausen, Störungen).<br><strong>Optimierung:</strong> Automatische Nachschubsteuerung, störungsfreie Transporttechnik." }
+        };
+
+        function selectRefaTime(key) {
+            document.getElementById('refa-title').innerHTML = refaData[key].title;
+            document.getElementById('refa-desc').innerHTML = refaData[key].desc;
+        }
+    </script>
+</body>
+</html>

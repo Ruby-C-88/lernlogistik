@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LALO – Teil 5: Distribution, Verpackung & Warenausgang | E-Learning</title>
+    
+    <!-- MathJax für mathematische Formeln -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #1e3a8a; /* Deep Slate Blue für LALO */
+            --secondary-color: #3b82f6;
+            --accent-color: #dbeafe;
+            --tag-bg: #eff6ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(30, 58, 138, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* UNTER-NAVIGATION (Kapitel LALO) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+
+        .highlight-text { font-weight: 600; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+
+        .diagram-box { background: #f8fafc; border: 2px dashed var(--secondary-color); border-radius: var(--radius); padding: 1.5rem; margin: 20px 0; text-align: center; }
+        .diagram-title { font-size: 1.15rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; }
+
+        .btn-interactive {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin: 0.25rem;
+        }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        .btn-interactive.active { background-color: #059669; }
+
+        .interactive-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .grid-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem; }
+
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Menü öffnen/schließen">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>LALO – Lagerlogistik</h1>
+                    <p>Teil 5: Distribution, Verpackung, Warenausgang & Transportsicherung</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <section class="card">
+            <h2>LALO - Teil 5: Distributionsdurchführung, Verpackung &amp; Warenausgang</h2>
+
+            <h3>Thema &amp; Lernziele dieser Einheit</h3>
+            <p><strong>Thema:</strong> 5. Unterrichtstag – Inhaltsbereich: Distributionslogistik, Verpackungstechnik, Warenausgangsprozesse und Ladungssicherung. Dozent: Charly Mettler.</p>
+            <p><strong>Qualifikations- und Lernziele (Leistungskriterien):</strong></p>
+            <ul>
+                <li><strong>Aufgaben der Distributionslogistik:</strong> Die Schnittstelle zwischen Produktion und Kunden bezüglich Termin-, Kosten- und Qualitätsvorgaben organisieren.</li>
+                <li><strong>Verpackungsfunktionen &amp; Ladeeinheiten:</strong> Verpackungshierarchien (Primär-, Sekundär-, Tertiärverpackung) und Verpackungsfunktionen (Schutz-, Transport-, Lager-, Lade-, Informations- und Verkaufsfunktion) unterscheiden.</li>
+                <li><strong>Warenausgangsprozess:</strong> Von der Auslagerungskontrolle über Verpackung, Konsolidierung, Wiegen/Messen bis hin zur Verladung und Dokumentenübergabe.</li>
+                <li><strong>Ladungssicherung &amp; Transportmittelbeladung:</strong> Grundsätze der Physik (Fliehkraft, Trägheit, Reibung), Formschluss vs. Kraftschluss und gesetzliche Bestimmungen (SDR/ADR, SVG) anwenden.</li>
+                <li><strong>Gefahrgutlogistik &amp; Kennzeichnung:</strong> Gefahrenklassen, UN-Nummern, Kemler-Zahlen (Gefahrennummern) und erforderliche Transportdokumente beherrschen.</li>
+            </ul>
+
+            <h3>Detaillierter Hauptteil</h3>
+            <h4>1. Aufgaben &amp; Schnittstellen der Distributionslogistik</h4>
+            <p>Die <strong>Distributionslogistik</strong> (Vertriebslogistik) verbindet die Fertigung eines Unternehmens mit seinen Kunden (Handel oder Endverbraucher). Sie stellt sicher, dass die richtigen Waren am richtigen Ort, zur richtigen Zeit, in der richtigen Menge und Qualität zu minimalen Kosten eintreffen (6R-Regel).</p>
+            <ul>
+                <li><span class="highlight-text">Auftragsabwicklung:</span> Prüfung, Freigabe und Einsteuern der Kundenaufträge.</li>
+                <li><span class="highlight-text">Lagerung &amp; Kommissionierung:</span> Vorhaltung und verpackungsberechte Zusammenstellung im Warenausgangslager.</li>
+                <li><span class="highlight-text">Verpackung &amp; Markierung:</span> Transportsichere und kundenindividuelle Vorbereitung der Packstücke.</li>
+                <li><span class="highlight-text">Verladung &amp; Transport:</span> Auswahl der Verkehrsträger, Tourenplanung und physikalische Verladung.</li>
+            </ul>
+
+            <h4>2. Verpackungsstufen &amp; Verpackungsfunktionen</h4>
+            <p><strong>Die 3 Verpackungsstufen:</strong></p>
+            <ol>
+                <li><span class="highlight-text">Primärverpackung (Verkaufsverpackung):</span> Umhüllt das Produkt direkt (z. B. Joghurtbecher, Blisterpackung).</li>
+                <li><span class="highlight-text">Sekundärverpackung (Umverpackung / Gruppierungsverpackung):</span> Zusammenfassung mehrerer Primärverpackungen zur Vereinfachung des Verkaufs oder Regaleinräumung (z. B. Karton mit 12 Joghurtbechern).</li>
+                <li><span class="highlight-text">Tertiärverpackung (Transportverpackung / Ladeeinheit):</span> Dient der Transportsicherung und Handhabung auf Paletten oder in Containern (z. B. Euro-Palette mit Stretchfolie, Holzkiste).</li>
+            </ol>
+
+            <p><strong>Die 6 Hauptfunktionen der Verpackung:</strong></p>
+            <ul>
+                <li><span class="highlight-text">Schutzfunktion:</span> Schutz des Füllguts vor Umwelteinflüssen (Feuchtigkeit, Stöße, Temperatur, Diebstahl) und Schutz der Umwelt vor dem Gut (z. B. bei Chemikalien).</li>
+                <li><span class="highlight-text">Lager- &amp; Stapelfunktion:</span> Stabilität für Hochausnutzung von Regalen und Blocklagern.</li>
+                <li><span class="highlight-text">Transport- &amp; Ladefunktion:</span> Optimale Abmessungen für Standard-Ladungsträger (z. B. Modulordnung 600×400 mm).</li>
+                <li><span class="highlight-text">Informationsfunktion:</span> Barcodes, GS1-128, SSCC, Gefahrgutlabel, Handhabungssymbole (z. B. "Oben", "Zerbrechlich").</li>
+                <li><span class="highlight-text">Verkaufs- &amp; Marketingfunktion:</span> Kund Ansprache, Branding und Kaufanreiz im Retail.</li>
+                <li><span class="highlight-text">Umwelt- &amp; Entsorgungsfunktion:</span> Materialtrennung, Wiederverwendbarkeit (Mehrweg) und Recyclingfähigkeit.</li>
+            </ul>
+
+            <!-- INTERAKTIVER GEFAHRGUT & KEMLER-ZAHL DECODER -->
+            <div class="diagram-box">
+                <div class="diagram-title">Interaktiver Gefahrgut- &amp; Kemler-Zahl-Decoder</div>
+                <div class="diagram-subtitle">Gib eine Kemler-Zahl (Gefahrennummer) und UN-Nummer ein oder teste vordefinierte Beispiele.</div>
+                
+                <div class="interactive-widget">
+                    <div class="interactive-controls">
+                        <button class="btn-interactive active" onclick="decodeGefahrgut('33', '1203')">33 / 1203 (Benzin)</button>
+                        <button class="btn-interactive" onclick="decodeGefahrgut('30', '1202')">30 / 1202 (Diesel)</button>
+                        <button class="btn-interactive" onclick="decodeGefahrgut('X338', '2924')">X338 / 2924 (Entzündbar, ätzend, reagiert mit Wasser)</button>
+                        <button class="btn-interactive" onclick="decodeGefahrgut('268', '1052')">268 / 1052 (Giftiges, ätzendes Gas)</button>
+                    </div>
+
+                    <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 1rem; margin: 1rem 0; text-align: center; max-width: 320px; margin-left: auto; margin-right: auto;">
+                        <div style="background: #f59e0b; color: black; font-weight: bold; font-size: 1.8rem; padding: 0.25rem; border-radius: 4px 4px 0 0; letter-spacing: 3px;" id="disp-kemler">33</div>
+                        <div style="background: #1e293b; color: #fbbf24; font-weight: bold; font-size: 1.8rem; padding: 0.25rem; border-radius: 0 0 4px 4px; letter-spacing: 3px;" id="disp-un">1203</div>
+                        <div style="font-size: 0.75rem; margin-top: 0.4rem; color: #78350f;">Standard ADR Orange-Warntafel</div>
+                    </div>
+
+                    <div id="gefahrgut-info-display" style="background: var(--tag-bg); padding: 1rem; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <h5 id="gg-title" style="margin-bottom: 0.25rem; color: var(--primary-color);">Gefahrennummer 33 / UN 1203</h5>
+                        <p id="gg-desc" style="font-size: 0.9rem; margin: 0;"><strong>Bedeutung der Kennzahl 33:</strong> Leicht entzündbarer flüssiger Stoff (Flammpunkt unter 23 °C). Die Verdopplung der Ziffer '3' zeigt eine erhöhte Gefahr an.<br><strong>Stoffbezeichnung (UN 1203):</strong> BENZIN oder OTTOKMOTORENSTOFF.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>3. Warenausgangsprozess &amp; Verladung</h4>
+            <p>Der Warenausgang bildet die finale Phase des physischen Materialflusses im Lager:</p>
+            <ol>
+                <li><span class="highlight-text">Bereitstellung &amp; Pufferung:</span> Auslagerung und Bereitstellung der kommissionierten Einheiten in der Warenausgangszone.</li>
+                <li><span class="highlight-text">Warenausgangskontrolle:</span> Vollständigkeitsprüfung (Soll/Ist-Abgleich via Lieferschein oder NVE/SSCC Scan) und Zustandsprüfung.</li>
+                <li><span class="highlight-text">Verpacken &amp; Wiegen:</span> Erstellung der Transportverpackung, Ermittlung des Bruttogewichts und Volumens für die Frachtberechnung.</li>
+                <li><span class="highlight-text">Labeling &amp; Markierung:</span> Anbringen der Transportaufkleber (GS1-128 Logistiklabel mit SSCC/NVE).</li>
+                <li><span class="highlight-text">Ladeeinheitenbildung &amp; Konsolidierung:</span> Zusammenfassung von Teilsendungen nach Empfängern oder Touren.</li>
+                <li><span class="highlight-text">Verladung &amp; Ladungssicherung:</span> Einbringen in das Transportmittel unter Berücksichtigung der Achslasten und Sicherungsmethoden.</li>
+                <li><span class="highlight-text">Dokumentenerstellung:</span> Erstellung von Lieferschein, Frachtbrief (CMR), Ausfuhrdokumenten und Erfassung der Warenausgangsbuchung im ERP/WMS.</li>
+            </ol>
+
+            <h4>4. Physik der Ladungssicherung &amp; Beladungsregeln</h4>
+            <ul>
+                <li><span class="highlight-text">Physikalische Kräftekombination:</span>
+                    <ul>
+                        <li><em>Massenkraft (Trägheit):</span> Bestreben der Ladung, bei Bremsung oder Kurvenfahrt in ihrer Richtung zu verharren (\(F = m \times a\)).</li>
+                        <li><em>Bremsverzögerung:</span> Beim Nachvorne-Rutschen wirken bis zu <strong>0,8 g</strong> (80 % des Ladungsgewichts) nach vorne.</li>
+                        <li><em>Kurvenfahrt &amp; Rückwärtsfahrt:</span> Nach den Seiten und nach hinten wirken bis zu <strong>0,5 g</strong> (50 % des Ladungsgewichts).</li>
+                        <li><em>Reibungskraft:</span> Wirkt dem Rutschen entgegen (\(F_R = \mu \times F_G\)). Ein Antirutschbelag erhöht den Reibwert \(\mu\) von ca. 0,2–0,3 auf bis zu 0,6.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Verfahren der Ladungssicherung:</span>
+                    <ul>
+                        <li><em>Kraftschlüssige Sicherung (Niederzurren):</span> Die Ladung wird durch Zurrgurte auf die Ladefläche gepresst, um die Reibungskraft zu erhöhen. Der Zurrwinkel sollte möglichst nahe bei 90° liegen.</li>
+                        <li><em>Formschlüssige Sicherung:</span> Lückenlose Anlegung der Ladung an Begrenzungen (Stirnwand, Bordwand, Keile, Festlegen durch Kopf- oder Buchtzurren).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>5. Gefahrgutlogistik (SDR/ADR) in der Schweiz</h4>
+            <ul>
+                <li><span class="highlight-text">SDR / ADR:</span> Schweizerische Verordnung über den Transport gefährlicher Güter auf der Straße (SDR) / Europäisches Übereinkommen (ADR).</li>
+                <li><span class="highlight-text">Orangefarbene Warntafel:</span>
+                    <ul>
+                        <li><em>Obere Hälfte (Kemler-Zahl / Gefahrennummer):</span> 2 oder 3 Ziffern (evtl. mit vorangestelltem 'X' für gefährliche Reaktion mit Wasser). Erste Ziffer = Hauptgefahr (3 = entzündbar, 6 = giftig, 8 = ätzend). Doppelung = Reaktivitätssteigerung (33 = hoch entzündbar).</li>
+                        <li><em>Untere Hälfte (UN-Nummer):</span> 4-stellige Nummer zur eindeutigen Identifikation des Stoffes (z. B. 1203 = Benzin, 1202 = Diesel).</li>
+                    </ul>
+                </li>
+                <li><span class="highlight-text">Freimengenregelung (1000-Punkte-Regel):</span> Erlaubt Erleichterungen beim Transport kleinerer Gefahrgutmengen, berechnet nach spezifischen Punktefaktoren je Beförderungskategorie.</li>
+            </ul>
+
+            <h3>Strukturierte Elemente</h3>
+            <h4>Tabelle 1: Gegenüberstellung der Ladungssicherungsarten</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sicherungsart</th>
+                            <th>Wirkungsprinzip</th>
+                            <th>Typische Hilfsmittel</th>
+                            <th>Vor- &amp; Nachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Kraftschluss (Niederzurren)</strong></td>
+                            <td>Erhöhung der Anpresskraft auf den Ladeboden zur Steigerung der Reibungskraft.</td>
+                            <td>Zurrgurte, Ratsche, Antirutschmatten (ARM).</td>
+                            <td><strong>+</strong> Universell einsetzbar.<br><strong>-</strong> Hohe Erforderlichkeit von Gurten; setzt feste Ladegüter voraus.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Formschluss (Direktzurren / Blocken)</strong></td>
+                            <td>Lückenloses Anlegen an feste Fahrzeugbegrenzungen oder direktes Festhalten.</td>
+                            <td>Stirnwand, Einstecklatten, Sperrbalken, Keile, Diagonalzurren.</td>
+                            <td><strong>+</strong> Höchste Sicherheit, geringere Vorspannkräfte nötig.<br><strong>-</strong> Erfordert passgenaue Laderäume oder Spezialaufbauten.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Tabelle 2: Bedeutung der ersten Ziffer der Kemler-Zahl (Hauptgefahr)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ziffer</th>
+                            <th>Bedeutung der Gefahr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2</strong></td>
+                            <td>Entweichen von Gas durch Druck oder chemische Reaktion.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3</strong></td>
+                            <td>Entzündbarkeit von flüssigen Stoffen (Gase/Dämpfe) oder selbsterhitzungsfähige flüssige Stoffe.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4</strong></td>
+                            <td>Entzündbarkeit von festen Stoffen oder selbsterhitzungsfähige feste Stoffe.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5</strong></td>
+                            <td>Oxidierende (brandfördernde) Wirkung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6</strong></td>
+                            <td>Giftigkeit oder Ansteckungsgefahr.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>7</strong></td>
+                            <td>Radioaktivität.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>8</strong></td>
+                            <td>Ätzwirkung.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>9</strong></td>
+                            <td>Gefahr einer spontanen heftigen Reaktion (Umweltgefährdung, sonstige Gefahren).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>X</strong> (Präfix)</td>
+                            <td>Stoff reagiert in gefährlicher Weise mit Wasser (Wasser darf nicht als Löschmittel verwendet werden!).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Prozess 1: Die 7 Phasen der Warenausgangsabwicklung</h4>
+            <ol>
+                <li><strong>Bereitstellung:</strong> Übernahme der kommissionierten Einheiten auf die Warenausgangsfläche.</li>
+                <li><strong>Ausgangskontrolle:</strong> Prüfen von Artikel, Menge, Qualität und Zubehör anhand der Auftragsdaten.</li>
+                <li><strong>Verpackung:</strong> Wählen des optimalen Packmittels und transportsichere Verpackung.</li>
+                <li><strong>Wiegen &amp; Kennzeichnen:</strong> Ermittlung des Frachtgewichts und Anbringen des GS1-128 Transportlabels (SSCC).</li>
+                <li><strong>Konsolidierung:</strong> Bündelung aller Packstücke einer Sendung oder Tour.</li>
+                <li><strong>Verladung &amp; Ladungssicherung:</strong> Gewichtsverteilung auf dem Lkw sichern und form-/kraftschlüssig verzurren.</li>
+                <li><strong>Dokumentenübergabe &amp; Buchung:</strong> Übergabe von Lieferschein/CMR an den Frachtführer und Buchen des Warenausgangs im ERP.</li>
+            </ol>
+
+            <h3>Sämtliche in diesem Abschnitt erwähnten Praxis- und Anwendungsbeispiele</h3>
+            <ul>
+                <li><span class="highlight-text">GS1-128 / SSCC (NVE):</span> Nummer der Versandzelleneinheit zur lückenlosen Nachverfolgung vom Warenausgang bis zum Kunden.</li>
+                <li><span class="highlight-text">Antirutschmatten (ARM):</span> Erhöhen den Reibbeiwert \(\mu\) von Holz auf Metall von 0,3 auf 0,6 und halbieren dadurch die benötigte Anzahl von Zurrgurten.</li>
+                <li><span class="highlight-text">Transport von Benzin (UN 1203 / Kemler 33):</span> Tankwagentransport mit orangefarbener Warntafel 33 / 1203.</li>
+                <li><span class="highlight-text">Verpackungsmodul 600 × 400 mm:</span> Perfekte Ausnutzung der Euro-Paletten-Grundfläche (1200 × 800 mm) ohne Überstand.</li>
+            </ul>
+
+            <h3>Mini-Quiz zur Überprüfung</h3>
+            <details>
+                <summary>Frage 1: Was bedeutet das vorangestellte „X“ vor einer Kemler-Zahl auf der orangefarbenen Gefahrgut-Warntafel?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Das „X“ bedeutet, dass der gefährliche Stoff in gefährlicher Weise mit Wasser reagiert. Wasser darf im Brand- oder Leckagefall keinesfalls als Lösch- oder Kühlmittel eingesetzt werden!</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 2: Wie viel Prozent des Ladungsgewichts wirken bei einer Vollbremsung in Fahrtrichtung nach vorne auf die Ladungssicherung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Bei einer Vollbremsung wirken bis zu <strong>80 % des Ladungsgewichts (0,8 g)</strong> als Massenkraft nach vorne.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 3: Worin unterscheiden sich Kraftschluss und Formschluss bei der Ladungssicherung?</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong> Beim <strong>Kraftschluss</strong> (z. B. Niederzurren) wird die Ladung durch Spanngurte auf den Ladeboden gepresst, um die Reibung zu erhöhen. Beim <strong>Formschluss</strong> wird die Ladung ohne Lücken direkt an feste Fahrzeugbegrenzungen (Stirnwand, Keile, Bordwand) angelegt oder direkt abgefangen.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Frage 4: Nenne die 3 Verpackungsstufen mit jeweils einem praktischen Beispiel.</summary>
+                <div class="answer">
+                    <p><strong>Lösung:</strong><br>
+                    1. <em>Primärverpackung:</em> Joghurtbecher (direkter Produktkontakt).<br>
+                    2. <em>Sekundärverpackung:</em> Karton mit 12 Joghurtbechern.<br>
+                    3. <em>Tertiärverpackung:</em> Holzpalette mit mehreren Kartons, umwickelt mit Stretchfolie.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard • LALO – Lagerlogistik | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        // GEFAHRGUT DECODER
+        const gefahrgutDB = {
+            '33-1203': {
+                kemler: '33', un: '1203',
+                title: 'Gefahrennummer 33 / UN 1203 (Benzin)',
+                desc: '<strong>Kemler 33:</strong> Leicht entzündbarer flüssiger Stoff (Flammpunkt unter 23 °C). Doppel-3 = erhöhte Entzündbarkeit.<br><strong>UN 1203:</strong> Benzin / Ottokraftstoff (Klasse 3).'
+            },
+            '30-1202': {
+                kemler: '30', un: '1202',
+                title: 'Gefahrennummer 30 / UN 1202 (Diesel / Heizöl)',
+                desc: '<strong>Kemler 30:</strong> Entzündbarer flüssiger Stoff (Flammpunkt 23 °C bis 60 °C).<br><strong>UN 1202:</strong> Dieselkraftstoff oder Heizöl leicht (Klasse 3).'
+            },
+            'X338-2924': {
+                kemler: 'X338', un: '2924',
+                title: 'Gefahrennummer X338 / UN 2924 (Reagiert mit Wasser, entzündbar & ätzend)',
+                desc: '<strong>Kemler X338:</strong> Stark entzündbar, ätzend, reagiert gefährlich mit Wasser (kein Wasser als Löschmittel!).<br><strong>UN 2924:</strong> Entzündbarer flüssiger Stoff, ätzend, n.a.g.'
+            },
+            '268-1052': {
+                kemler: '268', un: '1052',
+                title: 'Gefahrennummer 268 / UN 1052 (Fluorwasserstoff, wasserfrei)',
+                desc: '<strong>Kemler 268:</strong> Giftiges Gas, ätzend.<br><strong>UN 1052:</strong> Fluorwasserstoff, wasserfrei (Flusssäure-Gas).'
+            }
+        };
+
+        function decodeGefahrgut(k, u) {
+            const btns = document.querySelectorAll('.interactive-controls .btn-interactive');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('disp-kemler').innerText = k;
+            document.getElementById('disp-un').innerText = u;
+
+            const key = k + '-' + u;
+            if(gefahrgutDB[key]) {
+                document.getElementById('gg-title').innerHTML = gefahrgutDB[key].title;
+                document.getElementById('gg-desc').innerHTML = gefahrgutDB[key].desc;
+            }
+        }
+    </script>
+</body>
+</html>

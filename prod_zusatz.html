@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROLO – Zusatzmodul: Kosten & Risiken | E-Learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary-color: #0284c7;
+            --secondary-color: #0369a1;
+            --accent-color: #e0f2fe;
+            --tag-bg: #f0f9ff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+        html, body { width: 100%; overflow-x: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding-bottom: 40px; }
+        header { background-color: var(--primary-color); color: #ffffff; box-shadow: var(--shadow); margin-bottom: 2rem; position: relative; width: 100%; }
+        .header-banner { position: relative; width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, var(--primary-color) 0%, #0f172a 100%); }
+        .header-image-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2, 132, 199, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .header-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; z-index: 2; display: flex; align-items: flex-end; }
+        .header-title-container { max-width: 1200px; width: 100%; margin: 0 auto; }
+        .header-title-container h1 { font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .header-title-container p { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+        
+        /* HAUPT-NAVIGATION (Module) */
+        nav { max-width: 1200px; margin: -20px auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); border-radius: var(--radius) var(--radius) 0 0; position: relative; z-index: 10; box-shadow: var(--shadow); }
+        nav a { padding: 0.85rem 1.25rem; text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 1rem; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+        nav a.active, nav a:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        
+        /* UNTER-NAVIGATION (Kapitel Produktionslogistik) */
+        .sub-nav { max-width: 1200px; margin: 1rem auto 0 auto; padding: 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sub-nav a { padding: 0.5rem 1rem; text-decoration: none; color: var(--secondary-color); background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; font-weight: 600; font-size: 0.88rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .sub-nav a.active, .sub-nav a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+
+        .hamburger-btn { display: none; background: var(--primary-color); color: #ffffff; border: none; font-size: 1.5rem; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 100; }
+        main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.5rem; width: 100%; }
+        .card { background-color: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 1.5rem; width: 100%; overflow: hidden; }
+        .card h2 { font-size: 1.35rem; color: var(--primary-color); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+        .card h3 { font-size: 1.15rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e293b; }
+        .card h4 { font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.4rem; color: var(--primary-color); }
+        details { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 16px; margin-bottom: 12px; width: 100%; }
+        summary { font-weight: 600; cursor: pointer; color: var(--primary-color); }
+        .answer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 15px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; color: var(--primary-color); }
+        ul, ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; }
+        .interactive-widget { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: left; margin: 1.5rem 0; }
+        .diagram-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem; }
+        .diagram-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .btn-interactive { background-color: var(--primary-color); color: #ffffff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.2s; margin-top: 0.5rem; }
+        .btn-interactive:hover { background-color: var(--secondary-color); }
+        .form-group { margin-bottom: 0.75rem; }
+        .form-group label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 0.25rem; }
+        .form-group input { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; }
+        .widget-result { background: #f0f9ff; border-left: 4px solid var(--primary-color); padding: 0.75rem 1rem; margin-top: 1rem; border-radius: 0 6px 6px 0; font-weight: 600; }
+        footer { max-width: 1200px; margin: 3rem auto 0 auto; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); width: 100%; }
+        @media (max-width: 767px) {
+            .hamburger-btn { display: block; }
+            .header-banner { height: auto; min-height: 150px; }
+            .header-overlay { position: relative; padding: 1.25rem 1rem; }
+            .header-title-container h1 { font-size: 1.3rem; }
+            nav { display: none; flex-direction: column; margin: 0; padding: 0; border-radius: 0 0 var(--radius) var(--radius); width: 100%; }
+            nav.mobile-active { display: flex; }
+            nav a { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-color); width: 100%; }
+            .sub-nav { flex-direction: column; padding: 0 0.5rem; }
+            .sub-nav a { text-align: center; border-radius: 8px; }
+            main { margin: 1rem auto; padding: 0 0.5rem; }
+            .card { padding: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="hamburger-btn" id="hamburger-toggle">☰</button>
+        <div class="header-banner">
+            <div class="header-image-overlay"></div>
+            <div class="header-overlay">
+                <div class="header-title-container">
+                    <h1>PROLO – Produktionslogistik</h1>
+                    <p>Zusatzmodul: Kostenarten, Kostentreiber und Risiken</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Hier wird die Navigation vollautomatisch injiziert -->
+<div id="dynamic-nav"></div>
+
+<!-- Die beiden Skripte am Ende oder im Head laden -->
+<script src="nav-config.js"></script>
+<script src="nav-loader.js"></script>
+
+
+    <main>
+        <div class="card">
+            <h2>1. Thema & Lernziele dieser Einheit</h2>
+            <p><strong>Thema:</strong> Produktionslogistik – Zusatzmodul: Kostenarten, Kostentreiber und Risiken in der Produktionslogistik.</p>
+            <p><strong>Lernziele:</strong> Nach der Erarbeitung dieser Lerneinheit sind die Lernenden in der Lage:</p>
+            <ul>
+                <li>Die Einteilung von ABC-Produkten nach Produktionsmenge und Logistikintensität vorzunehmen.</li>
+                <li>Die spezifischen Risiken in der Produktionslogistik (Investitions-, Anlagenausfall-, Umwelt-, materialwirtschaftliche und Personalrisiken) detailliert auszuführen und den Risikomanagement-Prozess zu beschreiben.</li>
+                <li>Zwischen direkten und indirekten Schäden sowie deren Versicherbarkeit zu unterscheiden.</li>
+                <li>Die Einteilung der Fertigungskosten und Herstellkosten im betrieblichen Rechnungswesen darzulegen.</li>
+                <li>Typische Kostenarten nach den fünf zentralen Klassifikationskriterien zu ordnen und zu beschreiben.</li>
+                <li>Die sechs größten Kostentreiber in der Fertigung zu identifizieren, deren Ursachen zu analysieren und geeignete Gegenmaßnahmen abzuleiten.</li>
+            </ul>
+
+            <h2>2. Detaillierter Hauptteil</h2>
+            <h3>A. Einteilung der Produktionstypen & ABC-Einteilung nach Logistikintensität</h3>
+            <p>Die Ausgestaltung des Material- und Informationsflusses hängt maßgeblich vom zugrunde liegenden Produktionstyp ab.</p>
+            <p><strong>Einteilung der Produktionstypen:</strong></p>
+            <ul>
+                <li><strong>Einzelfertigung:</strong> Einmalige Herstellung eines einzelnen Produkts/Unikats auf Kundenwunsch.</li>
+                <li><strong>Serienfertigung:</strong> Herstellung unterschiedlicher Stückzahlen verschiedener Produkte in Serien.</li>
+                <li><strong>Sortenfertigung:</strong> Herstellung vieler Stücke verschiedener Produktvarianten aus denselben Grundstoffen.</li>
+                <li><strong>Massenfertigung:</strong> Kontinuierliche Herstellung sehr großer Stückzahlen eines identischen Standardprodukts.</li>
+                <li><strong>Chargenfertigung:</strong> Sonderfall der Serien- oder Massenfertigung mit festen Chargengrößen zur lückenlosen Qualitätssicherung und Rückverfolgbarkeit.</li>
+            </ul>
+            <p><strong>ABC-Analyse nach Produktionsmenge und Logistikintensität:</strong></p>
+            <ul>
+                <li><strong>A-Produkte:</strong> Produkte mit hoher Produktionsmenge und hoher Logistikintensität; erfordern hochautomatisierte, flussorientierte Transportsysteme und enge Takte.</li>
+                <li><strong>B-Produkte:</strong> Produkte mit mittlerer Produktionsmenge und moderater Logistikintensität; erfordern flexible, teils stochastische Logistikkonzepte.</li>
+                <li><strong>C-Produkte:</strong> Produkte mit geringer Produktionsmenge oder spezifischen Sonderanforderungen; erfordern flexible, manuelle oder kundenindividuelle Handhabung.</li>
+            </ul>
+
+            <h3>B. Risiken in der Produktionslogistik & Risikomanagement</h3>
+            <p>Unternehmerisches Handeln ist stets mit Risiken behaftet, die sich in der Gefahr von Fehlentscheidungen, Zielverfehlungen oder finanziellen Verlusten äußern. Die Schäden treten als direkte oder indirekte Verluste auf.</p>
+            
+            <p><strong>1. Schadensarten & Versicherbarkeit:</strong></p>
+            <ul>
+                <li><strong>Direkte Schäden:</strong> Physikalische Zerstörung oder Beschädigung von Sachwerten (z. B. Maschinenschaden durch Brand oder Kollision). Sie sind generell versicherbar.</li>
+                <li><strong>Indirekte Schäden:</strong>
+                    <ul>
+                        <li><strong>Versicherbar:</strong> Ertragsausfall infolge von Betriebsunterbrechungen, Haftpflichtforderungen Dritter, zusätzliche Lohnkosten oder Konventionalstrafen bei Lieferverzug.</li>
+                        <li><strong>Nicht versicherbar:</strong> Verluste von Goodwill (Imageverlust), Störungen des Betriebsklimas oder der nachhaltige Verlust von Kunden.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>2. Der Risikomanagement-Prozess:</strong> Ein strukturiertes Risikomanagement umfasst fünf aufeinander aufbauende Tätigkeiten:</p>
+            <ol>
+                <li><strong>Risiken erkennen:</strong> Systematische Identifikation potenzieller Gefahrenquellen in der Fertigung.</li>
+                <li><strong>Risiken vermindern oder ausschalten:</strong> Präventive bauliche, organisatorische oder technische Maßnahmen.</li>
+                <li><strong>Risiken bewerten:</strong> Quantifizierung von Eintrittswahrscheinlichkeit und Schadensausmaß.</li>
+                <li><strong>Risiken (vertraglich) auf Dritte verlagern:</strong> Vertragliche Haftungsüberwälzung auf Lieferanten oder Logistikdienstleister.</li>
+                <li><strong>Risiken durch Versicherungen kontrollieren:</strong> Versicherungsschutz für verbleibende Restrisiken abschließen.</li>
+            </ol>
+
+            <p><strong>3. Spezifische Risikoarten in der Produktionslogistik:</strong></p>
+            <ul>
+                <li><strong>Investitionsrisiko:</strong> Äußert sich als Erfolgsrisiko (Verfehlte Rendite) oder Liquiditätsrisiko (Engpässe bei Zahlungsverpflichtungen). Ursachen: Anschaffung einer ungeeigneten Maschine oder falsche Zukunftsprognosen. Abhilfe: Einsatz dynamischer und statischer Verfahren der Investitionsrechnung.</li>
+                <li><strong>Anlagenausfallrisiko:</strong> Resultiert aus der Unsicherheit über Zeitpunkt, Art, Ausmaß und Dauer möglicher Anlagenausfälle. Nimmt mit steigendem Automatisierungsgrad drastisch zu. Ursachen: Verschleiß, Korrosion, fehlerhafte Nutzung, Bedienungsfehler, Katastrophen.</li>
+                <li><strong>Umweltrisiken:</strong> Gesetzliches Risiko (Verstöße), finanzielles Risiko (erzwungene Fehlinvestitionen), Marktrisiko (Wettbewerbsnachteile bei Preiserhöhungen) und soziales Risiko (Produktionsausfälle durch Krankheiten/Unzufriedenheit).</li>
+                <li><strong>Materialwirtschaftliches Risiko:</strong> Gefahr, dass benötigtes Material nicht in geforderter Menge/Güte zur rechten Zeit am rechten Ort bereitsteht. Externe Ursachen: Lieferantenverzug, Materialverknappung. Interne Ursachen: Unkorrekte Bedarfsvorhersagen, mangelnde Lagerkontrolle.</li>
+                <li><strong>Personalrisiko:</strong> Risiken bezüglich des Faktors Arbeit. Externe Gefahren: Streiks bei Zulieferern, Unruhen, Pandemien. Interne Gefahren: Unzufriedenheit, Fehlzeiten, Fluktuation, Bedienungsfehler, Sabotage, Spezialistentum.</li>
+            </ul>
+
+            <h3>C. Fertigungskosten im betrieblichen Rechnungswesen</h3>
+            <p>Im betrieblichen Rechnungswesen bilden die Fertigungskosten zusammen mit den Materialkosten die Herstellkosten eines Erzeugnisses.</p>
+            <p><strong>1. Bestandteile der Fertigungskosten:</strong> Direkter Ressourceneinsatz im Produktionsprozess, Fertigungsgemeinkosten, Sondereinzelkosten der Fertigung (Spezialwerkzeuge) sowie Kosten für Produktionsplanung (AVOR) und Qualitätskontrolle.</p>
+            <p><strong>2. Rechenschema der Herstellkosten:</strong></p>
+            \[\text{Fertigungseinzelkosten} + \text{Fertigungsgemeinkosten} = \text{Fertigungskosten}\]
+            \[\text{Materialeinzelkosten} + \text{Materialgemeinkosten} = \text{Materialkosten}\]
+            \[\mathbf{\text{Fertigungskosten} + \text{Materialkosten} = \text{Herstellkosten}}\]
+
+            <h3>D. Systematik der Kostenarten</h3>
+            <p>Eine Kostenart beschreibt die Menge aller Kosten, die durch ein bestimmtes Merkmal auf gleiche Weise gekennzeichnet sind.</p>
+            <p><strong>Die 5 Klassifikationskriterien der Kostenarten:</strong></p>
+            <ol>
+                <li><strong>Nach verbrauchten Produktionsfaktoren:</strong> Materialkosten, Personalkosten, Dienstleistungskosten, Betriebsmittelkosten, Kapitalkosten, Steuern & Gebühren.</li>
+                <li><strong>Nach dem betrieblichen Funktionsbereich:</strong> Beschaffungskosten, Fertigungs- bzw. Herstellungskosten, Lagerhaltungskosten, Verwaltungskosten, Vertriebskosten.</li>
+                <li><strong>Nach Art der Erfassung:</strong> Aufwandsgleiche Kosten (Grundkosten) vs. kalkulatorische Kosten (Zusatz-/Anderskosten).</li>
+                <li><strong>Nach Art der Kostenträgerverrechnung:</strong> Einzelkosten (direkt zurechenbar) vs. Gemeinkosten (indirekt über Schlüssel verrechenbar).</li>
+                <li><strong>Nach Abhängigkeit von der Bezugsgröße (Beschäftigung):</strong> Fixkosten (beschäftigungsunabhängig) vs. variable Kosten (beschäftigungsabhängig).</li>
+            </ol>
+
+            <h3>E. Die 6 großen Kostentreiber in der Fertigung</h3>
+            <ol>
+                <li><strong>Fehlendes Know-how der Mitarbeiter:</strong> Wegfall von Erfahrungswissen, Fachkräftemangel. Folgen: Fehler, niedrige Produktivität.</li>
+                <li><strong>Einsatz veralteter oder falscher Technologie:</strong> Veraltete Maschinen, verschlissene Werkzeuge. Folgen: Effizienzverluste, hohe Energiekosten.</li>
+                <li><strong>Maschinenausfälle, Störungen und mangelnde Wartung:</strong> Vernachlässigung von Wartungsintervallen. Folgen: Ungeplante Stillstände, Notfallreparaturen, Verzug.</li>
+                <li><strong>Vernachlässigung des Gesamtprozesses (Silo-Denken):</strong> Isolierte Abteilungsoptimierung. Folgen: Ineffiziente Schnittstellen, hoher Ausschuss.</li>
+                <li><strong>Zu viele Fehler und zu viel Nacharbeit:</strong> Programmier- oder Einstellfehler. Folgen: Doppelter Arbeitsaufwand, massiver Kostenanstieg.</li>
+                <li><strong>Mangelnde Balance zwischen Mensch und Technik:</strong> Über-Automatisierung ohne Einbezug des Personals. Folgen: Qualitätsverlust, fehlende Flexibilität.</li>
+            </ol>
+
+            <h2>3. Strukturierte Elemente</h2>
+            <h3>Tabelle 1: Systematische Übersicht der Risikoarten in der Produktionslogistik</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Risikoart</th><th>Hauptursachen / Erscheinungsform</th><th>Primäre Folgen / Schäden</th><th>Versicherbarkeit / Gegenmaßnahmen</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Investitionsrisiko</td><td>Ungeeignete Maschinenwahl; falsche Marktprognosen.</td><td>Erfolgs- und Liquiditätsabweichungen.</td><td>Investitionsrechnungsverfahren anwenden.</td></tr>
+                        <tr><td>Anlagenausfallrisiko</td><td>Verschleiß, Korrosion, Bedienungsfehler, Katastrophen.</td><td>Produktionsstillstand, Lieferverzug, Reparaturkosten.</td><td>Regelmäßige Wartung, Redundanzen, Versicherung.</td></tr>
+                        <tr><td>Umweltrisiko</td><td>Gesetzesverstöße, veraltete Umwelttechnik.</td><td>Strafen, Imageverlust, Kundenverlust, Krankheitsausfälle.</td><td>Umweltmanagement, präventive Schutzmaßnahmen.</td></tr>
+                        <tr><td>Materialwirtschaftliches Risiko</td><td>Lieferantenverzug, fehlerhafte Bedarfsprognosen.</td><td>Fehlmengen, Bandstillstand, hohe Eillogistikkosten.</td><td>Sicherheitsbestände, Lieferantenbewertung, BDE.</td></tr>
+                        <tr><td>Personalrisiko</td><td>Streiks, Fachkräftemangel, Unzufriedenheit, Bedienfehler.</td><td>Qualitätsmängel, Sabotage, hohe Fluktuation.</td><td>Schulungen, Ergonomie, gutes Betriebsklima.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 2: Klassifikation der Kostenarten nach den 5 Kriterien</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Einteilungskriterium</th><th>Kostenart-Kategorien</th><th>Typische Beispiele im Betrieb</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Verbrauchte Produktionsfaktoren</td><td>Material-, Personal-, Betriebsmittel-, Kapitalkosten.</td><td>Rohstoffe, Fertigungslöhne, Abschreibungen, Zinsen.</td></tr>
+                        <tr><td>2. Betrieblicher Funktionsbereich</td><td>Beschaffungs-, Fertigungs-, Lager-, Verwaltungs-, Vertriebskosten.</td><td>Bestellkosten, Maschinenstunden, Lagerzinsen, IT-Kosten.</td></tr>
+                        <tr><td>3. Art der Erfassung</td><td>Aufwandsgleiche Kosten vs. kalkulatorische Kosten.</td><td>Miete (aufwandsgleich) vs. kalkulatorischer Unternehmerlohn.</td></tr>
+                        <tr><td>4. Kostenträgerverrechnung</td><td>Einzelkosten vs. Gemeinkosten.</td><td>Rohmaterial (Einzelkosten) vs. Hallenbeleuchtung (Gemeinkosten).</td></tr>
+                        <tr><td>5. Abhängigkeit von Beschäftigung</td><td>Fixkosten vs. variable Kosten.</td><td>Gebäudeabschreibung (fix) vs. Fertigungsmaterial (variabel).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tabelle 3: Die 6 Kostentreiber und ihre Optimierungsansätze</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Kostentreiber</th><th>Hauptursache im Betrieb</th><th>Wirksamer Optimierungsansatz</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Fehlendes Know-how</td><td>Fachkräftemangel, fehlende Einarbeitung.</td><td>Zielgerichtete Schulungen & Wissensmanagement.</td></tr>
+                        <tr><td>2. Veraltete Technologie</td><td>Ausgebliebene Ersatzinvestitionen.</td><td>Gezielte Modernisierung & Prozessautomatisierung.</td></tr>
+                        <tr><td>3. Maschinenausfälle</td><td>Vernachlässigte Wartungsintervalle.</td><td>Präventive/vorausschauende Wartung (Predictive Maintenance).</td></tr>
+                        <tr><td>4. Silo-Optimierung</td><td>Abteilungsdenken ohne Gesamtsicht.</td><td>Durchgängiges Wertstrommanagement & Lean Production.</td></tr>
+                        <tr><td>5. Fehler & Nacharbeit</td><td>Programmierfehler, falsche Werkzeuge.</td><td>Poka-Yoke, CAQ-Systeme, Null-Fehler-Programme.</td></tr>
+                        <tr><td>6. Fehlende Mensch-Technik-Balance</td><td>Über-Automatisierung ohne Einbezug des Personals.</td><td>Partizipative Arbeitsplatzgestaltung & Ergonomie.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Nummerierte Liste 1: Die 5 Schritte des Risikomanagements</h3>
+            <ol>
+                <li><strong>Risiken erkennen:</strong> Systematische Erfassung aller Gefahrenquellen in Beschaffung, Fertigung und Transport.</li>
+                <li><strong>Risiken vermindern/ausschalten:</strong> Technische und organisatorische Schutzmaßnahmen umsetzen.</li>
+                <li><strong>Risiken bewerten:</strong> Analyse von Schadenshöhe und Eintrittswahrscheinlichkeit.</li>
+                <li><strong>Risiken verlagern:</strong> Vertragliche Übertragung von Risiken auf Subunternehmer oder Lieferanten.</li>
+                <li><strong>Risiken versichern/kontrollieren:</strong> Finanzielle Absicherung unumgänglicher Restrisiken über Versicherungen.</li>
+            </ol>
+
+            <h3>Nummerierte Liste 2: Der Weg zur Ermittlung der Herstellkosten</h3>
+            <ol>
+                <li><strong>Erfassung der Materialeinzelkosten:</strong> Direkter Rohstoff- und Bauteileinsatz laut Stückliste.</li>
+                <li><strong>Zuschlag der Materialgemeinkosten:</strong> Kosten für Lagerung, Wareneingang und Prüfung.</li>
+                <li><strong>Errechnung der Materialkosten:</strong> Summe aus Materialeinzel- und Materialgemeinkosten.</li>
+                <li><strong>Erfassung der Fertigungseinzelkosten:</strong> Direkte Fertigungslöhne pro Arbeitsgang.</li>
+                <li><strong>Zuschlag der Fertigungsgemeinkosten:</strong> Maschinenabschreibungen, Energie, AVOR, Hallenmiete.</li>
+                <li><strong>Errechnung der Fertigungskosten:</strong> Summe aus Fertigungseinzel- und Fertigungsgemeinkosten.</li>
+                <li><strong>Ermittlung der Herstellkosten:</strong> Addition von Materialkosten und Fertigungskosten.</li>
+            </ol>
+
+            <h2>4. Praxis- und Anwendungsbeispiele</h2>
+            <p><strong>Praxisbeispiel 1: Schadensklassifizierung bei einem Hallenbrand</strong></p>
+            <ul>
+                <li><strong>Szenario:</strong> In der Fertigungshalle eines Maschinenbauers bricht durch einen Kurzschluss ein Brand aus.</li>
+                <li><strong>Direkter Schaden:</strong> Zwei CNC-Bearbeitungszentren werden vollständig zerstört (Schaden: \(1'200'000\text{ CHF}\)). Dieser Schaden ist durch die Sachversicherung abgedeckt.</li>
+                <li><strong>Indirekter Schaden (versicherbar):</strong> Durch den Ausfall steht die Produktion für 6 Wochen still. Der Ertragsausfall und die fortlaufenden Fixkosten betragen \(450'000\text{ CHF}\). Dies übernimmt die Betriebsunterbrechungsversicherung.</li>
+                <li><strong>Indirekter Schaden (nicht versicherbar):</strong> Ein Großkunde storniert aufgrund des Lieferverzugs seinen Jahresvertrag und wechselt zur Konkurrenz. Der daraus resultierende Goodwill- und Kundenverlust lässt sich nicht versichern.</li>
+            </ul>
+
+            <p><strong>Praxisbeispiel 2: Berechnung der Herstellkosten im Maschinenbau</strong></p>
+            <p>Szenario: Für die Fertigung einer Baugruppe fallen folgende Selbstkostenwerte an: MEK = \(12'000\text{ CHF}\), MGK-Zuschlag = \(10\%\), FEK = \(8'000\text{ CHF}\), FGK-Zuschlag = \(150\%\).</p>
+            <p>Schritt-für-Schritt-Rechnung:</p>
+            <ol>
+                <li>Materialkosten (MK): \[\text{MK} = 12'000 + (12'000 \times 0,10) = 12'000 + 1'200 = 13'200\text{ CHF}\]</li>
+                <li>Fertigungskosten (FK): \[\text{FK} = 8'000 + (8'000 \times 1,50) = 8'000 + 12'000 = 20'000\text{ CHF}\]</li>
+                <li>Herstellkosten (HK): \[\text{HK} = \text{MK} + \text{FK} = 13'200 + 20'000 = \mathbf{33'200\text{ CHF}}\]</li>
+            </ol>
+            <p>Erklärung: Die Fertigungskosten (\(20'000\text{ CHF}\)) machen über 60% der gesamten Herstellkosten aus.</p>
+
+            <p><strong>Praxisbeispiel 3: Kaskadeneffekt des Kostentreibers "Maschinenausfall"</strong></p>
+            <ul>
+                <li><strong>Ausgangslage:</strong> An einer Hauptmaschine wird aus Kostengründen die vorgeschriebene Wartung um 3 Monate verschoben (Kostentreiber: Mangelnde Wartung).</li>
+                <li><strong>Kaskade:</strong>
+                    <ol>
+                        <li>Während der Schicht erleidet die Maschine einen Spindelschaden (Anlagenausfallrisiko).</li>
+                        <li>Es entstehen direkte Reparaturkosten von \(25'000\text{ CHF}\).</li>
+                        <li>Der nachfolgende Montagebereich fällt für 2 Tage in Unproduktivität (Wartezeiten / Verschwendung).</li>
+                        <li>Zur Einhaltung des Kunden-Liefertermins müssen teure Sonderfahrten (Eillogistik) und Überstunden angeordnet werden.</li>
+                    </ol>
+                </li>
+                <li><strong>Lektion:</strong> Das kurzfristige Einsparen von Wartungskosten führt zu Umvielfachung der Gesamtkosten.</li>
+            </ul>
+
+            <!-- INTERAKTIVES WIDGET ZUSATZMODUL: HERSTELLKOSTEN-RECHNER -->
+            <div class="interactive-widget">
+                <div class="diagram-title">Interaktiver Simulator: Herstellkosten-Kalkulator</div>
+                <div class="diagram-subtitle">Berechnen Sie die Herstellkosten dynamisch aus Material- und Fertigungskosten:</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    <div class="form-group">
+                        <label>Materialeinzelkosten MEK (CHF):</label>
+                        <input type="number" id="hk_mek" value="12000">
+                    </div>
+                    <div class="form-group">
+                        <label>Materialgemeinkosten MGK (%):</label>
+                        <input type="number" id="hk_mgk" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Fertigungseinzelkosten FEK (CHF):</label>
+                        <input type="number" id="hk_fek" value="8000">
+                    </div>
+                    <div class="form-group">
+                        <label>Fertigungsgemeinkosten FGK (%):</label>
+                        <input type="number" id="hk_fgk" value="150">
+                    </div>
+                </div>
+                <button class="btn-interactive" onclick="calcHK()">Herstellkosten berechnen</button>
+                <div class="widget-result" id="hk_result">
+                    Materialkosten: 13'200 CHF | Fertigungskosten: 20'000 CHF | <strong>Herstellkosten (HK): 33'200 CHF</strong>
+                </div>
+            </div>
+
+            <h2>5. Mini-Quiz zur Wissensüberprüfung</h2>
+            <details>
+                <summary>Frage 1: Welche indirekten Schäden im Rahmen von Risiken der Produktionslogistik sind versicherbar und welche können nicht versichert werden?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Versicherbar sind indirekte Schäden wie Ertragsausfälle infolge von Betriebsunterbrechungen, Haftpflichtforderungen Dritter, zusätzliche Lohnkosten oder Konventionalstrafen. Nicht versicherbar sind hingegen immaterielle Verluste wie der Verlust von Goodwill (Image), Störungen des Betriebsklimas oder der endgültige Verlust von Kunden.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 2: Aus welchen Komponenten setzen sich die Herstellkosten im betrieblichen Rechnungswesen zusammen?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Die Herstellkosten setzen sich zusammen aus den Materialkosten (Materialeinzelkosten + Materialgemeinkosten) und den Fertigungskosten (Fertigungseinzelkosten + Fertigungsgemeinkosten inkl. Sondereinzelkosten der Fertigung).
+                </div>
+            </details>
+            <details>
+                <summary>Frage 3: In welche fünf Kategorien lassen sich Kostenarten je nach Kriterium unterteilen?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Kostenarten lassen sich unterteilen nach:
+                    <ol>
+                        <li>verbrauchten Produktionsfaktoren,</li>
+                        <li>betrieblichem Funktionsbereich,</li>
+                        <li>Art der Erfassung (aufwandsgleich vs. kalkulatorisch),</li>
+                        <li>Art der Verrechnung (Einzel- vs. Gemeinkosten),</li>
+                        <li>Abhängigkeit von der Bezugsgröße (Fix- vs. variable Kosten).</li>
+                    </ol>
+                </div>
+            </details>
+            <details>
+                <summary>Frage 4: Warum führt die isolierte Optimierung einzelner Abteilungen (Silo-Denken) oft zu höheren Gesamtkosten in der Fertigung?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Wenn einzelne Abteilungen isoliert optimiert werden, wird der Blick auf den Gesamtwertstrom vernachlässigt. Dies führt zu ineffizienten Schnittstellen, Materialstaus, höheren Ausschussraten und ungenutzten Potenzialen einer durchgängigen Automatisierung.
+                </div>
+            </details>
+            <details>
+                <summary>Frage 5: Was unterscheidet externe von internen Ursachen beim materialwirtschaftlichen Risiko?</summary>
+                <div class="answer">
+                    <strong>Antwort/Lösung:</strong> Externe Ursachen liegen außerhalb des Unternehmens (z. B. Unzuverlässigkeit von Lieferanten, Marktengpässe, kurzfristige Bedarfsverschiebungen). Interne Ursachen entstehen im eigenen Betrieb (z. B. fehlerhafte Bedarfsprognosen, ungeeignete Bedarfsermittlungsverfahren, mangelhafte Lagerbestandskontrollen).
+                </div>
+            </details>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lern-Dashboard | Logistikfachmann/-frau FA</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('hamburger-toggle');
+            const mainNav = document.getElementById('main-nav');
+            if (toggleBtn && mainNav) {
+                toggleBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('mobile-active');
+                    toggleBtn.innerHTML = mainNav.classList.contains('mobile-active') ? '✕' : '☰';
+                });
+            }
+        });
+
+        function calcHK() {
+            const mek = parseFloat(document.getElementById('hk_mek').value) || 0;
+            const mgkRate = parseFloat(document.getElementById('hk_mgk').value) || 0;
+            const fek = parseFloat(document.getElementById('hk_fek').value) || 0;
+            const fgkRate = parseFloat(document.getElementById('hk_fgk').value) || 0;
+
+            const mk = mek + (mek * (mgkRate / 100));
+            const fk = fek + (fek * (fgkRate / 100));
+            const hk = mk + fk;
+
+            document.getElementById('hk_result').innerHTML = 
+                `Materialkosten: <strong>${mk.toLocaleString()} CHF</strong> | ` +
+                `Fertigungskosten: <strong>${fk.toLocaleString()} CHF</strong> | ` +
+                `<strong>Herstellkosten (HK): ${hk.toLocaleString()} CHF</strong>`;
+        }
+    </script>
+</body>
+</html>
