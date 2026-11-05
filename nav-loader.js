@@ -1,68 +1,100 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // 1. Aktuelle Seite aus der URL bestimmen
-    const currentPage = window.location.pathname.split("/").pop() || "scm.html";
-
-    if (typeof dashboardConfig === "undefined" || !dashboardConfig.modules) {
-        console.error("Fehler: dashboardConfig ist nicht geladen!");
-        return;
+(function() {
+    // 1. ZENTRALES CSS INJIZIEREN (Erzwingt korrekte Darstellung auf allen Unterseiten)
+    if (!document.getElementById("nav-dynamic-styles")) {
+        const style = document.createElement("style");
+        style.id = "nav-dynamic-styles";
+        style.textContent = `
+            @media (max-width: 767px) {
+                .hamburger-btn { 
+                    display: block !important; 
+                    z-index: 9999 !important; 
+                    cursor: pointer !important; 
+                }
+                #main-nav { 
+                    display: none !important; 
+                    flex-direction: column !important; 
+                    width: 100% !important; 
+                    margin: 0 !important; 
+                }
+                #main-nav.mobile-active { 
+                    display: flex !important; 
+                }
+                #main-nav a { 
+                    width: 100% !important; 
+                    box-sizing: border-box !important; 
+                }
+            }
+        `;
+        document.head.appendChild(style);
     }
 
-    // 2. Haupt-Navigation generieren
-    let mainNavHTML = '<nav id="main-nav">';
-    let activeModule = null;
-
-    dashboardConfig.modules.forEach(mod => {
-        let isActive = false;
-        if (mod.file === currentPage) {
-            isActive = true;
-            activeModule = mod;
-        } else if (mod.subPages && mod.subPages.some(sub => sub.file === currentPage)) {
-            isActive = true;
-            activeModule = mod;
+    // 2. KLICK-HANDLER (Erkennt Klicks auf allen Seiten zuverlässig)
+    document.addEventListener("click", function(e) {
+        const toggleBtn = e.target.closest("#hamburger-toggle");
+        if (toggleBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const mainNav = document.getElementById("main-nav");
+            if (mainNav) {
+                const isOpen = mainNav.classList.toggle("mobile-active");
+                toggleBtn.innerHTML = isOpen ? "✕" : "☰";
+            }
+            return;
         }
 
-        mainNavHTML += `<a href="${mod.file}" class="${isActive ? 'active' : ''}">${mod.name}</a>`;
+        // Klick auf einen Navigationslink schliesst das Menü mobil automatisch
+        const navLink = e.target.closest("#main-nav a, .sub-nav a");
+        if (navLink) {
+            const mainNav = document.getElementById("main-nav");
+            const toggleBtn = document.getElementById("hamburger-toggle");
+            if (mainNav) mainNav.classList.remove("mobile-active");
+            if (toggleBtn) toggleBtn.innerHTML = "☰";
+        }
     });
-    mainNavHTML += '</nav>';
 
-    // 3. Unter-Navigation generieren
-    let subNavHTML = '';
-    if (activeModule && activeModule.subPages) {
-        subNavHTML = '<div class="sub-nav">';
-        activeModule.subPages.forEach(sub => {
-            const isSubActive = (sub.file === currentPage);
-            subNavHTML += `<a href="${sub.file}" class="${isSubActive ? 'active' : ''}">${sub.name}</a>`;
+    // 3. NAVIGATION GENERIEREN
+    function buildNavigation() {
+        const currentPage = window.location.pathname.split("/").pop() || "scm.html";
+        const container = document.getElementById("dynamic-nav");
+        if (!container) return;
+
+        if (typeof dashboardConfig === "undefined" || !dashboardConfig.modules) {
+            console.error("nav-config.js wurde nicht geladen!");
+            return;
+        }
+
+        let mainNavHTML = '<nav id="main-nav">';
+        let activeModule = null;
+
+        dashboardConfig.modules.forEach(mod => {
+            let isActive = false;
+            if (mod.file === currentPage) {
+                isActive = true;
+                activeModule = mod;
+            } else if (mod.subPages && mod.subPages.some(sub => sub.file === currentPage)) {
+                isActive = true;
+                activeModule = mod;
+            }
+            mainNavHTML += `<a href="${mod.file}" class="${isActive ? 'active' : ''}">${mod.name}</a>`;
         });
-        subNavHTML += '</div>';
-    }
+        mainNavHTML += '</nav>';
 
-    // 4. In den Platzhalter der Seite einfügen
-    const container = document.getElementById("dynamic-nav");
-    if (container) {
+        let subNavHTML = '';
+        if (activeModule && activeModule.subPages) {
+            subNavHTML = '<div class="sub-nav">';
+            activeModule.subPages.forEach(sub => {
+                const isSubActive = (sub.file === currentPage);
+                subNavHTML += `<a href="${sub.file}" class="${isSubActive ? 'active' : ''}">${sub.name}</a>`;
+            });
+            subNavHTML += '</div>';
+        }
+
         container.innerHTML = mainNavHTML + subNavHTML;
     }
-});
 
-// 5. ZENTRALES KLICK-HANDLING (Funktioniert auf allen Seiten ohne HTML-Anpassung)
-document.addEventListener("click", function(e) {
-    // Hamburger-Button Klick abfangen
-    const toggleBtn = e.target.closest("#hamburger-toggle");
-    if (toggleBtn) {
-        e.preventDefault();
-        const mainNav = document.getElementById("main-nav");
-        if (mainNav) {
-            mainNav.classList.toggle("mobile-active");
-            toggleBtn.innerHTML = mainNav.classList.contains("mobile-active") ? "✕" : "☰";
-        }
-        return;
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", buildNavigation);
+    } else {
+        buildNavigation();
     }
-
-    // Klick auf einen Navigationslink (Menü mobil wieder zuklappen)
-    const navLink = e.target.closest("#main-nav a, .sub-nav a");
-    if (navLink) {
-        const mainNav = document.getElementById("main-nav");
-        const toggleBtn = document.getElementById("hamburger-toggle");
-        if (mainNav) mainNav.classList.remove("mobile-active");
-        if (toggleBtn) toggleBtn.innerHTML = "☰";
-    }
-});
+})();
